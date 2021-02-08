@@ -1,13 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//router imports
+import { BrowserRouter as Router } from 'react-router-dom';
+
+//redux imports
+import { logger } from 'redux-logger';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import reducers from 'redux/reducer';
+import persistConfig from 'config/persistorConfig';
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from 'redux/sagas';
+
+//page
+import App from './App';
+
+//sass
+import './index.scss';
+
+const middleWares = [logger];
+
+const sagaMiddleware = createSagaMiddleware();
+
+const pReducer = persistReducer(persistConfig, reducers(reducers));
+export const store = createStore(
+  pReducer,
+  compose(applyMiddleware(...middleWares), applyMiddleware(sagaMiddleware))
+);
+
+const pStore = persistStore(store);
+
+sagaMiddleware.run(rootSaga);
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={pStore}>
+      <React.StrictMode>
+        <Router>
+          <App />
+        </Router>
+      </React.StrictMode>
+    </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );
 
