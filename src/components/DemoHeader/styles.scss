@@ -1,0 +1,107 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: #fff;
+  transition: all 0.5s;
+  z-index: 997;
+  padding: 12px 25px;
+  top: 0;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+
+  @include mobile {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .logo {
+    max-height: 70px;
+    padding-left: 5px;
+    padding-right: 30px;
+    padding-top: 0px;
+    border-right: 1px solid $secondary;
+
+    @include mobile {
+      padding-right: 0px;
+      max-height: 35px;
+      padding-left: 0;
+      border-right: 0;
+    }
+  }
+
+  .header-title {
+    color: $secondary;
+    font-weight: 300;
+    font-size: 40px;
+    margin: 0;
+    padding-left: 20px;
+
+    @include mobile {
+      font-size: 12px;
+    }
+  }
+
+  .profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+
+    @include mobile {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .profile-link {
+    margin-left: 10px;
+    color: #fff;
+    transition: 0.3s;
+    font-size: 20px;
+    display: inline-block;
+    font-weight: 400;
+    background: transparent;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+
+    @include mobile {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .profile-dropdown {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .profile-name {
+    color: #5d5d5d;
+    font-weight: 500;
+    padding-right: 10px;
+
+    @include mobile {
+      display: none;
+    }
+  }
+}
+
+.option-title {
+  padding: 5px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #ccc;
+  color: #5d5d5d;
+  margin: 0;
+}

@@ -1,0 +1,11 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.breadcrumb-custom {
+  color: #707070;
+  font-weight: 300;
+
+  .mlr-5 {
+    margin: 0 5px;
+  }
+}

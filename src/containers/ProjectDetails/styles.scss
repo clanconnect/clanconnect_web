@@ -1,0 +1,60 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.main-wrapper {
+  .flex {
+    display: flex;
+  }
+
+  .justify-between {
+    justify-content: space-between;
+  }
+
+  .content-wrapper {
+    padding: 40px 30px;
+    overflow-x: hidden;
+    width: 100%;
+    @include mobile {
+      width: 100%;
+      margin-bottom: 50px;
+    }
+  }
+
+  .tabs-container {
+    margin-top: 50px;
+
+    .tabs-btn {
+      background-color: #fff;
+      border: 1px solid $primary;
+      padding: 10px 20px;
+      display: inline-block;
+      color: $primary;
+      text-decoration: none;
+      margin-right: 30px;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .active-tab {
+      background-color: $primary;
+      color: white;
+    }
+  }
+
+  .con-mb {
+    margin-bottom: 40px;
+
+    @include mobile {
+      display: flex;
+      overflow-x: auto;
+    }
+  }
+
+  .mobile-res {
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.loader-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+.seen-text {
+  text-align: center;
+  font-weight: 500;
+  color: $text;
+  padding-top: 30px;
+}

@@ -3,13 +3,25 @@ import { Switch, Route } from 'react-router-dom';
 
 import routeConstant from 'common/routeConstants';
 
-const Login = () => {
-  return <h1>Setup with saga done :)</h1>;
-};
+//components
+import ProjectDetails from 'containers/ProjectDetails';
+import AllCreativesLists from 'containers/AllCreativesLists';
+import Influencer from 'containers/InfluencerPage';
+
 const Routes = ({ location }) => {
   return (
-    <Switch location={location}>
-      <Route path={routeConstant.login} component={Login} />
+    <Switch>
+      <Route
+        path={routeConstant.projectDetails}
+        component={ProjectDetails}
+        exact
+      />
+      <Route
+        path={routeConstant.allCreativesLists}
+        component={AllCreativesLists}
+        exact
+      />
+      <Route path={routeConstant.influencerPage} component={Influencer} exact />
     </Switch>
   );
 };

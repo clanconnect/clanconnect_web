@@ -1,0 +1,38 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.comment-profile {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 10px;
+  margin: 10px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid #8080804f;
+
+  .user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .user-chat {
+    padding-left: 20px;
+  }
+
+  .msg-title {
+    color: #5d5d5d;
+    margin-bottom: 3px;
+  }
+
+  .msg-date {
+    color: rgba(#5d5d5d, 0.5);
+    font-size: 12px;
+  }
+
+  .msg-para {
+    color: rgba(#5d5d5d, 0.8);
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 0px;
+  }
+}

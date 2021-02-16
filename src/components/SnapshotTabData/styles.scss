@@ -1,0 +1,74 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.snapshot-card {
+  width: 48%;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 3px 2px 8px 4px #eee;
+  padding: 25px 25px;
+
+  @include mobile {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .snapshot-card-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .snapshot-card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #5d5d5d;
+  }
+
+  .number {
+    color: #02040f;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .title {
+    color: rgba(#5d5d5d, 0.6);
+    font-size: 14px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+  }
+
+  .bold {
+    font-weight: 400;
+  }
+
+  .accepted {
+    color: #60c1ad;
+  }
+
+  .pending {
+    color: #ecaa46;
+  }
+
+  .rejected {
+    color: $primary;
+  }
+
+  .anticon-right {
+    width: 12px;
+
+    svg {
+      width: 12px;
+    }
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+}

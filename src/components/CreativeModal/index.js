@@ -1,0 +1,129 @@
+import React, { useState } from 'react';
+import { Modal, Menu, Dropdown, Carousel, Tag } from 'antd';
+import { DownOutlined, UpOutlined, RightOutlined } from '@ant-design/icons';
+import CommentBox from '../CommentBox';
+import AttachmentFileCard from '../AttachmentFileCard';
+import UploadDocumentModal from '../UploadDocumentModal';
+import CustomScroll from '../CustomScroll';
+
+import demoImag from 'assets/images/project1.jpg';
+import download from 'assets/images/download.svg';
+import paperclip from 'assets/images/paperclip.svg';
+import demoImg from 'assets/images/project1.jpg';
+
+import './styles.scss';
+
+const CreativeModal = ({ src, className, versionTrue }) => {
+  const [visible, setVisible] = useState(false);
+  const [showFiles, setShowFiles] = useState(false);
+  const menu = (
+    <Menu>
+      <Menu.Item key='0'>
+        <div className='flex flex-column'>
+          <label className='flex justify-between items-center mb-10'>
+            <span>Approved</span>
+            <input type='radio' name='status' value='approved' />
+          </label>
+          <label className='flex justify-between items-center mb-10'>
+            <span>Reject</span>
+            <input type='radio' name='status' value='reject' />
+          </label>
+        </div>
+      </Menu.Item>
+    </Menu>
+  );
+
+  function onChange(a, b, c) {
+    console.log(a, b, c);
+  }
+
+  const showAttachFiles = () => {
+    setShowFiles(!showFiles);
+  };
+
+  return (
+    <>
+      {versionTrue ? (
+        <div className='version-text' onClick={() => setVisible(true)}>
+          <img src={demoImg} width='80' height='80' className='version-img' />
+          <span>
+            <span className={className}>4 versions</span>
+            <RightOutlined className='ml-4' />
+          </span>
+        </div>
+      ) : (
+        <img
+          alt=''
+          onClick={() => setVisible(true)}
+          src={src}
+          className={className}
+        />
+      )}
+      <Modal
+        // title='Basic Modal'
+        visible={visible}
+        onOk={() => setVisible(false)}
+        onCancel={() => setVisible(false)}
+        width={1100}
+        style={{ top: 40 }}
+        className='custom-modal'
+      >
+        <div className='creative-modal'>
+          <div className='creative-modal-header flex justify-between'>
+            <p className='title'>Creative Name Here</p>
+            <div className=''>
+              <Dropdown overlay={menu} trigger={['click']}>
+                <a
+                  className='ant-dropdown-link'
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Select a status <DownOutlined />
+                </a>
+              </Dropdown>
+            </div>
+          </div>
+          <div className='creative-modal-body'>
+            <div className='flex mobile-section'>
+              <div className='carousal-section'>
+                <Carousel afterChange={onChange}>
+                  <div className='slider-box'>
+                    <Tag color='cyan'>Version 1</Tag>
+                    <img src={demoImag} className='contentStyle' />
+                    <img src={download} alt='' className='icons-custom' />
+                  </div>
+                  <div className='slider-box'>
+                    <Tag color='cyan'>Version 2</Tag>
+                    <img src={demoImag} className='contentStyle' />
+                    <img src={download} alt='' className='icons-custom' />
+                  </div>
+                  <div className='slider-box'>
+                    <Tag color='cyan'>Version 3</Tag>
+                    <img src={demoImag} className='contentStyle' />
+                    <img src={download} alt='' className='icons-custom' />
+                  </div>
+                </Carousel>
+              </div>
+              <div className='comment-section'>
+                <div className='flex justify-between items-center'>
+                  <p className='view-title' onClick={showAttachFiles}>
+                    View Attachments{' '}
+                    {showFiles ? (
+                      <UpOutlined className='ml-4' />
+                    ) : (
+                      <DownOutlined className='ml-4' />
+                    )}
+                  </p>
+
+                  <UploadDocumentModal src={paperclip} />
+                </div>
+                {showFiles ? <AttachmentFileCard /> : <CommentBox />}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+};
+
+export default CreativeModal;

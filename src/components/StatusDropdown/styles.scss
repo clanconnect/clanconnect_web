@@ -1,0 +1,12 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.table-header {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+
+  .down-icon {
+    color: rgba(0, 0, 0, 0.4);
+    width: 20px;
+  }
+}

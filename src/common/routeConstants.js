@@ -1,5 +1,7 @@
 const routeConstant = {
-  login: '/',
+  projectDetails: '/',
+  allCreativesLists: '/all-creatives-list',
+  influencerPage: '/influencer',
 };
 
 export default routeConstant;
