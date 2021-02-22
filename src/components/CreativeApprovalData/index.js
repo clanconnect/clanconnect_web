@@ -24,7 +24,7 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
   };
 
   const handleAllChecked = () => {
-    setAllChecked(true);
+    setAllChecked(!allChecked);
   };
 
   return (
@@ -37,9 +37,9 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
                 <>
                   <button
                     className='outline-btn bg-green'
-                    onClick={handleAllChecked}
+                    onClick={() => handleAllChecked()}
                   >
-                    Select All
+                    {!allChecked ? 'Select All' : 'Unselect All'}
                   </button>
                   <button className='outline-btn bg-red'>Reject</button>
                 </>
@@ -52,7 +52,7 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
                 </button>
               )}
             </div>
-            <button className='outline-btn bg-blue'>Done</button>
+            {/* <button className='outline-btn bg-blue'>Done</button> */}
           </div>
           <InfluncerFile
             influncerNameData={influncerNameDataApproved}
@@ -85,7 +85,7 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
                 </button>
               )}
             </div>
-            <button className='outline-btn bg-blue'>Done</button>
+            {/* <button className='outline-btn bg-blue'>Done</button> */}
           </div>
           <InfluncerFile
             influncerNameData={influncerNameDataPending}
@@ -117,7 +117,7 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
                 </button>
               )}
             </div>
-            <button className='outline-btn bg-blue'>Done</button>
+            {/* <button className='outline-btn bg-blue'>Done</button> */}
           </div>
           <InfluncerFile
             influncerNameData={influncerNameDataRejected}

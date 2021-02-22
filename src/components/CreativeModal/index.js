@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Modal, Menu, Dropdown, Carousel, Tag } from 'antd';
-import { DownOutlined, UpOutlined, RightOutlined } from '@ant-design/icons';
+import {
+  DownOutlined,
+  UpOutlined,
+  RightOutlined,
+  LeftOutlined,
+} from '@ant-design/icons';
 import CommentBox from '../CommentBox';
 import AttachmentFileCard from '../AttachmentFileCard';
 import UploadDocumentModal from '../BrandUploadDocumentModal';
@@ -16,6 +21,7 @@ import './styles.scss';
 const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
   const [visible, setVisible] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
+  const slider = useRef(null);
   const menu = (
     <Menu>
       <Menu.Item key='0'>
@@ -39,6 +45,14 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
 
   const showAttachFiles = () => {
     setShowFiles(!showFiles);
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   return (
@@ -94,7 +108,11 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
           <div className='creative-modal-body'>
             <div className='flex mobile-section'>
               <div className='carousal-section'>
-                <Carousel afterChange={onChange}>
+                <LeftOutlined
+                  onClick={() => slider.current.prev()}
+                  className='slider-left-icon'
+                />
+                <Carousel afterChange={onChange} ref={slider}>
                   <div className='slider-box'>
                     <Tag color='cyan'>Version 1</Tag>
                     <img src={demoImag} className='contentStyle' />
@@ -111,6 +129,10 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
                     <img src={download} alt='' className='icons-custom' />
                   </div>
                 </Carousel>
+                <RightOutlined
+                  onClick={() => slider.current.next()}
+                  className='slider-right-icon'
+                />
               </div>
               <div className='comment-section'>
                 <div className='flex justify-between items-center'>

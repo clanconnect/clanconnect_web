@@ -77,6 +77,7 @@
   .carousal-section {
     width: 65%;
     padding: 0 24px;
+    position: relative;
 
     @include mobile {
       width: 100%;
@@ -154,5 +155,19 @@
         height: 300px;
       }
     }
+  }
+
+  .slider-left-icon {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 30px;
+  }
+
+  .slider-right-icon {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    right: 30px;
   }
 }

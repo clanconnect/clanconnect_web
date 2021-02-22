@@ -10,8 +10,10 @@ const CommentProfile = ({ data }) => {
     <div className='comment-profile'>
       <img src={user} className='user-icon' />
       <div className='user-chat'>
-        <h4 className='msg-title'>{data?.username}</h4>
-        <span className='msg-date'>{data?.date}</span>
+        <div className='flex justify-between'>
+          <h4 className='msg-title'>{data?.username}</h4>
+          <span className='msg-date'>{data?.date}</span>
+        </div>
         <p className='msg-para'>{data?.userComment}</p>
       </div>
     </div>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Tabs } from 'antd';
+import { Link } from 'react-router-dom';
 import { RightOutlined } from '@ant-design/icons';
 
 import BrandListCard from '../BrandListCard';
 import DownLoadedFile from '../DownLoadedFile';
 import { influncerNameDataApproved } from 'common/dataManager';
+import routeConstants from 'common/routeConstants';
 
 import './styles.scss';
 
@@ -30,11 +32,13 @@ const InfluncerCreativeApprovalTab = ({ defaultActiveKey }) => {
               influncerNameData={influncerNameDataApproved}
               influencerStatus
             />
-            <div className='mt-30'>
-              <p className='view-title'>
-                View all creatives <RightOutlined />
-              </p>
-            </div>
+            <Link to={routeConstants.allCreativesLists}>
+              <div className='mt-30'>
+                <p className='view-title'>
+                  View all creatives <RightOutlined />
+                </p>
+              </div>
+            </Link>
           </div>
         </TabPane>
 
@@ -43,11 +47,13 @@ const InfluncerCreativeApprovalTab = ({ defaultActiveKey }) => {
           <div id='pending'>
             <BrandListCard name='Influencer Name Here pending' uploadCreative />
             <DownLoadedFile influncerNameData={influncerNameDataApproved} />
-            <div className='mt-30'>
-              <p className='view-title'>
-                View all creatives <RightOutlined />
-              </p>
-            </div>
+            <Link to={routeConstants.allCreativesLists}>
+              <div className='mt-30'>
+                <p className='view-title'>
+                  View all creatives <RightOutlined />
+                </p>
+              </div>
+            </Link>
           </div>
         </TabPane>
 
@@ -56,11 +62,13 @@ const InfluncerCreativeApprovalTab = ({ defaultActiveKey }) => {
           <div id='rejected'>
             <BrandListCard name='Influencer Name Here pending' uploadCreative />
             <DownLoadedFile influncerNameData={influncerNameDataApproved} />
-            <div className='mt-30'>
-              <p className='view-title'>
-                View all creatives <RightOutlined />
-              </p>
-            </div>
+            <Link to={routeConstants.allCreativesLists}>
+              <div className='mt-30'>
+                <p className='view-title'>
+                  View all creatives <RightOutlined />
+                </p>
+              </div>
+            </Link>
           </div>
         </TabPane>
       </Tabs>

@@ -32,7 +32,7 @@ const DemoHeader = (props) => {
   return (
     <header className='header'>
       <div className='header-top'>
-        <a href=''>
+        <a href='/'>
           <img src={logo} alt='logo' className='logo' />
         </a>
 
@@ -40,9 +40,9 @@ const DemoHeader = (props) => {
           <h1 className='header-title'>Discover. Partner. influence</h1>
         </div>
         <div className='profile-dropdown'>
-          <Link to={routeConstants.allCreativesLists}>
+          {/* <Link to={routeConstants.allCreativesLists}>
             <span className='mr-30 profile-name'>ALL CREATIVES</span>
-          </Link>
+          </Link> */}
           <span className='profile-name'>lakshay</span>
           <Dropdown overlay={menu} trigger={['click']}>
             <a
