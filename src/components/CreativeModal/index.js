@@ -3,7 +3,7 @@ import { Modal, Menu, Dropdown, Carousel, Tag } from 'antd';
 import { DownOutlined, UpOutlined, RightOutlined } from '@ant-design/icons';
 import CommentBox from '../CommentBox';
 import AttachmentFileCard from '../AttachmentFileCard';
-import UploadDocumentModal from '../UploadDocumentModal';
+import UploadDocumentModal from '../BrandUploadDocumentModal';
 import CustomScroll from '../CustomScroll';
 
 import demoImag from 'assets/images/project1.jpg';
@@ -13,7 +13,7 @@ import demoImg from 'assets/images/project1.jpg';
 
 import './styles.scss';
 
-const CreativeModal = ({ src, className, versionTrue }) => {
+const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
   const [visible, setVisible] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
   const menu = (
@@ -72,14 +72,23 @@ const CreativeModal = ({ src, className, versionTrue }) => {
           <div className='creative-modal-header flex justify-between'>
             <p className='title'>Creative Name Here</p>
             <div className=''>
-              <Dropdown overlay={menu} trigger={['click']}>
-                <a
-                  className='ant-dropdown-link'
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Select a status <DownOutlined />
-                </a>
-              </Dropdown>
+              {influencerStatus ? (
+                <div>
+                  <span>Status : </span>
+                  <button className='outline-btn bg-green-outline'>
+                    Approved
+                  </button>
+                </div>
+              ) : (
+                <Dropdown overlay={menu} trigger={['click']}>
+                  <a
+                    className='ant-dropdown-link'
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Select a status <DownOutlined />
+                  </a>
+                </Dropdown>
+              )}
             </div>
           </div>
           <div className='creative-modal-body'>

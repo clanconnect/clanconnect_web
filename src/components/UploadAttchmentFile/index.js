@@ -3,10 +3,16 @@ import { Progress } from 'antd';
 
 import './styles.scss';
 
-const UploadAttchmentFile = ({ percenter, icon, fileName, uploadedFile }) => {
+const UploadAttchmentFile = ({
+  percenter,
+  icon,
+  fileName,
+  uploadedFile,
+  handleClick,
+}) => {
   return (
     <>
-      <div className='file-card'>
+      <div className='file-card cursor-pointer' onClick={handleClick}>
         <div>
           <img src={icon} alt='' width='25' className='mr-15' />
           <span className='file-title'>{fileName}</span>

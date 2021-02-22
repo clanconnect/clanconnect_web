@@ -1,7 +1,7 @@
 @import 'styles/_colors';
 @import 'styles/_mixins';
 
-.upload-modal {
+.influencer-upload-modal {
   padding-bottom: 30px;
 
   .ant-modal-close {
@@ -17,6 +17,11 @@
     font-weight: 900;
 
     @include mobile {
+      top: -35px;
+      right: 0;
+    }
+
+    @include tablet {
       top: -35px;
       right: 0;
     }
@@ -77,7 +82,7 @@
   }
 
   .comment-btns {
-    margin-top: 20px;
+    margin-top: 45px;
   }
 
   .bg-outline {
@@ -95,13 +100,21 @@
   }
 
   .comapign-text {
-    font-size: 600;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
     font-size: 20px;
     border-bottom: 2px solid #f0f0f0;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     padding-bottom: 5px;
     text-transform: uppercase;
     color: $text;
+
+    .text-sm {
+      font-weight: 300;
+      font-size: 18px;
+      text-transform: lowercase;
+    }
   }
 
   .select-upload {
@@ -113,6 +126,11 @@
     font-size: 20px;
     margin: 20px 0;
     border-radius: 10px;
+
+    @include mobile {
+      height: 120px;
+      font-size: 14px;
+    }
 
     &:focus {
       outline-color: $secondary;

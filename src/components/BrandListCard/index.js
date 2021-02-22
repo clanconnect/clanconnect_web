@@ -1,6 +1,6 @@
 import React from 'react';
 import img1 from 'assets/images/project1.jpg';
-import CreativeUploadModal from '../CreativeUploadModal';
+import CreativeUploadModal from '../InfluencerUploadModal';
 
 import './styles.scss';
 

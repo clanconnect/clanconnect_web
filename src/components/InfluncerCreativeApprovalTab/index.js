@@ -26,7 +26,10 @@ const InfluncerCreativeApprovalTab = ({ defaultActiveKey }) => {
         <TabPane tab='Approved(11)' key='accepted'>
           <div id='accepted'>
             <BrandListCard name='Influencer Name Here pending' uploadCreative />
-            <DownLoadedFile influncerNameData={influncerNameDataApproved} />
+            <DownLoadedFile
+              influncerNameData={influncerNameDataApproved}
+              influencerStatus
+            />
             <div className='mt-30'>
               <p className='view-title'>
                 View all creatives <RightOutlined />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Tooltip } from 'antd';
 
 import UploadDocumentCard from '../UploadDocumentCard';
 import UploadAttchmentFile from '../UploadAttchmentFile';
@@ -18,7 +18,13 @@ const UploadDocumentModal = ({ src }) => {
 
   return (
     <>
-      <img width='16' src={src} onClick={() => setVisible(true)} />
+      <Tooltip
+        title='Attach any document or reference.'
+        placement='bottom'
+        className='cursor-pointer'
+      >
+        <img width='16' src={src} onClick={() => setVisible(true)} />
+      </Tooltip>
 
       <Modal
         title={

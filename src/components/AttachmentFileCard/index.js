@@ -13,8 +13,8 @@ const AttachmentFileCard = (props) => {
         </p>
       </div>
       <div>
-        <span className='mr-30 file-size'>23 MB</span>
-        <img src={downloadImg} alt='download' width='16' />
+        <span className=' file-size'>23 MB</span>
+        {/* <img src={downloadImg} alt='download' width='16' /> */}
       </div>
     </div>
   );

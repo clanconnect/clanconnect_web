@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import routeConstants from 'common/routeConstants';
 
 import logo from 'assets/images/logo.png';
 import dummy from 'assets/images/dummy.png';
@@ -38,6 +40,9 @@ const DemoHeader = (props) => {
           <h1 className='header-title'>Discover. Partner. influence</h1>
         </div>
         <div className='profile-dropdown'>
+          <Link to={routeConstants.allCreativesLists}>
+            <span className='mr-30 profile-name'>ALL CREATIVES</span>
+          </Link>
           <span className='profile-name'>lakshay</span>
           <Dropdown overlay={menu} trigger={['click']}>
             <a

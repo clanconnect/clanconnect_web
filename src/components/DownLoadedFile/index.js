@@ -10,7 +10,7 @@ import demoImg from 'assets/images/project1.jpg';
 
 import './styles.scss';
 
-const DownLoadedFile = ({ text }) => {
+const DownLoadedFile = ({ influencerStatus }) => {
   return (
     <div className='influncer-file-container'>
       <div className='influncer-file-subcontainer'>
@@ -22,7 +22,11 @@ const DownLoadedFile = ({ text }) => {
             </Badge>
           </div>
           <div className='icons-row'>
-            <CreativeModal src={fullScreen} className='icons-custom' />
+            <CreativeModal
+              src={fullScreen}
+              className='icons-custom'
+              influencerStatus
+            />
             <img src={download} alt='' className='icons-custom' />
           </div>
         </div>

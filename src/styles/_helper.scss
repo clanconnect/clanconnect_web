@@ -49,8 +49,21 @@
 .mt-30 {
   margin-top: 30px;
 }
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
 .no-b {
   border: none;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .top-space-commom {
@@ -75,4 +88,14 @@ p {
 
 .text-center {
   text-align: center;
+}
+
+.bg-green-outline {
+  background-color: #60c2ac;
+  border: 1px solid #60c2ac;
+  color: white;
+
+  &:focus {
+    outline: none;
+  }
 }
