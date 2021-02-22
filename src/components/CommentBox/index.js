@@ -13,7 +13,7 @@ const CommentBox = ({ name }) => {
       <div className='comment-scroll'>
         <div className='flex justify-between'>
           <h3 className='chat-title'>Creative Name here</h3>
-          <div className='chat-icon'>
+          <div className='chat-icon-c'>
             <Badge count={5} size='small'>
               <img src={chat} alt='' className='' width='18' />
             </Badge>

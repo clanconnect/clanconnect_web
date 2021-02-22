@@ -1,0 +1,21 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.tab-applied-proposal {
+  width: 100%;
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: $secondary;
+  }
+
+  .ant-tabs-ink-bar {
+    background: $secondary;
+  }
+
+  .ant-tabs-content-holder {
+    padding: 0 4px;
+  }
+
+  .ant-tabs-tab {
+    padding-top: 0px;
+  }
+}

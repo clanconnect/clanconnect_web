@@ -1,67 +1,7 @@
 @import 'styles/_colors';
 @import 'styles/_mixins';
 
-.tab-creative {
-  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: $secondary;
-  }
-
-  .ant-tabs-ink-bar {
-    background: $secondary;
-  }
-
-  .ant-tabs-content-holder {
-    padding: 0 4px;
-  }
-
-  .ant-tabs-tab {
-    padding-top: 0px;
-  }
-
-  .btn-row {
-    display: flex;
-    justify-content: space-between;
-
-    @include mobile {
-      align-items: flex-start;
-    }
-  }
-
-  .outline-btn {
-    background-color: #fff;
-    border: 1px solid $primary;
-    border-radius: 4px;
-    padding: 10px 20px;
-    display: inline-block;
-    color: $primary;
-    text-decoration: none;
-    margin-right: 30px;
-    cursor: pointer;
-    &:focus {
-      outline: none;
-    }
-
-    @include mobile {
-      margin-bottom: 12px;
-    }
-  }
-
-  .bg-red {
-    background-color: $primary;
-    color: #fff;
-  }
-
-  .bg-green {
-    border: 1px solid #60c2ac;
-    color: #60c2ac;
-  }
-
-  .bg-blue {
-    border: 1px solid $secondary;
-    background-color: $secondary;
-    color: white;
-  }
-
+.common-uploads {
   .img-box-download {
     // width: 20%;
     position: relative;

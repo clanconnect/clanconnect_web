@@ -20,7 +20,7 @@ const InfluncerFile = ({
 
   return influncerNameData.map((data, index) => {
     return (
-      <div>
+      <div className='common-uploads'>
         <h2 className='title'>{data.name}</h2>
         <div className='influncer-file-container'>
           {data.imgData.map((img, index) => (

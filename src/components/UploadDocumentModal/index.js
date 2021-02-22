@@ -19,6 +19,7 @@ const UploadDocumentModal = ({ src }) => {
   return (
     <>
       <img width='16' src={src} onClick={() => setVisible(true)} />
+
       <Modal
         title={
           <div className='flex justify-between'>

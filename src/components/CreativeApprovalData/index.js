@@ -6,7 +6,7 @@ import {
   influncerNameDataApproved,
   influncerNameDataPending,
   influncerNameDataRejected,
-} from './dataManager';
+} from 'common/dataManager';
 
 import './styles.scss';
 

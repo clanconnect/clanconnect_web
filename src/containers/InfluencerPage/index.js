@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import Header from 'components/DemoHeader';
 import SideNav from 'components/DemoSideNav';
 import LineHeading from 'components/LineHeading';
-import Breadcrumb from 'components/Breadcrumb';
-import ProjectDetailsCard from 'components/ProjectDetailsCard';
-import SnapshotTabData from 'components/SnapshotTabData';
-import ProposalsTabData from 'components/ProposalsTabData';
-import CreativeApprovalData from 'components/CreativeApprovalData';
+import InfluncerAppliedProposalsTab from 'components/InfluncerAppliedProposalsTab';
+import InfluncerCreativeApprovalTab from 'components/InfluncerCreativeApprovalTab';
 
 import { myTabs } from './dataManager';
 
@@ -40,14 +37,19 @@ const InfluencerPage = (props) => {
               ))}
             </div>
 
-            {/* {activeTab == 'Applied Proposals' && (
+            {activeTab == 'Applied Proposals' && (
               <div className='flex justify-between mobile-res'>
-                <SnapshotTabData />
+                <InfluncerAppliedProposalsTab />
               </div>
             )}
 
-            {activeTab == 'Creative Approval' && <ProposalsTabData />} */}
+            {activeTab == 'Creative Approval' && (
+              <InfluncerCreativeApprovalTab />
+            )}
           </div>
+          <LineHeading title='Ongoing Projects' style='mt-30' />
+          <LineHeading title='Completed Projects' style='mt-30' />
+          <LineHeading title='Drafts' style='mt-30' />
         </div>
       </div>
     </div>

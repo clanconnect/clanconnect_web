@@ -3,7 +3,7 @@ import { Progress } from 'antd';
 
 import './styles.scss';
 
-const UploadAttchmentFile = ({ percenter, icon, fileName }) => {
+const UploadAttchmentFile = ({ percenter, icon, fileName, uploadedFile }) => {
   return (
     <>
       <div className='file-card'>
@@ -11,9 +11,11 @@ const UploadAttchmentFile = ({ percenter, icon, fileName }) => {
           <img src={icon} alt='' width='25' className='mr-15' />
           <span className='file-title'>{fileName}</span>
         </div>
-        <div style={{ width: '35%' }}>
-          <Progress percent={percenter} size='small' />
-        </div>
+        {uploadedFile ? null : (
+          <div style={{ width: '35%' }}>
+            <Progress percent={percenter} size='small' />
+          </div>
+        )}
       </div>
     </>
   );
