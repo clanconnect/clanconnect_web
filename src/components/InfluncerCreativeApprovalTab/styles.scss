@@ -23,4 +23,10 @@
     color: $text;
     cursor: pointer;
   }
+
+  .file-influencer-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 }

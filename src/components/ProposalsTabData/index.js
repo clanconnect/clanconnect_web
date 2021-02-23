@@ -2,9 +2,56 @@ import React from 'react';
 import { Tabs } from 'antd';
 
 import BrandListCard from '../BrandListCard';
+import img1 from 'assets/images/inf1.png';
+import img2 from 'assets/images/inf2.jpeg';
+import influencer from 'assets/images/influencer.jpg';
 
 import './styles.scss';
 
+const influencerPendingList = [
+  {
+    name: 'Influencer Name Here',
+    img: img1,
+  },
+  {
+    name: 'Influencer Name Here',
+    img: influencer,
+  },
+  {
+    name: 'Influencer Name Here',
+    img: img1,
+  },
+];
+
+const influencerApprovalList = [
+  {
+    name: 'Influencer Name Here',
+    img: img2,
+  },
+  {
+    name: 'Influencer Name Here',
+    img: influencer,
+  },
+  {
+    name: 'Influencer Name Here',
+    img: img1,
+  },
+];
+
+const influencerRejectedList = [
+  {
+    name: 'Influencer Name Here',
+    img: img2,
+  },
+  {
+    name: 'Influencer Name Here',
+    img: img2,
+  },
+  {
+    name: 'Influencer Name Here',
+    img: img1,
+  },
+];
 const ProposalsTabData = ({ defaultActiveKey }) => {
   const { TabPane } = Tabs;
 
@@ -16,14 +63,20 @@ const ProposalsTabData = ({ defaultActiveKey }) => {
       <Tabs defaultActiveKey={defaultActiveKey} onChange={callback}>
         <TabPane tab='Pending' key='proposalPending'>
           <div id='pending'>
-            <BrandListCard name='Influencer Name Here pending' />
+            {influencerPendingList.map((list, index) => (
+              <BrandListCard name={list.name} img={list.img} key={index} />
+            ))}
           </div>
         </TabPane>
         <TabPane tab='Approved' key='proposalApproved'>
-          <BrandListCard name='Influencer Name Here approved' />
+          {influencerApprovalList.map((list, index) => (
+            <BrandListCard name={list.name} img={list.img} key={index} />
+          ))}
         </TabPane>
         <TabPane tab='Rejected' key='proposalRejected'>
-          <BrandListCard name='Influencer Name Here rejected' />
+          {influencerRejectedList.map((list, index) => (
+            <BrandListCard name={list.name} img={list.img} key={index} />
+          ))}
         </TabPane>
       </Tabs>
     </div>

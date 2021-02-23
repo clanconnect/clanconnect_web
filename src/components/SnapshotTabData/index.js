@@ -17,7 +17,7 @@ const SnapshotTabData = ({ handleTabs }) => {
         </div>
         <div className='snapshot-card-row'>
           <div
-            className='text-center'
+            className='text-center cursor-pointer'
             onClick={() => handleTabs('proposalApproved')}
           >
             <div className='title bold '>
@@ -27,7 +27,7 @@ const SnapshotTabData = ({ handleTabs }) => {
           </div>
 
           <div
-            className='text-center'
+            className='text-center cursor-pointer'
             onClick={() => handleTabs('proposalPending')}
           >
             <div className='title bold'>
@@ -37,7 +37,7 @@ const SnapshotTabData = ({ handleTabs }) => {
           </div>
 
           <div
-            className='text-center'
+            className='text-center cursor-pointer'
             onClick={() => handleTabs('proposalRejected')}
           >
             <div className='title bold'>
@@ -58,7 +58,7 @@ const SnapshotTabData = ({ handleTabs }) => {
         </div>
         <div className='snapshot-card-row'>
           <div
-            className='text-center'
+            className='text-center cursor-pointer'
             onClick={() => handleTabs('creativeApproved')}
           >
             <span className='title bold '>
@@ -68,7 +68,7 @@ const SnapshotTabData = ({ handleTabs }) => {
           </div>
 
           <div
-            className='text-center'
+            className='text-center cursor-pointer'
             onClick={() => handleTabs('creativePending')}
           >
             <span className='title bold'>
@@ -78,7 +78,7 @@ const SnapshotTabData = ({ handleTabs }) => {
           </div>
 
           <div
-            className='text-center'
+            className='text-center cursor-pointer'
             onClick={() => handleTabs('creativeRejected')}
           >
             <span className='title bold'>

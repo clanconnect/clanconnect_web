@@ -70,7 +70,7 @@ const ProjectDetails = (props) => {
               <ProposalsTabData defaultActiveKey={defaultActiveKeyProposals} />
             )}
 
-            {activeTab == 'Creative Approval' && (
+            {activeTab == 'Creatives Approval' && (
               <CreativeApprovalData
                 defaultActiveKey={defaultActiveKeyCreative}
               />

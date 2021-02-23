@@ -19,8 +19,8 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
     console.log(key);
   }
 
-  const onClickSelect = () => {
-    setShowSelectAllActive(true);
+  const onClickSelect = (value) => {
+    setShowSelectAllActive(value);
   };
 
   const handleAllChecked = () => {
@@ -30,36 +30,6 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
   return (
     <div className='tab-creative'>
       <Tabs defaultActiveKey={defaultActiveKey} onChange={callback}>
-        <TabPane tab='Approved (11)' key='creativeApproved'>
-          <div className='btn-row'>
-            <div>
-              {showSelectAllActive ? (
-                <>
-                  <button
-                    className='outline-btn bg-green'
-                    onClick={() => handleAllChecked()}
-                  >
-                    {!allChecked ? 'Select All' : 'Unselect All'}
-                  </button>
-                  <button className='outline-btn bg-red'>Reject</button>
-                </>
-              ) : (
-                <button
-                  className='outline-btn bg-green'
-                  onClick={onClickSelect}
-                >
-                  Select
-                </button>
-              )}
-            </div>
-            {/* <button className='outline-btn bg-blue'>Done</button> */}
-          </div>
-          <InfluncerFile
-            influncerNameData={influncerNameDataApproved}
-            showSelectAllActive={showSelectAllActive}
-            allChecked={allChecked}
-          />
-        </TabPane>
         <TabPane tab='Pending (22)' key='creativePending'>
           <div className='btn-row'>
             <div>
@@ -71,15 +41,23 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
                   >
                     Select All
                   </button>
-                  <button className='outline-btn bg-green-outline'>
+                  <button
+                    className='outline-btn bg-green-outline'
+                    onClick={() => onClickSelect(false)}
+                  >
                     Approved
                   </button>
-                  <button className='outline-btn bg-red'>Reject</button>
+                  <button
+                    className='outline-btn bg-red'
+                    onClick={() => onClickSelect(false)}
+                  >
+                    Reject
+                  </button>
                 </>
               ) : (
                 <button
                   className='outline-btn bg-green'
-                  onClick={onClickSelect}
+                  onClick={() => onClickSelect(true)}
                 >
                   Select
                 </button>
@@ -93,6 +71,42 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
             allChecked={allChecked}
           />
         </TabPane>
+        <TabPane tab='Approved (11)' key='creativeApproved'>
+          <div className='btn-row'>
+            <div>
+              {showSelectAllActive ? (
+                <>
+                  <button
+                    className='outline-btn bg-green'
+                    onClick={() => handleAllChecked()}
+                  >
+                    {!allChecked ? 'Select All' : 'Unselect All'}
+                  </button>
+                  <button
+                    className='outline-btn bg-red'
+                    onClick={() => onClickSelect(false)}
+                  >
+                    Reject
+                  </button>
+                </>
+              ) : (
+                <button
+                  className='outline-btn bg-green'
+                  onClick={() => onClickSelect(true)}
+                >
+                  Select
+                </button>
+              )}
+            </div>
+            {/* <button className='outline-btn bg-blue'>Done</button> */}
+          </div>
+          <InfluncerFile
+            influncerNameData={influncerNameDataApproved}
+            showSelectAllActive={showSelectAllActive}
+            allChecked={allChecked}
+          />
+        </TabPane>
+
         <TabPane tab='Rejected (21)' key='creativeRejected'>
           <div className='btn-row'>
             <div>
@@ -104,14 +118,17 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
                   >
                     Select All
                   </button>
-                  <button className='outline-btn bg-green-outline'>
+                  <button
+                    className='outline-btn bg-green-outline'
+                    onClick={() => onClickSelect(false)}
+                  >
                     Approved
                   </button>
                 </>
               ) : (
                 <button
                   className='outline-btn bg-green'
-                  onClick={onClickSelect}
+                  onClick={() => onClickSelect(true)}
                 >
                   Select
                 </button>

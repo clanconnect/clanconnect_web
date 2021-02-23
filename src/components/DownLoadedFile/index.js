@@ -10,16 +10,14 @@ import demoImg from 'assets/images/project1.jpg';
 
 import './styles.scss';
 
-const DownLoadedFile = ({ influencerStatus }) => {
+const DownLoadedFile = ({ fileData }) => {
   return (
     <div className='influncer-file-container'>
       <div className='influncer-file-subcontainer'>
         <div className='img-box-download'>
-          <img src={demoImg} alt='' className='full-img' />
+          <img src={fileData.demoImag} alt='' className='full-img' />
           <div className='chat-icon'>
-            <Badge count={5} size='small'>
-              <img src={chat} alt='' className='icons-custom' />
-            </Badge>
+            <img src={chat} alt='' className='icons-custom' />
           </div>
           <div className='icons-row'>
             <CreativeModal
@@ -32,7 +30,7 @@ const DownLoadedFile = ({ influencerStatus }) => {
         </div>
         <p className='date-box'>
           <CalendarOutlined />
-          <span className='date-text'>20/12/2020</span>
+          <span className='date-text'>{fileData.date}</span>
         </p>
       </div>
     </div>

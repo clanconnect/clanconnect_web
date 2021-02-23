@@ -4,11 +4,11 @@ import CreativeUploadModal from '../InfluencerUploadModal';
 
 import './styles.scss';
 
-const BrandListCard = ({ name, uploadCreative }) => {
+const BrandListCard = ({ name, uploadCreative, img }) => {
   return (
     <div className='brand-list'>
       <div className='brand-list-img'>
-        <img src={img1} alt='' />
+        <img src={img} alt='' />
       </div>
       <div className='brand-content'>
         <div className='brand-list-content'>

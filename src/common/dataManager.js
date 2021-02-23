@@ -257,3 +257,41 @@ export const influncerNameDataRejected = [
     ],
   },
 ];
+
+export const compaignData = [
+  {
+    name: 'Campaign name Two',
+    imgData: [
+      {
+        demoImag: demoImg,
+        date: '20/12/2020',
+      },
+      {
+        demoImag: demoImg,
+        date: '20/12/2020',
+      },
+      {
+        demoImag: demoImg,
+        date: '20/12/2020',
+      },
+      {
+        demoImag: demoImg,
+        date: '20/12/2020',
+      },
+      {
+        demoImag: demoImg,
+        date: '20/12/2020',
+      },
+    ],
+  },
+
+  {
+    name: 'Campaign name Two',
+    imgData: [
+      {
+        demoImag: demoImg,
+        date: '20/12/2020',
+      },
+    ],
+  },
+];

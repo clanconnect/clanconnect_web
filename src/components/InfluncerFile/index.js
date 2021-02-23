@@ -22,9 +22,9 @@ const InfluncerFile = ({
     return (
       <div className='common-uploads'>
         <h2 className='title'>{data.name}</h2>
-        <div className='influncer-file-container'>
+        <div className='influncer-file-row'>
           {data.imgData.map((img, index) => (
-            <div className='influncer-file-subcontainer'>
+            <div className='influncer-file-container'>
               <div className='img-box-download'>
                 <img src={img.demoImag} alt='' className='full-img' />
 
@@ -36,15 +36,17 @@ const InfluncerFile = ({
                   ></Checkbox>
                 ) : (
                   <div className='chat-icon'>
-                    <Badge count={5} size='small'>
-                      <img src={chat} alt='' className='icons-custom' />
-                    </Badge>
+                    <CreativeModal src={chat} className='icons-custom' />
                   </div>
                 )}
                 {!showSelectAllActive && (
                   <div className='icons-row'>
                     <CreativeModal src={fullScreen} className='icons-custom' />
-                    <img src={download} alt='' className='icons-custom' />
+                    <img
+                      src={download}
+                      alt='download icon'
+                      className='icons-custom cursor-pointer'
+                    />
                   </div>
                 )}
               </div>

@@ -15,6 +15,7 @@ import demoImag from 'assets/images/project1.jpg';
 import download from 'assets/images/download.svg';
 import paperclip from 'assets/images/paperclip.svg';
 import demoImg from 'assets/images/project1.jpg';
+import infImg from 'assets/images/influencer.jpg';
 
 import './styles.scss';
 
@@ -47,14 +48,6 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
     setShowFiles(!showFiles);
   };
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
   return (
     <>
       {versionTrue ? (
@@ -70,7 +63,7 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
           alt=''
           onClick={() => setVisible(true)}
           src={src}
-          className={className}
+          className={`cursor-pointer ${className}`}
         />
       )}
       <Modal
@@ -120,12 +113,18 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
                   </div>
                   <div className='slider-box'>
                     <Tag color='cyan'>Version 2</Tag>
-                    <img src={demoImag} className='contentStyle' />
+                    <iframe
+                      className='contentStyle'
+                      src='https://www.youtube.com/embed/ftud_jVBp0M'
+                      frameborder='0'
+                      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                      allowfullscreen
+                    ></iframe>
                     <img src={download} alt='' className='icons-custom' />
                   </div>
                   <div className='slider-box'>
                     <Tag color='cyan'>Version 3</Tag>
-                    <img src={demoImag} className='contentStyle' />
+                    <img src={infImg} className='contentStyle' />
                     <img src={download} alt='' className='icons-custom' />
                   </div>
                 </Carousel>

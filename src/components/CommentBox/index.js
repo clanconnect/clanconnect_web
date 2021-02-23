@@ -24,7 +24,6 @@ const CommentBox = ({ name }) => {
 
       <Input placeholder='Type something here…' className='custom-input' />
       <div className='comment-btns'>
-        <button className='btn-cancel'>cancel</button>
         <button className='btn-submit'>Submit</button>
       </div>
     </div>
