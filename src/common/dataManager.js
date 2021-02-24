@@ -149,30 +149,6 @@ export const influncerNameDataApproved = [
       },
     ],
   },
-
-  {
-    name: 'Influencer Name 2',
-    imgData: [
-      {
-        demoImag: demoImg,
-        date: '20/12/2020',
-      },
-      {
-        demoImag: demoImg,
-        date: '20/12/2020',
-      },
-    ],
-  },
-
-  {
-    name: 'Influencer Name 3',
-    imgData: [
-      {
-        demoImag: demoImg,
-        date: '20/12/2020',
-      },
-    ],
-  },
 ];
 
 export const influncerNameDataPending = [
