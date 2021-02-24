@@ -12,7 +12,7 @@ import demoImg from 'assets/images/project1.jpg';
 import { compaingsData, statusData, allInfluencerData } from './dataManager';
 import './styles.scss';
 
-const CreativeTable = (props) => {
+const BrandCreativeTable = (props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [showAddedRow, setShowAddedRow] = useState(false);
 
@@ -29,6 +29,15 @@ const CreativeTable = (props) => {
       render: () => <CreativeModal versionTrue className='version-title' />,
     },
 
+    {
+      title: (
+        <SearchSelectBox
+          data={allInfluencerData}
+          defaultValue='All Influencer'
+        />
+      ),
+      dataIndex: 'allInfluencers',
+    },
     {
       title: 'Size',
       dataIndex: 'size',
@@ -56,6 +65,7 @@ const CreativeTable = (props) => {
       key: '1',
       campaigns: 'Nestle Advertisement',
       posts: 98,
+      allInfluencers: 'Alice Collins',
       size: '70MB',
       date: '12/20/2020',
       status: 'Approved',
@@ -73,6 +83,7 @@ const CreativeTable = (props) => {
       key: '3',
       campaigns: 'Campaigns Name Two',
       posts: 98,
+      allInfluencers: 'Alice Collins',
       size: '70MB',
       date: '12/20/2020',
       status: 'Approved',
@@ -81,6 +92,7 @@ const CreativeTable = (props) => {
       key: '4',
       campaigns: 'Campaigns Name Two',
       posts: 88,
+      allInfluencers: 'Alice Collins',
       size: '89MB',
       date: '12/20/2020',
       status: 'Approved',
@@ -126,4 +138,4 @@ const CreativeTable = (props) => {
   );
 };
 
-export default CreativeTable;
+export default BrandCreativeTable;

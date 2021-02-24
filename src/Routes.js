@@ -7,6 +7,7 @@ import routeConstant from 'common/routeConstants';
 import ProjectDetails from 'containers/ProjectDetails';
 import AllCreativesLists from 'containers/AllCreativesLists';
 import Influencer from 'containers/InfluencerPage';
+import AllCreativesListsBrand from 'containers/AllCreativesListsBrand';
 
 const Routes = ({ location }) => {
   return (

@@ -1,0 +1,53 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.version-text {
+  color: #707070;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.version-img {
+  object-fit: cover;
+  display: block;
+}
+
+.ant-table {
+  overflow-x: auto;
+}
+
+.ant-table-thead {
+  text-transform: uppercase;
+}
+
+.added-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  padding: 15px 8px;
+}
+
+.delete-btn {
+  border: 1px solid $primary;
+  color: $primary;
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 6px 15px;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+
+.bg-download {
+  border: 1px solid $secondary;
+  color: $secondary;
+  margin-left: 10px;
+}
+
+.added-row-text {
+  color: #5d5d5d;
+  font-size: 16px;
+}

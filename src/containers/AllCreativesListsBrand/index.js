@@ -6,7 +6,7 @@ import CreativeTable from 'components/CreativeTable';
 
 import './styles.scss';
 
-const AllCreativesLists = (props) => {
+const AllCreativesListsBrand = (props) => {
   return (
     <div className='main-wrapper'>
       <Header />
@@ -19,7 +19,7 @@ const AllCreativesLists = (props) => {
             <div>
               <h2 className='list-title'>All Creatives</h2>
             </div>
-            <CreativeTable influencerFlowTable />
+            <CreativeTable />
           </div>
         </div>
       </div>
@@ -27,4 +27,4 @@ const AllCreativesLists = (props) => {
   );
 };
 
-export default AllCreativesLists;
+export default AllCreativesListsBrand;
