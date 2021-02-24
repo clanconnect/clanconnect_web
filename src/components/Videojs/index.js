@@ -1,6 +1,5 @@
 import React from 'react';
 import VideoPlayer from 'react-player';
-import Ex from 'assets/images/ex.mp4';
 
 import './styles.scss';
 
@@ -8,7 +7,6 @@ export default class Videojs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      src: Ex,
       poster: 'http://www.example.com/path/to/video_poster.jpg',
       playing: false,
     };
@@ -45,7 +43,7 @@ export default class Videojs extends React.Component {
     return (
       <>
         <VideoPlayer
-          url={src}
+          url='https://youtu.be/qgdfBnOQAkg'
           poster={poster}
           className={className}
           ref={this.onVideoRef}

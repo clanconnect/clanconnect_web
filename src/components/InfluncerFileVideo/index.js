@@ -7,7 +7,6 @@ import CreativeModal from '../CreativeModal';
 import download from 'assets/images/download.svg';
 import fullScreen from 'assets/images/full-screen.svg';
 import chat from 'assets/images/chat.svg';
-import Ex from 'assets/images/ex.mp4';
 
 import './styles.scss';
 
@@ -26,7 +25,7 @@ const InfluncerFileVideo = ({
     <div className='influncer-file-container'>
       <div className='img-box-download'>
         <VideoPlayer
-          url={Ex}
+          url='https://youtu.be/qgdfBnOQAkg'
           poster={poster}
           className='full-img full-video'
           controls={true}

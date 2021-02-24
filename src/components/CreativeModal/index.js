@@ -18,7 +18,6 @@ import download from 'assets/images/download.svg';
 import paperclip from 'assets/images/paperclip.svg';
 import demoImg from 'assets/images/project1.jpg';
 import infImg from 'assets/images/influencer.jpg';
-import Ex from 'assets/images/ex.mp4';
 
 import './styles.scss';
 
@@ -139,7 +138,7 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
                     <Tag color='cyan'>Version 2</Tag>
 
                     <VideoPlayer
-                      url={Ex}
+                      url='https://youtu.be/qgdfBnOQAkg'
                       poster={poster}
                       className='video-contentStyle'
                       onPause={pauseVideo}

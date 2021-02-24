@@ -1,5 +1,4 @@
 import React from 'react';
-import Ex from 'assets/images/ex.mp4';
 import VideoPlayer from '../Videojs';
 import './styles.scss';
 

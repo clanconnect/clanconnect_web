@@ -126,6 +126,7 @@
     font-size: 20px;
     margin: 20px 0;
     border-radius: 10px;
+    cursor: pointer;
 
     @include mobile {
       height: 120px;

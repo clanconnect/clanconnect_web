@@ -17,7 +17,7 @@ const DownLoadedFile = ({ fileData }) => {
         <div className='img-box-download'>
           <img src={fileData.demoImag} alt='' className='full-img' />
           <div className='chat-icon'>
-            <img src={chat} alt='' className='icons-custom' />
+            <CreativeModal src={chat} className='icons-custom' />
           </div>
           <div className='icons-row'>
             <CreativeModal
