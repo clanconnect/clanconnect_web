@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import VideoPlayer from 'react-player';
 import { Modal, Menu, Dropdown, Carousel, Tag } from 'antd';
 import {
   DownOutlined,
@@ -10,18 +11,22 @@ import CommentBox from '../CommentBox';
 import AttachmentFileCard from '../AttachmentFileCard';
 import UploadDocumentModal from '../BrandUploadDocumentModal';
 import CustomScroll from '../CustomScroll';
+import Videojs from '../Videojs';
 
 import demoImag from 'assets/images/project1.jpg';
 import download from 'assets/images/download.svg';
 import paperclip from 'assets/images/paperclip.svg';
 import demoImg from 'assets/images/project1.jpg';
 import infImg from 'assets/images/influencer.jpg';
+import Ex from 'assets/images/ex.mp4';
 
 import './styles.scss';
 
 const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
   const [visible, setVisible] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const poster = 'http://www.example.com/path/to/video_poster.jpg';
   const slider = useRef(null);
   const menu = (
     <Menu>
@@ -48,6 +53,23 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
     setShowFiles(!showFiles);
   };
 
+  const closeModal = (val) => {
+    setPlaying(false);
+    setShowFiles(false);
+
+    setTimeout(() => {
+      setVisible(val);
+    }, 500);
+  };
+
+  const pauseVideo = () => {
+    setPlaying(false);
+  };
+
+  const playVideo = () => {
+    setPlaying(true);
+  };
+
   return (
     <>
       {versionTrue ? (
@@ -70,21 +92,19 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
         // title='Basic Modal'
         visible={visible}
         onOk={() => setVisible(false)}
-        onCancel={() => setVisible(false)}
+        onCancel={() => closeModal(false)}
         width={1100}
         style={{ top: 40 }}
         className='custom-modal'
       >
         <div className='creative-modal'>
           <div className='creative-modal-header flex justify-between'>
-            <p className='title'>Creative Name Here</p>
+            <p className='title'>Influencer Name Here</p>
             <div className=''>
               {influencerStatus ? (
                 <div>
-                  <span>Status : </span>
-                  <button className='outline-btn bg-green-outline'>
-                    Approved
-                  </button>
+                  <span>Status: </span>
+                  <button className='bg-green-outline'>Approved</button>
                 </div>
               ) : (
                 <Dropdown overlay={menu} trigger={['click']}>
@@ -109,23 +129,39 @@ const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
                   <div className='slider-box'>
                     <Tag color='cyan'>Version 1</Tag>
                     <img src={demoImag} className='contentStyle' />
-                    <img src={download} alt='' className='icons-custom' />
+                    <img
+                      src={download}
+                      alt=''
+                      className='icons-custom cursor-pointer'
+                    />
                   </div>
                   <div className='slider-box'>
                     <Tag color='cyan'>Version 2</Tag>
-                    <iframe
-                      className='contentStyle'
-                      src='https://www.youtube.com/embed/ftud_jVBp0M'
-                      frameborder='0'
-                      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                      allowfullscreen
-                    ></iframe>
-                    <img src={download} alt='' className='icons-custom' />
+
+                    <VideoPlayer
+                      url={Ex}
+                      poster={poster}
+                      className='video-contentStyle'
+                      onPause={pauseVideo}
+                      onPlay={playVideo}
+                      playing={playing}
+                      controls={true}
+                    />
+
+                    <img
+                      src={download}
+                      alt=''
+                      className='icons-custom cursor-pointer'
+                    />
                   </div>
                   <div className='slider-box'>
                     <Tag color='cyan'>Version 3</Tag>
                     <img src={infImg} className='contentStyle' />
-                    <img src={download} alt='' className='icons-custom' />
+                    <img
+                      src={download}
+                      alt=''
+                      className='icons-custom cursor-pointer'
+                    />
                   </div>
                 </Carousel>
                 <RightOutlined

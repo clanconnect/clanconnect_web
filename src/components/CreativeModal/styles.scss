@@ -162,6 +162,8 @@
     z-index: 1;
     top: 50%;
     left: 30px;
+    font-size: 25px;
+    filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7));
   }
 
   .slider-right-icon {
@@ -169,5 +171,17 @@
     z-index: 1;
     top: 50%;
     right: 30px;
+    font-size: 25px;
+    filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7));
+  }
+
+  .video-contentStyle {
+    width: 100% !important;
+    height: 500px !important;
+    background-color: black;
+
+    @include mobile {
+      height: 300px !important;
+    }
   }
 }

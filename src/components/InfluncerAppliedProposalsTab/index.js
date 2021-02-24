@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 
 import BrandListCard from '../BrandListCard';
 import img1 from 'assets/images/inf1.png';
-import img2 from 'assets/images/inf2.jpeg';
+import demo from 'assets/images/project1.jpg';
 import influencer from 'assets/images/influencer.jpg';
 
 import './styles.scss';
@@ -11,7 +11,7 @@ import './styles.scss';
 const influencerPendingList = [
   {
     name: 'Nestle Advertisement',
-    img: img1,
+    img: demo,
   },
   {
     name: 'Campaign name Three',
@@ -39,7 +39,12 @@ const InfluncerAppliedProposalsTab = ({ defaultActiveKey }) => {
         <TabPane tab='Pending' key='pending'>
           <div id='pending'>
             {influencerPendingList.map((list, index) => (
-              <BrandListCard name={list.name} uploadCreative img={list.img} />
+              <BrandListCard
+                name={list.name}
+                uploadCreative
+                img={list.img}
+                disabled
+              />
             ))}
           </div>
         </TabPane>

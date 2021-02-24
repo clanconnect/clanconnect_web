@@ -8,7 +8,13 @@ import pdfImg from 'assets/images/pdf.svg';
 
 import './styles.scss';
 
-const CreativeUploadModal = ({ src, btnText, style, creativeUploads }) => {
+const CreativeUploadModal = ({
+  src,
+  btnText,
+  style,
+  creativeUploads,
+  disabled,
+}) => {
   const [visible, setVisible] = useState(false);
   const [uploadNewFile, setUploadNewFile] = useState('');
   const [showFile, setShowFile] = useState(false);

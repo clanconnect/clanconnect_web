@@ -55,8 +55,13 @@
   }
 
   .custom-input {
+    width: 100%;
     border-radius: 4px;
-    height: 45px;
-    margin-bottom: 8px;
+    height: 70px;
+    padding: 5px 10px;
+
+    &:focus {
+      outline-color: $secondary;
+    }
   }
 }

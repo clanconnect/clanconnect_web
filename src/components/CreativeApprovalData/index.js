@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tabs } from 'antd';
 
 import InfluncerFile from '../InfluncerFile';
+
 import {
   influncerNameDataApproved,
   influncerNameDataPending,

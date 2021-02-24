@@ -1,0 +1,75 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.common-uploads {
+  .img-box-download {
+    // width: 20%;
+    position: relative;
+    .full-img {
+      width: 100%;
+    }
+  }
+
+  .icons-row {
+    width: 100%;
+    position: absolute;
+    bottom: 16px;
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .icons-custom {
+    height: 14px;
+    filter: drop-shadow(1px 1px 1px rgba(white, 0.7));
+  }
+
+  .chat-icon {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+  }
+
+  .ant-scroll-number {
+    font-size: 10px;
+  }
+
+  .ant-badge-count {
+    background-color: $primary;
+  }
+
+  .title {
+    margin-top: 30px;
+  }
+
+  .date-box {
+    margin-top: 8px;
+  }
+
+  .date-text {
+    margin-left: 8px;
+    color: #5d5d5d;
+    font-family: 300;
+  }
+
+  .influncer-file-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .influncer-file-container {
+    width: 20%;
+    margin-right: 20px;
+
+    @include mobile {
+      width: 42%;
+    }
+  }
+
+  .full-video {
+    width: 100% !important;
+    height: 100% !important;
+    background-color: black;
+  }
+}

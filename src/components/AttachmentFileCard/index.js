@@ -5,7 +5,7 @@ import './styles.scss';
 
 const AttachmentFileCard = (props) => {
   return (
-    <div className='file-card'>
+    <div className='file-card cursor-pointer'>
       <div className='flex '>
         <img src={img} alt='download' width='25' className='mr-10 ' />
         <div>

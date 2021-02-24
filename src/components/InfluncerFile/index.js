@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Badge, Checkbox } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
+import InfluncerFileVideo from '../InfluncerFileVideo';
 
 import CreativeModal from '../CreativeModal';
 import download from 'assets/images/download.svg';
@@ -56,6 +57,10 @@ const InfluncerFile = ({
               </p>
             </div>
           ))}
+          <InfluncerFileVideo
+            showSelectAllActive={showSelectAllActive}
+            allChecked={allChecked}
+          />
         </div>
       </div>
     );

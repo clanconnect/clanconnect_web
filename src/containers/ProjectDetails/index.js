@@ -46,6 +46,7 @@ const ProjectDetails = (props) => {
         <div className='content-wrapper'>
           <Breadcrumb text={`Nestle Advertisement > Project Details`} />
           <ProjectDetailsCard />
+
           <div className='tabs-container'>
             <div className='con-mb'>
               {myTabs.map((tab, index) => (

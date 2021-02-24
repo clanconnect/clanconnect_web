@@ -103,6 +103,26 @@ p {
   text-align: center;
 }
 
+.outline-btn {
+  background-color: #fff;
+  border: 1px solid #eb008b;
+  border-radius: 4px;
+  padding: 10px 20px;
+  display: inline-block;
+  color: #eb008b;
+  text-decoration: none;
+  margin-right: 30px;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+
+.bg-red {
+  background-color: #eb008b;
+  color: #fff;
+}
+
 .bg-green-outline {
   background-color: #60c2ac;
   border: 1px solid #60c2ac;
@@ -111,4 +131,9 @@ p {
   &:focus {
     outline: none;
   }
+}
+
+.disabled {
+  opacity: 0.3;
+  pointer-events: none;
 }

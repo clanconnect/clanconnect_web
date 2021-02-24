@@ -1,4 +1,5 @@
 import demoImg from 'assets/images/project1.jpg';
+import influencer from 'assets/images/influencer.jpg';
 export const commentData = [
   {
     id: 1,
@@ -261,6 +262,7 @@ export const influncerNameDataRejected = [
 export const compaignData = [
   {
     name: 'Campaign name Two',
+    img: influencer,
     imgData: [
       {
         demoImag: demoImg,
@@ -287,6 +289,7 @@ export const compaignData = [
 
   {
     name: 'Campaign name Two',
+    img: influencer,
     imgData: [
       {
         demoImag: demoImg,
