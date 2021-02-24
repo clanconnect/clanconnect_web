@@ -154,6 +154,7 @@ export const influncerNameDataApproved = [
 export const influncerNameDataPending = [
   {
     name: 'Influencer Name 1',
+    novideo: false,
     imgData: [
       {
         demoImag: demoImg,
@@ -180,6 +181,7 @@ export const influncerNameDataPending = [
 
   {
     name: 'Influencer Name 2',
+    novideo: false,
     imgData: [
       {
         demoImag: demoImg,
@@ -194,6 +196,7 @@ export const influncerNameDataPending = [
 
   {
     name: 'Influencer Name 3',
+    novideo: false,
     imgData: [
       {
         demoImag: demoImg,
@@ -206,6 +209,7 @@ export const influncerNameDataPending = [
 export const influncerNameDataRejected = [
   {
     name: 'Influencer Name 1',
+    novideo: false,
     imgData: [
       {
         demoImag: demoImg,
@@ -216,6 +220,7 @@ export const influncerNameDataRejected = [
 
   {
     name: 'Influencer Name 2',
+    novideo: false,
     imgData: [
       {
         demoImag: demoImg,
@@ -226,6 +231,7 @@ export const influncerNameDataRejected = [
 
   {
     name: 'Influencer Name 3',
+    novideo: false,
     imgData: [
       {
         demoImag: demoImg,

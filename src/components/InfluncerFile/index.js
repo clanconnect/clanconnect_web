@@ -57,10 +57,13 @@ const InfluncerFile = ({
               </p>
             </div>
           ))}
-          <InfluncerFileVideo
-            showSelectAllActive={showSelectAllActive}
-            allChecked={allChecked}
-          />
+
+          {data.novideo == false ? null : (
+            <InfluncerFileVideo
+              showSelectAllActive={showSelectAllActive}
+              allChecked={allChecked}
+            />
+          )}
         </div>
       </div>
     );
