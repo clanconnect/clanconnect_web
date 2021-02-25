@@ -5,6 +5,6 @@ export const myTabs = [
   },
   {
     id: 2,
-    name: 'Creative Approval',
+    name: 'Creatives Approval',
   },
 ];

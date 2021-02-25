@@ -17,11 +17,13 @@ const BrandListCard = ({ name, uploadCreative, img, disabled }) => {
         </div>
         {uploadCreative ? (
           <div className='brand-list-btn'>
-            <CreativeUploadModal
-              btnText={disabled ? 'Approval Pending' : 'Upload Creative'}
-              style={`view-btn ${disabled && 'disabled'}`}
-              creativeUploads
-            />
+            {disabled ? null : (
+              <CreativeUploadModal
+                btnText={disabled ? 'Approval Pending' : 'Upload Creative'}
+                style={`view-btn ${disabled && 'disabled'}`}
+                creativeUploads
+              />
+            )}
           </div>
         ) : (
           <div className='brand-list-btn'>

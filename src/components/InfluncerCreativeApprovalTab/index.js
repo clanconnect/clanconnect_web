@@ -23,9 +23,19 @@ const InfluncerCreativeApprovalTab = ({ defaultActiveKey }) => {
     <div className='tab-applied-proposal'>
       <Tabs defaultActiveKey='campaigns' onChange={callback}>
         {/* campaigns tab */}
-        {/* <TabPane tab='Campaigns' key='campaigns'>
-          <BrandListCard name='Influencer Name Here rejected' img={ } uploadCreative />
-        </TabPane> */}
+        <TabPane tab='Campaigns' key='campaigns'>
+          <BrandListCard
+            name='Nestle Advertisement'
+            img={img1}
+            uploadCreative
+          />
+          <BrandListCard
+            name='Campaign Name Two'
+            img={influencer}
+            uploadCreative
+          />
+          <BrandListCard name='Campaign Name Three' img={img2} uploadCreative />
+        </TabPane>
 
         {/* pending tab */}
         <TabPane tab='Pending(12)' key='pending'>

@@ -22,6 +22,7 @@ const CreativeUploadModal = ({
 
   const handleUploadNewFile = (value) => {
     setUploadNewFile(value);
+    setShowOldFile(false);
   };
 
   const showUploadFilesProgress = (value) => {
@@ -36,6 +37,7 @@ const CreativeUploadModal = ({
   const closeModal = (val) => {
     setVisible(val);
     setUploadNewFile('');
+    setShowOldFile(false);
   };
 
   return (

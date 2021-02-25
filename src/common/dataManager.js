@@ -123,6 +123,8 @@ export const commentData = [
   },
 ];
 
+export const commentDataInfluencer = [];
+
 export const influncerNameDataApproved = [
   {
     name: 'Influencer Name 1',

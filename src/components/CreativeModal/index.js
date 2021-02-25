@@ -21,7 +21,13 @@ import infImg from 'assets/images/influencer.jpg';
 
 import './styles.scss';
 
-const CreativeModal = ({ src, className, versionTrue, influencerStatus }) => {
+const CreativeModal = ({
+  src,
+  className,
+  versionTrue,
+  influencerStatus,
+  emptystateInfluncer,
+}) => {
   const [visible, setVisible] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
   const [playing, setPlaying] = useState(false);

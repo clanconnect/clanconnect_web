@@ -4,9 +4,9 @@
 .custom-modal {
   padding-bottom: 30px;
 
-  .creative-modal {
-    padding-bottom: 30px;
-  }
+  // .creative-modal {
+  //   padding-bottom: 30px;
+  // }
 
   .ant-modal-close {
     border: 2px solid #dacfcf;
@@ -140,6 +140,7 @@
   }
 
   .mobile-section {
+    padding-bottom: 20px;
     @include mobile {
       flex-direction: column;
     }

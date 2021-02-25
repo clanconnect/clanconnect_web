@@ -43,13 +43,13 @@ const InfluencerPage = (props) => {
               </div>
             )}
 
-            {activeTab == 'Creative Approval' && (
+            {activeTab == 'Creatives Approval' && (
               <InfluncerCreativeApprovalTab />
             )}
           </div>
-          <LineHeading title='Ongoing Projects' style='mt-30' />
+          {/* <LineHeading title='Ongoing Projects' style='mt-30' />
           <LineHeading title='Completed Projects' style='mt-30' />
-          <LineHeading title='Drafts' style='mt-30' />
+          <LineHeading title='Drafts' style='mt-30' /> */}
         </div>
       </div>
     </div>
