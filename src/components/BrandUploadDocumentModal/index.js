@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Modal, Tooltip } from 'antd';
 
 import UploadDocumentCard from '../UploadDocumentCard';
@@ -6,14 +7,22 @@ import UploadAttchmentFile from '../UploadAttchmentFile';
 import pngImg from 'assets/images/png.svg';
 import pdfImg from 'assets/images/pdf.svg';
 
+import { uploadMedia } from 'redux/media/actions';
+
 import './styles.scss';
 
 const UploadDocumentModal = ({ src }) => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [showFile, setShowFile] = useState(false);
+  const [urlNumber, setUrlNumber] = useState(1);
 
   const showUploadFiles = (value) => {
+    let payload = {
+      urlNumber,
+    };
     setShowFile(value);
+    dispatch(uploadMedia(payload.urlNumber));
   };
 
   return (

@@ -3,6 +3,7 @@ import actions from './actions';
 const initialState = {
   id: '',
   token: '',
+  url: '',
   loading: false,
 };
 
