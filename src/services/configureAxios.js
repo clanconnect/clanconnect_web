@@ -25,16 +25,17 @@ axiosInstance.interceptors.response.use(
     return response.data;
   },
   (err) => {
-    if (err.response.status != 422) {
-      //will show toast notification
-      //toast.error(err.response.data.message);
-      //toast.error();
-    }
+    console.log(err);
+    // if (err.response.status != 422) {
+    //will show toast notification
+    //toast.error(err.response.data.message);
+    //toast.error();
+    // }
 
-    if (err.response.status === 422 && err.response.data.message) {
-      // toast.error(err.response.data.message);
-      // return;
-    }
+    // if (err.response.status === 422 && err.response.data.message) {
+    // toast.error(err.response.data.message);
+    // return;
+    // }
     return Promise.reject(err.response.data);
   }
 );

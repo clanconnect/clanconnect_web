@@ -5,16 +5,20 @@ import upload from 'assets/images/upload.svg';
 
 import './styles.scss';
 
-const UploadDocumentCard = () => {
+const UploadDocumentCard = ({ setfileList }) => {
   const { Dragger } = Upload;
-  const [fileList, setFilelist] = useState();
 
   const props = {
     name: 'file',
     multiple: true,
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+
+    beforeUpload(file) {
+      return false;
+    },
+
     onChange(info) {
       const { status } = info.file;
+      console.log(info, 'file');
       if (status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
@@ -23,6 +27,7 @@ const UploadDocumentCard = () => {
       } else if (status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }
+      setfileList(info.fileList);
     },
   };
 

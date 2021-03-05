@@ -3,8 +3,9 @@ import actions from './actions';
 const initialState = {
   id: '',
   token: '',
-  url: '',
+  uploadProgress: [],
   loading: false,
+  fileData: [],
 };
 
 export default function userReducer(state = initialState, action) {

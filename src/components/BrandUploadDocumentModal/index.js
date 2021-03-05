@@ -1,28 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Tooltip } from 'antd';
+import axios from 'axios';
+import axiosInstance from 'services/configureAxios';
 
 import UploadDocumentCard from '../UploadDocumentCard';
 import UploadAttchmentFile from '../UploadAttchmentFile';
 import pngImg from 'assets/images/png.svg';
 import pdfImg from 'assets/images/pdf.svg';
+import { getUploadUrlsApi, registerMediaApi } from 'services/media';
 
-import { uploadMedia } from 'redux/media/actions';
+import { setState } from 'redux/media/actions';
 
 import './styles.scss';
 
 const UploadDocumentModal = ({ src }) => {
   const dispatch = useDispatch();
+  const { uploadProgress, fileData } = useSelector((store) => store.media);
   const [visible, setVisible] = useState(false);
   const [showFile, setShowFile] = useState(false);
-  const [urlNumber, setUrlNumber] = useState(1);
+  const [fileList, setfileList] = useState([]);
+  const [progress, setProgress] = useState(0);
 
   const showUploadFiles = (value) => {
-    let payload = {
-      urlNumber,
-    };
     setShowFile(value);
-    dispatch(uploadMedia(payload.urlNumber));
+
+    getUploadUrlsApi(fileList).then((response) => {
+      if (response.success) {
+        for (let i = 0; i < response.data.length; i++) {
+          axios
+            .put(response.data[i].url, fileList[i].originFileObj, {
+              onUploadProgress: (progressEvent) => {
+                const progress = (
+                  (progressEvent.loaded / progressEvent.total) *
+                  100
+                ).toFixed(2);
+
+                setProgress(progress);
+              },
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
+                'Access-Control-Allow-Headers':
+                  'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
+              },
+            })
+            .then(() => {
+              registerMediaApi({ key: response.data[i].key }).then((res) => {
+                dispatch(
+                  setState({
+                    fileData: [...fileList, ...fileData],
+                  })
+                );
+                setfileList([]);
+              });
+            });
+        }
+      }
+    });
   };
 
   return (
@@ -39,7 +74,7 @@ const UploadDocumentModal = ({ src }) => {
         title={
           <div className='flex justify-between'>
             <span>Upload Attachment</span>
-            {showFile && <span>3 files selected</span>}
+            {showFile && <span>{fileData.length} files selected</span>}
           </div>
         }
         visible={visible}
@@ -51,36 +86,46 @@ const UploadDocumentModal = ({ src }) => {
       >
         {showFile ? (
           <div className='conatiner-file'>
-            <UploadAttchmentFile
-              percenter='30'
-              fileName='attachment_name_here.png'
-              icon={pngImg}
-            />
-            <UploadAttchmentFile
-              percenter='100'
-              fileName='attachment_name_here.pdf'
-              icon={pdfImg}
-            />
-            <UploadAttchmentFile
-              percenter='0'
-              fileName='attachment_name_here.jpg'
-              icon={pngImg}
-            />
+            {fileData &&
+              fileData.map((file) => {
+                return (
+                  <UploadAttchmentFile
+                    percenter={100}
+                    fileName={file.originFileObj.name}
+                    icon={pngImg}
+                  />
+                );
+              })}
+
+            {fileList &&
+              fileList.map((file) => {
+                return (
+                  <UploadAttchmentFile
+                    percenter={progress}
+                    fileName={file.originFileObj.name}
+                    icon={pngImg}
+                  />
+                );
+              })}
           </div>
         ) : (
-          <UploadDocumentCard />
+          <UploadDocumentCard setfileList={setfileList} />
         )}
 
         <div className='comment-btns flex justify-between '>
-          <div className=''>
-            <button
-              className='btn-submit'
-              onClick={() => showUploadFiles(true)}
-            >
-              Send
-            </button>
-            <button className='btn-cancel'>Cancel</button>
-          </div>
+          {showFile ? null : (
+            <div className=''>
+              <button
+                className={`btn-submit ${
+                  fileList.length === 0 ? 'disabled' : null
+                }`}
+                onClick={() => showUploadFiles(true)}
+              >
+                Send
+              </button>
+              {/* <button className='btn-cancel'>Cancel</button> */}
+            </div>
+          )}
 
           {showFile ? (
             <button
