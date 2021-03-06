@@ -27,9 +27,9 @@ const BrandListCard = ({ name, uploadCreative, img, disabled }) => {
           </div>
         ) : (
           <div className='brand-list-btn'>
-            <ProposalConfirmModal
-              className={`view-btn ${disabled && 'disabled'}`}
-            />
+            <button className={`view-btn ${disabled && 'disabled'}`}>
+              View Details
+            </button>
           </div>
         )}
       </div>

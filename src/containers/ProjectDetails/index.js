@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from 'components/DemoHeader';
 import SideNav from 'components/DemoSideNav';
 import Breadcrumb from 'components/Breadcrumb';
@@ -6,15 +6,21 @@ import ProjectDetailsCard from 'components/ProjectDetailsCard';
 import SnapshotTabData from 'components/SnapshotTabData';
 import ProposalsTabData from 'components/ProposalsTabData';
 import CreativeApprovalData from 'components/CreativeApprovalData';
+import { getProjectsAction } from 'redux/brands/projects/actions';
+import { getProposalsAction } from 'redux/brands/proposals/actions';
 
 import { myTabs } from './dataManager';
 
 import './styles.scss';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProjectDetails = (props) => {
+  const dispatch = useDispatch();
+  const { projectDetail } = useSelector((store) => store.projects);
+  const { proposalDetails } = useSelector((store) => store.proposals);
   const [activeTab, setActiveTab] = useState('Snapshot');
   const [defaultActiveKeyProposals, setDefaultActiveKeyProposals] = useState(
-    'proposalPending'
+    'sent'
   );
   const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
     'creativeApproved'
@@ -22,14 +28,15 @@ const ProjectDetails = (props) => {
 
   const handleActiveTab = (index) => {
     setActiveTab(index);
+    let params = {
+      include: 'user',
+      status: 'sent',
+    };
+    dispatch(getProposalsAction(params));
   };
 
   const handleTabs = (val) => {
-    if (
-      val === 'proposalPending' ||
-      val === 'proposalApproved' ||
-      val === 'proposalRejected'
-    ) {
+    if (val === 'sent' || val === 'accepted' || val === 'rejected') {
       setDefaultActiveKeyProposals(val);
       setActiveTab('Proposals');
     } else {
@@ -38,6 +45,20 @@ const ProjectDetails = (props) => {
     }
   };
 
+  useEffect(() => {
+    dispatch(getProjectsAction());
+  }, []);
+
+  const getProposals = (status) => {
+    let params = {
+      include: 'user',
+      status,
+    };
+    dispatch(getProposalsAction(params));
+  };
+
+  //console.log(proposalDetails, 'proposalDetails data');
+
   return (
     <div className='main-wrapper'>
       <Header />
@@ -45,7 +66,7 @@ const ProjectDetails = (props) => {
         <SideNav />
         <div className='content-wrapper'>
           <Breadcrumb text={`Nestle Advertisement > Project Details`} />
-          <ProjectDetailsCard />
+          <ProjectDetailsCard projectDetail={projectDetail} />
 
           <div className='tabs-container'>
             <div className='con-mb'>
@@ -68,7 +89,11 @@ const ProjectDetails = (props) => {
             )}
 
             {activeTab == 'Proposals' && (
-              <ProposalsTabData defaultActiveKey={defaultActiveKeyProposals} />
+              <ProposalsTabData
+                defaultActiveKey={defaultActiveKeyProposals}
+                getProposals={getProposals}
+                proposalDetails={proposalDetails}
+              />
             )}
 
             {activeTab == 'Creatives Approval' && (

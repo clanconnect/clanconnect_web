@@ -52,31 +52,81 @@ const influencerRejectedList = [
     img: img1,
   },
 ];
-const ProposalsTabData = ({ defaultActiveKey }) => {
+const ProposalsTabData = ({
+  defaultActiveKey,
+  getProposals,
+  proposalDetails,
+}) => {
   const { TabPane } = Tabs;
 
-  function callback(key) {
-    console.log(key);
-  }
+  // console.log(proposalDetails, 'user');
   return (
     <div className='tab-proposal'>
-      <Tabs defaultActiveKey={defaultActiveKey} onChange={callback}>
-        <TabPane tab='Pending' key='proposalPending'>
-          <div id='pending'>
-            {influencerPendingList.map((list, index) => (
-              <BrandListCard name={list.name} img={list.img} key={index} />
-            ))}
+      <Tabs
+        defaultActiveKey={defaultActiveKey}
+        onChange={(key) => getProposals(key)}
+      >
+        <TabPane tab='Pending' key='sent'>
+          <div id='sent'>
+            {proposalDetails != 0 ? (
+              proposalDetails &&
+              proposalDetails.map((data, index) => {
+                return [data.user].map((list, i) => {
+                  return (
+                    <BrandListCard
+                      name={list?.name}
+                      img={list?.imageUrl}
+                      key={i}
+                    />
+                  );
+                });
+              })
+            ) : (
+              <div className='empty-state'>
+                <p>No Data Available</p>
+              </div>
+            )}
           </div>
         </TabPane>
-        <TabPane tab='Approved' key='proposalApproved'>
-          {influencerApprovalList.map((list, index) => (
-            <BrandListCard name={list.name} img={list.img} key={index} />
-          ))}
+        <TabPane tab='Approved' key='accepted'>
+          {proposalDetails != 0 ? (
+            proposalDetails &&
+            proposalDetails.map((data, index) => {
+              return [data.user].map((list, i) => {
+                return (
+                  <BrandListCard
+                    name={list?.name}
+                    img={list?.imageUrl}
+                    key={i}
+                  />
+                );
+              });
+            })
+          ) : (
+            <div className='empty-state'>
+              <p>No Data Available</p>
+            </div>
+          )}
         </TabPane>
-        <TabPane tab='Rejected' key='proposalRejected'>
-          {influencerRejectedList.map((list, index) => (
-            <BrandListCard name={list.name} img={list.img} key={index} />
-          ))}
+        <TabPane tab='Rejected' key='rejected'>
+          {proposalDetails != 0 ? (
+            proposalDetails &&
+            proposalDetails.map((data, index) => {
+              return [data.user].map((list, i) => {
+                return (
+                  <BrandListCard
+                    name={list?.name}
+                    img={list?.imageUrl}
+                    key={i}
+                  />
+                );
+              });
+            })
+          ) : (
+            <div className='empty-state'>
+              <p>No Data Available</p>
+            </div>
+          )}
         </TabPane>
       </Tabs>
     </div>

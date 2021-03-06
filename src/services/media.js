@@ -10,3 +10,7 @@ export async function getUploadUrlsApi(payload) {
 export async function registerMediaApi(payload) {
   return await axiosInstance.post(apiConstant.REGISTER_MEDIA, payload);
 }
+
+export async function getMediaApi(payload) {
+  return await axiosInstance.get(apiConstant.GET_MEDIA, payload);
+}

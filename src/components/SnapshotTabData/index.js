@@ -18,7 +18,7 @@ const SnapshotTabData = ({ handleTabs }) => {
         <div className='snapshot-card-row'>
           <div
             className='text-center cursor-pointer'
-            onClick={() => handleTabs('proposalApproved')}
+            onClick={() => handleTabs('accepted')}
           >
             <div className='title bold '>
               <span>Accepted</span> <RightOutlined />
@@ -28,7 +28,7 @@ const SnapshotTabData = ({ handleTabs }) => {
 
           <div
             className='text-center cursor-pointer'
-            onClick={() => handleTabs('proposalPending')}
+            onClick={() => handleTabs('sent')}
           >
             <div className='title bold'>
               <span>Pending</span> <RightOutlined />
@@ -38,7 +38,7 @@ const SnapshotTabData = ({ handleTabs }) => {
 
           <div
             className='text-center cursor-pointer'
-            onClick={() => handleTabs('proposalRejected')}
+            onClick={() => handleTabs('rejected')}
           >
             <div className='title bold'>
               <span>Rejected</span> <RightOutlined />
