@@ -3,10 +3,10 @@ import actionConstants from './actions';
 import { getProposalsAPI } from 'services/brands';
 import { setState } from 'redux/media/actions';
 
-export function* getProposals(payload) {
+export function* getProposals(action) {
   try {
-    const response = yield call(getProposalsAPI, payload);
-    console.log(response);
+    const response = yield call(getProposalsAPI, action.payload);
+
     if (response.success) {
       yield put({
         type: actionConstants.SET_STATE,

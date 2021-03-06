@@ -6,7 +6,6 @@ import ProjectDetails from 'containers/ProjectDetails';
 export function* getProjects(payload) {
   try {
     const response = yield call(getProjectsApi);
-    console.log(response);
     if (response.success) {
       yield put({
         type: actionConstants.SET_STATE,

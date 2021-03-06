@@ -2,10 +2,9 @@ import { all, takeLatest, put, call } from 'redux-saga/effects';
 import actionConstants from './actions';
 import { getCreativesAPI } from 'services/brands';
 
-export function* getCreatives(payload) {
+export function* getCreatives(action) {
   try {
-    const response = yield call(getCreativesAPI, payload);
-    console.log(response);
+    const response = yield call(getCreativesAPI, action.payload);
     if (response.success) {
       yield put({
         type: actionConstants.SET_STATE,

@@ -37,8 +37,10 @@ const UploadDocumentModal = ({ src }) => {
                 ).toFixed(2);
 
                 setProgress(progress);
+                console.log(fileList, 'fileList');
               },
               headers: {
+                'content-type': fileList[i].originFileObj.type,
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
                 'Access-Control-Allow-Headers':

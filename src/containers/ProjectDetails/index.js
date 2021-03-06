@@ -8,6 +8,7 @@ import ProposalsTabData from 'components/ProposalsTabData';
 import CreativeApprovalData from 'components/CreativeApprovalData';
 import { getProjectsAction } from 'redux/brands/projects/actions';
 import { getProposalsAction } from 'redux/brands/proposals/actions';
+import { getCreativesAction } from 'redux/brands/creatives/actions';
 
 import { myTabs } from './dataManager';
 
@@ -18,30 +19,36 @@ const ProjectDetails = (props) => {
   const dispatch = useDispatch();
   const { projectDetail } = useSelector((store) => store.projects);
   const { proposalDetails } = useSelector((store) => store.proposals);
+  const { creativeDetails } = useSelector((store) => store.creatives);
+
   const [activeTab, setActiveTab] = useState('Snapshot');
   const [defaultActiveKeyProposals, setDefaultActiveKeyProposals] = useState(
     'sent'
   );
   const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
-    'creativeApproved'
+    'accepted'
   );
 
   const handleActiveTab = (index) => {
     setActiveTab(index);
-    let params = {
-      include: 'user',
-      status: 'sent',
-    };
-    dispatch(getProposalsAction(params));
   };
 
   const handleTabs = (val) => {
     if (val === 'sent' || val === 'accepted' || val === 'rejected') {
       setDefaultActiveKeyProposals(val);
       setActiveTab('Proposals');
-    } else {
-      setDefaultActiveKeyCreative(val);
-      setActiveTab('Creative Approval');
+      let params = {
+        include: 'user',
+        status: val,
+      };
+      dispatch(getProposalsAction(params));
+    }
+  };
+
+  const handleCreativeTabs = (val) => {
+    if (val === 'sent' || val === 'accepted' || val === 'rejected') {
+      setDefaultActiveKeyProposals(val);
+      setActiveTab('Creatives Approval');
     }
   };
 
@@ -54,10 +61,16 @@ const ProjectDetails = (props) => {
       include: 'user',
       status,
     };
-    dispatch(getProposalsAction(params));
+    dispatch(getProposalsAction({ params }));
   };
 
-  //console.log(proposalDetails, 'proposalDetails data');
+  const getCreatives = (status) => {
+    let params = {
+      include: 'media',
+      status,
+    };
+    dispatch(getCreativesAction({ params }));
+  };
 
   return (
     <div className='main-wrapper'>
@@ -84,7 +97,10 @@ const ProjectDetails = (props) => {
 
             {activeTab == 'Snapshot' && (
               <div className='flex justify-between mobile-res'>
-                <SnapshotTabData handleTabs={handleTabs} />
+                <SnapshotTabData
+                  handleTabs={handleTabs}
+                  handleCreativeTabs={handleCreativeTabs}
+                />
               </div>
             )}
 
@@ -99,6 +115,8 @@ const ProjectDetails = (props) => {
             {activeTab == 'Creatives Approval' && (
               <CreativeApprovalData
                 defaultActiveKey={defaultActiveKeyCreative}
+                getCreatives={getCreatives}
+                creativeDetails={creativeDetails}
               />
             )}
           </div>

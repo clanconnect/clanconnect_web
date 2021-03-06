@@ -4,7 +4,7 @@ import { RightOutlined } from '@ant-design/icons';
 
 import './styles.scss';
 
-const SnapshotTabData = ({ handleTabs }) => {
+const SnapshotTabData = ({ handleTabs, handleCreativeTabs }) => {
   return (
     <>
       <div className='snapshot-card'>
@@ -59,7 +59,7 @@ const SnapshotTabData = ({ handleTabs }) => {
         <div className='snapshot-card-row'>
           <div
             className='text-center cursor-pointer'
-            onClick={() => handleTabs('creativeApproved')}
+            onClick={() => handleCreativeTabs('accepted')}
           >
             <span className='title bold '>
               Approved <RightOutlined />
@@ -69,7 +69,7 @@ const SnapshotTabData = ({ handleTabs }) => {
 
           <div
             className='text-center cursor-pointer'
-            onClick={() => handleTabs('creativePending')}
+            onClick={() => handleCreativeTabs('sent')}
           >
             <span className='title bold'>
               Pending <RightOutlined />
@@ -79,7 +79,7 @@ const SnapshotTabData = ({ handleTabs }) => {
 
           <div
             className='text-center cursor-pointer'
-            onClick={() => handleTabs('creativeRejected')}
+            onClick={() => handleCreativeTabs('rejected')}
           >
             <span className='title bold'>
               Rejected <RightOutlined />

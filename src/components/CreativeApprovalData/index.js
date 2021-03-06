@@ -11,7 +11,11 @@ import {
 
 import './styles.scss';
 
-const CreativeApprovalData = ({ defaultActiveKey }) => {
+const CreativeApprovalData = ({
+  defaultActiveKey,
+  getCreatives,
+  creativeDetails,
+}) => {
   const { TabPane } = Tabs;
   const [showSelectAllActive, setShowSelectAllActive] = useState(false);
   const [allChecked, setAllChecked] = useState(false);
@@ -28,10 +32,15 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
     setAllChecked(!allChecked);
   };
 
+  console.log(creativeDetails, 'data creative');
+
   return (
     <div className='tab-creative'>
-      <Tabs defaultActiveKey={defaultActiveKey} onChange={callback}>
-        <TabPane tab='Pending (22)' key='creativePending'>
+      <Tabs
+        defaultActiveKey={defaultActiveKey}
+        onChange={(key) => getCreatives(key)}
+      >
+        <TabPane tab='Pending (22)' key='sent'>
           <div className='btn-row'>
             <div>
               {showSelectAllActive ? (
@@ -72,7 +81,7 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
             allChecked={allChecked}
           />
         </TabPane>
-        <TabPane tab='Approved (11)' key='creativeApproved'>
+        <TabPane tab='Approved (11)' key='accepted'>
           <div className='btn-row'>
             <div>
               {showSelectAllActive ? (
@@ -108,7 +117,7 @@ const CreativeApprovalData = ({ defaultActiveKey }) => {
           />
         </TabPane>
 
-        <TabPane tab='Rejected (21)' key='creativeRejected'>
+        <TabPane tab='Rejected (21)' key='rejected'>
           <div className='btn-row'>
             <div>
               {showSelectAllActive ? (

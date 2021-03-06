@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Tabs } from 'antd';
 
 import BrandListCard from '../BrandListCard';
 import img1 from 'assets/images/inf1.png';
 import img2 from 'assets/images/inf2.jpeg';
 import influencer from 'assets/images/influencer.jpg';
+import { getProposalsAction } from 'redux/brands/proposals/actions';
 
 import './styles.scss';
+import { useDispatch } from 'react-redux';
 
 const influencerPendingList = [
   {
@@ -58,8 +60,17 @@ const ProposalsTabData = ({
   proposalDetails,
 }) => {
   const { TabPane } = Tabs;
+  const dispatch = useDispatch();
 
-  // console.log(proposalDetails, 'user');
+  useEffect(() => {
+    let params = {
+      include: 'user',
+      status: 'sent',
+    };
+    dispatch(getProposalsAction({ params }));
+  }, []);
+
+  //console.log(proposalDetails, 'user');
   return (
     <div className='tab-proposal'>
       <Tabs
