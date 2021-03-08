@@ -2,23 +2,26 @@ import React from 'react';
 import { Spin } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentProfile from '../CommentProfile';
-import { commentData } from 'common/dataManager';
+import { connect } from 'react-redux';
+// import { commentData } from 'common/dataManager';
 import './styles.scss';
 
 export default class CustomScroll extends React.Component {
   state = {
-    items: commentData.slice(0, 5),
+    items: this.props.commentData.slice(0, 5),
     hasMore: true,
     emptystate: false,
   };
 
   fetchMoreData = () => {
+    const { commentData } = this.props;
     if (this.state.items.length >= commentData.length) {
       this.setState({ hasMore: false });
       return;
     }
 
     setTimeout(() => {
+      const { commentData } = this.props;
       this.setState({
         items: commentData.slice(0, 5).concat(this.state.items),
       });

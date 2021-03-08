@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs } from 'antd';
 
 import InfluncerFile from '../InfluncerFile';
+import { getCreativesAction } from 'redux/brands/creatives/actions';
 
 import {
   influncerNameDataApproved,
@@ -10,6 +11,7 @@ import {
 } from 'common/dataManager';
 
 import './styles.scss';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CreativeApprovalData = ({
   defaultActiveKey,
@@ -17,22 +19,28 @@ const CreativeApprovalData = ({
   creativeDetails,
 }) => {
   const { TabPane } = Tabs;
+  const dispatch = useDispatch();
   const [showSelectAllActive, setShowSelectAllActive] = useState(false);
-  const [allChecked, setAllChecked] = useState(false);
-
-  function callback(key) {
-    console.log(key);
-  }
+  const [checkedArray, setCheckedArray] = useState([]);
 
   const onClickSelect = (value) => {
     setShowSelectAllActive(value);
   };
 
-  const handleAllChecked = () => {
-    setAllChecked(!allChecked);
+  const handleCheckAll = () => {
+    creativeDetails.forEach(({ creatives }) => {
+      setCheckedArray([...checkedArray, ...creatives.map(({ id }) => id)]);
+    });
+    console.log(checkedArray, 'creativeId');
   };
 
-  console.log(creativeDetails, 'data creative');
+  useEffect(() => {
+    let params = {
+      include: 'media,user',
+      status: 'sent',
+    };
+    dispatch(getCreativesAction({ params }));
+  }, []);
 
   return (
     <div className='tab-creative'>
@@ -47,7 +55,7 @@ const CreativeApprovalData = ({
                 <>
                   <button
                     className='outline-btn bg-green'
-                    onClick={handleAllChecked}
+                    onClick={handleCheckAll}
                   >
                     Select All
                   </button>
@@ -78,7 +86,7 @@ const CreativeApprovalData = ({
           <InfluncerFile
             influncerNameData={influncerNameDataPending}
             showSelectAllActive={showSelectAllActive}
-            allChecked={allChecked}
+            creativeDetails={creativeDetails}
           />
         </TabPane>
         <TabPane tab='Approved (11)' key='accepted'>
@@ -86,12 +94,7 @@ const CreativeApprovalData = ({
             <div>
               {showSelectAllActive ? (
                 <>
-                  <button
-                    className='outline-btn bg-green'
-                    onClick={() => handleAllChecked()}
-                  >
-                    {!allChecked ? 'Select All' : 'Unselect All'}
-                  </button>
+                  <button className='outline-btn bg-green'>Select All</button>
                   <button
                     className='outline-btn bg-red'
                     onClick={() => onClickSelect(false)}
@@ -113,7 +116,7 @@ const CreativeApprovalData = ({
           <InfluncerFile
             influncerNameData={influncerNameDataApproved}
             showSelectAllActive={showSelectAllActive}
-            allChecked={allChecked}
+            creativeDetails={creativeDetails}
           />
         </TabPane>
 
@@ -122,12 +125,7 @@ const CreativeApprovalData = ({
             <div>
               {showSelectAllActive ? (
                 <>
-                  <button
-                    className='outline-btn bg-green'
-                    onClick={handleAllChecked}
-                  >
-                    Select All
-                  </button>
+                  <button className='outline-btn bg-green'>Select All</button>
                   <button
                     className='outline-btn bg-green-outline'
                     onClick={() => onClickSelect(false)}
@@ -149,7 +147,7 @@ const CreativeApprovalData = ({
           <InfluncerFile
             influncerNameData={influncerNameDataRejected}
             showSelectAllActive={showSelectAllActive}
-            allChecked={allChecked}
+            creativeDetails={creativeDetails}
           />
         </TabPane>
       </Tabs>
