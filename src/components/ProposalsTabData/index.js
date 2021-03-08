@@ -10,50 +10,6 @@ import { getProposalsAction } from 'redux/brands/proposals/actions';
 import './styles.scss';
 import { useDispatch } from 'react-redux';
 
-const influencerPendingList = [
-  {
-    name: 'Influencer Name Here',
-    img: img1,
-  },
-  {
-    name: 'Influencer Name Here',
-    img: influencer,
-  },
-  {
-    name: 'Influencer Name Here',
-    img: img1,
-  },
-];
-
-const influencerApprovalList = [
-  {
-    name: 'Influencer Name Here',
-    img: img2,
-  },
-  {
-    name: 'Influencer Name Here',
-    img: influencer,
-  },
-  {
-    name: 'Influencer Name Here',
-    img: img1,
-  },
-];
-
-const influencerRejectedList = [
-  {
-    name: 'Influencer Name Here',
-    img: img2,
-  },
-  {
-    name: 'Influencer Name Here',
-    img: img2,
-  },
-  {
-    name: 'Influencer Name Here',
-    img: img1,
-  },
-];
 const ProposalsTabData = ({
   defaultActiveKey,
   getProposals,

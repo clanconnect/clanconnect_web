@@ -1,4 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import VideoPlayer from 'react-player';
 import { Modal, Menu, Dropdown, Carousel, Tag } from 'antd';
 import {
@@ -12,6 +14,7 @@ import AttachmentFileCard from '../AttachmentFileCard';
 import UploadDocumentModal from '../BrandUploadDocumentModal';
 import CustomScroll from '../CustomScroll';
 import Videojs from '../Videojs';
+import apiConstant from 'common/apiConstant';
 
 import demoImag from 'assets/images/project1.jpg';
 import download from 'assets/images/download.svg';
@@ -27,12 +30,17 @@ const CreativeModal = ({
   versionTrue,
   influencerStatus,
   emptystateInfluncer,
+  creativeData,
+  getComments,
+  setPage,
 }) => {
   const [visible, setVisible] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
   const [playing, setPlaying] = useState(false);
   const poster = 'http://www.example.com/path/to/video_poster.jpg';
   const slider = useRef(null);
+  const { commentData, meta } = useSelector((store) => store.comments);
+
   const menu = (
     <Menu>
       <Menu.Item key='0'>
@@ -88,7 +96,10 @@ const CreativeModal = ({
       ) : (
         <img
           alt=''
-          onClick={() => setVisible(true)}
+          onClick={() => {
+            setVisible(true);
+            getComments();
+          }}
           src={src}
           className={`cursor-pointer ${className}`}
         />
@@ -104,7 +115,7 @@ const CreativeModal = ({
       >
         <div className='creative-modal'>
           <div className='creative-modal-header flex justify-between'>
-            <p className='title'>Influencer Name Here</p>
+            <p className='title'>{creativeData.user.name}</p>
             <div className=''>
               {influencerStatus ? (
                 <div>
@@ -131,16 +142,38 @@ const CreativeModal = ({
                   className='slider-left-icon'
                 />
                 <Carousel afterChange={onChange} ref={slider}>
-                  <div className='slider-box'>
-                    <Tag color='cyan'>Version 1</Tag>
-                    <img src={demoImag} className='contentStyle' />
-                    <img
-                      src={download}
-                      alt=''
-                      className='icons-custom cursor-pointer'
-                    />
-                  </div>
-                  <div className='slider-box'>
+                  {creativeData.creatives &&
+                    creativeData.creatives.map((item, i) => {
+                      return item.media.map((img, index) => {
+                        return (
+                          <div className='slider-box'>
+                            <Tag color='cyan'>{img.versionTag}</Tag>
+                            {img.mimeType.includes('image') ? (
+                              <img
+                                src={apiConstant.MEDIA_URL + img.slug}
+                                className='contentStyle'
+                              />
+                            ) : (
+                              <VideoPlayer
+                                url={apiConstant.MEDIA_URL + img.slug}
+                                poster={poster}
+                                className='video-contentStyle'
+                                onPause={pauseVideo}
+                                onPlay={playVideo}
+                                playing={playing}
+                                controls={true}
+                              />
+                            )}
+                            <img
+                              src={download}
+                              alt=''
+                              className='icons-custom cursor-pointer'
+                            />
+                          </div>
+                        );
+                      });
+                    })}
+                  {/* <div className='slider-box'>
                     <Tag color='cyan'>Version 2</Tag>
 
                     <VideoPlayer
@@ -167,7 +200,7 @@ const CreativeModal = ({
                       alt=''
                       className='icons-custom cursor-pointer'
                     />
-                  </div>
+                  </div> */}
                 </Carousel>
                 <RightOutlined
                   onClick={() => slider.current.next()}
@@ -187,7 +220,15 @@ const CreativeModal = ({
 
                   <UploadDocumentModal src={paperclip} />
                 </div>
-                {showFiles ? <AttachmentFileCard /> : <CommentBox />}
+                {showFiles ? (
+                  <AttachmentFileCard />
+                ) : (
+                  <CommentBox
+                    commentData={commentData}
+                    meta={meta}
+                    setPage={setPage}
+                  />
+                )}
               </div>
             </div>
           </div>

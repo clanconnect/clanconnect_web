@@ -26,7 +26,7 @@ const ProjectDetails = (props) => {
     'sent'
   );
   const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
-    'accepted'
+    'sent'
   );
 
   const handleActiveTab = (index) => {
@@ -66,7 +66,7 @@ const ProjectDetails = (props) => {
 
   const getCreatives = (status) => {
     let params = {
-      include: 'media',
+      include: 'media,user',
       status,
     };
     dispatch(getCreativesAction({ params }));

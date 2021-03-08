@@ -1,5 +1,6 @@
 import axiosInstance from './configureAxios';
 import apiConstant from 'common/apiConstant';
+import * as queryString from 'query-string';
 
 export async function getProjectsApi(payload = '5f888ecae9dac36951051c17') {
   return await axiosInstance.get(
@@ -22,5 +23,20 @@ export async function getCreativesAPI(payload) {
     {
       params: payload.params,
     }
+  );
+}
+
+export async function getCommentsApi({ page, id }) {
+  return await axiosInstance.get(
+    apiConstant.GET_COMMENTS.replace(':id', id) +
+      queryString.stringify({ page: page })
+  );
+}
+
+export async function postCommentsApi(payload) {
+  console.log(payload, '====++++++++++++++++++++++');
+  return await axiosInstance.post(
+    apiConstant.POST_COMMENTS.replace(':id', '6043533e6d206f62c8236b71'),
+    payload
   );
 }

@@ -7,6 +7,8 @@ const apiConstant = {
   GET_PROPOSALS: '/brands/projects/:id/proposals',
   GET_CREATIVES: '/brands/projects/:id/creatives',
   MEDIA_URL: 'https://clanconnect-dev-media.s3.amazonaws.com/originals/',
+  GET_COMMENTS: 'brands/creatives/:id/comments?',
+  POST_COMMENTS: '/brands/creatives/:id/comments',
 };
 
 export default apiConstant;
