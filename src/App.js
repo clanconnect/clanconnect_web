@@ -1,6 +1,5 @@
-import logo from './logo.svg';
-import './App.scss';
-import Routes from 'Routes';
+import "./App.scss";
+import Routes from "Routes";
 
 function App() {
   return <Routes />;
