@@ -1,71 +1,63 @@
-import React from 'react';
-import { Tabs } from 'antd';
+import React, { useEffect, useState } from "react";
+import "./styles.scss";
+import { Tabs } from "antd";
+import BrandListCard from "../BrandListCard";
+import { connect } from "react-redux";
+import { ACTIONS } from "redux/creators/projects/actions";
 
-import BrandListCard from '../BrandListCard';
-import img1 from 'assets/images/inf1.png';
-import demo from 'assets/images/project1.jpg';
-import influencer from 'assets/images/influencer.jpg';
-
-import './styles.scss';
-
-const influencerPendingList = [
-  {
-    name: 'Nestle Advertisement',
-    img: demo,
-  },
-  {
-    name: 'Campaign name Three',
-    img: influencer,
-  },
-  {
-    name: 'Campaign name Four',
-    img: img1,
-  },
-  {
-    name: 'Campaign name Five',
-    img: img1,
-  },
+const AvailableTabs = [
+  { label: "Pending", value: "in-review" },
+  { label: "Approved", value: "ongoing" },
+  { label: "Revised Quote Requests", value: "financial-review" },
+  { label: "Rejected", value: "rejected" },
 ];
 
-const InfluncerAppliedProposalsTab = ({ defaultActiveKey }) => {
-  const { TabPane } = Tabs;
+const ProjectList = (projects) => {
+  return projects.map((project) => (
+    <BrandListCard
+      name={project.title}
+      uploadCreative
+      img={project.coverPictureUrl}
+      disabled
+    />
+  ));
+};
 
-  function callback(key) {
-    console.log(key);
+const InfluncerAppliedProposalsTab = ({ list, dispatch }) => {
+  const { TabPane } = Tabs;
+  const [projects, setProjects] = useState(list);
+
+  function onTabChange(key) {
+    loadProjects({ status: key });
   }
+
+  const loadProjects = ({ status }) => {
+    setProjects([]);
+    dispatch({ type: ACTIONS.GET_INDEX, payload: { query: { status } } });
+  };
+
+  useEffect(() => {
+    loadProjects({ status: AvailableTabs[0].value });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => setProjects(list), [list]);
+
   return (
-    <div className='tab-applied-proposal'>
-      <Tabs defaultActiveKey='pending' onChange={callback}>
-        <TabPane tab='Pending' key='pending'>
-          <div id='pending'>
-            {influencerPendingList.map((list, index) => (
-              <BrandListCard
-                name={list.name}
-                uploadCreative
-                img={list.img}
-                disabled
-              />
-            ))}
-          </div>
-        </TabPane>
-        <TabPane tab='Approved' key='accepted'>
-          {influencerPendingList.map((list, index) => (
-            <BrandListCard name={list.name} uploadCreative img={list.img} />
-          ))}
-        </TabPane>
-        <TabPane tab='Revised Quote Requests' key='request'>
-          {influencerPendingList.map((list, index) => (
-            <BrandListCard name={list.name} uploadCreative img={list.img} />
-          ))}
-        </TabPane>
-        <TabPane tab='Rejected' key='rejected'>
-          {influencerPendingList.map((list, index) => (
-            <BrandListCard name={list.name} uploadCreative img={list.img} />
-          ))}
-        </TabPane>
+    <div className="tab-applied-proposal">
+      <Tabs defaultActiveKey="pending" onChange={onTabChange}>
+        {AvailableTabs.map((tab) => (
+          <TabPane tab={tab.label} key={tab.value}>
+            {ProjectList(projects)}
+          </TabPane>
+        ))}
       </Tabs>
     </div>
   );
 };
 
-export default InfluncerAppliedProposalsTab;
+const mapStateToProps = ({ CreatorProjects }) => ({
+  list: CreatorProjects.list,
+});
+
+export default connect(mapStateToProps)(InfluncerAppliedProposalsTab);
