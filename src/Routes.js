@@ -11,6 +11,7 @@ import Loader from 'components/Loader';
 const loadable = (loader) =>
   Loadable({
     loader,
+    delay: false,
     loading: () => <Loader />,
   });
 
@@ -33,7 +34,7 @@ const Routes = ({ location }) => {
   return (
     <>
       <ToastContainer />
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <Switch>
         <Route
           path={routeConstant.projectDetails}

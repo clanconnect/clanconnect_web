@@ -5,6 +5,7 @@ import {
   creativeUpdateStatusApi,
   creativesBulkUpdateApi,
 } from 'services/brands';
+import { getCreativesAction } from './actions';
 
 export function* getCreatives(action) {
   try {
@@ -39,7 +40,15 @@ export function* creativesBulkUpdate(action) {
   try {
     const response = yield call(creativesBulkUpdateApi, action.payload);
     if (response.success) {
-      console.log(response);
+      yield getCreatives(
+        getCreativesAction({
+          params: {
+            include: 'media,user',
+            status: action.payload.currentStatus,
+          },
+          id: action.payload.id,
+        })
+      );
     }
   } catch (err) {
     console.log(err);

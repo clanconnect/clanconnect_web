@@ -30,11 +30,10 @@ const Comment = (props) => {
 
   const getCommentsData = () => {
     setLoader(true);
-    setTimeout(
-      () => dispatch(getCommentsAction({ page, id: creativeId })),
-      3000
-    );
+
+    dispatch(getCommentsAction({ page, id: creativeId }));
   };
+
   useEffect(() => {
     if (commentDataTs !== commentsDataLocalTs && commentData) {
       setCommentsData(commentData);

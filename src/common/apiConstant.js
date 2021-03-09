@@ -6,8 +6,8 @@ const apiConstant = {
   GET_PROJECT_BY_ID: 'brands/projects/:id',
   GET_PROPOSALS: '/brands/projects/:id/proposals',
   GET_CREATIVES: '/brands/projects/:id/creatives',
-  GET_COMMENTS: 'brands/creatives/:id/comments?',
-  POST_COMMENTS: '/brands/creatives/:id/comments',
+  GET_COMMENTS: '/creatives/:id/comments?',
+  POST_COMMENTS: '/creatives/:id/comments',
   CREATIVE_UPDATE_STATUS:
     'brands/projects/:projectId/creatives/:creativeId/status',
   CREATIVE_BULK_UPDATE: '/brands/projects/:projectId/creatives/bulk-update',
