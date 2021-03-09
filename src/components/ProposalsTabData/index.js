@@ -42,7 +42,7 @@ const ProposalsTabData = ({
                   return (
                     <BrandListCard
                       name={list?.name}
-                      img={list?.imageUrl}
+                      img={list?.image}
                       key={i}
                     />
                   );
@@ -61,11 +61,7 @@ const ProposalsTabData = ({
             proposalDetails.map((data, index) => {
               return [data.user].map((list, i) => {
                 return (
-                  <BrandListCard
-                    name={list?.name}
-                    img={list?.imageUrl}
-                    key={i}
-                  />
+                  <BrandListCard name={list?.name} img={list?.image} key={i} />
                 );
               });
             })
@@ -81,11 +77,7 @@ const ProposalsTabData = ({
             proposalDetails.map((data, index) => {
               return [data.user].map((list, i) => {
                 return (
-                  <BrandListCard
-                    name={list?.name}
-                    img={list?.imageUrl}
-                    key={i}
-                  />
+                  <BrandListCard name={list?.name} img={list?.image} key={i} />
                 );
               });
             })

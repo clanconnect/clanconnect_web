@@ -37,7 +37,6 @@ const UploadDocumentModal = ({ src }) => {
                 ).toFixed(2);
 
                 setProgress(progress);
-                console.log(fileList, 'fileList');
               },
               headers: {
                 'content-type': fileList[i].originFileObj.type,
