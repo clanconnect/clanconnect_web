@@ -13,10 +13,11 @@ import AttachmentFileCard from "../AttachmentFileCard";
 import UploadDocumentModal from "../BrandUploadDocumentModal";
 import download from "assets/images/download.svg";
 import paperclip from "assets/images/paperclip.svg";
+import axios from "axios";
 
-const MediaView = ({ media }) => {
+const MediaView = ({ media, downloadFile }) => {
   return (
-    <div className="slider-box">
+    <div className="slider-box" key={`media-${media.id}`}>
       <Tag color="cyan">{media.versionTag}</Tag>
       {media.mimeType.includes("image") ? (
         // eslint-disable-next-line jsx-a11y/img-redundant-alt
@@ -34,7 +35,12 @@ const MediaView = ({ media }) => {
           controls={true}
         />
       )}
-      <img src={download} alt="" className="icons-custom cursor-pointer" />
+      <img
+        src={download}
+        alt=""
+        className="icons-custom cursor-pointer"
+        onClick={() => downloadFile(media.slug)}
+      />
     </div>
   );
 };
@@ -49,16 +55,27 @@ const InfluencerCreativeModal = ({
   const [showFiles, setShowFiles] = useState(false);
   const slider = useRef(null);
 
-  function onChange(a, b, c) {
-    console.log(a, b, c);
-  }
-
   const showAttachFiles = () => {
     setShowFiles(!showFiles);
   };
 
   const closeModal = (val) => {
     setVisible(false);
+  };
+
+  const downloadFile = (slug) => {
+    const url = `${
+      process.env.REACT_APP_MEDIA_ORIGINAL_URL
+    }/${slug}?${new Date().getTime()}`;
+    axios({ url, method: "GET", responseType: "blob" }).then((response) => {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(
+        new Blob([response.data], { type: response.data.type })
+      );
+      link.setAttribute("download", "");
+      document.body.appendChild(link);
+      link.click();
+    });
   };
 
   return (
@@ -90,8 +107,10 @@ const InfluencerCreativeModal = ({
                   onClick={() => slider.current.prev()}
                   className="slider-left-icon"
                 />
-                <Carousel afterChange={onChange} ref={slider}>
-                  {creative.media.map((media) => MediaView({ media }))}
+                <Carousel ref={slider}>
+                  {creative.media.map((media) =>
+                    MediaView({ media, downloadFile })
+                  )}
                 </Carousel>
                 <RightOutlined
                   onClick={() => slider.current.next()}

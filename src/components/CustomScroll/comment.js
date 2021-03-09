@@ -20,6 +20,7 @@ const Comment = (props) => {
   const { creativeId } = props;
   useEffect(() => {
     getCommentsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const getCommentsData = () => {
@@ -34,22 +35,23 @@ const Comment = (props) => {
       setCommentsData(commentData);
       setLoader(false);
     }
-  }, [commentDataTs]);
+  }, [commentData, commentDataTs, commentsDataLocalTs]);
+
   return (
     <div className="demo-class">
       {commentData &&
         commentData.map((item, index) => {
-          if (index == commentData.length - 1) {
+          if (index === commentData.length - 1) {
             return (
               <>
-                <CommentProfile data={item} key={index} />
+                <CommentProfile data={item} key={`comment-${index}`} />
                 {!loader && page < meta?.totalPages && (
                   <Waypoint onEnter={() => setPage(page + 1)} />
                 )}
               </>
             );
           } else {
-            return <CommentProfile data={item} key={index} />;
+            return <CommentProfile data={item} key={`comment-${index}`} />;
           }
         })}
       {/* {loader && Loading} */}

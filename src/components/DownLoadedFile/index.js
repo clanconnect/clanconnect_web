@@ -6,12 +6,31 @@ import download from "assets/images/download.svg";
 import fullScreen from "assets/images/full-screen.svg";
 import chat from "assets/images/chat.svg";
 import VideoPlayer from "react-player";
+import axios from "axios";
 
 const DownLoadedFile = ({ creative = {}, project }) => {
   const media = creative.media ? creative.media[0] : {};
   const imageUrl = `${process.env.REACT_APP_IMAGE_BASE_URL}/${
     media?.slug || "default"
   }`;
+
+  const downloadFile = () => {
+    axios({
+      url: `${process.env.REACT_APP_MEDIA_ORIGINAL_URL}/${
+        media?.slug
+      }?${new Date().getTime()}`,
+      method: "GET",
+      responseType: "blob",
+    }).then((response) => {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(
+        new Blob([response.data], { type: response.data.type })
+      );
+      link.setAttribute("download", "");
+      document.body.appendChild(link);
+      link.click();
+    });
+  };
 
   return (
     <div className="influncer-file-container">
@@ -24,7 +43,7 @@ const DownLoadedFile = ({ creative = {}, project }) => {
             <VideoPlayer
               url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media?.slug}`}
               className="full-video"
-              controls={true}
+              controls={false}
             />
           )}
           <div className="chat-icon">
@@ -42,7 +61,12 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               className="icons-custom"
               creative={creative}
             />
-            <img src={download} alt="" className="icons-custom" />
+            <img
+              src={download}
+              alt=""
+              className="icons-custom"
+              onClick={downloadFile}
+            />
           </div>
         </div>
         <p className="date-box">

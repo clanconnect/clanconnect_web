@@ -13,7 +13,7 @@ const CommentBox = ({ creativeId }) => {
   const dispatch = useDispatch();
   const { commentData } = useSelector((store) => store.comments);
   const [text, setText] = useState("");
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [errorState, setErrorState] = useState(false);
 
   const handleSubmit = () => {
@@ -37,12 +37,11 @@ const CommentBox = ({ creativeId }) => {
 
   useEffect(() => {
     dispatch(getCommentsAction({ page, id: creativeId }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(creativeId, "commentData");
-
   return (
-    <div className="comment-box">
+    <div className="comment-box" key={`creative-comments-${creativeId}`}>
       <div className="comment-scroll">
         <div className="flex justify-between">
           <h3 className="chat-title">Comments</h3>

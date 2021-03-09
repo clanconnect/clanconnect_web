@@ -16,12 +16,13 @@ const ProjectList = (projects) => {
       project={project}
       key={`projects-${project.id}`}
       creatives={[]}
+      disablePreviousVersionUpload={true}
     />
   ));
 };
 
 const ProjectCreatives = ({ project, creatives }) => (
-  <div>
+  <div key={`project-creatives-${project.id}`}>
     <ProjectListCard project={project} creatives={creatives} />
 
     <div className="file-influencer-row">

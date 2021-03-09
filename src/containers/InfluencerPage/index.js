@@ -27,6 +27,7 @@ const InfluencerPage = (props) => {
             <div className="con-mb">
               {myTabs.map((tab, index) => (
                 <button
+                  key={tab.name}
                   className={`tabs-btn ${
                     activeTab === tab.name ? "active-tab" : null
                   }`}
@@ -43,9 +44,7 @@ const InfluencerPage = (props) => {
               </div>
             )}
 
-            {activeTab === "Creatives Approval" && (
-              <InfluncerCreativeApprovalTab />
-            )}
+            {activeTab === "Creatives" && <InfluncerCreativeApprovalTab />}
           </div>
           {/* <LineHeading title='Ongoing Projects' style='mt-30' />
           <LineHeading title='Completed Projects' style='mt-30' />

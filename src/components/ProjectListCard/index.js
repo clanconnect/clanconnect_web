@@ -3,7 +3,7 @@ import "./styles.scss";
 import InfluencerUploadModal from "../InfluencerUploadModal";
 
 const StatusBasedActions = {
-  ongoing: (project, creatives) => (
+  ongoing: (project, creatives, disablePreviousVersionUpload) => (
     <div className="brand-list-btn">
       <InfluencerUploadModal
         btnText={"Upload Creative"}
@@ -11,6 +11,7 @@ const StatusBasedActions = {
         creativeUploads
         project={project}
         creatives={creatives}
+        disablePreviousVersionUpload={disablePreviousVersionUpload}
       />
     </div>
   ),
@@ -21,7 +22,12 @@ const StatusBasedActions = {
     </div>
   ),
 };
-const ProjectListCard = ({ project, disableAction, creatives }) => {
+const ProjectListCard = ({
+  project,
+  disableAction,
+  creatives,
+  disablePreviousVersionUpload,
+}) => {
   return (
     <div className="brand-list">
       <div className="brand-list-img">
@@ -33,8 +39,16 @@ const ProjectListCard = ({ project, disableAction, creatives }) => {
         </div>
 
         {!disableAction && StatusBasedActions[project.status]
-          ? StatusBasedActions[project.status](project, creatives || [])
-          : StatusBasedActions["default"](project, creatives || [])}
+          ? StatusBasedActions[project.status](
+              project,
+              creatives || [],
+              disablePreviousVersionUpload
+            )
+          : StatusBasedActions["default"](
+              project,
+              creatives || [],
+              disablePreviousVersionUpload
+            )}
       </div>
     </div>
   );

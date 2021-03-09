@@ -13,12 +13,24 @@ const UploadTypes = [
   { label: "A version of previously sent creative", value: "upload added" },
 ];
 
-const ShowUploadConsentView = ({ uploadNewFile, handleUploadNewFile }) => {
+const ShowUploadConsentView = ({
+  uploadNewFile,
+  handleUploadNewFile,
+  disablePreviousVersionUpload,
+}) => {
+  const types = disablePreviousVersionUpload
+    ? UploadTypes.filter((f) => f.value !== "upload added")
+    : UploadTypes;
+
   return ["upload added", "upload new"].includes(uploadNewFile) ? null : (
     <div>
       <p className="text-center mt-30">Please select one option:</p>
-      <div className="flex justify-between">
-        {UploadTypes.map((o) => (
+      <div
+        className={`flex ${
+          disablePreviousVersionUpload ? "justify-center" : "justify-between"
+        }`}
+      >
+        {types.map((o) => (
           <button
             key={`upload-type-${o.value}`}
             className="select-upload"
@@ -99,6 +111,7 @@ const InfluencerUploadModal = ({
   project,
   dispatch,
   creatives,
+  disablePreviousVersionUpload,
 }) => {
   const [visible, setVisible] = useState(false);
   const [uploadNewFile, setUploadNewFile] = useState("");
@@ -148,12 +161,13 @@ const InfluencerUploadModal = ({
   };
 
   const handleUpload = () => {
-    if (fileUploadStage == 0) {
+    if (files.length === 0) return;
+
+    if (fileUploadStage === 0) {
       setShowFile(true);
       setFileUploadStage(1);
       return;
     }
-    if (files.length === 0) return;
 
     MediaService.uploadMultiple(files, updateProgress)
       .then((res) => {
@@ -228,6 +242,7 @@ const InfluencerUploadModal = ({
 
         <ShowUploadConsentView
           key="show-upload-consent-view"
+          disablePreviousVersionUpload={disablePreviousVersionUpload}
           handleUploadNewFile={handleUploadNewFile}
           uploadNewFile={uploadNewFile}
         />
