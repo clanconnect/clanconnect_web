@@ -17,6 +17,15 @@ export function* fetchIndex({ payload }) {
   }
 }
 
+export function* add({ payload: { body, path, query } }) {
+  console.log("payload ===> ", body, path, query);
+  const res = yield call(CreativeService.addNew, { body, path, query });
+  console.log(res);
+}
+
 export default function* creatorCreativesSagas() {
-  yield all([takeLatest(ACTIONS.GET_INDEX, fetchIndex)]);
+  yield all([
+    takeLatest(ACTIONS.GET_INDEX, fetchIndex),
+    takeLatest(ACTIONS.ADD, add),
+  ]);
 }

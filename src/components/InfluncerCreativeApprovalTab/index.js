@@ -11,26 +11,34 @@ import { ACTIONS as PROJECT_ACTIONS } from "redux/creators/projects/actions";
 import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";
 
 const ProjectList = (projects) => {
-  return projects.map((project) => <ProjectListCard project={project} />);
+  return projects.map((project) => (
+    <ProjectListCard
+      project={project}
+      key={`projects-${project.id}`}
+      creatives={[]}
+    />
+  ));
 };
 
 const ProjectCreatives = ({ project, creatives }) => (
   <div>
-    <ProjectListCard project={project} />
+    <ProjectListCard project={project} creatives={creatives} />
 
     <div className="file-influencer-row">
       {creatives.map((creative) => (
-        <DownLoadedFile creative={creative} />
+        <DownLoadedFile creative={creative} key={`creative-${creative.id}`} />
       ))}
     </div>
 
-    <Link to={routeConstants.allCreativesLists}>
-      <div className="mt-30">
-        <p className="view-title">
-          View all creatives <RightOutlined />
-        </p>
-      </div>
-    </Link>
+    {creatives.length ? (
+      <Link to={routeConstants.allCreativesLists}>
+        <div className="mt-30">
+          <p className="view-title">
+            View all creatives <RightOutlined />
+          </p>
+        </div>
+      </Link>
+    ) : null}
   </div>
 );
 

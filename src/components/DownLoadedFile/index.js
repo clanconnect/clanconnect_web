@@ -30,7 +30,9 @@ const DownLoadedFile = ({ creative = {} }) => {
         </div>
         <p className="date-box">
           <CalendarOutlined />
-          <span className="date-text">{creative.createdAt}</span>
+          <span className="date-text">
+            {new Date(creative.createdAt).toISOString().split("T")[0]}
+          </span>
         </p>
       </div>
     </div>

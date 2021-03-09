@@ -1,14 +1,16 @@
 import React from "react";
 import "./styles.scss";
-import CreativeUploadModal from "../InfluencerUploadModal";
+import InfluencerUploadModal from "../InfluencerUploadModal";
 
 const StatusBasedActions = {
-  ongoing: (project) => (
+  ongoing: (project, creatives) => (
     <div className="brand-list-btn">
-      <CreativeUploadModal
+      <InfluencerUploadModal
         btnText={"Upload Creative"}
         style={`view-btn`}
         creativeUploads
+        project={project}
+        creatives={creatives}
       />
     </div>
   ),
@@ -19,7 +21,7 @@ const StatusBasedActions = {
     </div>
   ),
 };
-const ProjectListCard = ({ project, disableAction }) => {
+const ProjectListCard = ({ project, disableAction, creatives }) => {
   return (
     <div className="brand-list">
       <div className="brand-list-img">
@@ -31,8 +33,8 @@ const ProjectListCard = ({ project, disableAction }) => {
         </div>
 
         {!disableAction && StatusBasedActions[project.status]
-          ? StatusBasedActions[project.status](project)
-          : StatusBasedActions["default"](project)}
+          ? StatusBasedActions[project.status](project, creatives || [])
+          : StatusBasedActions["default"](project, creatives || [])}
       </div>
     </div>
   );

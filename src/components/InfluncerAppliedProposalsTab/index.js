@@ -14,7 +14,11 @@ const AvailableTabs = [
 
 const ProjectList = (projects) => {
   return projects.map((project) => (
-    <ProjectListCard project={project} disableAction />
+    <ProjectListCard
+      project={project}
+      disableAction
+      key={`projects-${project.id}`}
+    />
   ));
 };
 
