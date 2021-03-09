@@ -5,6 +5,7 @@ import proposalsSaga from "./brands/proposals/sagas";
 import creativeSaga from "./brands/creatives/sagas";
 import commentSaga from "./brands/comments/sagas";
 import creatorProjectSagas from "./creators/projects/sagas";
+import creatorCreativesSagas from "./creators/creatives/sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
     fork(creativeSaga),
     fork(commentSaga),
     fork(creatorProjectSagas),
+    fork(creatorCreativesSagas),
   ]);
 }

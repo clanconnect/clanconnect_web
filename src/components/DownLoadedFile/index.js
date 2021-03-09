@@ -1,36 +1,36 @@
-import React, { useState } from 'react';
-import { Badge, Checkbox } from 'antd';
-import { CalendarOutlined } from '@ant-design/icons';
+import React from "react";
+import { CalendarOutlined } from "@ant-design/icons";
 
-import CreativeModal from '../CreativeModal';
-import download from 'assets/images/download.svg';
-import fullScreen from 'assets/images/full-screen.svg';
-import chat from 'assets/images/chat.svg';
-import demoImg from 'assets/images/project1.jpg';
+import download from "assets/images/download.svg";
 
-import './styles.scss';
+import "./styles.scss";
 
-const DownLoadedFile = ({ fileData }) => {
+const DownLoadedFile = ({ creative = {} }) => {
+  const media = creative.media ? creative.media[0] : undefined;
+  const imageUrl = `${process.env.REACT_APP_MEDIA_BASE_URL}/${
+    media ? media.slug : ""
+  }`;
+
   return (
-    <div className='influncer-file-container'>
-      <div className='influncer-file-subcontainer'>
-        <div className='img-box-download'>
-          <img src={fileData.demoImag} alt='' className='full-img' />
-          <div className='chat-icon'>
-            <CreativeModal src={chat} className='icons-custom' />
+    <div className="influncer-file-container">
+      <div className="influncer-file-subcontainer">
+        <div className="img-box-download">
+          <img src={imageUrl} alt="" className="full-img" />
+          <div className="chat-icon">
+            {/* <CreativeModal src={chat} className="icons-custom" /> */}
           </div>
-          <div className='icons-row'>
-            <CreativeModal
+          <div className="icons-row">
+            {/* <CreativeModal
               src={fullScreen}
               className='icons-custom'
               influencerStatus
-            />
-            <img src={download} alt='' className='icons-custom' />
+            /> */}
+            <img src={download} alt="" className="icons-custom" />
           </div>
         </div>
-        <p className='date-box'>
+        <p className="date-box">
           <CalendarOutlined />
-          <span className='date-text'>{fileData.date}</span>
+          <span className="date-text">{creative.createdAt}</span>
         </p>
       </div>
     </div>

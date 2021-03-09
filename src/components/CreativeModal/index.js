@@ -1,28 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import VideoPlayer from 'react-player';
-import { Modal, Menu, Dropdown, Carousel, Tag } from 'antd';
+import VideoPlayer from "react-player";
+import { Modal, Menu, Dropdown, Carousel, Tag } from "antd";
 import {
   DownOutlined,
   UpOutlined,
   RightOutlined,
   LeftOutlined,
-} from '@ant-design/icons';
-import CommentBox from '../CommentBox';
-import AttachmentFileCard from '../AttachmentFileCard';
-import UploadDocumentModal from '../BrandUploadDocumentModal';
-import CustomScroll from '../CustomScroll';
-import Videojs from '../Videojs';
-import apiConstant from 'common/apiConstant';
+} from "@ant-design/icons";
+import CommentBox from "../CommentBox";
+import AttachmentFileCard from "../AttachmentFileCard";
+import UploadDocumentModal from "../BrandUploadDocumentModal";
+import apiConstant from "common/apiConstant";
 
-import demoImag from 'assets/images/project1.jpg';
-import download from 'assets/images/download.svg';
-import paperclip from 'assets/images/paperclip.svg';
-import demoImg from 'assets/images/project1.jpg';
-import infImg from 'assets/images/influencer.jpg';
+import download from "assets/images/download.svg";
+import paperclip from "assets/images/paperclip.svg";
+import demoImg from "assets/images/project1.jpg";
 
-import './styles.scss';
+import "./styles.scss";
 
 const CreativeModal = ({
   src,
@@ -37,21 +33,21 @@ const CreativeModal = ({
   const [visible, setVisible] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const poster = 'http://www.example.com/path/to/video_poster.jpg';
+  const poster = "http://www.example.com/path/to/video_poster.jpg";
   const slider = useRef(null);
   const { commentData, meta } = useSelector((store) => store.comments);
 
   const menu = (
     <Menu>
-      <Menu.Item key='0'>
-        <div className='flex flex-column'>
-          <label className='flex justify-between items-center mb-10'>
+      <Menu.Item key="0">
+        <div className="flex flex-column">
+          <label className="flex justify-between items-center mb-10">
             <span>Approved</span>
-            <input type='radio' name='status' value='approved' />
+            <input type="radio" name="status" value="approved" />
           </label>
-          <label className='flex justify-between items-center mb-10'>
+          <label className="flex justify-between items-center mb-10">
             <span>Reject</span>
-            <input type='radio' name='status' value='reject' />
+            <input type="radio" name="status" value="reject" />
           </label>
         </div>
       </Menu.Item>
@@ -86,16 +82,16 @@ const CreativeModal = ({
   return (
     <>
       {versionTrue ? (
-        <div className='version-text' onClick={() => setVisible(true)}>
-          <img src={demoImg} width='80' height='80' className='version-img' />
+        <div className="version-text" onClick={() => setVisible(true)}>
+          <img src={demoImg} width="80" height="80" className="version-img" />
           <span>
             <span className={className}>4 versions</span>
-            <RightOutlined className='ml-4' />
+            <RightOutlined className="ml-4" />
           </span>
         </div>
       ) : (
         <img
-          alt=''
+          alt=""
           onClick={() => {
             setVisible(true);
             getComments();
@@ -111,21 +107,21 @@ const CreativeModal = ({
         onCancel={() => closeModal(false)}
         width={1100}
         style={{ top: 40 }}
-        className='custom-modal'
+        className="custom-modal"
       >
-        <div className='creative-modal'>
-          <div className='creative-modal-header flex justify-between'>
-            <p className='title'>{creativeData.user.name}</p>
-            <div className=''>
+        <div className="creative-modal">
+          <div className="creative-modal-header flex justify-between">
+            <p className="title">{creativeData?.user.name}</p>
+            <div className="">
               {influencerStatus ? (
                 <div>
                   <span>Status: </span>
-                  <button className='bg-green-outline'>Approved</button>
+                  <button className="bg-green-outline">Approved</button>
                 </div>
               ) : (
-                <Dropdown overlay={menu} trigger={['click']}>
+                <Dropdown overlay={menu} trigger={["click"]}>
                   <a
-                    className='ant-dropdown-link'
+                    className="ant-dropdown-link"
                     onClick={(e) => e.preventDefault()}
                   >
                     Select a status <DownOutlined />
@@ -134,30 +130,30 @@ const CreativeModal = ({
               )}
             </div>
           </div>
-          <div className='creative-modal-body'>
-            <div className='flex mobile-section'>
-              <div className='carousal-section'>
+          <div className="creative-modal-body">
+            <div className="flex mobile-section">
+              <div className="carousal-section">
                 <LeftOutlined
                   onClick={() => slider.current.prev()}
-                  className='slider-left-icon'
+                  className="slider-left-icon"
                 />
                 <Carousel afterChange={onChange} ref={slider}>
                   {creativeData.creatives &&
                     creativeData.creatives.map((item, i) => {
                       return item.media.map((img, index) => {
                         return (
-                          <div className='slider-box'>
-                            <Tag color='cyan'>{img.versionTag}</Tag>
-                            {img.mimeType.includes('image') ? (
+                          <div className="slider-box">
+                            <Tag color="cyan">{img.versionTag}</Tag>
+                            {img.mimeType.includes("image") ? (
                               <img
                                 src={apiConstant.MEDIA_URL + img.slug}
-                                className='contentStyle'
+                                className="contentStyle"
                               />
                             ) : (
                               <VideoPlayer
                                 url={apiConstant.MEDIA_URL + img.slug}
                                 poster={poster}
-                                className='video-contentStyle'
+                                className="video-contentStyle"
                                 onPause={pauseVideo}
                                 onPlay={playVideo}
                                 playing={playing}
@@ -166,8 +162,8 @@ const CreativeModal = ({
                             )}
                             <img
                               src={download}
-                              alt=''
-                              className='icons-custom cursor-pointer'
+                              alt=""
+                              className="icons-custom cursor-pointer"
                             />
                           </div>
                         );
@@ -204,17 +200,17 @@ const CreativeModal = ({
                 </Carousel>
                 <RightOutlined
                   onClick={() => slider.current.next()}
-                  className='slider-right-icon'
+                  className="slider-right-icon"
                 />
               </div>
-              <div className='comment-section'>
-                <div className='flex justify-between items-center'>
-                  <p className='view-title' onClick={showAttachFiles}>
-                    View Attachments{' '}
+              <div className="comment-section">
+                <div className="flex justify-between items-center">
+                  <p className="view-title" onClick={showAttachFiles}>
+                    View Attachments{" "}
                     {showFiles ? (
-                      <UpOutlined className='ml-4' />
+                      <UpOutlined className="ml-4" />
                     ) : (
-                      <DownOutlined className='ml-4' />
+                      <DownOutlined className="ml-4" />
                     )}
                   </p>
 

@@ -5,8 +5,9 @@ import proposals from "./brands/proposals/reducer";
 import creatives from "./brands/creatives/reducer";
 import comments from "./brands/comments/reducer";
 import CreatorProjects from "./creators/projects/reducers";
+import CreatorCreatives from "./creators/creatives/reducers";
 
-export default (reducers) =>
+export default () =>
   combineReducers({
     media,
     projects,
@@ -16,4 +17,5 @@ export default (reducers) =>
 
     // Creator's Reducers
     CreatorProjects,
+    CreatorCreatives,
   });
