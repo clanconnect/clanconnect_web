@@ -17,10 +17,17 @@ export function* fetchIndex({ payload }) {
   }
 }
 
-export function* add({ payload: { body, path, query } }) {
-  console.log("payload ===> ", body, path, query);
-  const res = yield call(CreativeService.addNew, { body, path, query });
-  console.log(res);
+export function* add({
+  payload: { body, path, query },
+  onSuccess,
+  selectedStatus,
+}) {
+  yield call(CreativeService.addNew, { body, path, query });
+  if (onSuccess) yield onSuccess();
+  yield put({
+    type: ACTIONS.GET_INDEX,
+    payload: { query: { status: selectedStatus } },
+  });
 }
 
 export default function* creatorCreativesSagas() {

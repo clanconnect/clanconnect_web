@@ -33,6 +33,7 @@ const ShowUploadConsentView = ({ uploadNewFile, handleUploadNewFile }) => {
 };
 
 const UploadNewCreatives = ({
+  onCancel,
   selectedCreative,
   files,
   setFiles,
@@ -81,9 +82,11 @@ const UploadNewCreatives = ({
             onClick={handleUpload}
             disabled={files.length < 1}
           >
-            Send
+            Proceed
           </button>
-          <button className="btn-cancel">Cancel</button>
+          <button className="btn-cancel" onClick={onCancel}>
+            Cancel
+          </button>
         </div>
       </div>
     </>
@@ -104,6 +107,7 @@ const InfluencerUploadModal = ({
   const [files, setFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
   const [selectedCreative, setSelectedCreative] = useState({});
+  const [fileUploadStage, setFileUploadStage] = useState(0);
 
   useEffect(() => {
     const progress = {};
@@ -117,6 +121,7 @@ const InfluencerUploadModal = ({
     setUploadNewFile(value);
     setShowOldFile(false);
     setShowFile(false);
+    setFileUploadStage(0);
   };
 
   const showUploadFilesProgress = (value) => {
@@ -129,10 +134,13 @@ const InfluencerUploadModal = ({
     setUploadNewFile("upload new");
   };
 
-  const closeModal = (val) => {
-    setVisible(val);
+  const onCancel = () => {
+    setVisible(false);
+    setFiles([]);
     setUploadNewFile("");
     setShowOldFile(false);
+    setShowFile(false);
+    setFileUploadStage(0);
   };
 
   const updateProgress = (fileUid, progress) => {
@@ -140,7 +148,11 @@ const InfluencerUploadModal = ({
   };
 
   const handleUpload = () => {
-    setShowFile(true);
+    if (fileUploadStage == 0) {
+      setShowFile(true);
+      setFileUploadStage(1);
+      return;
+    }
     if (files.length === 0) return;
 
     MediaService.uploadMultiple(files, updateProgress)
@@ -150,7 +162,12 @@ const InfluencerUploadModal = ({
             body: { mediaId: media.id, projectId: project.id },
           };
           if (uploadNewFile === "upload new") {
-            dispatch({ type: ACTIONS.ADD, payload });
+            dispatch({
+              type: ACTIONS.ADD,
+              payload,
+              onSuccess: onCancel,
+              selectedStatus: creatives[0].status,
+            });
           }
         }
       })
@@ -190,7 +207,7 @@ const InfluencerUploadModal = ({
     title: ModalTitle,
     visible,
     onOk: () => setVisible(false),
-    onCancel: () => closeModal(false),
+    onCancel: () => onCancel(false),
     className: "influencer-upload-modal",
     centered: true,
     width: 700,
@@ -217,6 +234,7 @@ const InfluencerUploadModal = ({
 
         {uploadNewFile === "upload new" &&
           UploadNewCreatives({
+            onCancel,
             setFiles,
             handleUpload,
             showFile,
