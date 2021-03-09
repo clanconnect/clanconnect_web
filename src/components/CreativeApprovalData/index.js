@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Tabs } from 'antd';
 
 import InfluncerFile from '../InfluncerFile';
@@ -19,6 +20,7 @@ const CreativeApprovalData = ({
   creativeDetails,
 }) => {
   const { TabPane } = Tabs;
+  let { id } = useParams();
   const dispatch = useDispatch();
   const [showSelectAllActive, setShowSelectAllActive] = useState(false);
   const [checkedArray, setCheckedArray] = useState([]);
@@ -38,7 +40,7 @@ const CreativeApprovalData = ({
       include: 'media,user',
       status: 'sent',
     };
-    dispatch(getCreativesAction({ params }));
+    dispatch(getCreativesAction({ params, id }));
   }, []);
 
   return (

@@ -3,9 +3,9 @@ import actionConstants from './actions';
 import { getProjectsApi } from 'services/brands';
 import ProjectDetails from 'containers/ProjectDetails';
 
-export function* getProjects(payload) {
+export function* getProjects(action) {
   try {
-    const response = yield call(getProjectsApi);
+    const response = yield call(getProjectsApi, action.payload);
     if (response.success) {
       yield put({
         type: actionConstants.SET_STATE,

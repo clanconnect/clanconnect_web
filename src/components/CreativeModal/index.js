@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import VideoPlayer from 'react-player';
 import { Modal, Menu, Dropdown, Carousel, Tag } from 'antd';
@@ -12,15 +13,13 @@ import {
 import CommentBox from '../CommentBox';
 import AttachmentFileCard from '../AttachmentFileCard';
 import UploadDocumentModal from '../BrandUploadDocumentModal';
-import CustomScroll from '../CustomScroll';
-import Videojs from '../Videojs';
-import apiConstant from 'common/apiConstant';
 
 import demoImag from 'assets/images/project1.jpg';
 import download from 'assets/images/download.svg';
 import paperclip from 'assets/images/paperclip.svg';
 import demoImg from 'assets/images/project1.jpg';
 import infImg from 'assets/images/influencer.jpg';
+import { creativeUpdateStatusAction } from 'redux/brands/creatives/actions';
 
 import './styles.scss';
 
@@ -34,28 +33,59 @@ const CreativeModal = ({
   setPage,
   influncerName,
 }) => {
+  const dispatch = useDispatch();
+  let { id } = useParams();
   const [visible, setVisible] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
   const [playing, setPlaying] = useState(false);
   const poster = 'http://www.example.com/path/to/video_poster.jpg';
   const slider = useRef(null);
 
-  const menu = (
-    <Menu>
-      <Menu.Item key='0'>
-        <div className='flex flex-column'>
-          <label className='flex justify-between items-center mb-10'>
-            <span>Approved</span>
-            <input type='radio' name='status' value='approved' />
-          </label>
-          <label className='flex justify-between items-center mb-10'>
-            <span>Reject</span>
-            <input type='radio' name='status' value='reject' />
-          </label>
-        </div>
-      </Menu.Item>
-    </Menu>
-  );
+  const menu = (status) => {
+    console.log(status, 'status');
+    return (
+      <Menu>
+        <Menu.Item key='accepted'>
+          <div className='flex flex-column'>
+            <label className='flex justify-between items-center mb-10'>
+              <span>Approved</span>
+              <input
+                type='radio'
+                name='status'
+                value='accepted'
+                onChange={(e) => handleMenuClick(e.target.value)}
+                checked={status === 'accepted'}
+              />
+            </label>
+          </div>
+        </Menu.Item>
+        <Menu.Item key='rejected'>
+          <div className='flex flex-column'>
+            <label className='flex justify-between items-center mb-10'>
+              <span>Rejected</span>
+              <input
+                type='radio'
+                name='status'
+                value='rejected'
+                checked={status === 'rejected'}
+                onChange={(e) => handleMenuClick(e.target.value)}
+              />
+            </label>
+          </div>
+        </Menu.Item>
+      </Menu>
+    );
+  };
+
+  const handleMenuClick = (value) => {
+    dispatch(
+      creativeUpdateStatusAction({
+        status: value,
+        projectId: id,
+        creativeId: creative.id,
+      })
+    );
+  };
 
   function onChange(a, b, c) {
     console.log(a, b, c);
@@ -121,7 +151,7 @@ const CreativeModal = ({
                   <button className='bg-green-outline'>Approved</button>
                 </div>
               ) : (
-                <Dropdown overlay={menu} trigger={['click']}>
+                <Dropdown overlay={menu(creative.status)} trigger={['click']}>
                   <a
                     className='ant-dropdown-link'
                     onClick={(e) => e.preventDefault()}
@@ -140,18 +170,18 @@ const CreativeModal = ({
                   className='slider-left-icon'
                 />
                 <Carousel afterChange={onChange} ref={slider}>
-                  {creative.media.map((img, index) => {
+                  {creative.media.map((media) => {
                     return (
                       <div className='slider-box'>
-                        <Tag color='cyan'>{img.versionTag}</Tag>
-                        {img.mimeType.includes('image') ? (
+                        <Tag color='cyan'>{media.versionTag}</Tag>
+                        {media.mimeType.includes('image') ? (
                           <img
-                            src={apiConstant.MEDIA_URL + img.slug}
+                            src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${media.slug}`}
                             className='contentStyle'
                           />
                         ) : (
                           <VideoPlayer
-                            url={apiConstant.MEDIA_URL + img.slug}
+                            url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media.slug}`}
                             poster={poster}
                             className='video-contentStyle'
                             onPause={pauseVideo}
