@@ -15,20 +15,10 @@ import moment from 'moment';
 
 import './styles.scss';
 
-const InfluncerFile = ({
-  influncerNameData,
-  showSelectAllActive,
-  allChecked,
-  creativeDetails,
-}) => {
-  const [page, setPage] = useState(1);
+const InfluncerFile = ({ showSelectAllActive, creativeDetails }) => {
   const dispatch = useDispatch();
-
+  const [selectedCreatives, setSelectedCreatives] = useState([]);
   const poster = 'http://www.example.com/path/to/video_poster.jpg';
-
-  // const getComments = (id) => {
-
-  // };
 
   return creativeDetails
     ? creativeDetails.map((data, index) => {
@@ -44,13 +34,13 @@ const InfluncerFile = ({
                       {item.media[0].mimeType &&
                       item.media[0]?.mimeType.includes('image') ? (
                         <img
-                          src={apiConstant.MEDIA_URL + item?.media[0]?.slug}
+                          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${item?.media[0]?.slug}`}
                           alt=''
                           className='full-img'
                         />
                       ) : (
                         <VideoPlayer
-                          url={apiConstant.MEDIA_URL + item?.media[0]?.slug}
+                          url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${item?.media[0]?.slug}`}
                           poster={poster}
                           className='full-img full-video'
                           controls={true}

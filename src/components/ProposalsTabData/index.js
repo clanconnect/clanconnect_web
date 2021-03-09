@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Tabs } from 'antd';
+import { useParams } from 'react-router-dom';
 
 import BrandListCard from '../BrandListCard';
 import img1 from 'assets/images/inf1.png';
@@ -17,13 +18,14 @@ const ProposalsTabData = ({
 }) => {
   const { TabPane } = Tabs;
   const dispatch = useDispatch();
+  let { id } = useParams();
 
   useEffect(() => {
     let params = {
       include: 'user',
       status: 'sent',
     };
-    dispatch(getProposalsAction({ params }));
+    dispatch(getProposalsAction({ params, id }));
   }, []);
 
   //console.log(proposalDetails, 'user');

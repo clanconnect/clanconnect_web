@@ -6,9 +6,11 @@ const apiConstant = {
   GET_PROJECT_BY_ID: 'brands/projects/:id',
   GET_PROPOSALS: '/brands/projects/:id/proposals',
   GET_CREATIVES: '/brands/projects/:id/creatives',
-  MEDIA_URL: 'https://clanconnect-media-bucket.s3.amazonaws.com/img_medium/',
   GET_COMMENTS: 'brands/creatives/:id/comments?',
   POST_COMMENTS: '/brands/creatives/:id/comments',
+  CREATIVE_UPDATE_STATUS:
+    'brands/projects/:projectId/creatives/:creativeId/status',
+  CREATIVE_BULK_UPDATE: '/brands/projects/:projectId/creatives/bulk-update',
 };
 
 export default apiConstant;

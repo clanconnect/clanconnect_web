@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Header from 'components/DemoHeader';
 import SideNav from 'components/DemoSideNav';
 import Breadcrumb from 'components/Breadcrumb';
@@ -9,13 +10,14 @@ import CreativeApprovalData from 'components/CreativeApprovalData';
 import { getProjectsAction } from 'redux/brands/projects/actions';
 import { getProposalsAction } from 'redux/brands/proposals/actions';
 import { getCreativesAction } from 'redux/brands/creatives/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { myTabs } from './dataManager';
 
 import './styles.scss';
-import { useDispatch, useSelector } from 'react-redux';
 
 const ProjectDetails = (props) => {
+  let { id } = useParams();
   const dispatch = useDispatch();
   const { projectDetail } = useSelector((store) => store.projects);
   const { proposalDetails } = useSelector((store) => store.proposals);
@@ -41,7 +43,7 @@ const ProjectDetails = (props) => {
         include: 'user',
         status: val,
       };
-      dispatch(getProposalsAction(params));
+      dispatch(getProposalsAction({ params, id }));
     }
   };
 
@@ -53,7 +55,10 @@ const ProjectDetails = (props) => {
   };
 
   useEffect(() => {
-    dispatch(getProjectsAction());
+    let params = {
+      include: 'stats',
+    };
+    dispatch(getProjectsAction({ params, id }));
   }, []);
 
   const getProposals = (status) => {
@@ -61,7 +66,7 @@ const ProjectDetails = (props) => {
       include: 'user',
       status,
     };
-    dispatch(getProposalsAction({ params }));
+    dispatch(getProposalsAction({ params, id }));
   };
 
   const getCreatives = (status) => {
@@ -69,7 +74,7 @@ const ProjectDetails = (props) => {
       include: 'media,user',
       status,
     };
-    dispatch(getCreativesAction({ params }));
+    dispatch(getCreativesAction({ params, id }));
   };
 
   return (
@@ -100,6 +105,7 @@ const ProjectDetails = (props) => {
                 <SnapshotTabData
                   handleTabs={handleTabs}
                   handleCreativeTabs={handleCreativeTabs}
+                  projectDetail={projectDetail}
                 />
               </div>
             )}

@@ -6,7 +6,7 @@ import { setState } from 'redux/media/actions';
 export function* getProposals(action) {
   try {
     const response = yield call(getProposalsAPI, action.payload);
-
+    console.log(action.payload, 'action.payload');
     if (response.success) {
       yield put({
         type: actionConstants.SET_STATE,
