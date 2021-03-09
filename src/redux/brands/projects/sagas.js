@@ -1,7 +1,6 @@
-import { all, takeLatest, put, call } from 'redux-saga/effects';
-import actionConstants from './actions';
-import { getProjectsApi } from 'services/brands';
-import ProjectDetails from 'containers/ProjectDetails';
+import { all, takeLatest, put, call } from "redux-saga/effects";
+import actionConstants from "./actions";
+import { getProjectsApi } from "services/brands";
 
 export function* getProjects(action) {
   try {

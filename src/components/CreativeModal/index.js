@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import VideoPlayer from "react-player";

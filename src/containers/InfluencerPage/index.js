@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import Header from 'components/DemoHeader';
-import SideNav from 'components/DemoSideNav';
-import LineHeading from 'components/LineHeading';
-import InfluncerAppliedProposalsTab from 'components/InfluncerAppliedProposalsTab';
-import InfluncerCreativeApprovalTab from 'components/InfluncerCreativeApprovalTab';
+import React, { useState } from "react";
+import Header from "components/DemoHeader";
+import SideNav from "components/DemoSideNav";
+import LineHeading from "components/LineHeading";
+import InfluncerAppliedProposalsTab from "components/InfluncerAppliedProposalsTab";
+import InfluncerCreativeApprovalTab from "components/InfluncerCreativeApprovalTab";
 
-import { myTabs } from './dataManager';
+import { myTabs } from "./dataManager";
 
-import './styles.scss';
+import "./styles.scss";
 
 const InfluencerPage = (props) => {
-  const [activeTab, setActiveTab] = useState('Applied Proposals');
+  const [activeTab, setActiveTab] = useState("Applied Proposals");
 
   const handleActiveTab = (index) => {
     setActiveTab(index);
   };
 
   return (
-    <div className='main-wrapper-influncer'>
+    <div className="main-wrapper-influncer">
       <Header />
-      <div className='flex top-space-commom'>
+      <div className="flex top-space-commom">
         <SideNav />
-        <div className='content-wrapper'>
-          <LineHeading title='Invites' />
-          <div className='tabs-container'>
-            <div className='con-mb'>
+        <div className="content-wrapper">
+          <LineHeading title="Invites" />
+          <div className="tabs-container">
+            <div className="con-mb">
               {myTabs.map((tab, index) => (
                 <button
                   className={`tabs-btn ${
-                    activeTab === tab.name ? 'active-tab' : null
+                    activeTab === tab.name ? "active-tab" : null
                   }`}
                   onClick={() => handleActiveTab(tab.name)}
                 >
@@ -37,13 +37,13 @@ const InfluencerPage = (props) => {
               ))}
             </div>
 
-            {activeTab == 'Applied Proposals' && (
-              <div className='flex justify-between mobile-res'>
+            {activeTab === "Applied Proposals" && (
+              <div className="flex justify-between mobile-res">
                 <InfluncerAppliedProposalsTab />
               </div>
             )}
 
-            {activeTab == 'Creatives Approval' && (
+            {activeTab === "Creatives Approval" && (
               <InfluncerCreativeApprovalTab />
             )}
           </div>

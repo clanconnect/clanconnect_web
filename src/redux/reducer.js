@@ -7,7 +7,7 @@ import comments from "./brands/comments/reducer";
 import CreatorProjects from "./creators/projects/reducers";
 import CreatorCreatives from "./creators/creatives/reducers";
 
-export default () =>
+const func = () =>
   combineReducers({
     media,
     projects,
@@ -19,3 +19,5 @@ export default () =>
     CreatorProjects,
     CreatorCreatives,
   });
+
+export default func;

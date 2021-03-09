@@ -1,11 +1,12 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .img-box-download {
   // width: 20%;
   position: relative;
   .full-img {
     width: 100%;
+    height: 250px;
   }
 }
 

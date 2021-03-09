@@ -1,14 +1,16 @@
 import React from "react";
 import { CalendarOutlined } from "@ant-design/icons";
-
+import InfluencerCreativeModal from "../InfluencerCreativeModal";
 import download from "assets/images/download.svg";
+import fullScreen from "assets/images/full-screen.svg";
+import chat from "assets/images/chat.svg";
 
 import "./styles.scss";
 
-const DownLoadedFile = ({ creative = {} }) => {
+const DownLoadedFile = ({ creative = {}, project }) => {
   const media = creative.media ? creative.media[0] : undefined;
   const imageUrl = `${process.env.REACT_APP_IMAGE_BASE_URL}/${
-    media ? media.slug : ""
+    media ? media.slug : "default"
   }`;
 
   return (
@@ -17,14 +19,20 @@ const DownLoadedFile = ({ creative = {} }) => {
         <div className="img-box-download">
           <img src={imageUrl} alt="" className="full-img" />
           <div className="chat-icon">
-            {/* <CreativeModal src={chat} className="icons-custom" /> */}
+            <InfluencerCreativeModal
+              src={chat}
+              project={project}
+              className="icons-custom"
+              creative={creative}
+            />
           </div>
           <div className="icons-row">
-            {/* <CreativeModal
+            <InfluencerCreativeModal
               src={fullScreen}
-              className='icons-custom'
-              influencerStatus
-            /> */}
+              project={project}
+              className="icons-custom"
+              creative={creative}
+            />
             <img src={download} alt="" className="icons-custom" />
           </div>
         </div>

@@ -26,7 +26,11 @@ const ProjectCreatives = ({ project, creatives }) => (
 
     <div className="file-influencer-row">
       {creatives.map((creative) => (
-        <DownLoadedFile creative={creative} key={`creative-${creative.id}`} />
+        <DownLoadedFile
+          creative={creative}
+          key={`creative-${creative.id}`}
+          project={project}
+        />
       ))}
     </div>
 
