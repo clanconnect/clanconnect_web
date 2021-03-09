@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import { Tabs } from "antd";
-import BrandListCard from "../BrandListCard";
+import ProjectListCard from "../ProjectListCard";
 import { connect } from "react-redux";
 import { ACTIONS } from "redux/creators/projects/actions";
 
@@ -14,12 +14,7 @@ const AvailableTabs = [
 
 const ProjectList = (projects) => {
   return projects.map((project) => (
-    <BrandListCard
-      name={project.title}
-      uploadCreative
-      img={project.coverPictureUrl}
-      disabled
-    />
+    <ProjectListCard project={project} disableAction />
   ));
 };
 

@@ -4,30 +4,19 @@ import { Tabs } from "antd";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { RightOutlined } from "@ant-design/icons";
-import BrandListCard from "../BrandListCard";
+import ProjectListCard from "../ProjectListCard";
 import DownLoadedFile from "../DownLoadedFile";
 import routeConstants from "common/routeConstants";
 import { ACTIONS as PROJECT_ACTIONS } from "redux/creators/projects/actions";
 import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";
 
 const ProjectList = (projects) => {
-  return projects.map((project) => (
-    <BrandListCard
-      name={project.title}
-      uploadCreative
-      img={project.coverPictureUrl}
-      disabled
-    />
-  ));
+  return projects.map((project) => <ProjectListCard project={project} />);
 };
 
 const ProjectCreatives = ({ project, creatives }) => (
   <div>
-    <BrandListCard
-      name={project.title}
-      uploadCreative
-      img={project.coverPictureUrl}
-    />
+    <ProjectListCard project={project} />
 
     <div className="file-influencer-row">
       {creatives.map((creative) => (
