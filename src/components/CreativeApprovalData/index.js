@@ -3,7 +3,10 @@ import { useParams } from 'react-router-dom';
 import { Tabs } from 'antd';
 
 import InfluncerFile from '../InfluncerFile';
-import { getCreativesAction } from 'redux/brands/creatives/actions';
+import {
+  getCreativesAction,
+  creativeUpdateBulkAction,
+} from 'redux/brands/creatives/actions';
 
 import {
   influncerNameDataApproved,
@@ -24,9 +27,51 @@ const CreativeApprovalData = ({
   const dispatch = useDispatch();
   const [showSelectAllActive, setShowSelectAllActive] = useState(false);
   const [checkedArray, setCheckedArray] = useState([]);
+  const [selectedCreatives, setSelectedCreatives] = useState([]);
+
+  const handleSelectAll = () => {
+    const isSelected = isAllSelected();
+    const uppdatedCreative = new Set(selectedCreatives);
+    creativeDetails.forEach((data) => {
+      data.creatives.map((creative) => {
+        if (!isSelected && !uppdatedCreative.has(creative.id)) {
+          uppdatedCreative.add(creative.id);
+        } else if (isSelected && uppdatedCreative.has(creative.id)) {
+          uppdatedCreative.delete(creative.id);
+        }
+      });
+    });
+    setSelectedCreatives(Array.from(uppdatedCreative));
+  };
+
+  const isAllSelected = () => {
+    let isSelected = true;
+    if (selectedCreatives.length === 0) {
+      return false;
+    }
+    creativeDetails.forEach((data) => {
+      data.creatives.map((creative) => {
+        if (!selectedCreatives.includes(creative.id)) {
+          isSelected = false;
+        }
+      });
+    });
+    return isSelected;
+  };
 
   const onClickSelect = (value) => {
     setShowSelectAllActive(value);
+  };
+
+  const handleBulkCreatives = (status, currentStatus) => {
+    dispatch(
+      creativeUpdateBulkAction({
+        creatives: selectedCreatives,
+        status,
+        id,
+        currentStatus,
+      })
+    );
   };
 
   const handleCheckAll = () => {
@@ -38,7 +83,7 @@ const CreativeApprovalData = ({
   useEffect(() => {
     let params = {
       include: 'media,user',
-      status: 'sent',
+      status: 'pending',
     };
     dispatch(getCreativesAction({ params, id }));
   }, []);
@@ -47,109 +92,157 @@ const CreativeApprovalData = ({
     <div className='tab-creative'>
       <Tabs
         defaultActiveKey={defaultActiveKey}
-        onChange={(key) => getCreatives(key)}
+        onChange={(key) => {
+          getCreatives(key);
+          setSelectedCreatives([]);
+          setShowSelectAllActive(false);
+        }}
       >
-        <TabPane tab='Pending (22)' key='sent'>
-          <div className='btn-row'>
-            <div>
-              {showSelectAllActive ? (
-                <>
+        <TabPane tab='Pending' key='pending'>
+          {creativeDetails.length !== 0 && (
+            <div className='btn-row'>
+              <div>
+                {showSelectAllActive ? (
+                  <>
+                    <button
+                      className='outline-btn bg-green'
+                      onClick={handleSelectAll}
+                    >
+                      {isAllSelected() ? 'Deselect All' : 'Select All'}
+                    </button>
+                    <button
+                      className='outline-btn bg-green-outline'
+                      onClick={() => {
+                        onClickSelect(false);
+                        handleBulkCreatives('accepted', 'pending');
+                      }}
+                    >
+                      Approved
+                    </button>
+                    <button
+                      className='outline-btn bg-red'
+                      onClick={() => {
+                        onClickSelect(false);
+                        handleBulkCreatives('rejected', 'pending');
+                      }}
+                    >
+                      Reject
+                    </button>
+                  </>
+                ) : (
                   <button
                     className='outline-btn bg-green'
-                    onClick={handleCheckAll}
+                    onClick={() => onClickSelect(true)}
                   >
-                    Select All
+                    Select
                   </button>
-                  <button
-                    className='outline-btn bg-green-outline'
-                    onClick={() => onClickSelect(false)}
-                  >
-                    Approved
-                  </button>
-                  <button
-                    className='outline-btn bg-red'
-                    onClick={() => onClickSelect(false)}
-                  >
-                    Reject
-                  </button>
-                </>
-              ) : (
-                <button
-                  className='outline-btn bg-green'
-                  onClick={() => onClickSelect(true)}
-                >
-                  Select
-                </button>
-              )}
+                )}
+              </div>
+              {/* <button className='outline-btn bg-blue'>Done</button> */}
             </div>
-            {/* <button className='outline-btn bg-blue'>Done</button> */}
-          </div>
+          )}
           <InfluncerFile
             influncerNameData={influncerNameDataPending}
             showSelectAllActive={showSelectAllActive}
             creativeDetails={creativeDetails}
+            selectedCreatives={selectedCreatives}
+            setSelectedCreatives={setSelectedCreatives}
           />
-        </TabPane>
-        <TabPane tab='Approved (11)' key='accepted'>
-          <div className='btn-row'>
-            <div>
-              {showSelectAllActive ? (
-                <>
-                  <button className='outline-btn bg-green'>Select All</button>
-                  <button
-                    className='outline-btn bg-red'
-                    onClick={() => onClickSelect(false)}
-                  >
-                    Reject
-                  </button>
-                </>
-              ) : (
-                <button
-                  className='outline-btn bg-green'
-                  onClick={() => onClickSelect(true)}
-                >
-                  Select
-                </button>
-              )}
+          {creativeDetails.length === 0 && (
+            <div className='comment-empty '>
+              <p>No Data Available</p>
             </div>
-            {/* <button className='outline-btn bg-blue'>Done</button> */}
-          </div>
+          )}
+        </TabPane>
+        <TabPane tab='Approved' key='accepted'>
+          {creativeDetails.length !== 0 && (
+            <div className='btn-row'>
+              <div>
+                {showSelectAllActive ? (
+                  <>
+                    <button className='outline-btn bg-green'>
+                      {isAllSelected() ? 'Deselect All' : 'Select All'}
+                    </button>
+                    <button
+                      className='outline-btn bg-red'
+                      onClick={() => {
+                        onClickSelect(false);
+                        handleBulkCreatives('rejected', 'accepted');
+                      }}
+                    >
+                      Reject
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className='outline-btn bg-green'
+                    onClick={() => onClickSelect(true)}
+                  >
+                    Select
+                  </button>
+                )}
+              </div>
+              {/* <button className='outline-btn bg-blue'>Done</button> */}
+            </div>
+          )}
           <InfluncerFile
             influncerNameData={influncerNameDataApproved}
             showSelectAllActive={showSelectAllActive}
             creativeDetails={creativeDetails}
+            selectedCreatives={selectedCreatives}
+            setSelectedCreatives={setSelectedCreatives}
           />
+
+          {creativeDetails.length === 0 && (
+            <div className='comment-empty '>
+              <p>No Data Available</p>
+            </div>
+          )}
         </TabPane>
 
-        <TabPane tab='Rejected (21)' key='rejected'>
-          <div className='btn-row'>
-            <div>
-              {showSelectAllActive ? (
-                <>
-                  <button className='outline-btn bg-green'>Select All</button>
+        <TabPane tab='Rejected' key='rejected'>
+          {creativeDetails.length !== 0 && (
+            <div className='btn-row'>
+              <div>
+                {showSelectAllActive ? (
+                  <>
+                    <button className='outline-btn bg-green'>
+                      {isAllSelected() ? 'Deselect All' : 'Select All'}
+                    </button>
+                    <button
+                      className='outline-btn bg-green-outline'
+                      onClick={() => {
+                        onClickSelect(false);
+                        handleBulkCreatives('accepted', 'rejected');
+                      }}
+                    >
+                      Approved
+                    </button>
+                  </>
+                ) : (
                   <button
-                    className='outline-btn bg-green-outline'
-                    onClick={() => onClickSelect(false)}
+                    className='outline-btn bg-green'
+                    onClick={() => onClickSelect(true)}
                   >
-                    Approved
+                    Select
                   </button>
-                </>
-              ) : (
-                <button
-                  className='outline-btn bg-green'
-                  onClick={() => onClickSelect(true)}
-                >
-                  Select
-                </button>
-              )}
+                )}
+              </div>
+              {/* <button className='outline-btn bg-blue'>Done</button> */}
             </div>
-            {/* <button className='outline-btn bg-blue'>Done</button> */}
-          </div>
+          )}
           <InfluncerFile
             influncerNameData={influncerNameDataRejected}
             showSelectAllActive={showSelectAllActive}
             creativeDetails={creativeDetails}
+            selectedCreatives={selectedCreatives}
+            setSelectedCreatives={setSelectedCreatives}
           />
+          {creativeDetails.length === 0 && (
+            <div className='comment-empty '>
+              <p>No Data Available</p>
+            </div>
+          )}
         </TabPane>
       </Tabs>
     </div>

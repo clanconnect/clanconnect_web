@@ -81,7 +81,7 @@ const SnapshotTabData = ({ handleTabs, handleCreativeTabs, projectDetail }) => {
 
           <div
             className='text-center cursor-pointer'
-            onClick={() => handleCreativeTabs('sent')}
+            onClick={() => handleCreativeTabs('pending')}
           >
             <span className='title bold'>
               Pending <RightOutlined />

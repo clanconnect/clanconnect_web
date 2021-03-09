@@ -53,12 +53,9 @@ export async function creativeUpdateStatusApi(payload) {
   );
 }
 
-export async function creativesBulkUpdateApi(payload) {
+export async function creativesBulkUpdateApi({ id, status, creatives }) {
   return await axiosInstance.patch(
-    apiConstant.CREATIVE_BULK_UPDATE.replace(
-      ':projectId',
-      '5f8d3415e9dac37cb736defe'
-    ),
-    payload
+    apiConstant.CREATIVE_BULK_UPDATE.replace(':projectId', id),
+    { status, creatives }
   );
 }

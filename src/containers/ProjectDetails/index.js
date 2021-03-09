@@ -27,7 +27,9 @@ const ProjectDetails = (props) => {
   const [defaultActiveKeyProposals, setDefaultActiveKeyProposals] = useState(
     "sent"
   );
-  const [defaultActiveKeyCreative] = useState("sent");
+  const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
+    "pending"
+  );
 
   const handleActiveTab = (index) => {
     setActiveTab(index);
@@ -46,7 +48,7 @@ const ProjectDetails = (props) => {
   };
 
   const handleCreativeTabs = (val) => {
-    if (val === "sent" || val === "accepted" || val === "rejected") {
+    if (val === "pending" || val === "accepted" || val === "rejected") {
       setDefaultActiveKeyProposals(val);
       setActiveTab("Creatives Approval");
     }

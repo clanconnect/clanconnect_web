@@ -15,10 +15,27 @@ import moment from 'moment';
 
 import './styles.scss';
 
-const InfluncerFile = ({ showSelectAllActive, creativeDetails }) => {
+const InfluncerFile = ({
+  showSelectAllActive,
+  creativeDetails,
+  selectedCreatives,
+  setSelectedCreatives,
+}) => {
   const dispatch = useDispatch();
-  const [selectedCreatives, setSelectedCreatives] = useState([]);
+
   const poster = 'http://www.example.com/path/to/video_poster.jpg';
+
+  const handleSelect = (creativeId) => {
+    const uppdatedCreative = new Set(selectedCreatives);
+    if (uppdatedCreative.has(creativeId)) {
+      uppdatedCreative.delete(creativeId);
+    } else {
+      uppdatedCreative.add(creativeId);
+    }
+    setSelectedCreatives(Array.from(uppdatedCreative));
+  };
+
+  console.log(selectedCreatives, '=================');
 
   return creativeDetails
     ? creativeDetails.map((data, index) => {
@@ -27,7 +44,6 @@ const InfluncerFile = ({ showSelectAllActive, creativeDetails }) => {
             <h2 className='title'>{data.user.name}</h2>
             <div className='influncer-file-row'>
               {data.creatives.map((item, index) => {
-                console.log(item.media[0], 'line 40');
                 return item.media[0]?.mimeType ? (
                   <div className='influncer-file-container'>
                     <div className='img-box-download'>
@@ -48,7 +64,13 @@ const InfluncerFile = ({ showSelectAllActive, creativeDetails }) => {
                       )}
 
                       {showSelectAllActive ? (
-                        <Checkbox className='chat-icon'></Checkbox>
+                        <Checkbox
+                          className='chat-icon'
+                          onChange={() => {
+                            handleSelect(item.id);
+                          }}
+                          checked={selectedCreatives.includes(item.id)}
+                        ></Checkbox>
                       ) : (
                         <div className='chat-icon'>
                           <CreativeModal
