@@ -7,7 +7,7 @@ import "./styles.scss";
 
 const DownLoadedFile = ({ creative = {} }) => {
   const media = creative.media ? creative.media[0] : undefined;
-  const imageUrl = `${process.env.REACT_APP_MEDIA_BASE_URL}/${
+  const imageUrl = `${process.env.REACT_APP_IMAGE_BASE_URL}/${
     media ? media.slug : ""
   }`;
 
