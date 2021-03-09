@@ -27,6 +27,7 @@ const CommentBox = ({ creativeId }) => {
         id: creativeId,
       };
       dispatch(postCommentsAction(payload));
+      setText('');
     }
   };
 
