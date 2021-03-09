@@ -27,9 +27,7 @@ const ProjectDetails = (props) => {
   const [defaultActiveKeyProposals, setDefaultActiveKeyProposals] = useState(
     "sent"
   );
-  const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
-    "pending"
-  );
+  const [defaultActiveKeyCreative] = useState("pending");
 
   const handleActiveTab = (index) => {
     setActiveTab(index);
@@ -59,6 +57,7 @@ const ProjectDetails = (props) => {
       include: "stats",
     };
     dispatch(getProjectsAction({ params, id }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getProposals = (status) => {

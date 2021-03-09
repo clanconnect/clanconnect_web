@@ -22,6 +22,13 @@ export class CreativeService {
       body
     );
   }
+
+  static update({ query, body, path }) {
+    return api.patch(
+      `/creators/creatives/${path.id}?` + (query && qs.stringify(query)) || "",
+      body
+    );
+  }
 }
 
 export class MediaService {

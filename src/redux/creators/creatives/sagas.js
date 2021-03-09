@@ -30,9 +30,23 @@ export function* add({
   });
 }
 
+export function* update({
+  payload: { body, path, query },
+  onSuccess,
+  selectedStatus,
+}) {
+  yield call(CreativeService.update, { body, path, query });
+  if (onSuccess) yield onSuccess();
+  yield put({
+    type: ACTIONS.GET_INDEX,
+    payload: { query: { status: selectedStatus } },
+  });
+}
+
 export default function* creatorCreativesSagas() {
   yield all([
     takeLatest(ACTIONS.GET_INDEX, fetchIndex),
     takeLatest(ACTIONS.ADD, add),
+    takeLatest(ACTIONS.UPDATE, update),
   ]);
 }

@@ -172,12 +172,23 @@ const InfluencerUploadModal = ({
     MediaService.uploadMultiple(files, updateProgress)
       .then((res) => {
         for (const media of res) {
-          const payload = {
-            body: { mediaId: media.id, projectId: project.id },
-          };
-          if (uploadNewFile === "upload new") {
+          if (!selectedCreative || !selectedCreative.id) {
+            const payload = {
+              body: { mediaId: media.id, projectId: project.id },
+            };
             dispatch({
               type: ACTIONS.ADD,
+              payload,
+              onSuccess: onCancel,
+              selectedStatus: creatives[0].status,
+            });
+          } else {
+            const payload = {
+              body: { mediaId: media.id },
+              path: { id: selectedCreative.id },
+            };
+            dispatch({
+              type: ACTIONS.UPDATE,
               payload,
               onSuccess: onCancel,
               selectedStatus: creatives[0].status,
@@ -267,6 +278,7 @@ const InfluencerUploadModal = ({
             <div className="conatiner-file">
               {creatives.map((creative) => (
                 <UploadAttchmentFile
+                  key={`previous-creative-version-${creative.id}`}
                   fileName={creative.id}
                   icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
                     creative?.media[0]?.slug || "default"
