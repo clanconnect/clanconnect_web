@@ -31,7 +31,6 @@ const CreativeApprovalData = ({
     creativeDetails.forEach(({ creatives }) => {
       setCheckedArray([...checkedArray, ...creatives.map(({ id }) => id)]);
     });
-    console.log(checkedArray, 'creativeId');
   };
 
   useEffect(() => {

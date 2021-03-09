@@ -1,12 +1,12 @@
 import { all, takeLatest, put, call } from 'redux-saga/effects';
 import actionConstants from './actions';
 import { getCommentsApi, postCommentsApi } from 'services/brands';
+import { getCommentsAction } from './actions';
 
 export function* getComments(action) {
   try {
-    console.log(action.payload, 'id action');
     const response = yield call(getCommentsApi, action.payload);
-    console.log(action.payload, 'line no. 8');
+
     if (response.success) {
       yield put({
         type: actionConstants.SET_STATE,
@@ -24,6 +24,10 @@ export function* getComments(action) {
 export function* postComments(action) {
   try {
     const response = yield call(postCommentsApi, action.payload);
+
+    if (response.success) {
+      yield getComments(getCommentsAction({ page: 1, id: action.payload.id }));
+    }
   } catch (err) {
     console.log(err);
   }

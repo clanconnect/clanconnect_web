@@ -33,10 +33,9 @@ export async function getCommentsApi({ page, id }) {
   );
 }
 
-export async function postCommentsApi(payload) {
-  console.log(payload, '====++++++++++++++++++++++');
+export async function postCommentsApi({ text, id }) {
   return await axiosInstance.post(
-    apiConstant.POST_COMMENTS.replace(':id', '6043533e6d206f62c8236b71'),
-    payload
+    apiConstant.POST_COMMENTS.replace(':id', id),
+    { text }
   );
 }

@@ -100,7 +100,6 @@ const BrandCreativeTable = (props) => {
   ];
 
   const onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     setSelectedRowKeys(selectedRowKeys);
     setShowAddedRow(true);
   };

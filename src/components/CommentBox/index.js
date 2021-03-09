@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import CustomScroll from '../CustomScroll';
+import CustomScroll from '../CustomScroll/comment';
 import {
   getCommentsAction,
   postCommentsAction,
@@ -9,11 +9,12 @@ import {
 
 import './styles.scss';
 
-const CommentBox = ({ commentData, setPage }) => {
-  const { meta } = useSelector((store) => store.comments);
-  const [text, setText] = useState('');
-  const [errorState, setErrorState] = useState(false);
+const CommentBox = ({ creativeId }) => {
   const dispatch = useDispatch();
+  const { meta, commentData } = useSelector((store) => store.comments);
+  const [text, setText] = useState('');
+  const [page, setPage] = useState(1);
+  const [errorState, setErrorState] = useState(false);
 
   const handleSubmit = () => {
     if (text === '') {
@@ -23,6 +24,7 @@ const CommentBox = ({ commentData, setPage }) => {
       setErrorState(false);
       let payload = {
         text,
+        id: creativeId,
       };
       dispatch(postCommentsAction(payload));
     }
@@ -31,13 +33,20 @@ const CommentBox = ({ commentData, setPage }) => {
   const handleChange = (value) => {
     setText(value);
   };
+
+  // useEffect(() => {
+  //   dispatch(getCommentsAction({ page, id: creativeId }));
+  // }, []);
+
+  console.log(creativeId, 'commentData');
+
   return (
     <div className='comment-box'>
       <div className='comment-scroll'>
         <div className='flex justify-between'>
           <h3 className='chat-title'>Comments</h3>
         </div>
-        <CustomScroll commentData={commentData} setPage={setPage} meta={meta} />
+        <CustomScroll creativeId={creativeId} commentData={commentData} />
       </div>
 
       <textarea

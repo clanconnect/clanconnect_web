@@ -28,14 +28,15 @@ export default class CustomScroll extends React.Component {
     }, 500);
   };
 
-  componentDidMount() {
-    if (this.state.items.length === 0) {
-      this.setState({ hasMore: false });
-      this.setState({ emptystate: true });
-    }
-  }
+  // componentDidMount() {
+  //   if (this.state.items.length === 0) {
+  //     this.setState({ hasMore: false });
+  //     this.setState({ emptystate: true });
+  //   }
+  // }
 
   render() {
+    console.log(this.state.items);
     return (
       <InfiniteScroll
         dataLength={this.state.items.length}
