@@ -73,6 +73,20 @@ const CreativeModal = ({
             </label>
           </div>
         </Menu.Item>
+        <Menu.Item key='rejected'>
+          <div className='flex flex-column'>
+            <label className='flex justify-between items-center mb-10'>
+              <span>Pending</span>
+              <input
+                type='radio'
+                name='status'
+                value='pending'
+                checked={status === 'pending'}
+                onChange={(e) => handleMenuClick(e.target.value)}
+              />
+            </label>
+          </div>
+        </Menu.Item>
       </Menu>
     );
   };
