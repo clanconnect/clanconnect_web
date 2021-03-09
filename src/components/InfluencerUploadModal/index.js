@@ -4,7 +4,6 @@ import { Modal } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import UploadDocumentCard from "../UploadDocumentCard";
 import UploadAttchmentFile from "../UploadAttchmentFile";
-import pngImg from "assets/images/png.svg";
 import { connect } from "react-redux";
 import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
@@ -34,6 +33,7 @@ const ShowUploadConsentView = ({ uploadNewFile, handleUploadNewFile }) => {
 };
 
 const UploadNewCreatives = ({
+  selectedCreative,
   files,
   setFiles,
   handleUpload,
@@ -51,9 +51,10 @@ const UploadNewCreatives = ({
                 Uploading a new version for the selected creative shown below:
               </p>
               <UploadAttchmentFile
-                percenter="0"
-                fileName="attachment_name_here2.jpg"
-                icon={pngImg}
+                fileName={selectedCreative.id}
+                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
+                  selectedCreative?.media[0]?.slug || "default"
+                }`}
                 uploadedFile
               />
             </div>
@@ -102,6 +103,7 @@ const InfluencerUploadModal = ({
   const [showOldFile, setShowOldFile] = useState(false);
   const [files, setFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
+  const [selectedCreative, setSelectedCreative] = useState({});
 
   useEffect(() => {
     const progress = {};
@@ -110,15 +112,19 @@ const InfluencerUploadModal = ({
   }, [files]);
 
   const handleUploadNewFile = (value) => {
+    setSelectedCreative({});
+    setFiles([]);
     setUploadNewFile(value);
     setShowOldFile(false);
+    setShowFile(false);
   };
 
   const showUploadFilesProgress = (value) => {
     setShowFile(value);
   };
 
-  const handleOldVersionFile = () => {
+  const selectCreative = (creative) => {
+    setSelectedCreative(creative);
     setShowOldFile(true);
     setUploadNewFile("upload new");
   };
@@ -217,6 +223,7 @@ const InfluencerUploadModal = ({
             showOldFile,
             files,
             uploadProgress,
+            selectedCreative,
           })}
 
         {uploadNewFile === "upload added" && (
@@ -225,12 +232,14 @@ const InfluencerUploadModal = ({
               Please select one creative for which you want to upload a version:
             </p>
             <div className="conatiner-file">
-              {creatives.map((c) => (
+              {creatives.map((creative) => (
                 <UploadAttchmentFile
-                  fileName="attachment_name_here.jpg"
-                  icon={pngImg}
+                  fileName={creative.id}
+                  icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
+                    creative?.media[0]?.slug || "default"
+                  }`}
                   uploadedFile
-                  handleClick={handleOldVersionFile}
+                  handleClick={() => selectCreative(creative)}
                 />
               ))}
             </div>

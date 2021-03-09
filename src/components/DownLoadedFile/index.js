@@ -1,23 +1,32 @@
 import React from "react";
+import "./styles.scss";
 import { CalendarOutlined } from "@ant-design/icons";
 import InfluencerCreativeModal from "../InfluencerCreativeModal";
 import download from "assets/images/download.svg";
 import fullScreen from "assets/images/full-screen.svg";
 import chat from "assets/images/chat.svg";
-
-import "./styles.scss";
+import VideoPlayer from "react-player";
 
 const DownLoadedFile = ({ creative = {}, project }) => {
-  const media = creative.media ? creative.media[0] : undefined;
+  const media = creative.media ? creative.media[0] : {};
   const imageUrl = `${process.env.REACT_APP_IMAGE_BASE_URL}/${
-    media ? media.slug : "default"
+    media?.slug || "default"
   }`;
 
   return (
     <div className="influncer-file-container">
       <div className="influncer-file-subcontainer">
         <div className="img-box-download">
-          <img src={imageUrl} alt="" className="full-img" />
+          {media?.mimeType?.includes("image") ? (
+            // eslint-disable-next-line jsx-a11y/img-redundant-alt
+            <img src={imageUrl} alt="" className="full-img" />
+          ) : (
+            <VideoPlayer
+              url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media?.slug}`}
+              className="full-video"
+              controls={true}
+            />
+          )}
           <div className="chat-icon">
             <InfluencerCreativeModal
               src={chat}
