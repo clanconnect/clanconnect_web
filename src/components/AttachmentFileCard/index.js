@@ -40,7 +40,10 @@ const MediaIcon = (mimeType) => {
 
 const AttachmentFileCard = ({ media }) => {
   return (
-    <div className="file-card cursor-pointer">
+    <div
+      className="file-card cursor-pointer"
+      onClick={() => downloadMedia(media.slug)}
+    >
       <div className="flex ">
         <img
           src={MediaIcon(media.mimeType)}
@@ -57,12 +60,7 @@ const AttachmentFileCard = ({ media }) => {
       </div>
 
       <span className=" file-size">23 MB</span>
-      <img
-        src={download}
-        alt="download"
-        width="16"
-        onClick={() => downloadMedia(media.slug)}
-      />
+      <img src={download} alt="download" width="16" />
     </div>
   );
 };
