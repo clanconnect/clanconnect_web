@@ -3,10 +3,17 @@ import Header from 'components/DemoHeader';
 import SideNav from 'components/DemoSideNav';
 import Breadcrumb from 'components/Breadcrumb';
 import CreativeTable from 'components/CreativeTable';
+import { getAllCreativesAction } from 'redux/brands/creatives/actions';
 
 import './styles.scss';
 
 const AllCreativesListsBrand = (props) => {
+  const dispatch = useDispatch();
+  const { allCreativeDetails } = useSelector((store) => store.creatives);
+  useEffect(() => {
+    dispatch(getAllCreativesAction());
+  }, []);
+
   return (
     <div className='main-wrapper'>
       <Header />
@@ -19,7 +26,7 @@ const AllCreativesListsBrand = (props) => {
             <div>
               <h2 className='list-title'>All Creatives</h2>
             </div>
-            <CreativeTable />
+            <CreativeTable allCreativeDetails={allCreativeDetails} />
           </div>
         </div>
       </div>
