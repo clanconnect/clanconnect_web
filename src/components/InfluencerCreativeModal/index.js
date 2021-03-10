@@ -13,9 +13,9 @@ import AttachmentFileCard from "../AttachmentFileCard";
 import UploadDocumentModal from "../BrandUploadDocumentModal";
 import download from "assets/images/download.svg";
 import paperclip from "assets/images/paperclip.svg";
-import axios from "axios";
+import { downloadMedia } from "helpers";
 
-const MediaView = ({ media, downloadFile }) => {
+const MediaView = ({ media }) => {
   return (
     <div className="slider-box" key={`media-${media.id}`}>
       <Tag color="cyan">{media.versionTag}</Tag>
@@ -39,7 +39,7 @@ const MediaView = ({ media, downloadFile }) => {
         src={download}
         alt=""
         className="icons-custom cursor-pointer"
-        onClick={() => downloadFile(media.slug)}
+        onClick={() => downloadMedia(media.slug)}
       />
     </div>
   );
@@ -61,21 +61,6 @@ const InfluencerCreativeModal = ({
 
   const closeModal = (val) => {
     setVisible(false);
-  };
-
-  const downloadFile = (slug) => {
-    const url = `${
-      process.env.REACT_APP_MEDIA_ORIGINAL_URL
-    }/${slug}?${new Date().getTime()}`;
-    axios({ url, method: "GET", responseType: "blob" }).then((response) => {
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(
-        new Blob([response.data], { type: response.data.type })
-      );
-      link.setAttribute("download", "");
-      document.body.appendChild(link);
-      link.click();
-    });
   };
 
   return (
@@ -108,9 +93,7 @@ const InfluencerCreativeModal = ({
                   className="slider-left-icon"
                 />
                 <Carousel ref={slider}>
-                  {creative.media.map((media) =>
-                    MediaView({ media, downloadFile })
-                  )}
+                  {creative.media.map((media) => MediaView({ media }))}
                 </Carousel>
                 <RightOutlined
                   onClick={() => slider.current.next()}
