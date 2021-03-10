@@ -1,7 +1,7 @@
-import { all, takeLatest, put, call } from 'redux-saga/effects';
-import actionConstants from './actions';
-import { getCommentsApi, postCommentsApi } from 'services/brands';
-import { getCommentsAction } from './actions';
+import { all, takeLatest, put, call } from "redux-saga/effects";
+import actionConstants from "./actions";
+import { getCommentsApi, postCommentsApi } from "services/brands";
+import { getCommentsAction } from "./actions";
 
 export function* getComments(action) {
   try {

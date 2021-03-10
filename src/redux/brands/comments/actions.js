@@ -1,7 +1,7 @@
 const actionConstants = {
-  GET_COMMENTS: 'comments/GET_COMMENTS',
-  POST_COMMENTS: 'comments/POST_COMMENTS',
-  SET_STATE: 'comments/SET_STATE',
+  GET_COMMENTS: "comments/GET_COMMENTS",
+  POST_COMMENTS: "comments/POST_COMMENTS",
+  SET_STATE: "comments/SET_STATE",
 };
 
 export default actionConstants;
