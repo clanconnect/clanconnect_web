@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 import { ACTIONS } from "redux/creators/projects/actions";
 
 const AvailableTabs = [
-  { label: "Pending", value: "in-review" },
-  { label: "Approved", value: "ongoing" },
+  { label: "Pending", value: "sent" },
+  { label: "Approved", value: "accepted" },
   { label: "Revised Quote Requests", value: "financial-review" },
   { label: "Rejected", value: "rejected" },
 ];
@@ -32,7 +32,10 @@ const InfluncerAppliedProposalsTab = ({ list, dispatch }) => {
 
   const loadProjects = ({ status }) => {
     setProjects([]);
-    dispatch({ type: ACTIONS.GET_INDEX, payload: { query: { status } } });
+    dispatch({
+      type: ACTIONS.GET_INDEX,
+      payload: { query: { proposalStatus: status } },
+    });
   };
 
   useEffect(() => {
