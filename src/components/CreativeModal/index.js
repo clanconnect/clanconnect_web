@@ -42,7 +42,7 @@ const CreativeModal = ({
 
   useEffect(() => {
     setCreativeStatus(creative.status);
-  }, []);
+  }, [creative.status]);
 
   const menu = (status) => {
     return (
@@ -77,7 +77,7 @@ const CreativeModal = ({
             </label>
           </div>
         </Menu.Item>
-        <Menu.Item key='pending'>
+        {/* <Menu.Item key='pending'>
           <div className='flex flex-column'>
             <label className='flex justify-between items-center mb-10 cursor-pointer'>
               <span>Pending</span>
@@ -91,12 +91,13 @@ const CreativeModal = ({
               />
             </label>
           </div>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     );
   };
 
   const handleMenuClick = (value) => {
+    console.log(value, 'value');
     setCreativeStatus(value);
     dispatch(
       creativeUpdateStatusAction({

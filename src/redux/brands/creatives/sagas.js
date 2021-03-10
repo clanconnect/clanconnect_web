@@ -4,6 +4,7 @@ import {
   getCreativesAPI,
   creativeUpdateStatusApi,
   creativesBulkUpdateApi,
+  getAllCreativesApi,
 } from 'services/brands';
 import { getCreativesAction } from './actions';
 
@@ -64,10 +65,29 @@ export function* creativesBulkUpdate(action) {
   }
 }
 
+//all creative list
+export function* getAllCreatives(action) {
+  try {
+    const response = yield call(getAllCreativesApi, action.payload);
+    if (response.success) {
+      yield put({
+        type: actionConstants.SET_STATE,
+        payload: {
+          allCreativeDetails: response.data,
+          meta: response.meta,
+        },
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* proposalsSaga() {
   yield all([
     takeLatest(actionConstants.GET_CREATIVES, getCreatives),
     takeLatest(actionConstants.CREATIVE_UPDATE_STATUS, updateCreativeStatus),
     takeLatest(actionConstants.CREATIVE_BULK_UPDATE, creativesBulkUpdate),
+    takeLatest(actionConstants.GET_ALL_CREATIVES, getAllCreatives),
   ]);
 }

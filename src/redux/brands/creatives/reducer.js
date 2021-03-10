@@ -2,6 +2,8 @@ import actions from './actions';
 
 const initialState = {
   creativeDetails: [],
+  allCreativeDetails: [],
+  meta: [],
 };
 
 export default function creativesReducer(state = initialState, action) {

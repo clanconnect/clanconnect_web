@@ -26,7 +26,7 @@ const CreativeTable = (props) => {
     {
       title: 'Posts',
       dataIndex: 'posts',
-      render: () => <CreativeModal versionTrue className='version-title' />,
+      // render: () => <CreativeModal versionTrue className='version-title' />,
     },
 
     {
