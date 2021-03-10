@@ -62,14 +62,9 @@ export async function creativesBulkUpdateApi({ id, status, creatives }) {
 
 export async function getAllCreativesApi(payload) {
   return await axiosInstance.get(
-    apiConstant.GET_ALL_CREATIVES.replace(
-      ':projectId',
-      '5f8d3415e9dac37cb736defe'
-    ),
+    apiConstant.GET_ALL_CREATIVES.replace(':projectId', payload.id),
     {
-      params: {
-        include: 'media,user',
-      },
+      params: payload.params,
     }
   );
 }

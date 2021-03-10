@@ -7,12 +7,17 @@ import { getAllCreativesAction } from 'redux/brands/creatives/actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './styles.scss';
+import { useParams } from 'react-router-dom';
 
 const AllCreativesListsBrand = (props) => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const { allCreativeDetails } = useSelector((store) => store.creatives);
+  const { allCreativeDetails, meta } = useSelector((store) => store.creatives);
   useEffect(() => {
-    dispatch(getAllCreativesAction());
+    let params = {
+      include: 'media,user,project',
+    };
+    dispatch(getAllCreativesAction({ params, id: '5f8d3415e9dac37cb736defe' }));
   }, []);
 
   return (
@@ -27,7 +32,10 @@ const AllCreativesListsBrand = (props) => {
             <div>
               <h2 className='list-title'>All Creatives</h2>
             </div>
-            <CreativeTable allCreativeDetails={allCreativeDetails} />
+            <CreativeTable
+              allCreativeDetails={allCreativeDetails}
+              meta={meta}
+            />
           </div>
         </div>
       </div>

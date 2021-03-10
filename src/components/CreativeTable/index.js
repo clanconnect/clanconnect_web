@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Table, Pagination } from 'antd';
+import { useParams } from 'react-router-dom';
 import {
   RightOutlined,
   DeleteOutlined,
@@ -11,84 +12,79 @@ import CreativeModal from '../CreativeModal';
 import demoImg from 'assets/images/project1.jpg';
 import { compaingsData, statusData, allInfluencerData } from './dataManager';
 import './styles.scss';
+import { getAllCreativesAction } from 'redux/brands/creatives/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
-const CreativeTable = ({ allCreativeDetails }) => {
+const CreativeTable = ({ allCreativeDetails, meta }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [showAddedRow, setShowAddedRow] = useState(false);
+  const [arr, setArr] = useState([]);
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
   const columns = [
     {
       title: (
         <SearchSelectBox data={compaingsData} defaultValue='All Campaigns' />
       ),
-      dataIndex: 'campaigns',
+      dataIndex: ['project', 'title'],
+      key: ['project', 'title'],
     },
     {
       title: 'Posts',
       dataIndex: 'posts',
-      // render: () => <CreativeModal versionTrue className='version-title' />,
+      render: (text, record, index) => (
+        <CreativeModal
+          versionTrue
+          className='version-title'
+          creative={record}
+        />
+      ),
+      key: 'posts',
     },
 
     {
+      title: (
+        <SearchSelectBox
+          data={allInfluencerData}
+          defaultValue='All Influencers'
+        />
+      ),
+      dataIndex: ['user', 'name'],
+      key: ['user', 'name'],
+    },
+    {
       title: 'Size',
-      dataIndex: 'size',
-      sorter: {
-        compare: (a, b) => a.english - b.english,
-        multiple: 1,
-      },
+      render: (value, record, index) => bytesToSize(value),
+      dataIndex: ['stats', 'storageSizeInBytes'],
+      key: ['stats', 'storageSizeInBytes'],
     },
     {
       title: 'Date',
-      dataIndex: 'date',
+      dataIndex: 'createdAt',
       sorter: {
         compare: (a, b) => a.english - b.english,
         multiple: 1,
       },
+      render: (value, record, index) => new Date(value).toLocaleDateString(),
+      key: 'createdAt',
     },
     {
       title: <StatusDropdown />,
       dataIndex: 'status',
+      key: 'status',
     },
   ];
 
-  const data = [
-    {
-      key: '1',
-      campaigns: 'Nestle Advertisement',
-      posts: 98,
-      size: '70MB',
-      date: '12/20/2020',
-      status: 'Approved',
-    },
-    {
-      key: '2',
-      campaigns: 'Vincent Adams',
-      posts: 98,
-      allInfluencers: 66,
-      size: '89MB',
-      date: '12/20/2020',
-      status: 'Approved',
-    },
-    {
-      key: '3',
-      campaigns: 'Campaigns Name Two',
-      posts: 98,
-      size: '70MB',
-      date: '12/20/2020',
-      status: 'Approved',
-    },
-    {
-      key: '4',
-      campaigns: 'Campaigns Name Two',
-      posts: 88,
-      size: '89MB',
-      date: '12/20/2020',
-      status: 'Approved',
-    },
-  ];
+  const bytesToSize = (bytes) => {
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes == 0) return 'n/a';
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+    if (i == 0) return bytes + ' ' + sizes[i];
+    return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
+  };
 
   const onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     setSelectedRowKeys(selectedRowKeys);
     setShowAddedRow(true);
   };
@@ -99,7 +95,6 @@ const CreativeTable = ({ allCreativeDetails }) => {
   };
   const hasSelected = selectedRowKeys.length > 0;
 
-  console.log(allCreativeDetails, '===========');
   return (
     <div>
       {showAddedRow ? (
@@ -119,9 +114,23 @@ const CreativeTable = ({ allCreativeDetails }) => {
       ) : null}
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={allCreativeDetails}
         rowSelection={rowSelection}
-        pagination={{ position: ['bottomCenter'] }}
+        pagination={false}
+      />
+      <Pagination
+        defaultCurrent={1}
+        total={+meta.total}
+        pageSize={+meta.perPage}
+        current={+meta.page}
+        onChange={(page, perPage) => {
+          dispatch(
+            getAllCreativesAction({
+              params: { include: 'media,user,project', page },
+              id: '5f8d3415e9dac37cb736defe',
+            })
+          );
+        }}
       />
     </div>
   );

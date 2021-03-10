@@ -1,11 +1,11 @@
-import { combineReducers } from "redux";
-import media from "./media/reducer";
-import projects from "./brands/projects/reducer";
-import proposals from "./brands/proposals/reducer";
-import creatives from "./brands/creatives/reducer";
-import comments from "./brands/comments/reducer";
-import CreatorProjects from "./creators/projects/reducers";
-import CreatorCreatives from "./creators/creatives/reducers";
+import { combineReducers } from 'redux';
+import media from './media/reducer';
+import projects from './brands/projects/reducer';
+import proposals from './brands/proposals/reducer';
+import creatives from './brands/creatives/reducer';
+import comments from './brands/comments/reducer';
+import CreatorProjects from './creators/projects/reducers';
+import CreatorCreatives from './creators/creatives/reducers';
 
 const func = () =>
   combineReducers({

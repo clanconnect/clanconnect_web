@@ -137,9 +137,27 @@ const CreativeModal = ({
     <>
       {versionTrue ? (
         <div className='version-text' onClick={() => setVisible(true)}>
-          <img src={demoImg} width='80' height='80' className='version-img' />
+          {creative?.media[0]?.mimeType.includes('image') ? (
+            <img
+              src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug}`}
+              width='80'
+              height='80'
+              className='version-img'
+            />
+          ) : (
+            <VideoPlayer
+              url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${creative?.media[0]?.slug}`}
+              poster={poster}
+              onPause={pauseVideo}
+              onPlay={playVideo}
+              playing={playing}
+              controls={true}
+              style={{ height: '80px', width: '80px' }}
+              className='short-video'
+            />
+          )}
           <span>
-            <span className={className}>4 versions</span>
+            <span className={className}>{creative?.media[0]?.versionTag}</span>
             <RightOutlined className='ml-4' />
           </span>
         </div>
