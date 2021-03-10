@@ -25,6 +25,7 @@ export function* getCreatives(action) {
 
 //update creative status
 export function* updateCreativeStatus(action) {
+  console.log(action.payload);
   try {
     const response = yield call(creativeUpdateStatusApi, action.payload);
     if (response.success) {
@@ -34,7 +35,7 @@ export function* updateCreativeStatus(action) {
             include: 'media,user',
             status: action.payload.currentStatus,
           },
-          id: action.payload.id,
+          id: action.payload.projectId,
         })
       );
     }
@@ -54,7 +55,7 @@ export function* creativesBulkUpdate(action) {
             include: 'media,user',
             status: action.payload.currentStatus,
           },
-          id: action.payload.id,
+          id: action.payload.projectId,
         })
       );
     }

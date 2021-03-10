@@ -52,7 +52,7 @@ const CreativeModal = ({
       <Menu>
         <Menu.Item key='accepted'>
           <div className='flex flex-column'>
-            <label className='flex justify-between items-center mb-10'>
+            <label className='flex justify-between items-center mb-10 cursor-pointer'>
               <span>Approved</span>
               <input
                 type='radio'
@@ -60,13 +60,14 @@ const CreativeModal = ({
                 value='accepted'
                 onChange={(e) => handleMenuClick(e.target.value)}
                 checked={status === 'accepted'}
+                className='cursor-pointer'
               />
             </label>
           </div>
         </Menu.Item>
         <Menu.Item key='rejected'>
           <div className='flex flex-column'>
-            <label className='flex justify-between items-center mb-10'>
+            <label className='flex justify-between items-center mb-10 cursor-pointer'>
               <span>Rejected</span>
               <input
                 type='radio'
@@ -74,13 +75,14 @@ const CreativeModal = ({
                 value='rejected'
                 checked={status === 'rejected'}
                 onChange={(e) => handleMenuClick(e.target.value)}
+                className='cursor-pointer'
               />
             </label>
           </div>
         </Menu.Item>
         <Menu.Item key='rejected'>
           <div className='flex flex-column'>
-            <label className='flex justify-between items-center mb-10'>
+            <label className='flex justify-between items-center mb-10 cursor-pointer'>
               <span>Pending</span>
               <input
                 type='radio'
@@ -88,6 +90,7 @@ const CreativeModal = ({
                 value='pending'
                 checked={status === 'pending'}
                 onChange={(e) => handleMenuClick(e.target.value)}
+                className='cursor-pointer'
               />
             </label>
           </div>

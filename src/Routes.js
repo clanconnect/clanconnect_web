@@ -34,7 +34,7 @@ const Routes = ({ location }) => {
   return (
     <>
       <ToastContainer />
-      {/* {isLoading && <Loader />} */}
+      {isLoading && <Loader />}
       <Switch>
         <Route
           path={routeConstant.projectDetails}
