@@ -13,13 +13,10 @@ import {
 } from '@ant-design/icons';
 import CommentBox from '../CommentBox';
 import AttachmentFileCard from '../AttachmentFileCard';
-import UploadDocumentModal from '../BrandUploadDocumentModal';
-
-import demoImag from 'assets/images/project1.jpg';
+import BrandUploadDocumentModal from '../BrandUploadDocumentModal';
 import download from 'assets/images/download.svg';
 import paperclip from 'assets/images/paperclip.svg';
 import demoImg from 'assets/images/project1.jpg';
-import infImg from 'assets/images/influencer.jpg';
 import { creativeUpdateStatusAction } from 'redux/brands/creatives/actions';
 
 import './styles.scss';
@@ -80,7 +77,7 @@ const CreativeModal = ({
             </label>
           </div>
         </Menu.Item>
-        <Menu.Item key='rejected'>
+        <Menu.Item key='pending'>
           <div className='flex flex-column'>
             <label className='flex justify-between items-center mb-10 cursor-pointer'>
               <span>Pending</span>
@@ -267,7 +264,10 @@ const CreativeModal = ({
                     )}
                   </p>
 
-                  <UploadDocumentModal src={paperclip} />
+                  <BrandUploadDocumentModal
+                    src={paperclip}
+                    creative={creative}
+                  />
                 </div>
                 {showFiles ? (
                   <AttachmentFileCard />

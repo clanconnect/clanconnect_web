@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import CommentBox from "../CommentBox";
 import AttachmentFileCard from "../AttachmentFileCard";
-import UploadDocumentModal from "../BrandUploadDocumentModal";
+import BrandUploadDocumentModal from "../BrandUploadDocumentModal";
 import download from "assets/images/download.svg";
 import paperclip from "assets/images/paperclip.svg";
 import { downloadMedia } from "helpers";
@@ -52,11 +52,11 @@ const InfluencerCreativeModal = ({
   project = {},
 }) => {
   const [visible, setVisible] = useState(false);
-  const [showFiles, setShowFiles] = useState(false);
+  const [showAttachments, setShowAttachments] = useState(false);
   const slider = useRef(null);
 
   const showAttachFiles = () => {
-    setShowFiles(!showFiles);
+    setShowAttachments(!showAttachments);
   };
 
   const closeModal = (val) => {
@@ -105,17 +105,23 @@ const InfluencerCreativeModal = ({
                 <div className="flex justify-between items-center">
                   <p className="view-title" onClick={showAttachFiles}>
                     View Attachments{" "}
-                    {showFiles ? (
+                    {showAttachments ? (
                       <UpOutlined className="ml-4" />
                     ) : (
                       <DownOutlined className="ml-4" />
                     )}
                   </p>
 
-                  <UploadDocumentModal src={paperclip} />
+                  <BrandUploadDocumentModal
+                    src={paperclip}
+                    creative={creative}
+                  />
                 </div>
-                {showFiles ? (
-                  <AttachmentFileCard />
+
+                {showAttachments ? (
+                  creative.attachments.map((media) => (
+                    <AttachmentFileCard media={media} />
+                  ))
                 ) : (
                   <CommentBox creativeId={creative.id} />
                 )}
