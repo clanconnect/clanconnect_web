@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { toast } from "react-toastify";
 const axiosConfiguration = () =>
   axios.create({
     baseURL: process.env.REACT_APP_API_HOST,
@@ -9,9 +9,13 @@ const axiosConfiguration = () =>
 const axiosInstance = axiosConfiguration();
 
 axiosInstance.interceptors.request.use((config) => {
+  const sessionToken = window.location.pathname.includes("/influencer")
+    ? process.env.REACT_APP_INFLUENCER_SESSION_TOKEN
+    : process.env.REACT_APP_BRAND_SESSION_TOKEN;
+
   config.headers = {
-    Accept: 'application/json',
-    'sess-token': process.env.REACT_APP_API_SESSION_TOKEN,
+    Accept: "application/json",
+    "sess-token": sessionToken,
     withCredentials: true,
   };
 
