@@ -1,4 +1,4 @@
-import { all, takeLatest, put, call } from "redux-saga/effects";
+import { all, takeLatest, put, call, select } from "redux-saga/effects";
 import { ACTIONS } from "./actions";
 import { CreativeService } from "services/creators";
 
@@ -30,16 +30,32 @@ export function* add({
   });
 }
 
-export function* update({
-  payload: { body, path, query },
-  onSuccess,
-  selectedStatus,
-}) {
+export function* update({ payload: { body, path, query }, onSuccess }) {
+  const currentStatus = yield select((state) => {
+    return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
+  });
+
   yield call(CreativeService.update, { body, path, query });
   if (onSuccess) yield onSuccess();
   yield put({
     type: ACTIONS.GET_INDEX,
-    payload: { query: { status: selectedStatus } },
+    payload: { query: { status: currentStatus } },
+  });
+}
+
+export function* updateAttachments({
+  payload: { body, path, query },
+  onSuccess,
+}) {
+  const currentStatus = yield select((state) => {
+    return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
+  });
+
+  yield call(CreativeService.updateAttachments, { body, path, query });
+  if (onSuccess) yield onSuccess();
+  yield put({
+    type: ACTIONS.GET_INDEX,
+    payload: { query: { status: currentStatus } },
   });
 }
 
@@ -48,5 +64,6 @@ export default function* creatorCreativesSagas() {
     takeLatest(ACTIONS.GET_INDEX, fetchIndex),
     takeLatest(ACTIONS.ADD, add),
     takeLatest(ACTIONS.UPDATE, update),
+    takeLatest(ACTIONS.UPDATE_ATTACHMENTS, updateAttachments),
   ]);
 }

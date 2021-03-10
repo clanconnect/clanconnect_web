@@ -29,6 +29,14 @@ export class CreativeService {
       body
     );
   }
+
+  static updateAttachments({ query, body, path }) {
+    return api.patch(
+      `/creators/creatives/${path.id}/attachments?` +
+        (query && qs.stringify(query)) || "",
+      body
+    );
+  }
 }
 
 export class MediaService {
@@ -49,6 +57,7 @@ export class MediaService {
 
         const res = await api.post("/creators/media/register", {
           key: url.key,
+          originalName: file.originFileObj.name,
         });
 
         return res.data;

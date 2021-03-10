@@ -1,141 +1,119 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Tooltip } from 'antd';
-import axios from 'axios';
-import axiosInstance from 'services/configureAxios';
+import React, { useState, useEffect } from "react";
+import "./styles.scss";
+import { useDispatch } from "react-redux";
+import { Modal, Tooltip } from "antd";
+import UploadDocumentCard from "../UploadDocumentCard";
+import UploadAttchmentFile from "../UploadAttchmentFile";
+import pngImg from "assets/images/png.svg";
+import { MediaService } from "services/creators";
+import { ACTIONS } from "redux/creators/creatives/actions";
 
-import UploadDocumentCard from '../UploadDocumentCard';
-import UploadAttchmentFile from '../UploadAttchmentFile';
-import pngImg from 'assets/images/png.svg';
-import pdfImg from 'assets/images/pdf.svg';
-import { getUploadUrlsApi, registerMediaApi } from 'services/media';
-
-import { setState } from 'redux/media/actions';
-
-import './styles.scss';
-
-const UploadDocumentModal = ({ src }) => {
+const UploadDocumentModal = ({ src, creative }) => {
   const dispatch = useDispatch();
-  const { uploadProgress, fileData } = useSelector((store) => store.media);
   const [visible, setVisible] = useState(false);
   const [showFile, setShowFile] = useState(false);
-  const [fileList, setfileList] = useState([]);
-  const [progress, setProgress] = useState(0);
+  const [files, setFiles] = useState([]);
+  const [uploadProgress, setUploadProgress] = useState({});
+  const [fileUploadStage, setFileUploadStage] = useState(0);
 
-  const showUploadFiles = (value) => {
-    setShowFile(value);
+  const onCancel = () => {
+    setVisible(false);
+    setFiles([]);
+    setShowFile(false);
+    setFileUploadStage(0);
+  };
 
-    getUploadUrlsApi(fileList).then((response) => {
-      if (response.success) {
-        for (let i = 0; i < response.data.length; i++) {
-          axios
-            .put(response.data[i].url, fileList[i].originFileObj, {
-              onUploadProgress: (progressEvent) => {
-                const progress = (
-                  (progressEvent.loaded / progressEvent.total) *
-                  100
-                ).toFixed(2);
+  useEffect(() => {
+    const progress = {};
+    files.forEach((f) => (progress[f.uid] = 0));
+    setUploadProgress(progress);
+  }, [files]);
 
-                setProgress(progress);
-              },
-              headers: {
-                'content-type': fileList[i].originFileObj.type,
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
-                'Access-Control-Allow-Headers':
-                  'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
-              },
-            })
-            .then(() => {
-              registerMediaApi({ key: response.data[i].key }).then((res) => {
-                dispatch(
-                  setState({
-                    fileData: [...fileList, ...fileData],
-                  })
-                );
-                setfileList([]);
-              });
-            });
-        }
-      }
-    });
+  const updateProgress = (fileUid, progress) => {
+    setUploadProgress({ ...uploadProgress, ...{ [fileUid]: progress } });
+  };
+
+  const handleUpload = () => {
+    if (fileUploadStage === 0) {
+      setShowFile(true);
+      setFileUploadStage(1);
+      return;
+    }
+
+    MediaService.uploadMultiple(files, updateProgress)
+      .then((media) => {
+        dispatch({
+          type: ACTIONS.UPDATE_ATTACHMENTS,
+          payload: {
+            body: { newAttachments: media.map((m) => m.id) },
+            path: { id: creative.id },
+          },
+          onSuccess: onCancel,
+        });
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const ModalTitle = () => (
+    <div className="flex justify-between">
+      <span>Upload Attachment</span>
+      {showFile && <span>{files.length} file(s) selected</span>}
+    </div>
+  );
+
+  const ModalProps = {
+    title: ModalTitle(),
+    visible,
+    onOk: () => setVisible(false),
+    onCancel: () => setVisible(false),
+    className: "upload-modal",
+    centered: true,
+    width: 700,
   };
 
   return (
     <>
       <Tooltip
-        title='Attach any document or reference.'
-        placement='bottom'
-        className='cursor-pointer'
+        title="Attach any document or reference."
+        placement="bottom"
+        className="cursor-pointer"
       >
-        <img width='16' src={src} onClick={() => setVisible(true)} />
+        <img
+          width="16"
+          src={src}
+          onClick={() => setVisible(true)}
+          alt={"dfbnjgfjdn"}
+        />
       </Tooltip>
 
-      <Modal
-        title={
-          <div className='flex justify-between'>
-            <span>Upload Attachment</span>
-            {showFile && <span>{fileData.length} files selected</span>}
-          </div>
-        }
-        visible={visible}
-        onOk={() => setVisible(false)}
-        onCancel={() => setVisible(false)}
-        className='upload-modal'
-        centered
-        width={700}
-      >
+      <Modal {...ModalProps}>
         {showFile ? (
-          <div className='conatiner-file'>
-            {fileData &&
-              fileData.map((file) => {
-                return (
-                  <UploadAttchmentFile
-                    percenter={100}
-                    fileName={file.originFileObj.name}
-                    icon={pngImg}
-                  />
-                );
-              })}
-
-            {fileList &&
-              fileList.map((file) => {
-                return (
-                  <UploadAttchmentFile
-                    percenter={progress}
-                    fileName={file.originFileObj.name}
-                    icon={pngImg}
-                  />
-                );
-              })}
+          <div className="conatiner-file">
+            {files &&
+              files.map((file) => (
+                <UploadAttchmentFile
+                  percenter={uploadProgress[file.uid]}
+                  fileName={file.originFileObj.name}
+                  icon={pngImg}
+                />
+              ))}
           </div>
         ) : (
-          <UploadDocumentCard setfileList={setfileList} />
+          <UploadDocumentCard setfileList={setFiles} />
         )}
 
-        <div className='comment-btns flex justify-between '>
-          {showFile ? null : (
-            <div className=''>
-              <button
-                className={`btn-submit ${
-                  fileList.length === 0 ? 'disabled' : null
-                }`}
-                onClick={() => showUploadFiles(true)}
-              >
-                Send
-              </button>
-              {/* <button className='btn-cancel'>Cancel</button> */}
-            </div>
-          )}
-
-          {showFile ? (
+        <div className="comment-btns flex justify-between ">
+          <div className="">
             <button
-              className='btn-cancel bg-outline'
-              onClick={() => showUploadFiles(false)}
+              className={`btn-submit ${files.length === 0 ? "disabled" : null}`}
+              onClick={handleUpload}
             >
-              Upload More
+              Send
             </button>
-          ) : null}
+            <button className="btn-cancel" onClick={onCancel}>
+              Cancel
+            </button>
+          </div>
         </div>
       </Modal>
     </>
