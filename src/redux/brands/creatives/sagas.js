@@ -28,7 +28,15 @@ export function* updateCreativeStatus(action) {
   try {
     const response = yield call(creativeUpdateStatusApi, action.payload);
     if (response.success) {
-      console.log(response);
+      yield getCreatives(
+        getCreativesAction({
+          params: {
+            include: 'media,user',
+            status: action.payload.currentStatus,
+          },
+          id: action.payload.id,
+        })
+      );
     }
   } catch (err) {
     console.log(err);

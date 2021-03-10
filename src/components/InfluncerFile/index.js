@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { downloadMedia } from 'helpers';
 import { Badge, Checkbox } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import InfluncerFileVideo from '../InfluncerFileVideo';
@@ -41,7 +42,9 @@ const InfluncerFile = ({
     ? creativeDetails.map((data, index) => {
         return (
           <div className='common-uploads'>
-            <h2 className='title'>{data.user.name}</h2>
+            {data?.creatives[0]?.media?.length != 0 && (
+              <h2 className='title'>{data.user.name}</h2>
+            )}
             <div className='influncer-file-row'>
               {data.creatives.map((item, index) => {
                 return item.media[0]?.mimeType ? (
@@ -93,6 +96,7 @@ const InfluncerFile = ({
                             src={download}
                             alt='download icon'
                             className='icons-custom cursor-pointer'
+                            onClick={() => downloadMedia(item?.media[0]?.slug)}
                           />
                         </div>
                       )}
