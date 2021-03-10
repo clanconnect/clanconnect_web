@@ -1,26 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import reportWebVitals from "./reportWebVitals";
 
 //router imports
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from "react-router-dom";
 
 //redux imports
-import { logger } from 'redux-logger';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
-import reducers from 'redux/reducer';
-import persistConfig from 'config/persistorConfig';
-import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
-import rootSaga from 'redux/sagas';
+import { logger } from "redux-logger";
+import { createStore, applyMiddleware, compose } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import reducers from "redux/reducer";
+import persistConfig from "config/persistorConfig";
+import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "redux/sagas";
 
 //page
-import App from './App';
+import App from "./App";
 
 //sass
-import './index.scss';
+import "./index.scss";
 
 const middleWares = [logger];
 
@@ -43,14 +43,14 @@ sagaMiddleware.run(rootSaga);
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={pStore}>
-      <React.StrictMode>
-        <Router>
-          <App />
-        </Router>
-      </React.StrictMode>
+      {/* <React.StrictMode> */}
+      <Router>
+        <App />
+      </Router>
+      {/* </React.StrictMode> */}
     </PersistGate>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

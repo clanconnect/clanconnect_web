@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Waypoint } from 'react-waypoint';
-import { useSelector, useDispatch } from 'react-redux';
-import CommentProfile from '../CommentProfile';
-import { getCommentsAction } from 'redux/brands/comments/actions';
-import { Spin } from 'antd';
-// import { cloneDeep} from 'lodash'
-{
-  /* <Waypoint
-  onEnter={this._handleWaypointEnter}
-  onLeave={this._handleWaypointLeave}
-/> */
-}
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react";
+import { Waypoint } from "react-waypoint";
+import { useSelector, useDispatch } from "react-redux";
+import CommentProfile from "../CommentProfile";
+import { getCommentsAction } from "redux/brands/comments/actions";
+import { Spin } from "antd";
+
 const Comment = (props) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -23,9 +18,9 @@ const Comment = (props) => {
   );
 
   const { creativeId } = props;
-  console.log(meta.totalPages);
   useEffect(() => {
     getCommentsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const getCommentsData = () => {
@@ -39,35 +34,36 @@ const Comment = (props) => {
       setCommentsData(commentData);
       setLoader(false);
     }
-  }, [commentDataTs]);
+  }, [commentData, commentDataTs, commentsDataLocalTs]);
+
   return (
-    <div className='demo-class'>
+    <div className="demo-class">
       {commentData &&
         commentData.map((item, index) => {
-          if (index == commentData.length - 1) {
+          if (index === commentData.length - 1) {
             return (
               <>
-                <CommentProfile data={item} key={index} />
+                <CommentProfile data={item} key={`comment-${index}`} />
                 {!loader && page < meta?.totalPages && (
                   <Waypoint onEnter={() => setPage(page + 1)} />
                 )}
               </>
             );
           } else {
-            return <CommentProfile data={item} key={index} />;
+            return <CommentProfile data={item} key={`comment-${index}`} />;
           }
         })}
       {/* {loader && Loading} */}
       {!loader ? (
-        ''
+        ""
       ) : (
-        <div className='loader-row'>
+        <div className="loader-row">
           <Spin />
         </div>
       )}
 
       {commentData.length === 0 && (
-        <div className='comment-empty'>
+        <div className="comment-empty">
           <p>No Comments</p>
         </div>
       )}

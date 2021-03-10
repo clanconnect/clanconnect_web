@@ -1,36 +1,61 @@
-import React, { useState } from 'react';
-import { Badge, Checkbox } from 'antd';
-import { CalendarOutlined } from '@ant-design/icons';
+import React from "react";
+import "./styles.scss";
+import { CalendarOutlined } from "@ant-design/icons";
+import InfluencerCreativeModal from "../InfluencerCreativeModal";
+import download from "assets/images/download.svg";
+import fullScreen from "assets/images/full-screen.svg";
+import chat from "assets/images/chat.svg";
+import VideoPlayer from "react-player";
+import { downloadMedia } from "helpers";
 
-import CreativeModal from '../CreativeModal';
-import download from 'assets/images/download.svg';
-import fullScreen from 'assets/images/full-screen.svg';
-import chat from 'assets/images/chat.svg';
-import demoImg from 'assets/images/project1.jpg';
+const DownLoadedFile = ({ creative = {}, project }) => {
+  const media = creative.media ? creative.media[0] : {};
+  const imageUrl = `${process.env.REACT_APP_IMAGE_BASE_URL}/${
+    media?.slug || "default"
+  }`;
 
-import './styles.scss';
-
-const DownLoadedFile = ({ fileData }) => {
   return (
-    <div className='influncer-file-container'>
-      <div className='influncer-file-subcontainer'>
-        <div className='img-box-download'>
-          <img src={fileData.demoImag} alt='' className='full-img' />
-          <div className='chat-icon'>
-            <CreativeModal src={chat} className='icons-custom' />
-          </div>
-          <div className='icons-row'>
-            <CreativeModal
-              src={fullScreen}
-              className='icons-custom'
-              influencerStatus
+    <div className="influncer-file-container">
+      <div className="influncer-file-subcontainer">
+        <div className="img-box-download">
+          {media?.mimeType?.includes("image") ? (
+            // eslint-disable-next-line jsx-a11y/img-redundant-alt
+            <img src={imageUrl} alt="" className="full-img" />
+          ) : (
+            <VideoPlayer
+              url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media?.slug}`}
+              className="full-video"
+              controls={false}
             />
-            <img src={download} alt='' className='icons-custom' />
+          )}
+          <div className="chat-icon">
+            <InfluencerCreativeModal
+              src={chat}
+              project={project}
+              className="icons-custom"
+              creative={creative}
+            />
+          </div>
+          <div className="icons-row">
+            <InfluencerCreativeModal
+              src={fullScreen}
+              project={project}
+              className="icons-custom"
+              creative={creative}
+            />
+            <img
+              src={download}
+              alt=""
+              className="icons-custom"
+              onClick={() => downloadMedia(media.slug)}
+            />
           </div>
         </div>
-        <p className='date-box'>
+        <p className="date-box">
           <CalendarOutlined />
-          <span className='date-text'>{fileData.date}</span>
+          <span className="date-text">
+            {new Date(creative.createdAt).toISOString().split("T")[0]}
+          </span>
         </p>
       </div>
     </div>

@@ -1,10 +1,10 @@
 export const myTabs = [
   {
     id: 1,
-    name: 'Applied Proposals',
+    name: "Applied Proposals",
   },
   {
     id: 2,
-    name: 'Creatives Approval',
+    name: "Creatives",
   },
 ];
