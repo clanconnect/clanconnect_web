@@ -12,7 +12,7 @@ import demoImg from 'assets/images/project1.jpg';
 import { compaingsData, statusData, allInfluencerData } from './dataManager';
 import './styles.scss';
 
-const CreativeTable = (props) => {
+const CreativeTable = ({ allCreativeDetails }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [showAddedRow, setShowAddedRow] = useState(false);
 
@@ -26,7 +26,7 @@ const CreativeTable = (props) => {
     {
       title: 'Posts',
       dataIndex: 'posts',
-      render: () => <CreativeModal versionTrue className='version-title' />,
+      // render: () => <CreativeModal versionTrue className='version-title' />,
     },
 
     {
@@ -99,6 +99,7 @@ const CreativeTable = (props) => {
   };
   const hasSelected = selectedRowKeys.length > 0;
 
+  console.log(allCreativeDetails, '===========');
   return (
     <div>
       {showAddedRow ? (

@@ -1,6 +1,6 @@
 const routeConstant = {
   projectDetails: '/brands/projects/:id',
-  allCreativesLists: '/all-creatives-list',
+  allCreativesListsBrand: '/projects/all-creatives',
   influencerPage: '/influencer',
 };
 

@@ -19,9 +19,9 @@ const ProjectDetails = loadable(() =>
   import(/* webpackChunkName: 'ProjectDetails' */ 'containers/ProjectDetails')
 );
 
-const AllCreativesLists = loadable(() =>
+const AllCreativesListsBrand = loadable(() =>
   import(
-    /* webpackChunkName: 'AllCreativesLists' */ 'containers/AllCreativesLists'
+    /* webpackChunkName: 'AllCreativesListsBrand' */ 'containers/AllCreativesListsBrand'
   )
 );
 
@@ -42,8 +42,8 @@ const Routes = ({ location }) => {
           exact
         />
         <Route
-          path={routeConstant.allCreativesLists}
-          component={AllCreativesLists}
+          path={routeConstant.allCreativesListsBrand}
+          component={AllCreativesListsBrand}
           exact
         />
         <Route
