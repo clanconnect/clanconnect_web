@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from 'components/DemoHeader';
 import SideNav from 'components/DemoSideNav';
 import Breadcrumb from 'components/Breadcrumb';
 import CreativeTable from 'components/CreativeTable';
 import { getAllCreativesAction } from 'redux/brands/creatives/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 import './styles.scss';
 
