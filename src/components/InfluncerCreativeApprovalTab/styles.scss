@@ -32,8 +32,16 @@
 }
 
 .custom-project-collapse {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  padding: 10px 20px;
-  margin-bottom: 30px;
+  box-shadow: 0px 3px 6px #00000029;
+  margin-bottom: 40px;
+  border-radius: 5px;
+  padding-bottom: 20px;
+}
+
+.open-container {
+  padding: 0px 15px;
+}
+
+.shadow-none {
+  box-shadow: none;
 }

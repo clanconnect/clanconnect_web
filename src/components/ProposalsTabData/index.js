@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import { Tabs } from 'antd';
+import { Tabs, Empty } from 'antd';
 import { useParams } from 'react-router-dom';
 
 import BrandListCard from '../BrandListCard';
-import img1 from 'assets/images/inf1.png';
-import img2 from 'assets/images/inf2.jpeg';
-import influencer from 'assets/images/influencer.jpg';
 import { getProposalsAction } from 'redux/brands/proposals/actions';
 
 import './styles.scss';
@@ -51,9 +48,7 @@ const ProposalsTabData = ({
                 });
               })
             ) : (
-              <div className='empty-state'>
-                <p>No Data Available</p>
-              </div>
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )}
           </div>
         </TabPane>
@@ -68,9 +63,7 @@ const ProposalsTabData = ({
               });
             })
           ) : (
-            <div className='empty-state'>
-              <p>No Data Available</p>
-            </div>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </TabPane>
         <TabPane tab='Rejected' key='rejected'>
@@ -84,9 +77,7 @@ const ProposalsTabData = ({
               });
             })
           ) : (
-            <div className='empty-state'>
-              <p>No Data Available</p>
-            </div>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </TabPane>
       </Tabs>

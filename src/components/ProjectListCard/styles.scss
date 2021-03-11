@@ -21,6 +21,8 @@
   .brand-list-img {
     width: 11%;
     height: 90px;
+    padding: 15px;
+    border-radius: 5px;
 
     @include mobile {
       width: 50%;

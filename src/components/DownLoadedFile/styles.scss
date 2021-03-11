@@ -1,5 +1,5 @@
-@import "styles/_colors";
-@import "styles/_mixins";
+@import 'styles/_colors';
+@import 'styles/_mixins';
 
 .img-box-download {
   // width: 20%;
@@ -36,7 +36,7 @@
 
 .icons-custom {
   height: 14px;
-  filter: drop-shadow(1px 1px 1px rgba(white, 0.7));
+  filter: drop-shadow(1px 1px 1px rgba(white, 1));
 }
 
 .chat-icon {

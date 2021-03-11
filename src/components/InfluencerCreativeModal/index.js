@@ -1,46 +1,48 @@
-import React, { useState, useRef } from "react";
-import "./styles.scss";
-import VideoPlayer from "react-player";
-import { Modal, Carousel, Tag } from "antd";
+import React, { useState, useRef } from 'react';
+import './styles.scss';
+import VideoPlayer from 'react-player';
+import { Modal, Carousel, Tag, Empty } from 'antd';
 import {
   DownOutlined,
   UpOutlined,
   RightOutlined,
   LeftOutlined,
-} from "@ant-design/icons";
-import CommentBox from "../CommentBox";
-import AttachmentFileCard from "../AttachmentFileCard";
-import BrandUploadDocumentModal from "../BrandUploadDocumentModal";
-import download from "assets/images/download.svg";
-import paperclip from "assets/images/paperclip.svg";
-import { downloadMedia } from "helpers";
+} from '@ant-design/icons';
+import CommentBox from '../CommentBox';
+import AttachmentFileCard from '../AttachmentFileCard';
+import BrandUploadDocumentModal from '../BrandUploadDocumentModal';
+import download from 'assets/images/download.svg';
+import paperclip from 'assets/images/paperclip.svg';
+import { downloadMedia } from 'helpers';
 
 const MediaView = ({ media }) => {
   return (
-    <div className="slider-box" key={`media-${media.id}`}>
-      <Tag color="cyan">{media.versionTag}</Tag>
-      {media.mimeType.includes("image") ? (
+    <div className='slider-box' key={`media-${media.id}`}>
+      <Tag color='cyan'>{media.versionTag}</Tag>
+      {media.mimeType.includes('image') ? (
         // eslint-disable-next-line jsx-a11y/img-redundant-alt
         <img
           alt={`creative-image-${media.id}`}
           src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-            media.slug || "default"
+            media.slug || 'default'
           }`}
-          className="contentStyle"
+          className='contentStyle'
         />
       ) : (
         <VideoPlayer
           url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media.slug}`}
-          className="video-contentStyle"
+          className='video-contentStyle'
           controls={true}
         />
       )}
-      <img
-        src={download}
-        alt=""
-        className="icons-custom cursor-pointer"
-        onClick={() => downloadMedia(media.slug)}
-      />
+      {media.mimeType.includes('image') && (
+        <img
+          src={download}
+          alt=''
+          className='icons-custom cursor-pointer'
+          onClick={() => downloadMedia(media.slug)}
+        />
+      )}
     </div>
   );
 };
@@ -66,7 +68,7 @@ const InfluencerCreativeModal = ({
   return (
     <>
       <img
-        alt=""
+        alt=''
         onClick={() => setVisible(true)}
         src={src}
         className={`cursor-pointer ${className}`}
@@ -78,37 +80,37 @@ const InfluencerCreativeModal = ({
         onCancel={() => closeModal(false)}
         width={1100}
         style={{ top: 40 }}
-        className="custom-modal"
+        className='custom-modal'
       >
-        <div className="creative-modal">
-          <div className="creative-modal-header flex justify-between">
-            <p className="title">{project.title}</p>
+        <div className='creative-modal'>
+          <div className='creative-modal-header flex justify-between'>
+            <p className='title'>{project.title}</p>
           </div>
 
-          <div className="creative-modal-body">
-            <div className="flex mobile-section">
-              <div className="carousal-section">
+          <div className='creative-modal-body'>
+            <div className='flex mobile-section'>
+              <div className='carousal-section'>
                 <LeftOutlined
                   onClick={() => slider.current.prev()}
-                  className="slider-left-icon"
+                  className='slider-left-icon'
                 />
                 <Carousel ref={slider}>
                   {creative.media.map((media) => MediaView({ media }))}
                 </Carousel>
                 <RightOutlined
                   onClick={() => slider.current.next()}
-                  className="slider-right-icon"
+                  className='slider-right-icon'
                 />
               </div>
 
-              <div className="comment-section">
-                <div className="flex justify-between items-center">
-                  <p className="view-title" onClick={showAttachFiles}>
-                    View Attachments{" "}
+              <div className='comment-section'>
+                <div className='flex justify-between items-center'>
+                  <p className='view-title' onClick={showAttachFiles}>
+                    View Attachments{' '}
                     {showAttachments ? (
-                      <UpOutlined className="ml-4" />
+                      <UpOutlined className='ml-4' />
                     ) : (
-                      <DownOutlined className="ml-4" />
+                      <DownOutlined className='ml-4' />
                     )}
                   </p>
 
@@ -119,9 +121,16 @@ const InfluencerCreativeModal = ({
                 </div>
 
                 {showAttachments ? (
-                  creative.attachments.map((media) => (
-                    <AttachmentFileCard media={media} />
-                  ))
+                  creative.attachments != 0 ? (
+                    creative.attachments.map((media) => (
+                      <AttachmentFileCard media={media} />
+                    ))
+                  ) : (
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      style={{ margin: '0px' }}
+                    />
+                  )
                 ) : (
                   <CommentBox creativeId={creative.id} />
                 )}

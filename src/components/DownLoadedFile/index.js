@@ -1,60 +1,60 @@
-import React from "react";
-import "./styles.scss";
-import { CalendarOutlined } from "@ant-design/icons";
-import InfluencerCreativeModal from "../InfluencerCreativeModal";
-import download from "assets/images/download.svg";
-import fullScreen from "assets/images/full-screen.svg";
-import chat from "assets/images/chat.svg";
-import VideoPlayer from "react-player";
-import { downloadMedia } from "helpers";
+import React from 'react';
+import './styles.scss';
+import { CalendarOutlined } from '@ant-design/icons';
+import InfluencerCreativeModal from '../InfluencerCreativeModal';
+import download from 'assets/images/download.svg';
+import fullScreen from 'assets/images/full-screen.svg';
+import chat from 'assets/images/chat.svg';
+import VideoPlayer from 'react-player';
+import { downloadMedia } from 'helpers';
 
 const DownLoadedFile = ({ creative = {}, project }) => {
   const media = creative.media ? creative.media[0] : {};
   const imageUrl = `${process.env.REACT_APP_IMAGE_BASE_URL}/${
-    media?.slug || "default"
+    media?.slug || 'default'
   }`;
 
   return (
-    <div className="influncer-file-container">
-      <div className="influncer-file-subcontainer">
-        <div className="img-box-download">
-          {media?.mimeType?.includes("image") ? (
+    <div className='influncer-file-container'>
+      <div className='influncer-file-subcontainer'>
+        <div className='img-box-download'>
+          {media?.mimeType?.includes('image') ? (
             // eslint-disable-next-line jsx-a11y/img-redundant-alt
-            <img src={imageUrl} alt="" className="full-img" />
+            <img src={imageUrl} alt='' className='full-img' />
           ) : (
             <VideoPlayer
               url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media?.slug}`}
-              className="full-video"
+              className='full-video'
               controls={false}
             />
           )}
-          <div className="chat-icon">
+          {/* <div className="chat-icon">
             <InfluencerCreativeModal
               src={chat}
               project={project}
               className="icons-custom"
               creative={creative}
             />
-          </div>
-          <div className="icons-row">
+          </div> */}
+          <div className='icons-row'>
             <InfluencerCreativeModal
               src={fullScreen}
               project={project}
-              className="icons-custom"
+              className='icons-custom'
               creative={creative}
             />
             <img
               src={download}
-              alt=""
-              className="icons-custom"
+              alt=''
+              className='icons-custom'
               onClick={() => downloadMedia(media.slug)}
             />
           </div>
         </div>
-        <p className="date-box">
+        <p className='date-box'>
           <CalendarOutlined />
-          <span className="date-text">
-            {new Date(creative.createdAt).toISOString().split("T")[0]}
+          <span className='date-text'>
+            {new Date(creative.createdAt).toISOString().split('T')[0]}
           </span>
         </p>
       </div>

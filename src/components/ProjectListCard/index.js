@@ -1,12 +1,12 @@
-import React from "react";
-import "./styles.scss";
-import InfluencerUploadModal from "../InfluencerUploadModal";
+import React from 'react';
+import './styles.scss';
+import InfluencerUploadModal from '../InfluencerUploadModal';
 
 const StatusBasedActions = {
   ongoing: (project, creatives, disablePreviousVersionUpload) => (
-    <div className="brand-list-btn">
+    <div className='brand-list-btn'>
       <InfluencerUploadModal
-        btnText={"Upload Creative"}
+        btnText={'Upload Creative'}
         style={`view-btn`}
         creativeUploads
         project={project}
@@ -17,7 +17,7 @@ const StatusBasedActions = {
   ),
 
   default: (project) => (
-    <div className="brand-list-btn">
+    <div className='brand-list-btn'>
       <button className={`view-btn`}>View Details</button>
     </div>
   ),
@@ -27,15 +27,16 @@ const ProjectListCard = ({
   disableAction,
   creatives,
   disablePreviousVersionUpload,
+  className,
 }) => {
   return (
-    <div className="brand-list">
-      <div className="brand-list-img">
-        <img src={project.coverPictureUrl} alt="" />
+    <div className={`brand-list ${className}`}>
+      <div className='brand-list-img'>
+        <img src={project.coverPictureUrl} alt='' />
       </div>
-      <div className="brand-content">
-        <div className="brand-list-content">
-          <span className="list-title">{project.title}</span>
+      <div className='brand-content'>
+        <div className='brand-list-content'>
+          <span className='list-title'>{project.title}</span>
         </div>
 
         {!disableAction && StatusBasedActions[project.status]
@@ -44,7 +45,7 @@ const ProjectListCard = ({
               creatives || [],
               disablePreviousVersionUpload
             )
-          : StatusBasedActions["default"](
+          : StatusBasedActions['default'](
               project,
               creatives || [],
               disablePreviousVersionUpload
