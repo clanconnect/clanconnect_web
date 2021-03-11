@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
 import { downloadMedia } from 'helpers';
 
 import VideoPlayer from 'react-player';
@@ -116,7 +117,6 @@ const CreativeModal = ({
 
   const closeModal = (val) => {
     setPlaying(false);
-    setShowFiles(false);
 
     setTimeout(() => {
       setVisible(val);
@@ -202,11 +202,17 @@ const CreativeModal = ({
           <div className='creative-modal-body'>
             <div className='flex mobile-section'>
               <div className='carousal-section'>
-                <LeftOutlined
-                  onClick={() => slider.current.prev()}
-                  className='slider-left-icon'
-                />
-                <Carousel afterChange={onChange} ref={slider}>
+                {creative?.media?.length > 1 ? (
+                  <LeftOutlined
+                    onClick={() => slider.current.prev()}
+                    className='slider-left-icon'
+                  />
+                ) : null}
+                <Carousel
+                  afterChange={onChange}
+                  ref={slider}
+                  className={'remove-buttom'}
+                >
                   {creative.length != 0 ? (
                     creative.media.map((media) => {
                       return (
@@ -271,20 +277,22 @@ const CreativeModal = ({
                     />
                   </div> */}
                 </Carousel>
-                <RightOutlined
-                  onClick={() => slider.current.next()}
-                  className='slider-right-icon'
-                />
+                {creative?.media?.length > 1 ? (
+                  <RightOutlined
+                    onClick={() => slider.current.next()}
+                    className='slider-right-icon'
+                  />
+                ) : null}
               </div>
               <div className='comment-section'>
                 <div className='flex justify-between items-center'>
                   <p className='view-title' onClick={showAttachFiles}>
                     View Attachments{' '}
-                    {showFiles ? (
-                      <UpOutlined className='ml-4' />
-                    ) : (
-                      <DownOutlined className='ml-4' />
-                    )}
+                    <UpOutlined
+                      className={`${
+                        showFiles ? 'icon-animation' : 'trans-icon'
+                      } ml-4 `}
+                    />
                   </p>
 
                   <BrandUploadDocumentModal
@@ -293,16 +301,18 @@ const CreativeModal = ({
                   />
                 </div>
                 {showFiles ? (
-                  creative.attachments.length != 0 ? (
-                    creative.attachments.map((media) => (
-                      <AttachmentFileCard media={media} />
-                    ))
-                  ) : (
-                    <Empty
-                      image={Empty.PRESENTED_IMAGE_SIMPLE}
-                      style={{ margin: '0' }}
-                    />
-                  )
+                  <div className='tarnsition'>
+                    {creative.attachments.length != 0 ? (
+                      creative.attachments.map((media) => (
+                        <AttachmentFileCard media={media} />
+                      ))
+                    ) : (
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        style={{ margin: '0' }}
+                      />
+                    )}
+                  </div>
                 ) : (
                   <CommentBox creativeId={creative.id} />
                 )}

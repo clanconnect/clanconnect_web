@@ -23,6 +23,9 @@
 
   .file-title {
     color: #5d5d5d;
+    width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

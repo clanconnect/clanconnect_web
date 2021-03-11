@@ -189,3 +189,27 @@
     }
   }
 }
+
+.version-text {
+  max-height: 80px;
+  max-width: 80px;
+}
+
+.short-video {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.icon-animation {
+  transition: 0.5s;
+}
+
+.trans-icon {
+  transition: 0.5s;
+  transform: rotate(180deg);
+}
+
+.tarnsition {
+  transition: 0.5s;
+  height: 100%;
+}
