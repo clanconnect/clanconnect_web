@@ -1,25 +1,25 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { downloadMedia } from 'helpers';
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { downloadMedia } from "helpers";
 
-import VideoPlayer from 'react-player';
-import { Modal, Menu, Dropdown, Carousel, Tag, Empty } from 'antd';
+import VideoPlayer from "react-player";
+import { Modal, Menu, Dropdown, Carousel, Tag, Empty } from "antd";
 import {
   DownOutlined,
   UpOutlined,
   RightOutlined,
   LeftOutlined,
-} from '@ant-design/icons';
-import CommentBox from '../CommentBox';
-import AttachmentFileCard from '../AttachmentFileCard';
-import BrandUploadDocumentModal from '../BrandUploadDocumentModal';
-import download from 'assets/images/download.svg';
-import paperclip from 'assets/images/paperclip.svg';
-import demoImg from 'assets/images/project1.jpg';
-import { creativeUpdateStatusAction } from 'redux/brands/creatives/actions';
+} from "@ant-design/icons";
+import CommentBox from "../CommentBox";
+import AttachmentFileCard from "../AttachmentFileCard";
+import BrandUploadDocumentModal from "../BrandUploadDocumentModal";
+import download from "assets/images/download.svg";
+import paperclip from "assets/images/paperclip.svg";
+import demoImg from "assets/images/project1.jpg";
+import { creativeUpdateStatusAction } from "redux/brands/creatives/actions";
 
-import './styles.scss';
+import "./styles.scss";
 
 const CreativeModal = ({
   src,
@@ -34,8 +34,8 @@ const CreativeModal = ({
   const [visible, setVisible] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [creativeStatus, setCreativeStatus] = useState('');
-  const poster = 'http://www.example.com/path/to/video_poster.jpg';
+  const [creativeStatus, setCreativeStatus] = useState("");
+  const poster = "http://www.example.com/path/to/video_poster.jpg";
   const slider = useRef(null);
 
   useEffect(() => {
@@ -45,32 +45,32 @@ const CreativeModal = ({
   const menu = (status) => {
     return (
       <Menu>
-        <Menu.Item key='accepted'>
-          <div className='flex flex-column'>
-            <label className='flex justify-between items-center mb-10 cursor-pointer'>
+        <Menu.Item key="accepted">
+          <div className="flex flex-column">
+            <label className="flex justify-between items-center mb-10 cursor-pointer">
               <span>Approved</span>
               <input
-                type='radio'
-                name='status'
-                value='accepted'
+                type="radio"
+                name="status"
+                value="accepted"
                 onChange={(e) => handleMenuClick(e.target.value)}
-                checked={status === 'accepted'}
-                className='cursor-pointer'
+                checked={status === "accepted"}
+                className="cursor-pointer"
               />
             </label>
           </div>
         </Menu.Item>
-        <Menu.Item key='rejected'>
-          <div className='flex flex-column'>
-            <label className='flex justify-between items-center mb-10 cursor-pointer'>
+        <Menu.Item key="rejected">
+          <div className="flex flex-column">
+            <label className="flex justify-between items-center mb-10 cursor-pointer">
               <span>Rejected</span>
               <input
-                type='radio'
-                name='status'
-                value='rejected'
-                checked={status === 'rejected'}
+                type="radio"
+                name="status"
+                value="rejected"
+                checked={status === "rejected"}
                 onChange={(e) => handleMenuClick(e.target.value)}
-                className='cursor-pointer'
+                className="cursor-pointer"
               />
             </label>
           </div>
@@ -95,7 +95,7 @@ const CreativeModal = ({
   };
 
   const handleMenuClick = (value) => {
-    console.log(value, 'value');
+    console.log(value, "value");
     setCreativeStatus(value);
     dispatch(
       creativeUpdateStatusAction({
@@ -134,13 +134,19 @@ const CreativeModal = ({
   return (
     <>
       {versionTrue ? (
-        <div className='version-text' onClick={() => setVisible(true)}>
-          {creative?.media[0]?.mimeType.includes('image') ? (
+        <div className="version-text" onClick={() => setVisible(true)}>
+          {creative?.media[0]?.mimeType.includes("image") ? (
             <img
               src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug}`}
-              width='80'
-              height='80'
-              className='version-img'
+              width="80"
+              height="80"
+              className="version-img"
+              alt="n m"
+              onError={(e) => {
+                e.target.src = `${process.env.REACT_APP_MEDIA_ORIGINAL_URL}/${
+                  creative?.media[0]?.slug || "default"
+                }`;
+              }}
             />
           ) : (
             <VideoPlayer
@@ -150,18 +156,18 @@ const CreativeModal = ({
               onPlay={playVideo}
               playing={playing}
               controls={true}
-              style={{ height: '80px', width: '80px' }}
-              className='short-video'
+              style={{ height: "80px", width: "80px" }}
+              className="short-video"
             />
           )}
           <span>
             <span className={className}>{creative?.media[0]?.versionTag}</span>
-            <RightOutlined className='ml-4' />
+            <RightOutlined className="ml-4" />
           </span>
         </div>
       ) : (
         <img
-          alt=''
+          alt=""
           onClick={() => {
             setVisible(true);
           }}
@@ -176,21 +182,21 @@ const CreativeModal = ({
         onCancel={() => closeModal(false)}
         width={1100}
         style={{ top: 40 }}
-        className='custom-modal'
+        className="custom-modal"
       >
-        <div className='creative-modal'>
-          <div className='creative-modal-header flex justify-between'>
-            <p className='title'>{influncerName}</p>
-            <div className=''>
+        <div className="creative-modal">
+          <div className="creative-modal-header flex justify-between">
+            <p className="title">{influncerName}</p>
+            <div className="">
               {influencerStatus ? (
                 <div>
                   <span>Status: </span>
-                  <button className='bg-green-outline'>Approved</button>
+                  <button className="bg-green-outline">Approved</button>
                 </div>
               ) : (
-                <Dropdown overlay={menu(creativeStatus)} trigger={['click']}>
+                <Dropdown overlay={menu(creativeStatus)} trigger={["click"]}>
                   <a
-                    className='ant-dropdown-link'
+                    className="ant-dropdown-link"
                     onClick={(e) => e.preventDefault()}
                   >
                     Select a status <DownOutlined />
@@ -199,40 +205,46 @@ const CreativeModal = ({
               )}
             </div>
           </div>
-          <div className='creative-modal-body'>
-            <div className='flex mobile-section'>
-              <div className='carousal-section'>
+          <div className="creative-modal-body">
+            <div className="flex mobile-section">
+              <div className="carousal-section">
                 <LeftOutlined
                   onClick={() => slider.current.prev()}
-                  className='slider-left-icon'
+                  className="slider-left-icon"
                 />
                 <Carousel afterChange={onChange} ref={slider}>
                   {creative.length != 0 ? (
                     creative.media.map((media) => {
                       return (
-                        <div className='slider-box'>
-                          <Tag color='cyan'>{media.versionTag}</Tag>
-                          {media.mimeType.includes('image') ? (
+                        <div className="slider-box">
+                          <Tag color="cyan">{media.versionTag}</Tag>
+                          {media.mimeType.includes("image") ? (
                             <img
                               src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${media.slug}`}
-                              className='contentStyle'
+                              className="contentStyle"
+                              alt={`creative-media-${media.id}`}
+                              onError={(e) => {
+                                e.target.src = `${
+                                  process.env.REACT_APP_MEDIA_ORIGINAL_URL
+                                }/${media.slug || "default"}`;
+                              }}
                             />
                           ) : (
                             <VideoPlayer
                               url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media.slug}`}
                               poster={poster}
-                              className='video-contentStyle'
+                              className="video-contentStyle"
                               onPause={pauseVideo}
                               onPlay={playVideo}
                               playing={playing}
                               controls={true}
                             />
                           )}
-                          {media.mimeType.includes('image') && (
+                          {media.mimeType.includes("image") && (
                             <img
                               src={download}
-                              alt='download icon'
-                              className='icons-custom cursor-pointer'
+                              alt="download icon"
+                              className="icons-custom cursor-pointer"
                               onClick={() => downloadMedia(media.slug)}
                             />
                           )}
@@ -273,17 +285,17 @@ const CreativeModal = ({
                 </Carousel>
                 <RightOutlined
                   onClick={() => slider.current.next()}
-                  className='slider-right-icon'
+                  className="slider-right-icon"
                 />
               </div>
-              <div className='comment-section'>
-                <div className='flex justify-between items-center'>
-                  <p className='view-title' onClick={showAttachFiles}>
-                    View Attachments{' '}
+              <div className="comment-section">
+                <div className="flex justify-between items-center">
+                  <p className="view-title" onClick={showAttachFiles}>
+                    View Attachments{" "}
                     {showFiles ? (
-                      <UpOutlined className='ml-4' />
+                      <UpOutlined className="ml-4" />
                     ) : (
-                      <DownOutlined className='ml-4' />
+                      <DownOutlined className="ml-4" />
                     )}
                   </p>
 
@@ -300,7 +312,7 @@ const CreativeModal = ({
                   ) : (
                     <Empty
                       image={Empty.PRESENTED_IMAGE_SIMPLE}
-                      style={{ margin: '0' }}
+                      style={{ margin: "0" }}
                     />
                   )
                 ) : (
