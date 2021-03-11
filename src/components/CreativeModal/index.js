@@ -26,9 +26,7 @@ const CreativeModal = ({
   className,
   versionTrue,
   influencerStatus,
-  emptystateInfluncer,
   creative,
-  setPage,
   influncerName,
 }) => {
   const dispatch = useDispatch();
@@ -82,12 +80,12 @@ const CreativeModal = ({
             <label className='flex justify-between items-center mb-10 cursor-pointer'>
               <span>Pending</span>
               <input
-                type='radio'
-                name='status'
-                value='pending'
-                checked={status === 'pending'}
+                type="radio"
+                name="status"
+                value="pending"
+                checked={status === "pending"}
                 onChange={(e) => handleMenuClick(e.target.value)}
-                className='cursor-pointer'
+                className="cursor-pointer"
               />
             </label>
           </div>
@@ -289,7 +287,9 @@ const CreativeModal = ({
                   />
                 </div>
                 {showFiles ? (
-                  <AttachmentFileCard />
+                  creative.attachments.map((media) => (
+                    <AttachmentFileCard media={media} />
+                  ))
                 ) : (
                   <CommentBox creativeId={creative.id} />
                 )}

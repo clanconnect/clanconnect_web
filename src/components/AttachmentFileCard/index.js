@@ -38,7 +38,7 @@ const MediaIcon = (mimeType) => {
   }
 };
 
-const AttachmentFileCard = ({ media }) => {
+const AttachmentFileCard = ({ media = {} }) => {
   return (
     <div
       className="file-card cursor-pointer"
@@ -46,7 +46,7 @@ const AttachmentFileCard = ({ media }) => {
     >
       <div className="flex ">
         <img
-          src={MediaIcon(media.mimeType)}
+          src={MediaIcon(media.mimeType || "")}
           alt="download"
           width="25"
           className="mr-10 "

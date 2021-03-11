@@ -1,14 +1,14 @@
 export const myTabs = [
   {
     id: 1,
-    name: 'Snapshot',
+    name: "Snapshot",
   },
   {
     id: 2,
-    name: 'Proposals',
+    name: "Proposals",
   },
   {
     id: 3,
-    name: 'Creative Approval',
+    name: "Creative Approval",
   },
 ];
