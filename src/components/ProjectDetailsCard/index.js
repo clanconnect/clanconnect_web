@@ -1,10 +1,11 @@
 import React from 'react';
+import { Empty } from 'antd';
 import img1 from 'assets/images/project1.jpg';
 
 import './styles.scss';
 
 const ProjectDetailsCard = ({ projectDetail }) => {
-  return (
+  return projectDetail.length != 0 ? (
     <div className='card-wrapper'>
       <div className='img-card'>
         <img src={projectDetail?.coverPictureUrl} alt='img' />
@@ -14,6 +15,8 @@ const ProjectDetailsCard = ({ projectDetail }) => {
         <p className='project-para'>{projectDetail?.shortDesc}</p>
       </div>
     </div>
+  ) : (
+    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
   );
 };
 

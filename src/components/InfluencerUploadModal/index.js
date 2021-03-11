@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles.scss";
-import { Modal } from "antd";
+import { Modal, Empty } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import UploadDocumentCard from "../UploadDocumentCard";
 import UploadAttchmentFile from "../UploadAttchmentFile";
@@ -300,17 +300,21 @@ const InfluencerUploadModal = ({
               Please select one creative for which you want to upload a version:
             </p>
             <div className="conatiner-file">
-              {creatives.map((creative) => (
-                <UploadAttchmentFile
-                  key={`previous-creative-version-${creative.id}`}
-                  fileName={creative.id}
-                  icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                    creative?.media[0]?.slug || "default"
-                  }`}
-                  uploadedFile
-                  handleClick={() => selectCreative(creative)}
-                />
-              ))}
+              {creatives.length != 0 ? (
+                creatives.map((creative) => (
+                  <UploadAttchmentFile
+                    key={`previous-creative-version-${creative.id}`}
+                    fileName={creative.id}
+                    icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
+                      creative?.media[0]?.slug || "default"
+                    }`}
+                    uploadedFile
+                    handleClick={() => selectCreative(creative)}
+                  />
+                ))
+              ) : (
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              )}
             </div>
           </div>
         )}

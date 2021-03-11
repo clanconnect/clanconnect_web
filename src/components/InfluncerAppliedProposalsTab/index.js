@@ -1,25 +1,29 @@
-import React, { useEffect, useState } from "react";
-import "./styles.scss";
-import { Tabs } from "antd";
-import ProjectListCard from "../ProjectListCard";
-import { connect } from "react-redux";
-import { ACTIONS } from "redux/creators/projects/actions";
+import React, { useEffect, useState } from 'react';
+import './styles.scss';
+import { Tabs, Empty } from 'antd';
+import ProjectListCard from '../ProjectListCard';
+import { connect } from 'react-redux';
+import { ACTIONS } from 'redux/creators/projects/actions';
 
 const AvailableTabs = [
-  { label: "Pending", value: "sent" },
-  { label: "Approved", value: "accepted" },
-  { label: "Revised Quote Requests", value: "financial-review" },
-  { label: "Rejected", value: "rejected" },
+  { label: 'Pending', value: 'sent' },
+  { label: 'Approved', value: 'accepted' },
+  { label: 'Revised Quote Requests', value: 'financial-review' },
+  { label: 'Rejected', value: 'rejected' },
 ];
 
 const ProjectList = (projects) => {
-  return projects.map((project) => (
-    <ProjectListCard
-      project={project}
-      disableAction
-      key={`projects-${project.id}`}
-    />
-  ));
+  return projects.length != 0 ? (
+    projects.map((project) => (
+      <ProjectListCard
+        project={project}
+        disableAction
+        key={`projects-${project.id}`}
+      />
+    ))
+  ) : (
+    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+  );
 };
 
 const InfluncerAppliedProposalsTab = ({ list, dispatch }) => {
@@ -46,8 +50,8 @@ const InfluncerAppliedProposalsTab = ({ list, dispatch }) => {
   useEffect(() => setProjects(list), [list]);
 
   return (
-    <div className="tab-applied-proposal">
-      <Tabs defaultActiveKey="pending" onChange={onTabChange}>
+    <div className='tab-applied-proposal'>
+      <Tabs defaultActiveKey='pending' onChange={onTabChange}>
         {AvailableTabs.map((tab) => (
           <TabPane tab={tab.label} key={tab.value}>
             {ProjectList(projects)}

@@ -22,5 +22,9 @@
 
   .file-title {
     color: #5d5d5d;
+    white-space: nowrap;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

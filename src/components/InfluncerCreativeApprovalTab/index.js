@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './styles.scss';
-import { Tabs } from 'antd';
+import { Tabs, Empty } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RightOutlined } from '@ant-design/icons';
@@ -11,43 +11,60 @@ import { ACTIONS as PROJECT_ACTIONS } from 'redux/creators/projects/actions';
 import { ACTIONS as CREATIVE_ACTIONS } from 'redux/creators/creatives/actions';
 
 const ProjectList = (projects) => {
-  return projects.map((project) => (
-    <ProjectListCard
-      project={project}
-      key={`projects-${project.id}`}
-      creatives={[]}
-      disablePreviousVersionUpload={true}
-    />
-  ));
+  return projects.length != 0 ? (
+    projects.map((project) => (
+      <ProjectListCard
+        project={project}
+        key={`projects-${project.id}`}
+        creatives={[]}
+        disablePreviousVersionUpload={true}
+      />
+    ))
+  ) : (
+    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+  );
 };
 
-const ProjectCreatives = ({ project, creatives }) => (
-  <div className='custom-project-collapse'>
-    <div key={`project-creatives-${project.id}`}>
-      <ProjectListCard project={project} creatives={creatives} />
+const ProjectCreatives = ({ project, creatives }) =>
+  project.length != 0 ? (
+    <div className='custom-project-collapse'>
+      <div key={`project-creatives-${project.id}`}>
+        <ProjectListCard
+          project={project}
+          creatives={creatives}
+          className='shadow-none'
+        />
 
-      <div className='file-influencer-row'>
-        {creatives.map((creative) => (
-          <DownLoadedFile
-            creative={creative}
-            key={`creative-${creative.id}`}
-            project={project}
-          />
-        ))}
-      </div>
-
-      {creatives.length ? (
-        <Link to={routeConstants.allCreativesLists}>
-          <div className='mt-30'>
-            <p className='view-title'>
-              View all creatives <RightOutlined />
-            </p>
+        <div className='open-container'>
+          <div className='file-influencer-row'>
+            {creatives.length != 0 ? (
+              creatives.map((creative) => (
+                <DownLoadedFile
+                  creative={creative}
+                  key={`creative-${creative.id}`}
+                  project={project}
+                />
+              ))
+            ) : (
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            )}
           </div>
-        </Link>
-      ) : null}
+
+          {creatives.length ? (
+            <Link to={routeConstants.allCreativesLists}>
+              <div className='mt-30'>
+                <p className='view-title'>
+                  View all creatives <RightOutlined />
+                </p>
+              </div>
+            </Link>
+          ) : null}
+        </div>
+      </div>
     </div>
-  </div>
-);
+  ) : (
+    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+  );
 
 const AvailableTabs = [
   { label: 'Pending', value: 'pending' },

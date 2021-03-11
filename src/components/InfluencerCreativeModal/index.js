@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./styles.scss";
 import VideoPlayer from "react-player";
-import { Modal, Carousel, Tag } from "antd";
+import { Modal, Carousel, Tag, Empty } from "antd";
 import {
   DownOutlined,
   UpOutlined,
@@ -36,12 +36,14 @@ const MediaView = ({ media, imageUrl, onImageError }) => {
           controls={true}
         />
       )}
-      <img
-        src={download}
-        alt=""
-        className="icons-custom cursor-pointer"
-        onClick={() => downloadMedia(media.slug)}
-      />
+      {media.mimeType.includes("image") && (
+        <img
+          src={download}
+          alt=""
+          className="icons-custom cursor-pointer"
+          onClick={() => downloadMedia(media.slug)}
+        />
+      )}
     </div>
   );
 };
@@ -135,9 +137,16 @@ const InfluencerCreativeModal = ({
                 </div>
 
                 {showAttachments ? (
-                  creative.attachments.map((media) => (
-                    <AttachmentFileCard media={media} />
-                  ))
+                  creative.attachments != 0 ? (
+                    creative.attachments.map((media) => (
+                      <AttachmentFileCard media={media} />
+                    ))
+                  ) : (
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      style={{ margin: "0px" }}
+                    />
+                  )
                 ) : (
                   <CommentBox creativeId={creative.id} />
                 )}

@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
-import { Waypoint } from "react-waypoint";
-import { useSelector, useDispatch } from "react-redux";
-import CommentProfile from "../CommentProfile";
-import { getCommentsAction } from "redux/brands/comments/actions";
-import { Spin } from "antd";
+import React, { useEffect, useState } from 'react';
+import { Waypoint } from 'react-waypoint';
+import { useSelector, useDispatch } from 'react-redux';
+import CommentProfile from '../CommentProfile';
+import { getCommentsAction } from 'redux/brands/comments/actions';
+import { Spin, Empty } from 'antd';
 
 const Comment = (props) => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const Comment = (props) => {
   }, [commentData, commentDataTs, commentsDataLocalTs]);
 
   return (
-    <div className="demo-class">
+    <div className='demo-class'>
       {commentData &&
         commentData.map((item, index) => {
           if (index === commentData.length - 1) {
@@ -55,17 +55,15 @@ const Comment = (props) => {
         })}
       {/* {loader && Loading} */}
       {!loader ? (
-        ""
+        ''
       ) : (
-        <div className="loader-row">
+        <div className='loader-row'>
           <Spin />
         </div>
       )}
 
       {commentData.length === 0 && (
-        <div className="comment-empty">
-          <p>No Comments</p>
-        </div>
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ margin: '0px' }} />
       )}
     </div>
   );

@@ -1,64 +1,81 @@
 import React from "react";
 import "./styles.scss";
-import img from "assets/images/png.svg";
-import pdf from "assets/images/pdf.svg";
 import download from "assets/images/download.svg";
 import { convertSizeForHuman, downloadMedia } from "helpers";
+import {
+  VideoCameraOutlined,
+  FileImageOutlined,
+  AudioOutlined,
+  FilePdfOutlined,
+  FileExcelOutlined,
+  FileTextOutlined,
+  FilePptOutlined,
+  FileZipOutlined,
+  FileOutlined,
+  Html5Outlined,
+} from "@ant-design/icons";
 
 const MediaIcon = (mimeType) => {
   const map = {
-    image: img,
-    audio: "fa-file-audio-o",
-    video: "fa-file-video-o",
-    "application/pdf": pdf,
-    "application/msword": "fa-file-word-o",
-    "application/vnd.ms-word": "fa-file-word-o",
-    "application/vnd.oasis.opendocument.text": "fa-file-word-o",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml":
-      "fa-file-word-o",
-    "application/vnd.ms-excel": "fa-file-excel-o",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml":
-      "fa-file-excel-o",
-    "application/vnd.oasis.opendocument.spreadsheet": "fa-file-excel-o",
-    "application/vnd.ms-powerpoint": "fa-file-powerpoint-o",
-    "application/vnd.openxmlformats-officedocument.presentationml":
-      "fa-file-powerpoint-o",
-    "application/vnd.oasis.opendocument.presentation": "fa-file-powerpoint-o",
-    "text/plain": "fa-file-text-o",
-    "text/html": "fa-file-code-o",
-    "application/json": "fa-file-code-o",
-    "application/gzip": "fa-file-archive-o",
-    "application/zip": "fa-file-archive-o",
+    image: (props = {}) => <FileImageOutlined {...props} />,
+    audio: (props = {}) => <AudioOutlined {...props} />,
+    video: (props = {}) => <VideoCameraOutlined {...props} />,
+    "application/pdf": (props = {}) => <FilePdfOutlined {...props} />,
+    "application/msword": (props = {}) => <FileTextOutlined {...props} />,
+    "application/vnd.ms-word": (props = {}) => <FileTextOutlined {...props} />,
+    "application/vnd.oasis.opendocument.text": (props = {}) => (
+      <FileTextOutlined {...props} />
+    ),
+    "application/vnd.openxmlformats-officedocument.wordprocessingml": (
+      props = {}
+    ) => <FileTextOutlined {...props} />,
+    "application/vnd.ms-excel": (props = {}) => (
+      <FileExcelOutlined {...props} />
+    ),
+    "application/vnd.openxmlformats-officedocument.spreadsheetml": (
+      props = {}
+    ) => <FileExcelOutlined {...props} />,
+    "application/vnd.oasis.opendocument.spreadsheet": (props = {}) => (
+      <FileExcelOutlined {...props} />
+    ),
+    "application/vnd.ms-powerpoint": (props = {}) => (
+      <FilePptOutlined {...props} />
+    ),
+    "application/vnd.openxmlformats-officedocument.presentationml": (
+      props = {}
+    ) => <FilePptOutlined {...props} />,
+    "application/vnd.oasis.opendocument.presentation": (props = {}) => (
+      <FilePptOutlined {...props} />
+    ),
+    "text/plain": (props = {}) => <FileOutlined {...props} />,
+    "text/html": (props = {}) => <Html5Outlined {...props} />,
+    "application/zip": (props = {}) => <FileZipOutlined {...props} />,
   };
 
   for (const key in map) {
     if (mimeType.includes(key)) {
-      return map[key];
+      const icon = map[key];
+      return <>{icon({ style: { fontSize: "25px", color: "#5d5d5d" } })}</>;
     }
   }
 };
 
 const AttachmentFileCard = ({ media = {} }) => {
-  console.log("media ====> ", media);
   return (
     <div
       className="file-card cursor-pointer"
       onClick={() => downloadMedia(media.slug)}
     >
-      <div className="flex ">
-        <img
-          src={MediaIcon(media.mimeType || "")}
-          alt="download"
-          width="25"
-          className="mr-10 "
-        />
+      <div className="flex">
+        {MediaIcon(media.mimeType || "")}
         <div>
-          <span className="file-title">{media.originalName || media.id}</span>
+          <p className="file-title">{media.originalName || media.id}</p>
           <p className="file-date">
             <span>{new Date(media.createdAt).toISOString().split("T")[0]}</span>
           </p>
         </div>
       </div>
+
       <span className=" file-size">{convertSizeForHuman(media.size || 0)}</span>
       <img src={download} alt="download" width="16" />
     </div>

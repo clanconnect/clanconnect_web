@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Tabs } from "antd";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Tabs, Empty } from 'antd';
 
-import InfluncerFile from "../InfluncerFile";
+import InfluncerFile from '../InfluncerFile';
 import {
   getCreativesAction,
   creativeUpdateBulkAction,
-} from "redux/brands/creatives/actions";
+} from 'redux/brands/creatives/actions';
 
 import {
   influncerNameDataApproved,
   influncerNameDataPending,
   influncerNameDataRejected,
-} from "common/dataManager";
+} from 'common/dataManager';
 
-import "./styles.scss";
-import { useDispatch } from "react-redux";
+import './styles.scss';
+import { useDispatch } from 'react-redux';
 
 const CreativeApprovalData = ({
   defaultActiveKey,
@@ -82,14 +82,14 @@ const CreativeApprovalData = ({
 
   useEffect(() => {
     let params = {
-      include: "media,user",
-      status: "pending",
+      include: 'media,user',
+      status: 'pending',
     };
     dispatch(getCreativesAction({ params, id }));
   }, []);
 
   return (
-    <div className="tab-creative">
+    <div className='tab-creative'>
       <Tabs
         defaultActiveKey={defaultActiveKey}
         onChange={(key) => {
@@ -98,32 +98,32 @@ const CreativeApprovalData = ({
           setShowSelectAllActive(false);
         }}
       >
-        <TabPane tab="Pending" key="pending">
+        <TabPane tab='Pending' key='pending'>
           {creativeDetails.length !== 0 && (
-            <div className="btn-row">
+            <div className='btn-row'>
               <div>
                 {showSelectAllActive ? (
                   <>
                     <button
-                      className="outline-btn bg-green"
+                      className='outline-btn bg-green'
                       onClick={handleSelectAll}
                     >
-                      {isAllSelected() ? "Deselect All" : "Select All"}
+                      {isAllSelected() ? 'Deselect All' : 'Select All'}
                     </button>
                     <button
-                      className="outline-btn bg-green-outline"
+                      className='outline-btn bg-green-outline'
                       onClick={() => {
                         onClickSelect(false);
-                        handleBulkCreatives("accepted", "pending");
+                        handleBulkCreatives('accepted', 'pending');
                       }}
                     >
                       Approved
                     </button>
                     <button
-                      className="outline-btn bg-red"
+                      className='outline-btn bg-red'
                       onClick={() => {
                         onClickSelect(false);
-                        handleBulkCreatives("rejected", "pending");
+                        handleBulkCreatives('rejected', 'pending');
                       }}
                     >
                       Reject
@@ -131,7 +131,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className="outline-btn bg-green"
+                    className='outline-btn bg-green'
                     onClick={() => onClickSelect(true)}
                   >
                     Select
@@ -149,25 +149,23 @@ const CreativeApprovalData = ({
             setSelectedCreatives={setSelectedCreatives}
           />
           {creativeDetails.length === 0 && (
-            <div className="comment-empty ">
-              <p>No Data Available</p>
-            </div>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </TabPane>
-        <TabPane tab="Approved" key="accepted">
+        <TabPane tab='Approved' key='accepted'>
           {creativeDetails.length !== 0 && (
-            <div className="btn-row">
+            <div className='btn-row'>
               <div>
                 {showSelectAllActive ? (
                   <>
-                    <button className="outline-btn bg-green">
-                      {isAllSelected() ? "Deselect All" : "Select All"}
+                    <button className='outline-btn bg-green'>
+                      {isAllSelected() ? 'Deselect All' : 'Select All'}
                     </button>
                     <button
-                      className="outline-btn bg-red"
+                      className='outline-btn bg-red'
                       onClick={() => {
                         onClickSelect(false);
-                        handleBulkCreatives("rejected", "accepted");
+                        handleBulkCreatives('rejected', 'accepted');
                       }}
                     >
                       Reject
@@ -175,7 +173,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className="outline-btn bg-green"
+                    className='outline-btn bg-green'
                     onClick={() => onClickSelect(true)}
                   >
                     Select
@@ -194,26 +192,24 @@ const CreativeApprovalData = ({
           />
 
           {creativeDetails.length === 0 && (
-            <div className="comment-empty ">
-              <p>No Data Available</p>
-            </div>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </TabPane>
 
-        <TabPane tab="Rejected" key="rejected">
+        <TabPane tab='Rejected' key='rejected'>
           {creativeDetails.length !== 0 && (
-            <div className="btn-row">
+            <div className='btn-row'>
               <div>
                 {showSelectAllActive ? (
                   <>
-                    <button className="outline-btn bg-green">
-                      {isAllSelected() ? "Deselect All" : "Select All"}
+                    <button className='outline-btn bg-green'>
+                      {isAllSelected() ? 'Deselect All' : 'Select All'}
                     </button>
                     <button
-                      className="outline-btn bg-green-outline"
+                      className='outline-btn bg-green-outline'
                       onClick={() => {
                         onClickSelect(false);
-                        handleBulkCreatives("accepted", "rejected");
+                        handleBulkCreatives('accepted', 'rejected');
                       }}
                     >
                       Approved
@@ -221,7 +217,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className="outline-btn bg-green"
+                    className='outline-btn bg-green'
                     onClick={() => onClickSelect(true)}
                   >
                     Select
@@ -239,9 +235,7 @@ const CreativeApprovalData = ({
             setSelectedCreatives={setSelectedCreatives}
           />
           {creativeDetails.length === 0 && (
-            <div className="comment-empty ">
-              <p>No Data Available</p>
-            </div>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </TabPane>
       </Tabs>

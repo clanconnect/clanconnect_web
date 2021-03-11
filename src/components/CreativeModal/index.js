@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { downloadMedia } from 'helpers';
 
 import VideoPlayer from 'react-player';
-import { Modal, Menu, Dropdown, Carousel, Tag } from 'antd';
+import { Modal, Menu, Dropdown, Carousel, Tag, Empty } from 'antd';
 import {
   DownOutlined,
   UpOutlined,
@@ -207,35 +207,41 @@ const CreativeModal = ({
                   className='slider-left-icon'
                 />
                 <Carousel afterChange={onChange} ref={slider}>
-                  {creative.media.map((media) => {
-                    return (
-                      <div className='slider-box'>
-                        <Tag color='cyan'>{media.versionTag}</Tag>
-                        {media.mimeType.includes('image') ? (
-                          <img
-                            src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${media.slug}`}
-                            className='contentStyle'
-                          />
-                        ) : (
-                          <VideoPlayer
-                            url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media.slug}`}
-                            poster={poster}
-                            className='video-contentStyle'
-                            onPause={pauseVideo}
-                            onPlay={playVideo}
-                            playing={playing}
-                            controls={true}
-                          />
-                        )}
-                        <img
-                          src={download}
-                          alt='download icon'
-                          className='icons-custom cursor-pointer'
-                          onClick={() => downloadMedia(media.slug)}
-                        />
-                      </div>
-                    );
-                  })}
+                  {creative.length != 0 ? (
+                    creative.media.map((media) => {
+                      return (
+                        <div className='slider-box'>
+                          <Tag color='cyan'>{media.versionTag}</Tag>
+                          {media.mimeType.includes('image') ? (
+                            <img
+                              src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${media.slug}`}
+                              className='contentStyle'
+                            />
+                          ) : (
+                            <VideoPlayer
+                              url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media.slug}`}
+                              poster={poster}
+                              className='video-contentStyle'
+                              onPause={pauseVideo}
+                              onPlay={playVideo}
+                              playing={playing}
+                              controls={true}
+                            />
+                          )}
+                          {media.mimeType.includes('image') && (
+                            <img
+                              src={download}
+                              alt='download icon'
+                              className='icons-custom cursor-pointer'
+                              onClick={() => downloadMedia(media.slug)}
+                            />
+                          )}
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  )}
                   {/* <div className='slider-box'>
                     <Tag color='cyan'>Version 2</Tag>
 
@@ -287,9 +293,16 @@ const CreativeModal = ({
                   />
                 </div>
                 {showFiles ? (
-                  creative.attachments.map((media) => (
-                    <AttachmentFileCard media={media} />
-                  ))
+                  creative.attachments.length != 0 ? (
+                    creative.attachments.map((media) => (
+                      <AttachmentFileCard media={media} />
+                    ))
+                  ) : (
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      style={{ margin: '0' }}
+                    />
+                  )
                 ) : (
                   <CommentBox creativeId={creative.id} />
                 )}

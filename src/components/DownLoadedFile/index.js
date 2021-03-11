@@ -39,14 +39,14 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               controls={false}
             />
           )}
-          <div className="chat-icon">
+          {/* <div className="chat-icon">
             <InfluencerCreativeModal
               src={chat}
               project={project}
               className="icons-custom"
               creative={creative}
             />
-          </div>
+          </div> */}
           <div className="icons-row">
             <InfluencerCreativeModal
               src={fullScreen}
