@@ -30,3 +30,7 @@ export const convertSizeForHuman = (bytes) => {
 
   return `${bytes} Bytes`;
 };
+
+export const getImageUrl = (slug) => {
+  return process.env.REACT_APP_MEDIA_ORIGINAL_URL + "/" + slug;
+};
