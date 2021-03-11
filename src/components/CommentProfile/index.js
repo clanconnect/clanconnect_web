@@ -1,6 +1,4 @@
 import React from "react";
-import { Badge, Checkbox } from "antd";
-import user from "assets/images/user.jpg";
 import moment from "moment";
 
 import "./styles.scss";
@@ -8,8 +6,9 @@ import { getImageUrl } from "helpers";
 
 const CommentProfile = ({ data }) => {
   return (
-    <div className="comment-profile">
+    <div className="comment-profile" key={`comment-detail-${data.id}`}>
       <img
+        alt="hgbn"
         src={data?.author?.image || getImageUrl("default-user.jpg")}
         className="user-icon"
       />

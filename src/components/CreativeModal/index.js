@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-
 import { downloadMedia } from "helpers";
-
 import VideoPlayer from "react-player";
 import { Modal, Menu, Dropdown, Carousel, Tag, Empty } from "antd";
 import {
@@ -11,6 +9,7 @@ import {
   UpOutlined,
   RightOutlined,
   LeftOutlined,
+  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import CommentBox from "../CommentBox";
 import AttachmentFileCard from "../AttachmentFileCard";
@@ -20,6 +19,7 @@ import paperclip from "assets/images/paperclip.svg";
 import { creativeUpdateStatusAction } from "redux/brands/creatives/actions";
 import "./styles.scss";
 
+const { confirm } = Modal;
 const CreativeModal = ({
   src,
   className,
@@ -34,11 +34,27 @@ const CreativeModal = ({
   const [showFiles, setShowFiles] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [creativeStatus, setCreativeStatus] = useState("");
+  const [currentMedia, setCurrentMedia] = useState(null);
   const slider = useRef(null);
+  const statusMap = {
+    accepted: {
+      label: "Accepted",
+      style: {
+        color: "white",
+        borderColor: "white",
+        backgroundColor: "#87d068",
+      },
+    },
+    rejected: {
+      label: "Rejected",
+      style: { color: "white", borderColor: "white", backgroundColor: "#f50" },
+    },
+  };
 
   useEffect(() => {
-    setCreativeStatus(creative.status);
-  }, [creative.status]);
+    setCurrentMedia(creative.media[0]);
+    setCreativeStatus(creative.media[0].status);
+  }, [creative.media]);
 
   const menu = (status) => {
     return (
@@ -77,31 +93,43 @@ const CreativeModal = ({
     );
   };
 
-  const handleMenuClick = (value) => {
-    setCreativeStatus(value);
+  const updateStatus = (value) => {
     dispatch(
       creativeUpdateStatusAction({
         status: value,
         projectId: id,
         creativeId: creative.id,
+        mediaId: currentMedia.id,
+        currentStatus: creative.status,
       })
     );
+    setCreativeStatus(value);
   };
 
-  const closeModal = (val) => {
+  const handleMenuClick = (value) => {
+    if (creative.status === "accepted" && value === "accepted") {
+      confirm({
+        title: "Are you sure to proceed?",
+        icon: <ExclamationCircleOutlined />,
+        content: "Previously approved versions will automatically be rejected.",
+        onOk: () => updateStatus(value),
+        onCancel: () => {},
+      });
+      return;
+    }
+    updateStatus(value);
+  };
+
+  const closeModal = () => {
     setPlaying(false);
-
-    setTimeout(() => {
-      setVisible(val);
-    }, 500);
+    setVisible(false);
+    setCurrentMedia(null);
   };
 
-  const pauseVideo = () => {
-    setPlaying(false);
-  };
-
-  const playVideo = () => {
-    setPlaying(true);
+  const handleCreativeChange = (val) => {
+    const media = creative.media ? creative.media[val] : null;
+    setCurrentMedia(media);
+    setCreativeStatus(media.status);
   };
 
   return (
@@ -169,9 +197,11 @@ const CreativeModal = ({
                   <a
                     href="#javascript"
                     className="ant-dropdown-link"
+                    style={statusMap[creativeStatus]?.style || {}}
                     onClick={(e) => e.preventDefault()}
                   >
-                    Select a status <DownOutlined />
+                    {statusMap[creativeStatus]?.label || "Select a status"}
+                    <DownOutlined />
                   </a>
                 </Dropdown>
               )}
@@ -186,8 +216,12 @@ const CreativeModal = ({
                     className="slider-left-icon"
                   />
                 ) : null}
-                <Carousel ref={slider} className={"remove-buttom"}>
-                  {creative.length != 0 ? (
+                <Carousel
+                  ref={slider}
+                  className={"remove-buttom"}
+                  beforeChange={(f, t) => handleCreativeChange(t)}
+                >
+                  {creative.length !== 0 ? (
                     creative.media.map((media) => {
                       return (
                         <div
@@ -238,7 +272,10 @@ const CreativeModal = ({
               </div>
               <div className="comment-section">
                 <div className="flex justify-between items-center">
-                  <p className="view-title" onClick={() => setShowFiles(true)}>
+                  <p
+                    className="view-title"
+                    onClick={() => setShowFiles(!showFiles)}
+                  >
                     View Attachments{" "}
                     <UpOutlined
                       className={`${
@@ -254,9 +291,12 @@ const CreativeModal = ({
                 </div>
                 {showFiles ? (
                   <div className="tarnsition">
-                    {creative.attachments.length != 0 ? (
+                    {creative.attachments.length !== 0 ? (
                       creative.attachments.map((media) => (
-                        <AttachmentFileCard media={media} />
+                        <AttachmentFileCard
+                          media={media}
+                          key={`attachment-media-${media.id}`}
+                        />
                       ))
                     ) : (
                       <Empty
