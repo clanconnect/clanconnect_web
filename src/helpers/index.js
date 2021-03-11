@@ -15,3 +15,18 @@ export const downloadMedia = (slug) => {
     link.click();
   });
 };
+
+export const convertSizeForHuman = (bytes) => {
+  const sizes = ["KBs", "MBs", "GBs"];
+  let fileSize = bytes;
+  for (const size of sizes) {
+    fileSize = fileSize / 1024;
+    if (fileSize > 1024) {
+      continue;
+    }
+
+    return `${Math.floor(fileSize)} ${size}`;
+  }
+
+  return `${bytes} Bytes`;
+};

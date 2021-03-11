@@ -3,12 +3,12 @@ import "./styles.scss";
 import { Upload } from "antd";
 import upload from "assets/images/upload.svg";
 
-const UploadDocumentCard = ({ setfileList }) => {
+const UploadDocumentCard = ({ setfileList, multiple }) => {
   const { Dragger } = Upload;
 
   const props = {
     name: "file",
-    multiple: true,
+    multiple: multiple === undefined ? true : multiple,
     beforeUpload: () => false,
     onChange: (info) => setfileList(info.fileList),
   };

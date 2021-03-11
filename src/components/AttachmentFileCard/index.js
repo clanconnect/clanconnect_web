@@ -3,7 +3,7 @@ import "./styles.scss";
 import img from "assets/images/png.svg";
 import pdf from "assets/images/pdf.svg";
 import download from "assets/images/download.svg";
-import { downloadMedia } from "helpers";
+import { convertSizeForHuman, downloadMedia } from "helpers";
 
 const MediaIcon = (mimeType) => {
   const map = {
@@ -39,6 +39,7 @@ const MediaIcon = (mimeType) => {
 };
 
 const AttachmentFileCard = ({ media = {} }) => {
+  console.log("media ====> ", media);
   return (
     <div
       className="file-card cursor-pointer"
@@ -58,8 +59,7 @@ const AttachmentFileCard = ({ media = {} }) => {
           </p>
         </div>
       </div>
-
-      <span className=" file-size">23 MB</span>
+      <span className=" file-size">{convertSizeForHuman(media.size || 0)}</span>
       <img src={download} alt="download" width="16" />
     </div>
   );
