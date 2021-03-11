@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import Header from 'components/DemoHeader';
-import SideNav from 'components/DemoSideNav';
-import Breadcrumb from 'components/Breadcrumb';
-import ProjectDetailsCard from 'components/ProjectDetailsCard';
-import SnapshotTabData from 'components/SnapshotTabData';
-import ProposalsTabData from 'components/ProposalsTabData';
-import CreativeApprovalData from 'components/CreativeApprovalData';
-import { getProjectsAction } from 'redux/brands/projects/actions';
-import { getProposalsAction } from 'redux/brands/proposals/actions';
-import { getCreativesAction } from 'redux/brands/creatives/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Header from "components/DemoHeader";
+import SideNav from "components/DemoSideNav";
+import Breadcrumb from "components/Breadcrumb";
+import ProjectDetailsCard from "components/ProjectDetailsCard";
+import SnapshotTabData from "components/SnapshotTabData";
+import ProposalsTabData from "components/ProposalsTabData";
+import CreativeApprovalData from "components/CreativeApprovalData";
+import { getProjectsAction } from "redux/brands/projects/actions";
+import { getProposalsAction } from "redux/brands/proposals/actions";
+import { getCreativesAction } from "redux/brands/creatives/actions";
+import { useDispatch, useSelector } from "react-redux";
 
-import { myTabs } from './dataManager';
+import { myTabs } from "./dataManager";
 
-import './styles.scss';
+import "./styles.scss";
 
 const ProjectDetails = (props) => {
   let { id } = useParams();
@@ -23,12 +23,12 @@ const ProjectDetails = (props) => {
   const { proposalDetails } = useSelector((store) => store.proposals);
   const { creativeDetails } = useSelector((store) => store.creatives);
 
-  const [activeTab, setActiveTab] = useState('Snapshot');
+  const [activeTab, setActiveTab] = useState("Snapshot");
   const [defaultActiveKeyProposals, setDefaultActiveKeyProposals] = useState(
-    'sent'
+    "sent"
   );
   const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
-    'pending'
+    "pending"
   );
 
   const handleActiveTab = (index) => {
@@ -36,11 +36,11 @@ const ProjectDetails = (props) => {
   };
 
   const handleTabs = (val) => {
-    if (val === 'sent' || val === 'accepted' || val === 'rejected') {
+    if (val === "sent" || val === "accepted" || val === "rejected") {
       setDefaultActiveKeyProposals(val);
-      setActiveTab('Proposals');
+      setActiveTab("Proposals");
       let params = {
-        include: 'user',
+        include: "user",
         status: val,
       };
       dispatch(getProposalsAction({ params, id }));
@@ -48,16 +48,16 @@ const ProjectDetails = (props) => {
   };
 
   const handleCreativeTabs = (val) => {
-    console.log(val, '0--------------------0');
-    if (val === 'pending' || val === 'accepted' || val === 'rejected') {
+    console.log(val, "0--------------------0");
+    if (val === "pending" || val === "accepted" || val === "rejected") {
       setDefaultActiveKeyCreative(val);
-      setActiveTab('Creatives Approval');
+      setActiveTab("Creatives Approval");
     }
   };
 
   useEffect(() => {
     let params = {
-      include: 'stats',
+      include: "stats",
     };
     dispatch(getProjectsAction({ params, id }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,7 +65,7 @@ const ProjectDetails = (props) => {
 
   const getProposals = (status) => {
     let params = {
-      include: 'user',
+      include: "user",
       status,
     };
     dispatch(getProposalsAction({ params, id }));
@@ -73,27 +73,28 @@ const ProjectDetails = (props) => {
 
   const getCreatives = (status) => {
     let params = {
-      include: 'media,user',
+      include: "media,user",
       status,
     };
     dispatch(getCreativesAction({ params, id }));
   };
 
   return (
-    <div className='main-wrapper'>
+    <div className="main-wrapper">
       <Header />
-      <div className='flex top-space-commom'>
+      <div className="flex top-space-commom">
         <SideNav />
-        <div className='content-wrapper'>
+        <div className="content-wrapper">
           <Breadcrumb text={`Nestle Advertisement > Project Details`} />
           <ProjectDetailsCard projectDetail={projectDetail} />
 
-          <div className='tabs-container'>
-            <div className='con-mb'>
+          <div className="tabs-container">
+            <div className="con-mb">
               {myTabs.map((tab, index) => (
                 <button
+                  key={tab.name}
                   className={`tabs-btn ${
-                    activeTab === tab.name ? 'active-tab' : null
+                    activeTab === tab.name ? "active-tab" : null
                   }`}
                   onClick={() => handleActiveTab(tab.name)}
                 >
@@ -102,8 +103,8 @@ const ProjectDetails = (props) => {
               ))}
             </div>
 
-            {activeTab === 'Snapshot' && (
-              <div className='flex justify-between mobile-res'>
+            {activeTab === "Snapshot" && (
+              <div className="flex justify-between mobile-res">
                 <SnapshotTabData
                   handleTabs={handleTabs}
                   handleCreativeTabs={handleCreativeTabs}
@@ -112,7 +113,7 @@ const ProjectDetails = (props) => {
               </div>
             )}
 
-            {activeTab === 'Proposals' && (
+            {activeTab === "Proposals" && (
               <ProposalsTabData
                 defaultActiveKey={defaultActiveKeyProposals}
                 getProposals={getProposals}
@@ -120,7 +121,7 @@ const ProjectDetails = (props) => {
               />
             )}
 
-            {activeTab === 'Creatives Approval' && (
+            {activeTab === "Creatives Approval" && (
               <CreativeApprovalData
                 defaultActiveKey={defaultActiveKeyCreative}
                 getCreatives={getCreatives}
