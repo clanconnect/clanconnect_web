@@ -113,7 +113,11 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
 
         {AvailableTabs.map((o) => (
           <TabPane tab={o.label} key={o.value}>
-            {creatives.map((obj) => ProjectCreatives(obj))}
+            {creatives.length != 0 ? (
+              creatives.map((obj) => ProjectCreatives(obj))
+            ) : (
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            )}
           </TabPane>
         ))}
       </Tabs>

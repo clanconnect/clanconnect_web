@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+
 import { downloadMedia } from "helpers";
+
 import VideoPlayer from "react-player";
 import { Modal, Menu, Dropdown, Carousel, Tag, Empty } from "antd";
 import {
@@ -88,8 +90,18 @@ const CreativeModal = ({
 
   const closeModal = (val) => {
     setPlaying(false);
-    setShowFiles(false);
-    setVisible(false);
+
+    setTimeout(() => {
+      setVisible(val);
+    }, 500);
+  };
+
+  const pauseVideo = () => {
+    setPlaying(false);
+  };
+
+  const playVideo = () => {
+    setPlaying(true);
   };
 
   return (
@@ -168,17 +180,14 @@ const CreativeModal = ({
           <div className="creative-modal-body">
             <div className="flex mobile-section">
               <div className="carousal-section">
-                <LeftOutlined
-                  onClick={() => slider.current.prev()}
-                  className="slider-left-icon"
-                />
-                <Carousel
-                  ref={slider}
-                  afterChange={(v) => {
-                    console.log(v);
-                  }}
-                >
-                  {creative.length !== 0 ? (
+                {creative?.media?.length > 1 ? (
+                  <LeftOutlined
+                    onClick={() => slider.current.prev()}
+                    className="slider-left-icon"
+                  />
+                ) : null}
+                <Carousel ref={slider} className={"remove-buttom"}>
+                  {creative.length != 0 ? (
                     creative.media.map((media) => {
                       return (
                         <div
@@ -219,52 +228,23 @@ const CreativeModal = ({
                   ) : (
                     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                   )}
-                  {/* <div className='slider-box'>
-                    <Tag color='cyan'>Version 2</Tag>
-
-                    <VideoPlayer
-                      url='https://youtu.be/qgdfBnOQAkg'
-                      poster={poster}
-                      className='video-contentStyle'
-                      onPause={pauseVideo}
-                      onPlay={playVideo}
-                      playing={playing}
-                      controls={true}
-                    />
-
-                    <img
-                      src={download}
-                      alt=''
-                      className='icons-custom cursor-pointer'
-                    />
-                  </div>
-                  <div className='slider-box'>
-                    <Tag color='cyan'>Version 3</Tag>
-                    <img src={infImg} className='contentStyle' />
-                    <img
-                      src={download}
-                      alt=''
-                      className='icons-custom cursor-pointer'
-                    />
-                  </div> */}
                 </Carousel>
-                <RightOutlined
-                  onClick={() => slider.current.next()}
-                  className="slider-right-icon"
-                />
+                {creative?.media?.length > 1 ? (
+                  <RightOutlined
+                    onClick={() => slider.current.next()}
+                    className="slider-right-icon"
+                  />
+                ) : null}
               </div>
               <div className="comment-section">
                 <div className="flex justify-between items-center">
-                  <p
-                    className="view-title"
-                    onClick={() => setShowFiles(!showFiles)}
-                  >
+                  <p className="view-title" onClick={() => setShowFiles(true)}>
                     View Attachments{" "}
-                    {showFiles ? (
-                      <UpOutlined className="ml-4" />
-                    ) : (
-                      <DownOutlined className="ml-4" />
-                    )}
+                    <UpOutlined
+                      className={`${
+                        showFiles ? "icon-animation" : "trans-icon"
+                      } ml-4 `}
+                    />
                   </p>
 
                   <BrandUploadDocumentModal
@@ -273,16 +253,18 @@ const CreativeModal = ({
                   />
                 </div>
                 {showFiles ? (
-                  creative.attachments.length !== 0 ? (
-                    creative.attachments.map((media) => (
-                      <AttachmentFileCard media={media} />
-                    ))
-                  ) : (
-                    <Empty
-                      image={Empty.PRESENTED_IMAGE_SIMPLE}
-                      style={{ margin: "0" }}
-                    />
-                  )
+                  <div className="tarnsition">
+                    {creative.attachments.length != 0 ? (
+                      creative.attachments.map((media) => (
+                        <AttachmentFileCard media={media} />
+                      ))
+                    ) : (
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        style={{ margin: "0" }}
+                      />
+                    )}
+                  </div>
                 ) : (
                   <CommentBox creativeId={creative.id} />
                 )}

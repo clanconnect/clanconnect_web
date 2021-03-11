@@ -129,6 +129,8 @@
   .view-title {
     color: #5d5d5d;
     cursor: pointer;
+    -webkit-transition: width 0.35s ease-in-out;
+    transition: width 0.35s ease-in-out;
   }
 
   .ant-modal-footer {
@@ -198,4 +200,18 @@
 .short-video {
   width: 80px !important;
   height: 80px !important;
+}
+
+.icon-animation {
+  transition: 0.5s;
+}
+
+.trans-icon {
+  transition: 0.5s;
+  transform: rotate(180deg);
+}
+
+.tarnsition {
+  transition: 0.5s;
+  height: 100%;
 }
