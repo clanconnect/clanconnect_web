@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import "./styles.scss";
-import { Tabs } from "antd";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { RightOutlined } from "@ant-design/icons";
-import ProjectListCard from "../ProjectListCard";
-import DownLoadedFile from "../DownLoadedFile";
-import routeConstants from "common/routeConstants";
-import { ACTIONS as PROJECT_ACTIONS } from "redux/creators/projects/actions";
-import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";
+import React, { useEffect } from 'react';
+import './styles.scss';
+import { Tabs } from 'antd';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { RightOutlined } from '@ant-design/icons';
+import ProjectListCard from '../ProjectListCard';
+import DownLoadedFile from '../DownLoadedFile';
+import routeConstants from 'common/routeConstants';
+import { ACTIONS as PROJECT_ACTIONS } from 'redux/creators/projects/actions';
+import { ACTIONS as CREATIVE_ACTIONS } from 'redux/creators/creatives/actions';
 
 const ProjectList = (projects) => {
   return projects.map((project) => (
@@ -22,43 +22,45 @@ const ProjectList = (projects) => {
 };
 
 const ProjectCreatives = ({ project, creatives }) => (
-  <div key={`project-creatives-${project.id}`}>
-    <ProjectListCard project={project} creatives={creatives} />
+  <div className='custom-project-collapse'>
+    <div key={`project-creatives-${project.id}`}>
+      <ProjectListCard project={project} creatives={creatives} />
 
-    <div className="file-influencer-row">
-      {creatives.map((creative) => (
-        <DownLoadedFile
-          creative={creative}
-          key={`creative-${creative.id}`}
-          project={project}
-        />
-      ))}
+      <div className='file-influencer-row'>
+        {creatives.map((creative) => (
+          <DownLoadedFile
+            creative={creative}
+            key={`creative-${creative.id}`}
+            project={project}
+          />
+        ))}
+      </div>
+
+      {creatives.length ? (
+        <Link to={routeConstants.allCreativesLists}>
+          <div className='mt-30'>
+            <p className='view-title'>
+              View all creatives <RightOutlined />
+            </p>
+          </div>
+        </Link>
+      ) : null}
     </div>
-
-    {creatives.length ? (
-      <Link to={routeConstants.allCreativesLists}>
-        <div className="mt-30">
-          <p className="view-title">
-            View all creatives <RightOutlined />
-          </p>
-        </div>
-      </Link>
-    ) : null}
   </div>
 );
 
 const AvailableTabs = [
-  { label: "Pending", value: "pending" },
-  { label: "Approved", value: "approved" },
-  { label: "Rejected", value: "rejected" },
+  { label: 'Pending', value: 'pending' },
+  { label: 'Approved', value: 'approved' },
+  { label: 'Rejected', value: 'rejected' },
 ];
 
 const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   const { TabPane } = Tabs;
 
   function callback(key) {
-    if (key === "projects") {
-      loadProjects({ status: "ongoing" });
+    if (key === 'projects') {
+      loadProjects({ status: 'ongoing' });
     } else {
       loadCreatives({ status: key });
     }
@@ -74,21 +76,21 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   const loadCreatives = ({ status }) => {
     dispatch({
       type: CREATIVE_ACTIONS.GET_INDEX,
-      payload: { query: { status, include: "project" } },
+      payload: { query: { status, include: 'project' } },
     });
   };
 
   useEffect(() => {
-    loadProjects({ status: "ongoing" });
-    loadCreatives({ status: "pending" });
+    loadProjects({ status: 'ongoing' });
+    loadCreatives({ status: 'pending' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="tab-applied-proposal">
-      <Tabs defaultActiveKey="campaigns" onChange={callback}>
+    <div className='tab-applied-proposal'>
+      <Tabs defaultActiveKey='campaigns' onChange={callback}>
         {/* campaigns tab */}
-        <TabPane tab="Campaigns" key="projects">
+        <TabPane tab='Campaigns' key='projects'>
           {ProjectList(projects)}
         </TabPane>
 

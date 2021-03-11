@@ -1,5 +1,6 @@
 import React from 'react';
 import { Progress } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
 import './styles.scss';
 
@@ -18,8 +19,9 @@ const UploadAttchmentFile = ({
           <span className='file-title'>{fileName}</span>
         </div>
         {uploadedFile ? null : (
-          <div style={{ width: '35%' }}>
+          <div style={{ width: '35%' }} className='progress-custom'>
             <Progress percent={percenter} size='small' />
+            <DeleteOutlined />
           </div>
         )}
       </div>
