@@ -3,14 +3,37 @@ import "./styles.scss";
 import { Upload } from "antd";
 import upload from "assets/images/upload.svg";
 
-const UploadDocumentCard = ({ setfileList, multiple }) => {
+const allowedAccepts = {
+  image: ".png,.jpg,.jpeg",
+  audio: "audio/*",
+  video: "video/*",
+  pdf: ".pdf",
+  excel: "",
+  doc:
+    ".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+};
+
+const UploadDocumentCard = ({
+  setfileList,
+  multiple,
+  files = [],
+  accept = Object.keys(allowedAccepts),
+}) => {
   const { Dragger } = Upload;
+  let fileTypes = "";
+  if (accept.length < 1) {
+    fileTypes = Object.values(allowedAccepts).join(",");
+  } else {
+    fileTypes = accept.map((type) => allowedAccepts[type]).join(",");
+  }
 
   const props = {
     name: "file",
+    fileList: files,
     multiple: multiple === undefined ? true : multiple,
     beforeUpload: () => false,
     onChange: (info) => setfileList(info.fileList),
+    accept: fileTypes,
   };
 
   return (

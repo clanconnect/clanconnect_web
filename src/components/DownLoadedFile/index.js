@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.scss";
 import { CalendarOutlined } from "@ant-design/icons";
 import InfluencerCreativeModal from "../InfluencerCreativeModal";
@@ -10,9 +10,9 @@ import { downloadMedia } from "helpers";
 
 const DownLoadedFile = ({ creative = {}, project }) => {
   const media = creative.media ? creative.media[0] : {};
-  const imageUrl = `${process.env.REACT_APP_IMAGE_BASE_URL}/${
-    media?.slug || "default"
-  }`;
+  const [imageUrl, setImageUrl] = useState(
+    `${process.env.REACT_APP_IMAGE_BASE_URL}/${media?.slug || "default"}`
+  );
 
   return (
     <div className="influncer-file-container">
@@ -20,7 +20,18 @@ const DownLoadedFile = ({ creative = {}, project }) => {
         <div className="img-box-download">
           {media?.mimeType?.includes("image") ? (
             // eslint-disable-next-line jsx-a11y/img-redundant-alt
-            <img src={imageUrl} alt="" className="full-img" />
+            <img
+              src={imageUrl}
+              alt=""
+              className="full-img"
+              onError={() => {
+                setImageUrl(
+                  `${process.env.REACT_APP_MEDIA_ORIGINAL_URL}/${
+                    media?.slug || "default"
+                  }`
+                );
+              }}
+            />
           ) : (
             <VideoPlayer
               url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media?.slug}`}

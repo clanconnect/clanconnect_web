@@ -15,7 +15,7 @@ import download from "assets/images/download.svg";
 import paperclip from "assets/images/paperclip.svg";
 import { downloadMedia } from "helpers";
 
-const MediaView = ({ media }) => {
+const MediaView = ({ media, imageUrl, onImageError }) => {
   return (
     <div className="slider-box" key={`media-${media.id}`}>
       <Tag color="cyan">{media.versionTag}</Tag>
@@ -23,9 +23,10 @@ const MediaView = ({ media }) => {
         // eslint-disable-next-line jsx-a11y/img-redundant-alt
         <img
           alt={`creative-image-${media.id}`}
-          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-            media.slug || "default"
-          }`}
+          src={imageUrl}
+          onError={(e) => {
+            e.target.src = onImageError(media.slug);
+          }}
           className="contentStyle"
         />
       ) : (
@@ -53,6 +54,15 @@ const InfluencerCreativeModal = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
+
+  const getImageUrl = (slug) => {
+    return `${process.env.REACT_APP_IMAGE_BASE_URL}/${slug || "default"}`;
+  };
+
+  const onImageError = (slug) => {
+    return `${process.env.REACT_APP_MEDIA_ORIGINAL_URL}/${slug || "default"}`;
+  };
+
   const slider = useRef(null);
 
   const showAttachFiles = () => {
@@ -93,7 +103,13 @@ const InfluencerCreativeModal = ({
                   className="slider-left-icon"
                 />
                 <Carousel ref={slider}>
-                  {creative.media.map((media) => MediaView({ media }))}
+                  {creative.media.map((media) =>
+                    MediaView({
+                      media,
+                      imageUrl: getImageUrl(media.slug),
+                      onImageError,
+                    })
+                  )}
                 </Carousel>
                 <RightOutlined
                   onClick={() => slider.current.next()}

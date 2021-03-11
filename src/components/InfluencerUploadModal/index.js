@@ -53,6 +53,8 @@ const UploadNewCreatives = ({
   showFile,
   showOldFile,
   uploadProgress,
+  fileUploadStage,
+  removeFileFromUpload,
 }) => {
   return (
     <>
@@ -72,7 +74,12 @@ const UploadNewCreatives = ({
               />
             </div>
           )}
-          <UploadDocumentCard setfileList={setFiles} />
+          <UploadDocumentCard
+            setfileList={setFiles}
+            files={files}
+            multiple={!!!Object.keys(selectedCreative).length}
+            accept={["image", "video"]}
+          />
         </>
       ) : (
         <div className="conatiner-file">
@@ -82,6 +89,7 @@ const UploadNewCreatives = ({
               percenter={uploadProgress[file.uid]}
               fileName={file.name}
               icon={URL.createObjectURL(file.originFileObj)}
+              onDelete={() => removeFileFromUpload(file)}
             />
           ))}
         </div>
@@ -94,7 +102,7 @@ const UploadNewCreatives = ({
             onClick={handleUpload}
             disabled={files.length < 1}
           >
-            Proceed
+            {!fileUploadStage ? "Review" : "Upload"}
           </button>
           <button className="btn-cancel" onClick={onCancel}>
             Cancel
@@ -128,6 +136,17 @@ const InfluencerUploadModal = ({
     setUploadProgress(progress);
   }, [files]);
 
+  const removeFileFromUpload = (file) => {
+    const index = files.indexOf(file);
+    const selectedFiles = files;
+    if (index > -1) {
+      selectedFiles.splice(index, 1);
+      setFiles([...selectedFiles]);
+      if (selectedFiles.length === 0) {
+        handleUploadNewFile("upload new");
+      }
+    }
+  };
   const handleUploadNewFile = (value) => {
     setSelectedCreative({});
     setFiles([]);
@@ -205,7 +224,10 @@ const InfluencerUploadModal = ({
       {uploadNewFile === "upload added" && (
         <span>
           <ArrowLeftOutlined
-            onClick={() => handleUploadNewFile("")}
+            onClick={() => {
+              handleUploadNewFile("");
+              setFileUploadStage(0);
+            }}
             className="mr-5"
           />{" "}
           Upload a version
@@ -263,6 +285,8 @@ const InfluencerUploadModal = ({
             onCancel,
             setFiles,
             handleUpload,
+            removeFileFromUpload,
+            fileUploadStage,
             showFile,
             showOldFile,
             files,

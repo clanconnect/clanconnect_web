@@ -18,6 +18,10 @@ const UploadDocumentModal = ({ src, creative }) => {
 
   const onCancel = () => {
     setVisible(false);
+    reset();
+  };
+
+  const reset = () => {
     setFiles([]);
     setShowFile(false);
     setFileUploadStage(0);
@@ -31,6 +35,18 @@ const UploadDocumentModal = ({ src, creative }) => {
 
   const updateProgress = (fileUid, progress) => {
     setUploadProgress({ ...uploadProgress, ...{ [fileUid]: progress } });
+  };
+
+  const removeFileFromUpload = (file) => {
+    const index = files.indexOf(file);
+    const selectedFiles = files;
+    if (index > -1) {
+      selectedFiles.splice(index, 1);
+      setFiles([...selectedFiles]);
+      if (selectedFiles.length === 0) {
+        reset();
+      }
+    }
   };
 
   const handleUpload = () => {
@@ -64,8 +80,7 @@ const UploadDocumentModal = ({ src, creative }) => {
   const ModalProps = {
     title: ModalTitle(),
     visible,
-    onOk: () => setVisible(false),
-    onCancel: () => setVisible(false),
+    onCancel: () => onCancel(),
     className: "upload-modal",
     centered: true,
     width: 700,
@@ -95,11 +110,12 @@ const UploadDocumentModal = ({ src, creative }) => {
                   percenter={uploadProgress[file.uid]}
                   fileName={file.originFileObj.name}
                   icon={pngImg}
+                  onDelete={() => removeFileFromUpload(file)}
                 />
               ))}
           </div>
         ) : (
-          <UploadDocumentCard setfileList={setFiles} />
+          <UploadDocumentCard setfileList={setFiles} files={files} />
         )}
 
         <div className="comment-btns flex justify-between ">
@@ -108,7 +124,7 @@ const UploadDocumentModal = ({ src, creative }) => {
               className={`btn-submit ${files.length === 0 ? "disabled" : null}`}
               onClick={handleUpload}
             >
-              Send
+              {fileUploadStage === 0 ? "Review" : "Upload"}
             </button>
             <button className="btn-cancel" onClick={onCancel}>
               Cancel

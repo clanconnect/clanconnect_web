@@ -51,7 +51,7 @@ export class MediaService {
         await api.put(url.url, file.originFileObj, {
           headers: { "content-type": file.mimeType },
           onUploadProgress: (e) => {
-            setProgress(file.uid, (e.loaded / e.total) * 100);
+            setProgress(file.uid, Math.floor((e.loaded / e.total) * 100));
           },
         });
 
