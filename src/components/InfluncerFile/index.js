@@ -61,7 +61,7 @@ const InfluncerFile = ({
                       ) : (
                         <VideoPlayer
                           url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${item?.media[0]?.slug}`}
-                          className="full-img full-video"
+                          className=" full-video"
                           controls={false}
                         />
                       )}

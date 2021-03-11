@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .common-uploads {
   .img-box-download {
@@ -12,6 +12,16 @@
 
       @include mobile {
         max-height: auto;
+      }
+    }
+
+    .full-video {
+      width: 100% !important;
+      height: 195px !important;
+      background-color: black;
+
+      @include mobile {
+        height: 100px !important;
       }
     }
   }
