@@ -1,116 +1,154 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Pagination } from 'antd';
-import { useParams } from 'react-router-dom';
-import {
-  RightOutlined,
-  DeleteOutlined,
-  DownloadOutlined,
-} from '@ant-design/icons';
-import SearchSelectBox from '../SearchSelectBox';
-import StatusDropdown from '../StatusDropdown';
-import CreativeModal from '../CreativeModal';
-import demoImg from 'assets/images/project1.jpg';
-import { compaingsData, statusData, allInfluencerData } from './dataManager';
-import './styles.scss';
-import { getAllCreativesAction } from 'redux/brands/creatives/actions';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import "./styles.scss";
+import { Table, Tag } from "antd";
+import { DeleteOutlined, DownloadOutlined } from "@ant-design/icons";
+import StatusDropdown from "../StatusDropdown";
+import { useDispatch, connect } from "react-redux";
+import { ACTIONS } from "redux/creators/creatives/actions";
+import { convertSizeForHuman } from "helpers";
+import InfluencerCreativeModal from "components/InfluencerCreativeModal";
+import download from "assets/images/download.svg";
 
-const CreativeTableInfluencer = ({ allCreativeDetails, meta }) => {
+const statusTags = {
+  rejected: <Tag color="#f50">Rejected</Tag>,
+  pending: <Tag color="#2db7f5">Pending</Tag>,
+  accepted: <Tag color="#87d068">Accepted</Tag>,
+};
+
+const CreativeTableInfluencer = ({ list, pagination }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [showAddedRow, setShowAddedRow] = useState(false);
-  const [arr, setArr] = useState([]);
-  const { id } = useParams();
+  const [rows, setRows] = useState([]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: ACTIONS.GET_ALL,
+      payload: { query: { include: "project,media,user" } },
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    const rows = [];
+    let index = 0;
+    for (const item of list) {
+      rows.push({ ...item, key: index });
+      index++;
+    }
+    setRows([...rows]);
+  }, [list]);
+
+  const onPageChange = (pagination) => {
+    setSelectedRowKeys([]);
+    dispatch({
+      type: ACTIONS.GET_ALL,
+      payload: {
+        query: {
+          include: "project,media,user",
+          page: pagination.current,
+          perPage: pagination.pageSize,
+        },
+      },
+    });
+  };
 
   const columns = [
     {
-      title: (
-        <SearchSelectBox data={compaingsData} defaultValue='All Campaigns' />
+      title: "Campaign Name",
+      render: (a, row) => <span>{row.project.title}</span>,
+      key: "projectName",
+    },
+    {
+      title: "Posts",
+      dataIndex: "posts",
+      render: (i, row) => (
+        <InfluencerCreativeModal
+          project={row.project}
+          creative={row}
+          src={download}
+          compactView={true}
+        />
       ),
-      dataIndex: 'name',
-      key: 'name',
     },
     {
-      title: 'Posts',
-      dataIndex: 'posts',
-      // render: () => (
-      //   <CreativeModal
-      //     versionTrue
-      //     className='version-title'
-      //     creative={record}
-      //   />
-      // ),
-      key: 'posts',
+      title: "Size",
+      render: (v, row) => (
+        <span>{convertSizeForHuman(row.stats.storageSizeInBytes)}</span>
+      ),
+      key: "size",
     },
     {
-      title: 'Size',
-      dataIndex: 'size',
-      key: 'size',
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      sorter: {
-        compare: (a, b) => a.english - b.english,
-        multiple: 1,
-      },
-      key: 'date',
+      title: "Date",
+      render: (v, row) => new Date(row.createdAt).toISOString().split("T")[0],
+      key: "date",
     },
     {
       title: <StatusDropdown />,
-      dataIndex: 'status',
-      key: 'status',
-    },
-  ];
-
-  const data = [
-    {
-      key: '1',
-      name: 'Mike John',
-      posts: 32,
-      size: '10 MB',
-      date: '12/23/2020',
-      status: 'status',
+      render: (i, row) => statusTags[row.status],
+      key: "status",
     },
   ];
 
   const onSelectChange = (selectedRowKeys) => {
     setSelectedRowKeys(selectedRowKeys);
-    setShowAddedRow(true);
   };
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
+  const deleteCreatives = () => {
+    const ids = [];
+    for (const index of selectedRowKeys) {
+      ids.push(list[index].id);
+    }
+
+    dispatch({
+      type: ACTIONS.BULK_DELETE,
+      payload: { body: { ids } },
+      onSuccess: () => setSelectedRowKeys([]),
+    });
   };
-  const hasSelected = selectedRowKeys.length > 0;
 
   return (
     <div>
-      {showAddedRow ? (
-        <div className='added-row'>
+      {selectedRowKeys.length > 0 ? (
+        <div className="added-row">
           <div>
-            <p className='mb-0 added-row-text'>2 rows selected:</p>
+            <p className="mb-0 added-row-text">
+              {selectedRowKeys.length} row(s) selected
+            </p>
           </div>
           <div>
-            <button className='delete-btn'>
+            <button
+              className="delete-btn"
+              onClick={deleteCreatives}
+              disabled={!!!selectedRowKeys.length}
+            >
               <DeleteOutlined /> Delete
             </button>
-            <button className='delete-btn bg-download'>
+            <button className="delete-btn bg-download">
               <DownloadOutlined /> Download
             </button>
           </div>
         </div>
       ) : null}
       <Table
+        bordered
         columns={columns}
-        dataSource={data}
-        rowSelection={rowSelection}
-        pagination={false}
+        dataSource={rows}
+        rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
+        onChange={onPageChange}
+        pagination={{
+          hideOnSinglePage: true,
+          total: pagination.total,
+          current: pagination.page,
+          pageSize: pagination.perPage,
+          defaultCurrent: 1,
+        }}
       />
-      <Pagination />
     </div>
   );
 };
 
-export default CreativeTableInfluencer;
+const mapStateToProps = ({ CreatorCreatives }) => ({
+  list: CreatorCreatives.allCreatives.list,
+  pagination: CreatorCreatives.allCreatives.pagination,
+});
+
+export default connect(mapStateToProps)(CreativeTableInfluencer);

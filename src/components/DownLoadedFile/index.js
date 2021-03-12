@@ -4,7 +4,6 @@ import { CalendarOutlined } from "@ant-design/icons";
 import InfluencerCreativeModal from "../InfluencerCreativeModal";
 import download from "assets/images/download.svg";
 import fullScreen from "assets/images/full-screen.svg";
-import chat from "assets/images/chat.svg";
 import VideoPlayer from "react-player";
 import { downloadMedia } from "helpers";
 

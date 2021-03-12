@@ -11,7 +11,7 @@ import { ACTIONS as PROJECT_ACTIONS } from 'redux/creators/projects/actions';
 import { ACTIONS as CREATIVE_ACTIONS } from 'redux/creators/creatives/actions';
 
 const ProjectList = (projects) => {
-  return projects.length != 0 ? (
+  return projects.length !== 0 ? (
     projects.map((project) => (
       <ProjectListCard
         project={project}
@@ -38,7 +38,7 @@ const ProjectCreatives = ({ project, creatives }) => {
 
         <div className='open-container'>
           <div className='file-influencer-row'>
-            {creatives && creatives?.length != 0 ? (
+            {creatives.length !== 0 ? (
               creatives.map((creative) => (
                 <DownLoadedFile
                   creative={creative}

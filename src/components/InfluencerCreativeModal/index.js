@@ -2,12 +2,7 @@ import React, { useState, useRef } from 'react';
 import './styles.scss';
 import VideoPlayer from 'react-player';
 import { Modal, Carousel, Tag, Empty } from 'antd';
-import {
-  DownOutlined,
-  UpOutlined,
-  RightOutlined,
-  LeftOutlined,
-} from '@ant-design/icons';
+import { UpOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
 import CommentBox from '../CommentBox';
 import AttachmentFileCard from '../AttachmentFileCard';
 import BrandUploadDocumentModal from '../BrandUploadDocumentModal';
@@ -53,6 +48,7 @@ const InfluencerCreativeModal = ({
   className,
   creative = {},
   project = {},
+  compactView,
 }) => {
   const [visible, setVisible] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
@@ -77,12 +73,42 @@ const InfluencerCreativeModal = ({
 
   return (
     <>
-      <img
-        alt=''
-        onClick={() => setVisible(true)}
-        src={src}
-        className={`cursor-pointer ${className}`}
-      />
+      {compactView ? (
+        <div className='version-text' onClick={() => setVisible(true)}>
+          {creative?.media[0]?.mimeType.includes('image') ? (
+            <img
+              src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug}`}
+              width='80'
+              height='80'
+              className='version-img'
+              alt='n m'
+              onError={(e) => {
+                e.target.src = `${process.env.REACT_APP_MEDIA_ORIGINAL_URL}/${
+                  creative?.media[0]?.slug || 'default'
+                }`;
+              }}
+            />
+          ) : (
+            <VideoPlayer
+              url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${creative?.media[0]?.slug}`}
+              controls={false}
+              style={{ height: '80px', width: '80px' }}
+              className='short-video'
+            />
+          )}
+          <span className={'version-title'}>
+            {creative.media.length} version
+          </span>
+          <RightOutlined className='ml-4' />
+        </div>
+      ) : (
+        <img
+          alt=''
+          onClick={() => setVisible(true)}
+          src={src}
+          className={`cursor-pointer ${className}`}
+        />
+      )}
 
       <Modal
         visible={visible}
@@ -107,7 +133,7 @@ const InfluencerCreativeModal = ({
                   />
                 ) : null}
                 <Carousel ref={slider}>
-                  {creative.media.length != 0 ? (
+                  {creative.media.length !== 0 ? (
                     creative.media.map((media) =>
                       MediaView({
                         media,
