@@ -290,7 +290,9 @@ const CreativeModal = ({
                   />
                 </div>
                 {showFiles ? (
-                  <div className='tarnsition slideDown'>
+                  <div
+                    className={`tarnsition animate__animated animate__fadeIn`}
+                  >
                     {creative.attachments.length !== 0 ? (
                       creative.attachments.map((media) => (
                         <AttachmentFileCard
@@ -306,7 +308,7 @@ const CreativeModal = ({
                     )}
                   </div>
                 ) : (
-                  <CommentBox creativeId={creative.id} />
+                  <CommentBox creativeId={creative.id} showFiles={showFiles} />
                 )}
               </div>
             </div>

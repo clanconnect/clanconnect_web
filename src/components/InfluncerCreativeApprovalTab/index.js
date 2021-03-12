@@ -25,8 +25,9 @@ const ProjectList = (projects) => {
   );
 };
 
-const ProjectCreatives = ({ project, creatives }) =>
-  project.length != 0 ? (
+const ProjectCreatives = ({ project, creatives }) => {
+  console.log(creatives);
+  return project.length != 0 ? (
     <div className='custom-project-collapse'>
       <div key={`project-creatives-${project.id}`}>
         <ProjectListCard
@@ -37,7 +38,7 @@ const ProjectCreatives = ({ project, creatives }) =>
 
         <div className='open-container'>
           <div className='file-influencer-row'>
-            {creatives.length != 0 ? (
+            {creatives && creatives?.length != 0 ? (
               creatives.map((creative) => (
                 <DownLoadedFile
                   creative={creative}
@@ -50,7 +51,7 @@ const ProjectCreatives = ({ project, creatives }) =>
             )}
           </div>
 
-          {creatives.length ? (
+          {creatives?.length ? (
             <Link to={routeConstants.allCreativesLists}>
               <div className='mt-30'>
                 <p className='view-title'>
@@ -65,6 +66,7 @@ const ProjectCreatives = ({ project, creatives }) =>
   ) : (
     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
   );
+};
 
 const AvailableTabs = [
   { label: 'Pending', value: 'pending' },
@@ -113,7 +115,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
 
         {AvailableTabs.map((o) => (
           <TabPane tab={o.label} key={o.value}>
-            {creatives.length != 0 ? (
+            {creatives && creatives?.length != 0 ? (
               creatives.map((obj) => ProjectCreatives(obj))
             ) : (
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
