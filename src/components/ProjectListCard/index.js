@@ -28,13 +28,14 @@ const ProjectListCard = ({
   creatives,
   disablePreviousVersionUpload,
   className,
+  rightspace,
 }) => {
   return (
     <div className={`brand-list ${className}`}>
       <div className='brand-list-img'>
         <img src={project.coverPictureUrl} alt='' />
       </div>
-      <div className='brand-content'>
+      <div className={`brand-content ${rightspace ? 'wid-50' : ''}`}>
         <div className='brand-list-content'>
           <span className='list-title'>{project.title}</span>
         </div>

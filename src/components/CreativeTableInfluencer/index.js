@@ -84,6 +84,12 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
       title: "Status",
       render: (i, row) => statusTags[row.status],
       key: "status",
+      filterMultiple: false,
+      filters: [
+        { text: "Pending", value: "pending" },
+        { text: "Accepted", value: "accepted" },
+        { text: "Rejected", value: "rejected" },
+      ],
     },
   ];
 
