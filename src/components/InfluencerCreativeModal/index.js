@@ -145,7 +145,7 @@ const InfluencerCreativeModal = ({
                 </div>
 
                 {showAttachments ? (
-                  <div className='tarnsition'>
+                  <div className='tarnsition slideDown'>
                     {creative.attachments != 0 ? (
                       creative.attachments.map((media) => (
                         <AttachmentFileCard media={media} />
