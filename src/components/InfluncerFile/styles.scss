@@ -1,5 +1,5 @@
-@import "styles/_colors";
-@import "styles/_mixins";
+@import 'styles/_colors';
+@import 'styles/_mixins';
 
 .common-uploads {
   .img-box-download {
@@ -7,11 +7,14 @@
     position: relative;
     .full-img {
       width: 100%;
+      min-height: 200px;
       max-height: 200px;
+      object-fit: cover;
       object-fit: cover;
 
       @include mobile {
         max-height: auto;
+        min-height: auto;
       }
     }
 

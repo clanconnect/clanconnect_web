@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import "./styles.scss";
-import { Modal, Empty } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import UploadDocumentCard from "../UploadDocumentCard";
-import UploadAttchmentFile from "../UploadAttchmentFile";
-import { connect } from "react-redux";
-import { ACTIONS } from "redux/creators/creatives/actions";
-import { MediaService } from "services/creators";
+import React, { useEffect, useState } from 'react';
+import './styles.scss';
+import { Modal, Empty } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import UploadDocumentCard from '../UploadDocumentCard';
+import UploadAttchmentFile from '../UploadAttchmentFile';
+import { connect } from 'react-redux';
+import { ACTIONS } from 'redux/creators/creatives/actions';
+import { MediaService } from 'services/creators';
 
 const UploadTypes = [
-  { label: "Uploading a new creative", value: "upload new" },
-  { label: "A version of previously sent creative", value: "upload added" },
+  { label: 'Uploading a new creative', value: 'upload new' },
+  { label: 'A version of previously sent creative', value: 'upload added' },
 ];
 
 const ShowUploadConsentView = ({
@@ -19,21 +19,21 @@ const ShowUploadConsentView = ({
   disablePreviousVersionUpload,
 }) => {
   const types = disablePreviousVersionUpload
-    ? UploadTypes.filter((f) => f.value !== "upload added")
+    ? UploadTypes.filter((f) => f.value !== 'upload added')
     : UploadTypes;
 
-  return ["upload added", "upload new"].includes(uploadNewFile) ? null : (
+  return ['upload added', 'upload new'].includes(uploadNewFile) ? null : (
     <div>
-      <p className="text-center mt-30">Please select one option:</p>
+      <p className='text-center mt-30'>Please select one option:</p>
       <div
         className={`flex ${
-          disablePreviousVersionUpload ? "justify-center" : "justify-between"
+          disablePreviousVersionUpload ? 'justify-center' : 'justify-between'
         }`}
       >
         {types.map((o) => (
           <button
             key={`upload-type-${o.value}`}
-            className="select-upload"
+            className='select-upload'
             onClick={() => handleUploadNewFile(o.value)}
           >
             {o.label}
@@ -61,14 +61,14 @@ const UploadNewCreatives = ({
       {!showFile ? (
         <>
           {showOldFile && (
-            <div className="mb-30">
-              <p className="text-center mb-30">
+            <div className='mb-30'>
+              <p className='text-center mb-30'>
                 Uploading a new version for the selected creative shown below:
               </p>
               <UploadAttchmentFile
                 fileName={selectedCreative.id}
                 icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                  selectedCreative?.media[0]?.slug || "default"
+                  selectedCreative?.media[0]?.slug || 'default'
                 }`}
                 uploadedFile
               />
@@ -78,11 +78,11 @@ const UploadNewCreatives = ({
             setfileList={setFiles}
             files={files}
             multiple={!!!Object.keys(selectedCreative).length}
-            accept={["image", "video"]}
+            accept={['image', 'video']}
           />
         </>
       ) : (
-        <div className="conatiner-file">
+        <div className='conatiner-file'>
           {files.map((file) => (
             <UploadAttchmentFile
               key={`file-${file.uid}`}
@@ -95,16 +95,16 @@ const UploadNewCreatives = ({
         </div>
       )}
 
-      <div className="comment-btns flex justify-between ">
-        <div className="">
+      <div className='comment-btns flex justify-between '>
+        <div className=''>
           <button
-            className="btn-submit"
+            className='btn-submit'
             onClick={handleUpload}
             disabled={files.length < 1}
           >
-            {!fileUploadStage ? "Review" : "Upload"}
+            {!fileUploadStage ? 'Review' : 'Upload'}
           </button>
-          <button className="btn-cancel" onClick={onCancel}>
+          <button className='btn-cancel' onClick={onCancel}>
             Cancel
           </button>
         </div>
@@ -122,7 +122,7 @@ const InfluencerUploadModal = ({
   disablePreviousVersionUpload,
 }) => {
   const [visible, setVisible] = useState(false);
-  const [uploadNewFile, setUploadNewFile] = useState("");
+  const [uploadNewFile, setUploadNewFile] = useState('');
   const [showFile, setShowFile] = useState(false);
   const [showOldFile, setShowOldFile] = useState(false);
   const [files, setFiles] = useState([]);
@@ -143,7 +143,7 @@ const InfluencerUploadModal = ({
       selectedFiles.splice(index, 1);
       setFiles([...selectedFiles]);
       if (selectedFiles.length === 0) {
-        handleUploadNewFile("upload new");
+        handleUploadNewFile('upload new');
       }
     }
   };
@@ -163,13 +163,13 @@ const InfluencerUploadModal = ({
   const selectCreative = (creative) => {
     setSelectedCreative(creative);
     setShowOldFile(true);
-    setUploadNewFile("upload new");
+    setUploadNewFile('upload new');
   };
 
   const onCancel = () => {
     setVisible(false);
     setFiles([]);
-    setUploadNewFile("");
+    setUploadNewFile('');
     setShowOldFile(false);
     setShowFile(false);
     setFileUploadStage(0);
@@ -220,30 +220,30 @@ const InfluencerUploadModal = ({
 
   const ModalTitle = (
     <>
-      {uploadNewFile === "" && <span>Upload Creative</span>}
-      {uploadNewFile === "upload added" && (
+      {uploadNewFile === '' && <span>Upload Creative</span>}
+      {uploadNewFile === 'upload added' && (
         <span>
           <ArrowLeftOutlined
             onClick={() => {
-              handleUploadNewFile("");
+              handleUploadNewFile('');
               setFileUploadStage(0);
             }}
-            className="mr-5"
-          />{" "}
+            className='mr-5'
+          />{' '}
           Upload a version
         </span>
       )}
 
-      {uploadNewFile === "upload new" && (
+      {uploadNewFile === 'upload new' && (
         <span>
           <ArrowLeftOutlined
             onClick={
               !showFile
-                ? () => handleUploadNewFile("")
+                ? () => handleUploadNewFile('')
                 : () => showUploadFilesProgress(false)
             }
-            className="mr-5"
-          />{" "}
+            className='mr-5'
+          />{' '}
           Upload a new creative
         </span>
       )}
@@ -254,33 +254,42 @@ const InfluencerUploadModal = ({
     title: ModalTitle,
     visible,
     onOk: () => setVisible(false),
-    onCancel: () => onCancel(false),
-    className: "influencer-upload-modal",
+    onCancel: (event) => {
+      onCancel(false);
+      event.stopPropagation();
+    },
+    className: 'influencer-upload-modal',
     centered: true,
     width: 700,
   };
 
   return (
     <>
-      <button className={style} onClick={() => setVisible(true)}>
+      <button
+        className={style}
+        onClick={(event) => {
+          setVisible(true);
+          event.stopPropagation();
+        }}
+      >
         {btnText}
       </button>
       <Modal {...ModalProps}>
-        <div className="comapign-text">
+        <div className='comapign-text'>
           <span>{project.title}</span>
           {showFile && (
-            <span className="text-sm">{files.length} File(s) Selected</span>
+            <span className='text-sm'>{files.length} File(s) Selected</span>
           )}
         </div>
 
         <ShowUploadConsentView
-          key="show-upload-consent-view"
+          key='show-upload-consent-view'
           disablePreviousVersionUpload={disablePreviousVersionUpload}
           handleUploadNewFile={handleUploadNewFile}
           uploadNewFile={uploadNewFile}
         />
 
-        {uploadNewFile === "upload new" &&
+        {uploadNewFile === 'upload new' &&
           UploadNewCreatives({
             onCancel,
             setFiles,
@@ -294,19 +303,19 @@ const InfluencerUploadModal = ({
             selectedCreative,
           })}
 
-        {uploadNewFile === "upload added" && (
+        {uploadNewFile === 'upload added' && (
           <div>
-            <p className="text-center mb-30">
+            <p className='text-center mb-30'>
               Please select one creative for which you want to upload a version:
             </p>
-            <div className="conatiner-file">
+            <div className='conatiner-file'>
               {creatives.length != 0 ? (
                 creatives.map((creative) => (
                   <UploadAttchmentFile
                     key={`previous-creative-version-${creative.id}`}
                     fileName={creative.id}
                     icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                      creative?.media[0]?.slug || "default"
+                      creative?.media[0]?.slug || 'default'
                     }`}
                     uploadedFile
                     handleClick={() => selectCreative(creative)}

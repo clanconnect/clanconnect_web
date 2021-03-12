@@ -81,11 +81,13 @@ const CreativeApprovalData = ({
   };
 
   useEffect(() => {
-    let params = {
-      include: 'media,user',
-      status: 'pending',
-    };
-    dispatch(getCreativesAction({ params, id }));
+    if (defaultActiveKey === 'pending') {
+      let params = {
+        include: 'media,user',
+        status: 'pending',
+      };
+      dispatch(getCreativesAction({ params, id }));
+    }
   }, []);
 
   return (

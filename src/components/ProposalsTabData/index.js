@@ -18,14 +18,16 @@ const ProposalsTabData = ({
   let { id } = useParams();
 
   useEffect(() => {
-    let params = {
-      include: 'user',
-      status: 'sent',
-    };
-    dispatch(getProposalsAction({ params, id }));
+    if (defaultActiveKey === 'sent') {
+      let params = {
+        include: 'user',
+        status: 'sent',
+      };
+      dispatch(getProposalsAction({ params, id }));
+    }
   }, []);
 
-  //console.log(proposalDetails, 'user');
+  console.log(proposalDetails, 'user');
   return (
     <div className='tab-proposal'>
       <Tabs
