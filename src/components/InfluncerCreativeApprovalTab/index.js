@@ -36,15 +36,16 @@ const ProjectCreatives = ({ project, creatives }) => {
   return project.length != 0 ? (
     <div className='custom-project-collapse'>
       <div key={`project-creatives-${project.id}`}>
-        <Collapse onChange={callback}>
+        <Collapse onChange={callback} expandIconPosition={'right'}>
           <Panel
-            showArrow={false}
+            showArrow={true}
             key={project.id}
             header={
               <ProjectListCard
                 project={project}
                 creatives={creatives}
-                className='shadow-none'
+                className='shadow-none '
+                rightspace
               />
             }
           >
