@@ -34,7 +34,10 @@ const ShowUploadConsentView = ({
           <button
             key={`upload-type-${o.value}`}
             className='select-upload'
-            onClick={() => handleUploadNewFile(o.value)}
+            onClick={(event) => {
+              handleUploadNewFile(o.value);
+              event.stopPropagation();
+            }}
           >
             {o.label}
           </button>

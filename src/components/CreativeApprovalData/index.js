@@ -112,6 +112,16 @@ const CreativeApprovalData = ({
                     >
                       {isAllSelected() ? 'Deselect All' : 'Select All'}
                     </button>
+
+                    <button
+                      className='outline-btn bg-green'
+                      onClick={() => {
+                        onClickSelect(false);
+                      }}
+                    >
+                      Deselect
+                    </button>
+
                     <button
                       className='outline-btn bg-green-outline'
                       onClick={() => {
@@ -160,8 +170,20 @@ const CreativeApprovalData = ({
               <div>
                 {showSelectAllActive ? (
                   <>
-                    <button className='outline-btn bg-green'>
+                    <button
+                      className='outline-btn bg-green'
+                      onClick={handleSelectAll}
+                    >
                       {isAllSelected() ? 'Deselect All' : 'Select All'}
+                    </button>
+
+                    <button
+                      className='outline-btn bg-green'
+                      onClick={() => {
+                        onClickSelect(false);
+                      }}
+                    >
+                      Deselect
                     </button>
                     <button
                       className='outline-btn bg-red'
@@ -204,8 +226,20 @@ const CreativeApprovalData = ({
               <div>
                 {showSelectAllActive ? (
                   <>
-                    <button className='outline-btn bg-green'>
+                    <button
+                      className='outline-btn bg-green'
+                      onClick={handleSelectAll}
+                    >
                       {isAllSelected() ? 'Deselect All' : 'Select All'}
+                    </button>
+
+                    <button
+                      className='outline-btn bg-green'
+                      onClick={() => {
+                        onClickSelect(false);
+                      }}
+                    >
+                      Deselect
                     </button>
                     <button
                       className='outline-btn bg-green-outline'
