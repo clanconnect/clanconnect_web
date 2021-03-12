@@ -5,4 +5,5 @@ export const ACTIONS = {
   UPDATE: "influencers/creators/UPDATE",
   UPDATE_ATTACHMENTS: "influencers/creators/UPDATE_ATTACHMENTS",
   GET_ALL: "influencers/creators/GET_ALL",
+  BULK_DELETE: "influencers/creators/BULK_DELETE",
 };

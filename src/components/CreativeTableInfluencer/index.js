@@ -89,8 +89,20 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
   ];
 
   const onSelectChange = (selectedRowKeys) => {
-    console.log(selectedRowKeys);
     setSelectedRowKeys(selectedRowKeys);
+  };
+
+  const deleteCreatives = () => {
+    const ids = [];
+    for (const index of selectedRowKeys) {
+      ids.push(list[index].id);
+    }
+
+    dispatch({
+      type: ACTIONS.BULK_DELETE,
+      payload: { body: { ids } },
+      onSuccess: () => setSelectedRowKeys([]),
+    });
   };
 
   return (
@@ -99,11 +111,15 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
         <div className="added-row">
           <div>
             <p className="mb-0 added-row-text">
-              {selectedRowKeys.length} rows selected:
+              {selectedRowKeys.length} row(s) selected
             </p>
           </div>
           <div>
-            <button className="delete-btn">
+            <button
+              className="delete-btn"
+              onClick={deleteCreatives}
+              disabled={!!!selectedRowKeys.length}
+            >
               <DeleteOutlined /> Delete
             </button>
             <button className="delete-btn bg-download">

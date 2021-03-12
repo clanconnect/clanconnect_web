@@ -43,6 +43,13 @@ export class CreativeService {
       "/creators/creatives?" + (query && qs.stringify(query)) || ""
     );
   }
+
+  static bulkDelete({ query, body }) {
+    return api.post(
+      `/creators/creatives/bulk-delete?` + (query && qs.stringify(query)) || "",
+      body
+    );
+  }
 }
 
 export class MediaService {

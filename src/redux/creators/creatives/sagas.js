@@ -79,6 +79,22 @@ export function* fetchAll({ payload }) {
   }
 }
 
+export function* bulkDelete({
+  payload: { body, path = {}, query = {} },
+  onSuccess,
+}) {
+  try {
+    yield call(CreativeService.bulkDelete, { body, path, query });
+    yield put({
+      type: ACTIONS.GET_ALL,
+      payload: { query: { include: "project,media,user" } },
+    });
+    if (onSuccess) yield onSuccess();
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export default function* creatorCreativesSagas() {
   yield all([
     takeLatest(ACTIONS.GET_INDEX, fetchIndex),
@@ -86,5 +102,6 @@ export default function* creatorCreativesSagas() {
     takeLatest(ACTIONS.UPDATE, update),
     takeLatest(ACTIONS.UPDATE_ATTACHMENTS, updateAttachments),
     takeLatest(ACTIONS.GET_ALL, fetchAll),
+    takeLatest(ACTIONS.BULK_DELETE, bulkDelete),
   ]);
 }

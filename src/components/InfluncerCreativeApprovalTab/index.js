@@ -51,7 +51,7 @@ const ProjectCreatives = ({ project, creatives }) =>
           </div>
 
           {creatives.length ? (
-            <Link to={routeConstants.allCreativesLists}>
+            <Link to={routeConstants.allCreativesListsInfluencer}>
               <div className="mt-30">
                 <p className="view-title">
                   View all creatives <RightOutlined />
