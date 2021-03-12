@@ -50,13 +50,13 @@ const DownLoadedFile = ({ creative = {}, project }) => {
             <InfluencerCreativeModal
               src={fullScreen}
               project={project}
-              className="icons-custom"
+              className="icons-custom cursor-pointer"
               creative={creative}
             />
             <img
               src={download}
               alt=""
-              className="icons-custom"
+              className="icons-custom cursor-pointer"
               onClick={() => downloadMedia(media.slug)}
             />
           </div>
