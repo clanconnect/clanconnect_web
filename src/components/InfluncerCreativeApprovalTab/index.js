@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
-import './styles.scss';
-import { Tabs, Empty, Collapse } from 'antd';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { RightOutlined } from '@ant-design/icons';
-import ProjectListCard from '../ProjectListCard';
-import DownLoadedFile from '../DownLoadedFile';
-import routeConstants from 'common/routeConstants';
-import { ACTIONS as PROJECT_ACTIONS } from 'redux/creators/projects/actions';
-import { ACTIONS as CREATIVE_ACTIONS } from 'redux/creators/creatives/actions';
+import React, { useEffect } from "react";
+import "./styles.scss";
+import { Tabs, Empty, Collapse } from "antd";
+import { connect } from "react-redux";
+import ProjectListCard from "../ProjectListCard";
+import DownLoadedFile from "../DownLoadedFile";
+import { ACTIONS as PROJECT_ACTIONS } from "redux/creators/projects/actions";
+import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";
 
 const ProjectList = (projects) => {
   return projects.length !== 0 ? (
@@ -32,9 +29,8 @@ function callback(key) {
 }
 
 const ProjectCreatives = ({ project, creatives }) => {
-  console.log(creatives);
-  return project.length != 0 ? (
-    <div className='custom-project-collapse'>
+  return project.length !== 0 ? (
+    <div className="custom-project-collapse">
       <div key={`project-creatives-${project.id}`}>
         <Collapse onChange={callback}>
           <Panel
@@ -44,12 +40,12 @@ const ProjectCreatives = ({ project, creatives }) => {
               <ProjectListCard
                 project={project}
                 creatives={creatives}
-                className='shadow-none'
+                className="shadow-none"
               />
             }
           >
-            <div className='open-container'>
-              <div className='file-influencer-row'>
+            <div className="open-container">
+              <div className="file-influencer-row">
                 {creatives.length !== 0 ? (
                   creatives.map((creative) => (
                     <DownLoadedFile
@@ -62,16 +58,6 @@ const ProjectCreatives = ({ project, creatives }) => {
                   <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                 )}
               </div>
-
-              {creatives?.length ? (
-                <Link to={routeConstants.allCreativesLists}>
-                  <div className='mt-30'>
-                    <p className='view-title'>
-                      View all creatives <RightOutlined />
-                    </p>
-                  </div>
-                </Link>
-              ) : null}
             </div>
           </Panel>
         </Collapse>
@@ -83,17 +69,17 @@ const ProjectCreatives = ({ project, creatives }) => {
 };
 
 const AvailableTabs = [
-  { label: 'Pending', value: 'pending' },
-  { label: 'Approved', value: 'approved' },
-  { label: 'Rejected', value: 'rejected' },
+  { label: "Pending", value: "pending" },
+  { label: "Approved", value: "approved" },
+  { label: "Rejected", value: "rejected" },
 ];
 
 const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   const { TabPane } = Tabs;
 
   function callback(key) {
-    if (key === 'projects') {
-      loadProjects({ status: 'ongoing' });
+    if (key === "projects") {
+      loadProjects({ status: "ongoing" });
     } else {
       loadCreatives({ status: key });
     }
@@ -109,27 +95,27 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   const loadCreatives = ({ status }) => {
     dispatch({
       type: CREATIVE_ACTIONS.GET_INDEX,
-      payload: { query: { status, include: 'project' } },
+      payload: { query: { status, include: "project" } },
     });
   };
 
   useEffect(() => {
-    loadProjects({ status: 'ongoing' });
-    loadCreatives({ status: 'pending' });
+    loadProjects({ status: "ongoing" });
+    loadCreatives({ status: "pending" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className='tab-applied-proposal'>
-      <Tabs defaultActiveKey='campaigns' onChange={callback}>
+    <div className="tab-applied-proposal">
+      <Tabs defaultActiveKey="campaigns" onChange={callback}>
         {/* campaigns tab */}
-        <TabPane tab='Campaigns' key='projects'>
+        <TabPane tab="Campaigns" key="projects">
           {ProjectList(projects)}
         </TabPane>
 
         {AvailableTabs.map((o) => (
           <TabPane tab={o.label} key={o.value}>
-            {creatives && creatives?.length != 0 ? (
+            {creatives && creatives?.length !== 0 ? (
               creatives.map((obj) => ProjectCreatives(obj))
             ) : (
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
