@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 import './styles.scss';
 import { Tabs, Empty, Collapse } from 'antd';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { RightOutlined } from '@ant-design/icons';
 import ProjectListCard from '../ProjectListCard';
 import DownLoadedFile from '../DownLoadedFile';
-import routeConstants from 'common/routeConstants';
 import { ACTIONS as PROJECT_ACTIONS } from 'redux/creators/projects/actions';
 import { ACTIONS as CREATIVE_ACTIONS } from 'redux/creators/creatives/actions';
 
@@ -32,8 +29,7 @@ function callback(key) {
 }
 
 const ProjectCreatives = ({ project, creatives }) => {
-  console.log(creatives);
-  return project.length != 0 ? (
+  return project.length !== 0 ? (
     <div className='custom-project-collapse'>
       <div key={`project-creatives-${project.id}`}>
         <Collapse onChange={callback} expandIconPosition={'right'}>
@@ -63,16 +59,6 @@ const ProjectCreatives = ({ project, creatives }) => {
                   <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                 )}
               </div>
-
-              {creatives?.length ? (
-                <Link to={routeConstants.allCreativesLists}>
-                  <div className='mt-30'>
-                    <p className='view-title'>
-                      View all creatives <RightOutlined />
-                    </p>
-                  </div>
-                </Link>
-              ) : null}
             </div>
           </Panel>
         </Collapse>
@@ -130,7 +116,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
 
         {AvailableTabs.map((o) => (
           <TabPane tab={o.label} key={o.value}>
-            {creatives && creatives?.length != 0 ? (
+            {creatives && creatives?.length !== 0 ? (
               creatives.map((obj) => ProjectCreatives(obj))
             ) : (
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />

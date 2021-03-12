@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import { Table, Tag } from "antd";
 import { DeleteOutlined, DownloadOutlined } from "@ant-design/icons";
-import StatusDropdown from "../StatusDropdown";
 import { useDispatch, connect } from "react-redux";
 import { ACTIONS } from "redux/creators/creatives/actions";
 import { convertSizeForHuman } from "helpers";
@@ -82,7 +81,7 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
       key: "date",
     },
     {
-      title: <StatusDropdown />,
+      title: "Status",
       render: (i, row) => statusTags[row.status],
       key: "status",
     },
