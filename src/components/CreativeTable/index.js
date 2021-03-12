@@ -1,13 +1,18 @@
 import React from "react";
 import "./styles.scss";
-import { Table, Pagination } from "antd";
+import { Table, Pagination, Tag } from "antd";
 import SearchSelectBox from "../SearchSelectBox";
-import StatusDropdown from "../StatusDropdown";
 import CreativeModal from "../CreativeModal";
 import { compaingsData, allInfluencerData } from "./dataManager";
 import { getAllCreativesAction } from "redux/brands/creatives/actions";
 import { useDispatch } from "react-redux";
 import { convertSizeForHuman } from "helpers";
+
+const statusTags = {
+  rejected: <Tag color="#f50">Rejected</Tag>,
+  pending: <Tag color="#2db7f5">Pending</Tag>,
+  accepted: <Tag color="#87d068">Accepted</Tag>,
+};
 
 const CreativeTable = ({ allCreativeDetails, meta }) => {
   const dispatch = useDispatch();
@@ -60,8 +65,8 @@ const CreativeTable = ({ allCreativeDetails, meta }) => {
       key: "createdAt",
     },
     {
-      title: <StatusDropdown />,
-      dataIndex: "status",
+      title: "Status",
+      render: (i, row) => statusTags[row.status],
       key: "status",
     },
   ];
