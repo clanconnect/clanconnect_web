@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './styles.scss';
-import { Tabs, Empty } from 'antd';
+import { Tabs, Empty, Collapse } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RightOutlined } from '@ant-design/icons';
@@ -25,42 +25,56 @@ const ProjectList = (projects) => {
   );
 };
 
+const { Panel } = Collapse;
+
+function callback(key) {
+  console.log(key);
+}
+
 const ProjectCreatives = ({ project, creatives }) => {
   console.log(creatives);
   return project.length != 0 ? (
     <div className='custom-project-collapse'>
       <div key={`project-creatives-${project.id}`}>
-        <ProjectListCard
-          project={project}
-          creatives={creatives}
-          className='shadow-none'
-        />
-
-        <div className='open-container'>
-          <div className='file-influencer-row'>
-            {creatives.length !== 0 ? (
-              creatives.map((creative) => (
-                <DownLoadedFile
-                  creative={creative}
-                  key={`creative-${creative.id}`}
-                  project={project}
-                />
-              ))
-            ) : (
-              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-            )}
-          </div>
-
-          {creatives?.length ? (
-            <Link to={routeConstants.allCreativesLists}>
-              <div className='mt-30'>
-                <p className='view-title'>
-                  View all creatives <RightOutlined />
-                </p>
+        <Collapse onChange={callback}>
+          <Panel
+            showArrow={false}
+            key={project.id}
+            header={
+              <ProjectListCard
+                project={project}
+                creatives={creatives}
+                className='shadow-none'
+              />
+            }
+          >
+            <div className='open-container'>
+              <div className='file-influencer-row'>
+                {creatives.length !== 0 ? (
+                  creatives.map((creative) => (
+                    <DownLoadedFile
+                      creative={creative}
+                      key={`creative-${creative.id}`}
+                      project={project}
+                    />
+                  ))
+                ) : (
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                )}
               </div>
-            </Link>
-          ) : null}
-        </div>
+
+              {creatives?.length ? (
+                <Link to={routeConstants.allCreativesLists}>
+                  <div className='mt-30'>
+                    <p className='view-title'>
+                      View all creatives <RightOutlined />
+                    </p>
+                  </div>
+                </Link>
+              ) : null}
+            </div>
+          </Panel>
+        </Collapse>
       </div>
     </div>
   ) : (
