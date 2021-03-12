@@ -37,6 +37,12 @@ export class CreativeService {
       body
     );
   }
+
+  static getAll({ query }) {
+    return api.get(
+      "/creators/creatives?" + (query && qs.stringify(query)) || ""
+    );
+  }
 }
 
 export class MediaService {

@@ -1,9 +1,6 @@
-import { all, takeLatest, put, call, select } from 'redux-saga/effects';
-import { ACTIONS } from './actions';
-import {
-  CreativeService,
-  getAllInfluencerCreativesApi,
-} from 'services/creators';
+import { all, takeLatest, put, call, select } from "redux-saga/effects";
+import { ACTIONS } from "./actions";
+import { CreativeService } from "services/creators";
 
 export function* fetchIndex({ payload }) {
   try {
@@ -35,7 +32,7 @@ export function* add({
 
 export function* update({ payload: { body, path, query }, onSuccess }) {
   const currentStatus = yield select((state) => {
-    return state.CreatorCreatives.list[0]?.creatives[0]?.status || 'pending';
+    return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
   });
 
   yield call(CreativeService.update, { body, path, query });
@@ -51,7 +48,7 @@ export function* updateAttachments({
   onSuccess,
 }) {
   const currentStatus = yield select((state) => {
-    return state.CreatorCreatives.list[0]?.creatives[0]?.status || 'pending';
+    return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
   });
 
   yield call(CreativeService.updateAttachments, { body, path, query });
@@ -62,11 +59,32 @@ export function* updateAttachments({
   });
 }
 
+export function* fetchAll({ payload }) {
+  try {
+    const response = yield call(CreativeService.getAll, payload);
+
+    if (response.success) {
+      yield put({
+        type: ACTIONS.SET_STATE,
+        payload: {
+          allCreatives: {
+            list: response.data,
+            pagination: response.meta.pagination || {},
+          },
+        },
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* creatorCreativesSagas() {
   yield all([
     takeLatest(ACTIONS.GET_INDEX, fetchIndex),
     takeLatest(ACTIONS.ADD, add),
     takeLatest(ACTIONS.UPDATE, update),
     takeLatest(ACTIONS.UPDATE_ATTACHMENTS, updateAttachments),
+    takeLatest(ACTIONS.GET_ALL, fetchAll),
   ]);
 }

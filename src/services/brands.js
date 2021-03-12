@@ -59,9 +59,3 @@ export async function creativesBulkUpdateApi({ id, status, creatives }) {
     { status, creatives }
   );
 }
-
-export async function getAllCreativesApi(payload) {
-  return await axiosInstance.get(apiConstant.GET_ALL_CREATIVES, {
-    params: payload.params,
-  });
-}
