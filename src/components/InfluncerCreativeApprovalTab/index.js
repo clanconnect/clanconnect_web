@@ -70,7 +70,7 @@ const ProjectCreatives = ({ project, creatives }) => {
 
 const AvailableTabs = [
   { label: "Pending", value: "pending" },
-  { label: "Approved", value: "approved" },
+  { label: "Approved", value: "accepted" },
   { label: "Rejected", value: "rejected" },
 ];
 
