@@ -12,6 +12,7 @@ const apiConstant = {
     "brands/projects/:projectId/creatives/:creativeId/status",
   CREATIVE_BULK_UPDATE: "/brands/projects/:projectId/creatives/bulk-update",
   GET_ALL_CREATIVES: "/brands/projects/creatives/all?",
+  GET_ALL_INFLUENCER_CREATIVES: "/creators/creatives?",
 };
 
 export default apiConstant;

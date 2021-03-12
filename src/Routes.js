@@ -29,6 +29,12 @@ const Influencer = loadable(() =>
   import(/* webpackChunkName: 'InfluencerPage' */ 'containers/InfluencerPage')
 );
 
+const AllCreativesListsInfluencer = loadable(() =>
+  import(
+    /* webpackChunkName: 'AllCreativesListsInfluencer' */ 'containers/AllCreativesListsInfluencer'
+  )
+);
+
 const Routes = ({ location }) => {
   const [isLoading, setIsLoading] = useState(false);
   return (
@@ -49,6 +55,11 @@ const Routes = ({ location }) => {
         <Route
           path={routeConstant.influencerPage}
           component={Influencer}
+          exact
+        />
+        <Route
+          path={routeConstant.allCreativesListsInfluencer}
+          component={AllCreativesListsInfluencer}
           exact
         />
       </Switch>

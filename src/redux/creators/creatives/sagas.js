@@ -1,6 +1,9 @@
-import { all, takeLatest, put, call, select } from "redux-saga/effects";
-import { ACTIONS } from "./actions";
-import { CreativeService } from "services/creators";
+import { all, takeLatest, put, call, select } from 'redux-saga/effects';
+import { ACTIONS } from './actions';
+import {
+  CreativeService,
+  getAllInfluencerCreativesApi,
+} from 'services/creators';
 
 export function* fetchIndex({ payload }) {
   try {
@@ -32,7 +35,7 @@ export function* add({
 
 export function* update({ payload: { body, path, query }, onSuccess }) {
   const currentStatus = yield select((state) => {
-    return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
+    return state.CreatorCreatives.list[0]?.creatives[0]?.status || 'pending';
   });
 
   yield call(CreativeService.update, { body, path, query });
@@ -48,7 +51,7 @@ export function* updateAttachments({
   onSuccess,
 }) {
   const currentStatus = yield select((state) => {
-    return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
+    return state.CreatorCreatives.list[0]?.creatives[0]?.status || 'pending';
   });
 
   yield call(CreativeService.updateAttachments, { body, path, query });

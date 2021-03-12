@@ -17,7 +17,7 @@ const AllCreativesListsBrand = (props) => {
     let params = {
       include: 'media,user,project',
     };
-    dispatch(getAllCreativesAction({ params, id: '5f8d3415e9dac37cb736defe' }));
+    dispatch(getAllCreativesAction({ params, id: id }));
   }, []);
 
   return (
