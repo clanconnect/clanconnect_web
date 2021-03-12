@@ -33,9 +33,25 @@
 
 .custom-project-collapse {
   box-shadow: 0px 3px 6px #00000029;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   border-radius: 5px;
-  padding-bottom: 20px;
+
+  .ant-collapse-icon-position-left {
+    border: none;
+    margin-top: 20px;
+  }
+
+  .ant-collapse-header {
+    padding: 0px !important;
+    background-color: transparent;
+  }
+  .ant-collapse {
+    background-color: transparent !important;
+  }
+
+  .shadow-none {
+    margin: 0px;
+  }
 }
 
 .open-container {
