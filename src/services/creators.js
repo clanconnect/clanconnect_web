@@ -12,7 +12,7 @@ export class ProjectService {
 export class CreativeService {
   static index({ query }) {
     return api.get(
-      "/creators/creatives?" + (query && qs.stringify(query)) || ""
+      "/creators/creatives/by-projects?" + (query && qs.stringify(query)) || ""
     );
   }
 
