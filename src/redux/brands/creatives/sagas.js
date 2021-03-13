@@ -1,12 +1,12 @@
-import { all, takeLatest, put, call } from 'redux-saga/effects';
-import actionConstants from './actions';
+import { all, takeLatest, put, call } from "redux-saga/effects";
+import actionConstants from "./actions";
 import {
   getCreativesAPI,
   creativeUpdateStatusApi,
   creativesBulkUpdateApi,
   getAllCreativesApi,
-} from 'services/brands';
-import { getCreativesAction } from './actions';
+} from "services/brands";
+import { getCreativesAction } from "./actions";
 
 export function* getCreatives(action) {
   try {
@@ -14,9 +14,7 @@ export function* getCreatives(action) {
     if (response.success) {
       yield put({
         type: actionConstants.SET_STATE,
-        payload: {
-          creativeDetails: response.data,
-        },
+        payload: { creativeDetails: response.data },
       });
     }
   } catch (err) {
@@ -26,14 +24,13 @@ export function* getCreatives(action) {
 
 //update creative status
 export function* updateCreativeStatus(action) {
-  console.log(action.payload);
   try {
     const response = yield call(creativeUpdateStatusApi, action.payload);
     if (response.success) {
       yield getCreatives(
         getCreativesAction({
           params: {
-            include: 'media,user',
+            include: "media,user",
             status: action.payload.currentStatus,
           },
           id: action.payload.projectId,
@@ -53,7 +50,7 @@ export function* creativesBulkUpdate(action) {
       yield getCreatives(
         getCreativesAction({
           params: {
-            include: 'media,user',
+            include: "media,user",
             status: action.payload.currentStatus,
           },
           id: action.payload.projectId,
