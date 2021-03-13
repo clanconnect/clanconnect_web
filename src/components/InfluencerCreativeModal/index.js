@@ -11,9 +11,21 @@ import paperclip from 'assets/images/paperclip.svg';
 import { downloadMedia } from 'helpers';
 
 const statusTags = {
-  rejected: <Tag color='#f50'>Rejected</Tag>,
-  pending: <Tag color='#2db7f5'>Pending</Tag>,
-  accepted: <Tag color='#87d068'>Accepted</Tag>,
+  rejected: (
+    <Tag color='#f50' style={{ position: 'relative', top: 0, left: 0 }}>
+      Rejected
+    </Tag>
+  ),
+  pending: (
+    <Tag color='#2db7f5' style={{ position: 'relative', top: 0, left: 0 }}>
+      Pending
+    </Tag>
+  ),
+  accepted: (
+    <Tag color='#87d068' style={{ position: 'relative', top: 0, left: 0 }}>
+      Accepted
+    </Tag>
+  ),
 };
 
 const MediaView = ({ media, imageUrl, onImageError }) => {
