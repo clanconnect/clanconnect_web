@@ -1,40 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import Header from 'components/DemoHeader';
-import SideNav from 'components/DemoSideNav';
-import Breadcrumb from 'components/Breadcrumb';
-import CreativeTable from 'components/CreativeTable';
-import { getAllCreativesAction } from 'redux/brands/creatives/actions';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
+import Header from "components/DemoHeader";
+import SideNav from "components/DemoSideNav";
+import Breadcrumb from "components/Breadcrumb";
+import CreativeTable from "components/CreativeTable";
+import { getAllCreativesAction } from "redux/brands/creatives/actions";
+import { useSelector, useDispatch } from "react-redux";
 
-import './styles.scss';
-import { useParams } from 'react-router-dom';
+import "./styles.scss";
+import { useParams } from "react-router-dom";
 
 const AllCreativesListsBrand = (props) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { allCreativeDetails, meta } = useSelector((store) => store.creatives);
+  const { allCreativeDetails = [], pagination = {} } = useSelector(
+    (store) => store.creatives
+  );
   useEffect(() => {
-    let params = {
-      include: 'media,user,project',
-    };
+    let params = { include: "media,user,project", page: 1, perPage: 10 };
     dispatch(getAllCreativesAction({ params, id: id }));
   }, []);
-
   return (
-    <div className='main-wrapper'>
+    <div className="main-wrapper">
       <Header />
-      <div className='flex top-space-commom'>
+      <div className="flex top-space-commom">
         <SideNav />
-        <div className='content-wrapper'>
+        <div className="content-wrapper">
           <Breadcrumb text={`All Creatives`} />
 
-          <div className='list-wrapper'>
+          <div className="list-wrapper">
             <div>
-              <h2 className='list-title'>All Creatives</h2>
+              <h2 className="list-title">All Creatives</h2>
             </div>
             <CreativeTable
               allCreativeDetails={allCreativeDetails}
-              meta={meta}
+              pagination={pagination}
             />
           </div>
         </div>

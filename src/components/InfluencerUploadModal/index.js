@@ -313,7 +313,7 @@ const InfluencerUploadModal = ({
               Please select one creative for which you want to upload a version:
             </p>
             <div className="conatiner-file">
-              {creatives.length != 0 ? (
+              {creatives.length !== 0 ? (
                 creatives.map((creative) => (
                   <UploadAttchmentFile
                     key={`previous-creative-version-${creative.id}`}

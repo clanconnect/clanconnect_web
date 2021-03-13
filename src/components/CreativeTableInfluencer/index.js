@@ -103,22 +103,6 @@ const CreativeTableInfluencer = ({ list, pagination, loading }) => {
     },
   ];
 
-  // const onSelectChange = (selectedRowKeys) => {
-  //   setSelectedRowKeys(selectedRowKeys);
-  // };
-
-  // const deleteCreatives = () => {
-  //   const ids = [];
-  //   for (const index of selectedRowKeys) {
-  //     ids.push(list[index].id);
-  //   }
-
-  //   dispatch({
-  //     type: ACTIONS.BULK_DELETE,
-  //     payload: { body: { ids } },
-  //     onSuccess: () => setSelectedRowKeys([]),
-  //   });
-  // };
   console.log("loading ====> ", loading);
   return (
     <div>
