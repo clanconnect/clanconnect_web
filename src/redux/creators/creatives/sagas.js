@@ -61,12 +61,14 @@ export function* updateAttachments({
 
 export function* fetchAll({ payload }) {
   try {
+    yield put({ type: ACTIONS.SET_STATE, payload: { loading: true } });
     const response = yield call(CreativeService.getAll, payload);
 
     if (response.success) {
       yield put({
         type: ACTIONS.SET_STATE,
         payload: {
+          loading: false,
           allCreatives: {
             list: response.data,
             pagination: response.meta.pagination || {},
@@ -76,6 +78,7 @@ export function* fetchAll({ payload }) {
     }
   } catch (err) {
     console.log(err);
+    yield put({ type: ACTIONS.SET_STATE, payload: { loading: false } });
   }
 }
 

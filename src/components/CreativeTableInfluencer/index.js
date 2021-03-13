@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import { Table, Tag } from "antd";
-import { DeleteOutlined, DownloadOutlined } from "@ant-design/icons";
 import { useDispatch, connect } from "react-redux";
 import { ACTIONS } from "redux/creators/creatives/actions";
 import { convertSizeForHuman } from "helpers";
@@ -14,7 +13,7 @@ const statusTags = {
   accepted: <Tag color="#87d068">Accepted</Tag>,
 };
 
-const CreativeTableInfluencer = ({ list, pagination }) => {
+const CreativeTableInfluencer = ({ list, pagination, loading }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [rows, setRows] = useState([]);
   const dispatch = useDispatch();
@@ -36,8 +35,14 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
     setRows([...rows]);
   }, [list]);
 
-  const onPageChange = (pagination) => {
-    setSelectedRowKeys([]);
+  const onPageChange = (pagination, filters, sorter = {}) => {
+    let sortOrder = {};
+    if (Array.isArray(sorter)) {
+      sorter.forEach((s) => (sortOrder[s.columnKey] = s.order));
+    } else {
+      if (Object.keys(sorter).length > 1)
+        sortOrder[sorter.columnKey] = sorter.order;
+    }
     dispatch({
       type: ACTIONS.GET_ALL,
       payload: {
@@ -45,6 +50,8 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
           include: "project,media,user",
           page: pagination.current,
           perPage: pagination.pageSize,
+          status: (filters?.status || []).join(","),
+          sortOrder: JSON.stringify(sortOrder),
         },
       },
     });
@@ -55,6 +62,7 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
       title: "Campaign Name",
       render: (a, row) => <span>{row.project.title}</span>,
       key: "projectName",
+      sortDirections: ["descend", "ascend"],
     },
     {
       title: "Posts",
@@ -73,12 +81,14 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
       render: (v, row) => (
         <span>{convertSizeForHuman(row.stats.storageSizeInBytes)}</span>
       ),
-      key: "size",
+      key: "storageSize",
+      sorter: { multiple: 1 },
     },
     {
       title: "Date",
       render: (v, row) => new Date(row.createdAt).toISOString().split("T")[0],
-      key: "date",
+      key: "createdAt",
+      sorter: { multiple: 2 },
     },
     {
       title: "Status",
@@ -93,26 +103,26 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
     },
   ];
 
-  const onSelectChange = (selectedRowKeys) => {
-    setSelectedRowKeys(selectedRowKeys);
-  };
+  // const onSelectChange = (selectedRowKeys) => {
+  //   setSelectedRowKeys(selectedRowKeys);
+  // };
 
-  const deleteCreatives = () => {
-    const ids = [];
-    for (const index of selectedRowKeys) {
-      ids.push(list[index].id);
-    }
+  // const deleteCreatives = () => {
+  //   const ids = [];
+  //   for (const index of selectedRowKeys) {
+  //     ids.push(list[index].id);
+  //   }
 
-    dispatch({
-      type: ACTIONS.BULK_DELETE,
-      payload: { body: { ids } },
-      onSuccess: () => setSelectedRowKeys([]),
-    });
-  };
-
+  //   dispatch({
+  //     type: ACTIONS.BULK_DELETE,
+  //     payload: { body: { ids } },
+  //     onSuccess: () => setSelectedRowKeys([]),
+  //   });
+  // };
+  console.log("loading ====> ", loading);
   return (
     <div>
-      {selectedRowKeys.length > 0 ? (
+      {/* {selectedRowKeys.length > 0 ? (
         <div className="added-row">
           <div>
             <p className="mb-0 added-row-text">
@@ -132,12 +142,13 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
             </button>
           </div>
         </div>
-      ) : null}
+      ) : null} */}
       <Table
         bordered
+        loading={loading}
         columns={columns}
         dataSource={rows}
-        rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
+        // rowSelection={{ selectedRowKeys, onChange: onSelectChange }}
         onChange={onPageChange}
         pagination={{
           hideOnSinglePage: true,
@@ -152,6 +163,7 @@ const CreativeTableInfluencer = ({ list, pagination }) => {
 };
 
 const mapStateToProps = ({ CreatorCreatives }) => ({
+  loading: CreatorCreatives.loading,
   list: CreatorCreatives.allCreatives.list,
   pagination: CreatorCreatives.allCreatives.pagination,
 });
