@@ -268,7 +268,7 @@ const InfluencerUploadModal = ({
   };
 
   return (
-    <>
+    <div onClick={(e) => e.stopPropagation()}>
       <button
         className={style}
         onClick={(event) => {
@@ -332,7 +332,7 @@ const InfluencerUploadModal = ({
           </div>
         )}
       </Modal>
-    </>
+    </div>
   );
 };
 
