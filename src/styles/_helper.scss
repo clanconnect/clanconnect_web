@@ -107,11 +107,11 @@ p {
   background-color: #fff;
   border: 1px solid #eb008b;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 5px 15px;
   display: inline-block;
   color: #eb008b;
   text-decoration: none;
-  margin-right: 30px;
+  margin-right: 15px;
   cursor: pointer;
   &:focus {
     outline: none;
@@ -180,4 +180,9 @@ p {
   justify-content: center;
   width: 100%;
   height: 100%;
+}
+
+.btn-gray {
+  border: 1px solid #707070 !important;
+  color: #707070 !important;
 }
