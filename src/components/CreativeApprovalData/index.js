@@ -107,8 +107,10 @@ const CreativeApprovalData = ({
                     </button>
 
                     <button
-                      className="outline-btn bg-grey"
-                      onClick={() => onClickSelect(false)}
+                      className='outline-btn btn-gray'
+                      onClick={() => {
+                        onClickSelect(false);
+                      }}
                     >
                       Deselect
                     </button>
@@ -169,7 +171,11 @@ const CreativeApprovalData = ({
                     </button>
 
                     <button
+<<<<<<< HEAD
+                      className='outline-btn btn-gray'
+=======
                       className="outline-btn bg-green"
+>>>>>>> dev/vinayak
                       onClick={() => {
                         onClickSelect(false);
                       }}
@@ -225,7 +231,11 @@ const CreativeApprovalData = ({
                     </button>
 
                     <button
+<<<<<<< HEAD
+                      className='outline-btn  btn-gray'
+=======
                       className="outline-btn bg-green"
+>>>>>>> dev/vinayak
                       onClick={() => {
                         onClickSelect(false);
                       }}
