@@ -28,11 +28,16 @@ function callback(key) {
   console.log(key);
 }
 
-const ProjectCreatives = ({ project, creatives }) => {
+const ProjectCreatives = ({ project, creatives }, index) => {
   return project.length !== 0 ? (
     <div className="custom-project-collapse">
       <div key={`project-creatives-${project.id}`}>
-        <Collapse onChange={callback} expandIconPosition={"right"}>
+        <Collapse
+          onChange={callback}
+          expandIconPosition={"right"}
+          accordion
+          defaultActiveKey={[index === 0 ? project.id : ""]}
+        >
           <Panel
             showArrow={true}
             key={project.id}
@@ -117,7 +122,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
         {AvailableTabs.map((o) => (
           <TabPane tab={o.label} key={o.value}>
             {creatives && creatives?.length !== 0 ? (
-              creatives.map((obj) => ProjectCreatives(obj))
+              creatives.map((obj, index) => ProjectCreatives(obj, index))
             ) : (
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )}
