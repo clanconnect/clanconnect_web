@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./styles.scss";
-import { Modal, Empty } from "antd";
+import { Modal, Empty, Result } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import UploadDocumentCard from "../UploadDocumentCard";
 import UploadAttchmentFile from "../UploadAttchmentFile";
 import { connect } from "react-redux";
 import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
+import { remove } from "lodash";
 
 const UploadTypes = [
   { label: "Uploading a new creative", value: "upload new" },
@@ -58,6 +59,7 @@ const UploadNewCreatives = ({
   uploadProgress,
   fileUploadStage,
   removeFileFromUpload,
+  uploadingFile,
 }) => {
   return (
     <>
@@ -73,6 +75,7 @@ const UploadNewCreatives = ({
                 icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
                   selectedCreative?.media[0]?.slug || "default"
                 }`}
+                mimeType={selectedCreative?.media[0]?.mimeType || ""}
                 uploadedFile
               />
             </div>
@@ -86,32 +89,37 @@ const UploadNewCreatives = ({
         </>
       ) : (
         <div className="conatiner-file">
-          {files.map((file) => (
-            <UploadAttchmentFile
-              key={`file-${file.uid}`}
-              percenter={uploadProgress[file.uid]}
-              fileName={file.name}
-              icon={URL.createObjectURL(file.originFileObj)}
-              onDelete={() => removeFileFromUpload(file)}
-            />
-          ))}
+          {files.map((file) => {
+            return (
+              <UploadAttchmentFile
+                key={`file-${file.uid}`}
+                percenter={uploadProgress[file.uid]}
+                fileName={file.name}
+                mimeType={file.type}
+                icon={URL.createObjectURL(file.originFileObj)}
+                onDelete={() => removeFileFromUpload(file)}
+              />
+            );
+          })}
         </div>
       )}
 
-      <div className="comment-btns flex justify-between ">
-        <div className="">
-          <button
-            className="btn-submit"
-            onClick={handleUpload}
-            disabled={files.length < 1}
-          >
-            {!fileUploadStage ? "Review" : "Upload"}
-          </button>
-          <button className="btn-cancel" onClick={onCancel}>
-            Cancel
-          </button>
+      {files.length > 0 && (
+        <div className="comment-btns flex justify-between ">
+          <div className="">
+            <button
+              className="btn-submit"
+              onClick={handleUpload}
+              disabled={uploadingFile}
+            >
+              {fileUploadStage === 0 &&
+                (uploadingFile ? "Uploading..." : "Upload")}
+              {fileUploadStage === 1 &&
+                (uploadingFile ? "Sending...." : "Send")}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
@@ -129,9 +137,11 @@ const InfluencerUploadModal = ({
   const [showFile, setShowFile] = useState(false);
   const [showOldFile, setShowOldFile] = useState(false);
   const [files, setFiles] = useState([]);
+  const [uploadingFile, setUploadingFile] = useState(false);
   const [uploadProgress, setUploadProgress] = useState({});
   const [selectedCreative, setSelectedCreative] = useState({});
   const [fileUploadStage, setFileUploadStage] = useState(0);
+  const [uploadedMedia, setUploadedMedia] = useState([]);
 
   useEffect(() => {
     const progress = {};
@@ -140,23 +150,29 @@ const InfluencerUploadModal = ({
   }, [files]);
 
   const removeFileFromUpload = (file) => {
-    const index = files.indexOf(file);
     const selectedFiles = files;
-    if (index > -1) {
-      selectedFiles.splice(index, 1);
-      setFiles([...selectedFiles]);
-      if (selectedFiles.length === 0) {
-        handleUploadNewFile("upload new");
-      }
+    remove(selectedFiles, (o) => o.uid === file.uid);
+    const uploadedFiles = uploadedMedia;
+    remove(uploadedFiles, (o) => o.local.uid === file.uid);
+    setUploadedMedia([...uploadedFiles]);
+    setFiles([...selectedFiles]);
+
+    if (selectedFiles.length === 0) {
+      handleUploadNewFile("upload new");
     }
   };
+
   const handleUploadNewFile = (value) => {
-    setSelectedCreative({});
-    setFiles([]);
     setUploadNewFile(value);
+    setUploadedMedia([]);
+    resetUpload();
+  };
+
+  const resetUpload = () => {
+    setFileUploadStage(0);
+    setSelectedCreative({});
     setShowOldFile(false);
     setShowFile(false);
-    setFileUploadStage(0);
   };
 
   const showUploadFilesProgress = (value) => {
@@ -171,84 +187,92 @@ const InfluencerUploadModal = ({
 
   const onCancel = () => {
     setVisible(false);
-    setFiles([]);
-    setUploadNewFile("");
-    setShowOldFile(false);
-    setShowFile(false);
-    setFileUploadStage(0);
+    handleUploadNewFile("");
   };
 
-  const updateProgress = (fileUid, progress) => {
-    setUploadProgress({ ...uploadProgress, ...{ [fileUid]: progress } });
-  };
+  const handleMediaUpload = () => {
+    setShowFile(true);
+    setFileUploadStage(1);
+    setUploadingFile(true);
 
-  const handleUpload = () => {
-    if (files.length === 0) return;
-
-    if (fileUploadStage === 0) {
-      setShowFile(true);
-      setFileUploadStage(1);
-      return;
-    }
+    const updateProgress = (fileUid, progress) => {
+      setUploadProgress((prevState) => {
+        return { ...prevState, ...{ [fileUid]: progress } };
+      });
+    };
 
     MediaService.uploadMultiple(files, updateProgress)
       .then((res) => {
+        const uploadedFiles = [];
         for (const media of res) {
-          if (!selectedCreative || !selectedCreative.id) {
-            const payload = {
-              body: { mediaId: media.id, projectId: project.id },
-            };
-            dispatch({
-              type: ACTIONS.ADD,
-              payload,
-              onSuccess: onCancel,
-              selectedStatus: creatives[0].status,
-            });
-          } else {
-            const payload = {
-              body: { mediaId: media.id },
-              path: { id: selectedCreative.id },
-            };
-            dispatch({
-              type: ACTIONS.UPDATE,
-              payload,
-              onSuccess: onCancel,
-              selectedStatus: creatives[0].status,
-            });
-          }
+          uploadedFiles.push(media);
         }
+
+        setUploadedMedia([...uploadedFiles]);
+        setUploadingFile(false);
       })
       .catch((e) => console.log(e));
   };
 
+  const handleCreativeUpload = () => {
+    setUploadingFile(true);
+    const onSuccess = () => {
+      setUploadingFile(false);
+      setFileUploadStage(2);
+    };
+    const selectedStatus = creatives[0].status;
+
+    for (const media of uploadedMedia) {
+      if (selectedCreative && selectedCreative.id) {
+        const payload = {
+          body: { mediaId: media.server.id },
+          path: { id: selectedCreative.id },
+        };
+        dispatch({ type: ACTIONS.UPDATE, payload, onSuccess, selectedStatus });
+        return;
+      }
+      const payload = {
+        body: { mediaId: media.server.id, projectId: project.id },
+      };
+      dispatch({ type: ACTIONS.ADD, payload, onSuccess, selectedStatus });
+    }
+    return;
+  };
+
+  const handleUpload = () => {
+    if (files.length === 0) return;
+    if (fileUploadStage === 0) handleMediaUpload();
+    if (fileUploadStage === 1) handleCreativeUpload();
+  };
+
   const ModalTitle = (
     <>
-      {uploadNewFile === "" && <span>Upload Creative</span>}
-      {uploadNewFile === "upload added" && (
-        <span>
-          <ArrowLeftOutlined
-            onClick={() => {
-              handleUploadNewFile("");
-              setFileUploadStage(0);
-            }}
-            className="mr-5"
-          />{" "}
-          Upload a version
-        </span>
-      )}
+      {fileUploadStage < 2 && (
+        <>
+          {uploadNewFile === "" && <span>Upload Creative</span>}
+          {uploadNewFile === "upload added" && (
+            <span>
+              <ArrowLeftOutlined
+                onClick={() => handleUploadNewFile("")}
+                className="mr-5"
+              />{" "}
+              Upload a version
+            </span>
+          )}
 
-      {uploadNewFile === "upload new" && (
-        <span>
-          <ArrowLeftOutlined
-            onClick={
-              !showFile
-                ? () => handleUploadNewFile("")
-                : () => showUploadFilesProgress(false)
-            }
-            className="mr-5"
-          />{" "}
-          Upload a new creative
-        </span>
+          {uploadNewFile === "upload new" && (
+            <span>
+              <ArrowLeftOutlined
+                onClick={() => {
+                  resetUpload();
+                  showUploadFilesProgress(false);
+                }}
+                className="mr-5"
+              />{" "}
+              Upload a new creative
+            </span>
+          )}
+        </>
       )}
     </>
   );
@@ -279,12 +303,14 @@ const InfluencerUploadModal = ({
         {btnText}
       </button>
       <Modal {...ModalProps}>
-        <div className="comapign-text">
-          <span>{project.title}</span>
-          {showFile && (
-            <span className="text-sm">{files.length} File(s) Selected</span>
-          )}
-        </div>
+        {fileUploadStage < 2 && (
+          <div className="comapign-text">
+            <span>{project.title}</span>
+            {showFile && (
+              <span className="text-sm">{files.length} File(s) Selected</span>
+            )}
+          </div>
+        )}
 
         <ShowUploadConsentView
           key="show-upload-consent-view"
@@ -294,6 +320,7 @@ const InfluencerUploadModal = ({
         />
 
         {uploadNewFile === "upload new" &&
+          fileUploadStage < 2 &&
           UploadNewCreatives({
             onCancel,
             setFiles,
@@ -305,7 +332,27 @@ const InfluencerUploadModal = ({
             files,
             uploadProgress,
             selectedCreative,
+            uploadingFile,
           })}
+
+        {fileUploadStage === 2 && (
+          <Result
+            status="success"
+            title="All creatives sucesfully uploaded"
+            subTitle="Would you like to upload more creatives?"
+            extra={[
+              <button
+                className="btn-submit"
+                onClick={() => handleUploadNewFile("")}
+              >
+                Yes, Upload More{" "}
+              </button>,
+              <button className="btn-cancel" onClick={() => onCancel()}>
+                No, Thanks!
+              </button>,
+            ]}
+          />
+        )}
 
         {uploadNewFile === "upload added" && (
           <div>
@@ -321,6 +368,7 @@ const InfluencerUploadModal = ({
                     icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
                       creative?.media[0]?.slug || "default"
                     }`}
+                    mimeType={creative?.media[0]?.mimeType}
                     uploadedFile
                     handleClick={() => selectCreative(creative)}
                   />
