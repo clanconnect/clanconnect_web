@@ -287,6 +287,7 @@ const CreativeModal = ({
                   <BrandUploadDocumentModal
                     src={paperclip}
                     creative={creative}
+                    project={{ id }}
                   />
                 </div>
                 {showFiles ? (

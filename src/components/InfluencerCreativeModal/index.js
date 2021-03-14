@@ -202,6 +202,7 @@ const InfluencerCreativeModal = ({
 
                   <BrandUploadDocumentModal
                     src={paperclip}
+                    project={project}
                     creative={creative}
                   />
                 </div>
