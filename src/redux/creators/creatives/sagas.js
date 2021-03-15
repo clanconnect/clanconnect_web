@@ -24,10 +24,12 @@ export function* add({
 }) {
   yield call(CreativeService.addNew, { body, path, query });
   if (onSuccess) yield onSuccess();
-  yield put({
-    type: ACTIONS.GET_INDEX,
-    payload: { query: { status: selectedStatus } },
-  });
+  if (selectedStatus) {
+    yield put({
+      type: ACTIONS.GET_INDEX,
+      payload: { query: { status: selectedStatus } },
+    });
+  }
 }
 
 export function* update({ payload: { body, path, query }, onSuccess }) {

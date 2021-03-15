@@ -165,6 +165,7 @@ const InfluencerUploadModal = ({
   const handleUploadNewFile = (value) => {
     setUploadNewFile(value);
     setUploadedMedia([]);
+    setFiles([]);
     resetUpload();
   };
 
@@ -192,7 +193,6 @@ const InfluencerUploadModal = ({
 
   const handleMediaUpload = () => {
     setShowFile(true);
-    setFileUploadStage(1);
     setUploadingFile(true);
 
     const updateProgress = (fileUid, progress) => {
@@ -203,6 +203,7 @@ const InfluencerUploadModal = ({
 
     MediaService.uploadMultiple(files, updateProgress)
       .then((res) => {
+        setFileUploadStage(1);
         const uploadedFiles = [];
         for (const media of res) {
           uploadedFiles.push(media);
@@ -220,7 +221,7 @@ const InfluencerUploadModal = ({
       setUploadingFile(false);
       setFileUploadStage(2);
     };
-    const selectedStatus = creatives[0].status;
+    const selectedStatus = creatives[0]?.status;
 
     for (const media of uploadedMedia) {
       if (selectedCreative && selectedCreative.id) {
