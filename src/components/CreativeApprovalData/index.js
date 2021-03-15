@@ -103,16 +103,14 @@ const CreativeApprovalData = ({
                       className='outline-btn bg-green'
                       onClick={handleSelectAll}
                     >
-                      {isAllSelected() ? 'Deselect All' : 'Select All'}
+                      Select All
                     </button>
 
                     <button
                       className='outline-btn btn-gray'
-                      onClick={() => {
-                        onClickSelect(false);
-                      }}
+                      onClick={() => setSelectedCreatives([])}
                     >
-                      Deselect
+                      Deselect All
                     </button>
 
                     <button
@@ -122,7 +120,7 @@ const CreativeApprovalData = ({
                         handleBulkCreatives('accepted', 'pending');
                       }}
                     >
-                      Approved
+                      Approve
                     </button>
                     <button
                       className='outline-btn bg-red'
@@ -143,7 +141,14 @@ const CreativeApprovalData = ({
                   </button>
                 )}
               </div>
-              {/* <button className='outline-btn bg-blue'>Done</button> */}
+              <button
+                className='outline-btn bg-blue'
+                onClick={() => {
+                  onClickSelect(false);
+                }}
+              >
+                Done
+              </button>
             </div>
           )}
           <InfluncerFile
@@ -167,16 +172,14 @@ const CreativeApprovalData = ({
                       className='outline-btn bg-green'
                       onClick={handleSelectAll}
                     >
-                      {isAllSelected() ? 'Deselect All' : 'Select All'}
+                      Select All
                     </button>
 
                     <button
                       className='outline-btn btn-gray'
-                      onClick={() => {
-                        onClickSelect(false);
-                      }}
+                      onClick={() => setSelectedCreatives([])}
                     >
-                      Deselect
+                      Deselect All
                     </button>
                     <button
                       className='outline-btn bg-red'
@@ -197,7 +200,14 @@ const CreativeApprovalData = ({
                   </button>
                 )}
               </div>
-              {/* <button className='outline-btn bg-blue'>Done</button> */}
+              <button
+                className='outline-btn bg-blue'
+                onClick={() => {
+                  onClickSelect(false);
+                }}
+              >
+                Done
+              </button>
             </div>
           )}
           <InfluncerFile
@@ -223,16 +233,14 @@ const CreativeApprovalData = ({
                       className='outline-btn bg-green'
                       onClick={handleSelectAll}
                     >
-                      {isAllSelected() ? 'Deselect All' : 'Select All'}
+                      Select All
                     </button>
 
                     <button
-                      className='outline-btn  btn-gray'
-                      onClick={() => {
-                        onClickSelect(false);
-                      }}
+                      className='outline-btn btn-gray'
+                      onClick={() => setSelectedCreatives([])}
                     >
-                      Deselect
+                      Deselect All
                     </button>
                     <button
                       className='outline-btn bg-green-outline'
@@ -253,7 +261,14 @@ const CreativeApprovalData = ({
                   </button>
                 )}
               </div>
-              {/* <button className='outline-btn bg-blue'>Done</button> */}
+              <button
+                className='outline-btn bg-blue'
+                onClick={() => {
+                  onClickSelect(false);
+                }}
+              >
+                Done
+              </button>
             </div>
           )}
           <InfluncerFile

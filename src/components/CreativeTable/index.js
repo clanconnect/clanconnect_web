@@ -1,67 +1,67 @@
-import React from "react";
-import "./styles.scss";
-import { Table, Tag } from "antd";
-import CreativeModal from "../CreativeModal";
-import { getAllCreativesAction } from "redux/brands/creatives/actions";
-import { useDispatch } from "react-redux";
-import { convertSizeForHuman } from "helpers";
+import React from 'react';
+import './styles.scss';
+import { Table, Tag } from 'antd';
+import CreativeModal from '../CreativeModal';
+import { getAllCreativesAction } from 'redux/brands/creatives/actions';
+import { useDispatch } from 'react-redux';
+import { convertSizeForHuman } from 'helpers';
 
 const statusTags = {
-  rejected: <Tag color="#f50">Rejected</Tag>,
-  pending: <Tag color="#2db7f5">Pending</Tag>,
-  accepted: <Tag color="#87d068">Accepted</Tag>,
+  rejected: <Tag color='#f50'>Rejected</Tag>,
+  pending: <Tag color='#2db7f5'>Pending</Tag>,
+  accepted: <Tag color='#87d068'>Approved</Tag>,
 };
 
 const CreativeTable = ({ allCreativeDetails, pagination = {} }) => {
   const dispatch = useDispatch();
-  console.log("all creative details ====> ", allCreativeDetails);
+  console.log('all creative details ====> ', allCreativeDetails);
   const columns = [
     {
-      title: "Campaign Name",
-      dataIndex: ["project", "title"],
-      key: ["project", "title"],
+      title: 'Campaign Name',
+      dataIndex: ['project', 'title'],
+      key: ['project', 'title'],
     },
     {
-      title: "Posts",
-      dataIndex: "posts",
+      title: 'Posts',
+      dataIndex: 'posts',
       render: (text, record, index) => (
         <CreativeModal
           versionTrue
-          className="version-title"
+          className='version-title'
           creative={record}
         />
       ),
-      key: "posts",
+      key: 'posts',
     },
 
     {
-      title: "Influencer Name",
-      dataIndex: ["user", "name"],
-      key: ["user", "name"],
+      title: 'Influencer Name',
+      dataIndex: ['user', 'name'],
+      key: ['user', 'name'],
     },
     {
-      title: "Size",
+      title: 'Size',
       render: (value, record, index) => convertSizeForHuman(value),
-      dataIndex: ["stats", "storageSizeInBytes"],
-      key: "storageSize",
+      dataIndex: ['stats', 'storageSizeInBytes'],
+      key: 'storageSize',
       sorter: { multiple: 1 },
     },
     {
-      title: "Date",
-      dataIndex: "createdAt",
+      title: 'Date',
+      dataIndex: 'createdAt',
       render: (value, record, index) => new Date(value).toLocaleDateString(),
-      key: "createdAt",
+      key: 'createdAt',
       sorter: { multiple: 2 },
     },
     {
-      title: "Status",
+      title: 'Status',
       render: (i, row) => statusTags[row.status],
-      key: "status",
+      key: 'status',
       filterMultiple: false,
       filters: [
-        { text: "Pending", value: "pending" },
-        { text: "Accepted", value: "accepted" },
-        { text: "Rejected", value: "rejected" },
+        { text: 'Pending', value: 'pending' },
+        { text: 'Approved', value: 'accepted' },
+        { text: 'Rejected', value: 'rejected' },
       ],
     },
   ];
@@ -78,17 +78,17 @@ const CreativeTable = ({ allCreativeDetails, pagination = {} }) => {
     dispatch(
       getAllCreativesAction({
         params: {
-          include: "media,user,project",
+          include: 'media,user,project',
           page: pagination.current,
           perPage: pagination.pageSize,
-          status: (filters?.status || []).join(","),
+          status: (filters?.status || []).join(','),
           sortOrder: JSON.stringify(sortOrder),
         },
       })
     );
   };
 
-  console.log("pagination ====> ", pagination);
+  console.log('pagination ====> ', pagination);
   return (
     <div>
       <Table
