@@ -71,7 +71,7 @@ export function* getAllCreatives(action) {
         type: actionConstants.SET_STATE,
         payload: {
           allCreativeDetails: response.data,
-          meta: response.meta.pagination,
+          pagination: response.meta.pagination,
         },
       });
     }

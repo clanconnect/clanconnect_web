@@ -52,8 +52,8 @@ const CreativeModal = ({
   };
 
   useEffect(() => {
-    setCurrentMedia(creative.media[0]);
-    setCreativeStatus(creative.media[0].status);
+    setCurrentMedia(creative.media[0] || {});
+    setCreativeStatus(creative.media[0]?.status || "pending");
   }, [creative.media]);
 
   const menu = (status) => {
@@ -153,7 +153,7 @@ const CreativeModal = ({
             <VideoPlayer
               url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${creative?.media[0]?.slug}`}
               playing={playing}
-              controls={true}
+              controls={false}
               style={{ height: "80px", width: "80px" }}
               className="short-video"
             />
@@ -287,6 +287,7 @@ const CreativeModal = ({
                   <BrandUploadDocumentModal
                     src={paperclip}
                     creative={creative}
+                    project={{ id }}
                   />
                 </div>
                 {showFiles ? (

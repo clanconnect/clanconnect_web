@@ -202,13 +202,14 @@ const InfluencerCreativeModal = ({
 
                   <BrandUploadDocumentModal
                     src={paperclip}
+                    project={project}
                     creative={creative}
                   />
                 </div>
 
                 {showAttachments ? (
                   <div className="tarnsition animate__animated animate__fadeIn">
-                    {creative.attachments != 0 ? (
+                    {creative.attachments !== 0 ? (
                       creative.attachments.map((media) => (
                         <AttachmentFileCard media={media} />
                       ))

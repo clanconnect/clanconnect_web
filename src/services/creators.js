@@ -73,7 +73,7 @@ export class MediaService {
           originalName: file.originFileObj.name,
         });
 
-        return res.data;
+        return { server: res.data, local: file };
       } catch (e) {
         console.log(e);
       }
