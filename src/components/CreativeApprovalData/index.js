@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Tabs, Empty } from 'antd';
+import routeConstant from 'common/routeConstants';
 
 import InfluncerFile from '../InfluncerFile';
 import {
@@ -82,6 +83,11 @@ const CreativeApprovalData = ({
       dispatch(getCreativesAction({ params, id }));
     }
   }, []);
+  const operations = (
+    <Link to={routeConstant.allCreativesListsBrand}>
+      <p className='cursor-pointer view-title'>View all creatives</p>
+    </Link>
+  );
 
   return (
     <div className='tab-creative'>
@@ -92,6 +98,7 @@ const CreativeApprovalData = ({
           setSelectedCreatives([]);
           setShowSelectAllActive(false);
         }}
+        tabBarExtraContent={operations}
       >
         <TabPane tab='Pending' key='pending'>
           {creativeDetails.length !== 0 && (
