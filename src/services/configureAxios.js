@@ -4,6 +4,7 @@ const axiosConfiguration = () =>
   axios.create({
     baseURL: process.env.REACT_APP_API_HOST,
     timeout: 30000,
+    withCredentials: true,
   });
 
 const axiosInstance = axiosConfiguration();
