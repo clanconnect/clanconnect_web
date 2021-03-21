@@ -1,6 +1,5 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import Cookies from "js-cookie";
 
 axios.defaults.withCredentials = true;
 const axiosConfiguration = () =>
@@ -13,16 +12,7 @@ const axiosConfiguration = () =>
 const axiosInstance = axiosConfiguration();
 
 axiosInstance.interceptors.request.use((config) => {
-  // const sessionToken = window.location.pathname.includes("/influencer")
-  //   ? process.env.REACT_APP_INFLUENCER_SESSION_TOKEN
-  //   : process.env.REACT_APP_BRAND_SESSION_TOKEN;
-
-  config.headers = {
-    Accept: "application/json",
-    // "sess-token": sessionToken,
-    withCredentials: true,
-  };
-
+  config.headers = { Accept: "application/json", withCredentials: true };
   return config;
 });
 

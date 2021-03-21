@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Loadable from 'react-loadable';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { Switch, Route } from "react-router-dom";
+import Loadable from "react-loadable";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import routeConstant from 'common/routeConstants';
+import routeConstant from "common/routeConstants";
 
-import Loader from 'components/Loader';
+import Loader from "components/Loader";
 
 const loadable = (loader) =>
   Loadable({
@@ -16,27 +16,27 @@ const loadable = (loader) =>
   });
 
 const ProjectDetails = loadable(() =>
-  import(/* webpackChunkName: 'ProjectDetails' */ 'containers/ProjectDetails')
+  import(/* webpackChunkName: 'ProjectDetails' */ "containers/ProjectDetails")
 );
 
 const AllCreativesListsBrand = loadable(() =>
   import(
-    /* webpackChunkName: 'AllCreativesListsBrand' */ 'containers/AllCreativesListsBrand'
+    /* webpackChunkName: 'AllCreativesListsBrand' */ "containers/AllCreativesListsBrand"
   )
 );
 
 const Influencer = loadable(() =>
-  import(/* webpackChunkName: 'InfluencerPage' */ 'containers/InfluencerPage')
+  import(/* webpackChunkName: 'InfluencerPage' */ "containers/InfluencerPage")
 );
 
 const AllCreativesListsInfluencer = loadable(() =>
   import(
-    /* webpackChunkName: 'AllCreativesListsInfluencer' */ 'containers/AllCreativesListsInfluencer'
+    /* webpackChunkName: 'AllCreativesListsInfluencer' */ "containers/AllCreativesListsInfluencer"
   )
 );
 
 const Routes = ({ location }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   return (
     <>
       <ToastContainer />
