@@ -1,59 +1,64 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-import routeConstants from 'common/routeConstants';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { ACTIONS } from "../../redux/users/actions";
+import { Link } from "react-router-dom";
+import { Menu, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import routeConstants from "common/routeConstants";
 
-import logo from 'assets/images/logo.png';
-import dummy from 'assets/images/dummy.png';
+import logo from "assets/images/logo.png";
+import dummy from "assets/images/dummy.png";
 
-import './styles.scss';
+import "./styles.scss";
 
 const DemoHeader = (props) => {
+  useEffect(() => {
+    props.dispatch();
+  }, []);
   const menu = (
     <Menu>
-      <Menu.Item key='0'>
-        <p className='option-title'>Inbox</p>
+      <Menu.Item key="0">
+        <p className="option-title">Inbox</p>
       </Menu.Item>
-      <Menu.Item key='1'>
-        <p className='option-title'>Projects</p>
+      <Menu.Item key="1">
+        <p className="option-title">Projects</p>
       </Menu.Item>
-      <Menu.Item key='3'>
-        <p className='option-title'>Profile Settings</p>
+      <Menu.Item key="3">
+        <p className="option-title">Profile Settings</p>
       </Menu.Item>
-      <Menu.Item key='4'>
-        <p className='option-title'>Clan Coins 0</p>
+      <Menu.Item key="4">
+        <p className="option-title">Clan Coins 0</p>
       </Menu.Item>
-      <Menu.Item key='5'>
-        <p className='option-title no-b'> Logout</p>
+      <Menu.Item key="5">
+        <p className="option-title no-b"> Logout</p>
       </Menu.Item>
     </Menu>
   );
   return (
-    <header className='header'>
-      <div className='header-top'>
-        <a href='/'>
-          <img src={logo} alt='logo' className='logo' />
+    <header className="header">
+      <div className="header-top">
+        <a href="/">
+          <img src={logo} alt="logo" className="logo" />
         </a>
 
         <div>
-          <h1 className='header-title'>Discover. Partner. Influence</h1>
+          <h1 className="header-title">Discover. Partner. Influence</h1>
         </div>
-        <div className='profile-dropdown'>
+        <div className="profile-dropdown">
           {/* <Link to={routeConstants.allCreativesLists}>
             <span className='mr-30 profile-name'>ALL CREATIVES</span>
           </Link> */}
-          <span className='profile-name'>lakshay</span>
-          <Dropdown overlay={menu} trigger={['click']}>
+          <span className="profile-name">{props?.user?.name}</span>
+          <Dropdown overlay={menu} trigger={["click"]}>
             <a
-              className='ant-dropdown-link profile-link'
+              className="ant-dropdown-link profile-link"
               onClick={(e) => e.preventDefault()}
             >
               <img
                 src={dummy}
-                alt='logo'
-                className='logo'
-                className='profile-img'
+                alt="logo"
+                className="logo"
+                className="profile-img"
               />
             </a>
           </Dropdown>
@@ -63,4 +68,16 @@ const DemoHeader = (props) => {
   );
 };
 
-export default DemoHeader;
+const mapStateToProps = ({ user }) => {
+  return {
+    user: user.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: () => dispatch({ type: ACTIONS.GET_USER }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DemoHeader);
