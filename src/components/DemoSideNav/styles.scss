@@ -1,20 +1,32 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .sidenav {
   background: #f1f1f2;
   color: #fff;
   transition: all 0.1s;
-  padding-top: 80px;
+  // padding-top: 80px;
   position: relative;
   width: 60px;
+
   &:hover {
     background: #f1f1f2;
     color: #fff;
     transition: all 0.1s;
-    padding-top: 80px;
+    // padding-top: 80px;
     position: relative;
     width: 250px;
+
+    @include mobile {
+      width: 100%;
+      position: fixed;
+    }
+
+    .right-menu {
+      .link-item {
+        display: inline-block;
+      }
+    }
   }
 
   @include mobile {
@@ -27,16 +39,62 @@
   }
 
   .right-menu {
-    padding-top: 15px;
+    // padding-top: 15px;
 
-    li {
-      list-style: none;
-      width: 250px;
+    ul {
+      padding-left: 0;
+      margin-bottom: 0;
+
+      @include mobile {
+        display: flex;
+        align-items: center;
+      }
     }
 
-    a {
-      height: 60px;
+    .link-li {
+      list-style: none;
+      width: 250px;
+      padding: 10px;
+      position: relative;
+
+      @include mobile {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      &:hover {
+        background: $secondary;
+
+        .icon {
+          filter: brightness(0) invert(1);
+        }
+        .link-item {
+          color: $white;
+        }
+      }
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .link-item {
+      // height: 60px;
       color: #5d5d5d;
+      display: none;
+      font-size: 20px;
+      margin-left: 10px;
+
+      @include mobile {
+        font-size: 10px;
+        margin-left: 0;
+        margin-top: 10px;
+        display: inline-block;
+      }
     }
   }
 }

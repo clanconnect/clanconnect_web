@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .header {
   position: fixed;
@@ -108,4 +108,39 @@
   border-bottom: 1px solid #ccc;
   color: #5d5d5d;
   margin: 0;
+}
+
+.ant-dropdown-menu {
+  width: 220px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+
+  .ant-dropdown-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+    color: #5d5d5d;
+
+    &:last-child {
+      border: none;
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  .icon {
+    width: 20px;
+    margin-right: 10px;
+    color: #5d5d5d;
+  }
+
+  .option-title {
+    border: none;
+  }
 }

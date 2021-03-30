@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="452px" viewBox="0 0 512 452" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>filter</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="filter" transform="translate(256.000000, 226.000000) rotate(-270.000000) translate(-256.000000, -226.000000) translate(30.000000, -30.000000)" fill="#000000" fill-rule="nonzero">
+            <path d="M60.5,0 L30.5,0 L30.5,362 L0.5,362 L0.5,452 L30.5,452 L30.5,512 L60.5,512 L60.5,452 L90.5,452 L90.5,362 L60.5,362 L60.5,0 Z M60.5,422 L30.5,422 L30.5,392 L60.5,392 L60.5,422 Z" id="Shape"></path>
+            <path d="M451.5,362 L421.5,362 L421.5,0 L391.5,0 L391.5,362 L361.5,362 L361.5,452 L391.5,452 L391.5,512 L421.5,512 L421.5,452 L451.5,452 L451.5,362 Z M421.5,422 L391.5,422 L391.5,392 L421.5,392 L421.5,422 Z" id="Shape"></path>
+            <path d="M301.5,0 L271.5,0 L271.5,222 L241.5,222 L241.5,312 L271.5,312 L271.5,512 L301.5,512 L301.5,312 L331.5,312 L331.5,222 L301.5,222 L301.5,0 Z M301.5,282 L271.5,282 L271.5,252 L301.5,252 L301.5,282 Z" id="Shape"></path>
+            <path d="M180.5,0 L150.5,0 L150.5,53.652 L120.5,53.652 L120.5,143.652 L150.5,143.652 L150.5,512 L180.5,512 L180.5,143.652 L210.5,143.652 L210.5,53.652 L180.5,53.652 L180.5,0 Z M180.5,113.652 L150.5,113.652 L150.5,83.652 L180.5,83.652 L180.5,113.652 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
 import "./styles.scss";
 import { getImageUrl } from "helpers";
@@ -22,6 +23,9 @@ const CommentProfile = ({ data }) => {
         <p className="msg-para" style={{ whiteSpace: "pre-line" }}>
           {data?.text}
         </p>
+        <div className="comment-status status-active">
+          <CheckCircleOutlined className="icon-green" />
+        </div>
       </div>
     </div>
   );

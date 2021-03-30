@@ -1,22 +1,35 @@
-import React from 'react';
+import React from "react";
 
-import './styles.scss';
+import "./styles.scss";
+
+import icon1 from "../../assets/images/dashboard-icon.png";
+import icon2 from "../../assets/images/list-icon.png";
+import icon3 from "../../assets/images/Review-icon.png";
 
 const DemoSideNav = (props) => {
   return (
-    <nav className='sidenav'>
-      <div className='right-menu'>
-        {/* <ul>
-          <li>
-            <a href='/projects'>Projects</a>
+    <nav className="sidenav">
+      <div className="right-menu">
+        <ul>
+          <li className="link-li">
+            <img className="icon" src={icon1} alt="icon" />
+            <a href="/projects" className="link-item">
+              Projects
+            </a>
           </li>
-          <li>
-            <a href='/clan_brand_list'>My lists</a>
+          <li className="link-li">
+            <img className="icon" src={icon2} alt="icon" />
+            <a href="/clan_brand_list" className="link-item">
+              My lists
+            </a>
           </li>
-          <li>
-            <a href='/clan_create_project'>Create a project</a>
+          <li className="link-li">
+            <img className="icon" src={icon3} alt="icon" />
+            <a href="/clan_create_project" className="link-item">
+              Create a project
+            </a>
           </li>
-        </ul> */}
+        </ul>
       </div>
     </nav>
   );

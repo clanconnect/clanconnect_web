@@ -9,6 +9,12 @@ import routeConstants from "common/routeConstants";
 import logo from "assets/images/logo.png";
 import dummy from "assets/images/dummy.png";
 
+import chatIcon from "assets/images/chat2.svg";
+import folderIcon from "assets/images/folder.svg";
+import filterIcon from "assets/images/filter.svg";
+import logoutIcon from "assets/images/logout.svg";
+import coinsIcon from "assets/images/money.svg";
+
 import "./styles.scss";
 
 const DemoHeader = (props) => {
@@ -18,18 +24,23 @@ const DemoHeader = (props) => {
   const menu = (
     <Menu>
       <Menu.Item key="0">
+        <img src={chatIcon} className="icon" />
         <p className="option-title">Inbox</p>
       </Menu.Item>
       <Menu.Item key="1">
+        <img src={folderIcon} className="icon" />
         <p className="option-title">Projects</p>
       </Menu.Item>
       <Menu.Item key="3">
+        <img src={filterIcon} className="icon" />
         <p className="option-title">Profile Settings</p>
       </Menu.Item>
       <Menu.Item key="4">
+        <img src={coinsIcon} className="icon" />
         <p className="option-title">Clan Coins 0</p>
       </Menu.Item>
       <Menu.Item key="5">
+        <img src={logoutIcon} className="icon" />
         <p className="option-title no-b"> Logout</p>
       </Menu.Item>
     </Menu>

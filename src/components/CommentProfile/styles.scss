@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .comment-profile {
   display: flex;
@@ -18,6 +18,7 @@
   .user-chat {
     padding-left: 20px;
     width: 100%;
+    position: relative;
   }
 
   .msg-title {
@@ -35,5 +36,19 @@
     font-size: 14px;
     font-weight: 300;
     margin-bottom: 0px;
+  }
+
+  .comment-status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: none;
+
+    .icon-green {
+      color: green;
+    }
+    &.status-active {
+      display: block;
+    }
   }
 }

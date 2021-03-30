@@ -4,6 +4,7 @@ import { CalendarOutlined } from "@ant-design/icons";
 import InfluencerCreativeModal from "../InfluencerCreativeModal";
 import download from "assets/images/download.svg";
 import fullScreen from "assets/images/full-screen.svg";
+import chat from "assets/images/chat.svg";
 import VideoPlayer from "react-player";
 import { downloadMedia } from "helpers";
 
@@ -12,7 +13,7 @@ const DownLoadedFile = ({ creative = {}, project }) => {
   const [imageUrl, setImageUrl] = useState(
     `${process.env.REACT_APP_IMAGE_BASE_URL}/${media?.slug || "default"}`
   );
-
+  console.log("stats", creative.stats, project);
   return (
     <div className="influncer-file-container">
       <div className="influncer-file-subcontainer">
@@ -38,14 +39,15 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               controls={false}
             />
           )}
-          {/* <div className="chat-icon">
+          <div className="chat-icon">
+            <span className="number">{creative.stats.unreadComments}</span>
             <InfluencerCreativeModal
               src={chat}
               project={project}
               className="icons-custom"
               creative={creative}
             />
-          </div> */}
+          </div>
           <div className="icons-row">
             <InfluencerCreativeModal
               src={fullScreen}
