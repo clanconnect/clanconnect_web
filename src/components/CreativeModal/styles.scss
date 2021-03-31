@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .custom-modal {
   height: 636px;
@@ -114,6 +114,11 @@
     width: 18px;
     bottom: 20px;
     filter: drop-shadow(1px 1px 1px rgba(white, 1));
+
+    .icon-sec {
+      background-color: #fff;
+      padding: 10px;
+    }
   }
 
   .comment-section {

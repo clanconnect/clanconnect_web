@@ -55,12 +55,14 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               className="icons-custom cursor-pointer"
               creative={creative}
             />
-            <img
-              src={download}
-              alt=""
-              className="icons-custom cursor-pointer"
-              onClick={() => downloadMedia(media.slug)}
-            />
+            <div className="icon-sec">
+              <img
+                src={download}
+                alt=""
+                className="icons-custom cursor-pointer"
+                onClick={() => downloadMedia(media.slug)}
+              />
+            </div>
           </div>
         </div>
         <p className="date-box">

@@ -84,19 +84,23 @@ const InfluncerFile = ({
                       // </div>
                       null}
                       {!showSelectAllActive && (
-                        <div className="icons-row">
+                        <div className="icons-row sasasas">
                           <CreativeModal
                             src={fullScreen}
-                            className="icons-custom"
+                            className="icons-custom icon-sec"
                             creative={item}
                             influncerName={data.user.name}
                           />
-                          <img
-                            src={download}
-                            alt="download icon"
-                            className="icons-custom cursor-pointer"
-                            onClick={() => downloadMedia(item?.media[0]?.slug)}
-                          />
+                          <div className="icon-sec">
+                            <img
+                              src={download}
+                              alt="download icon"
+                              className="icons-custom cursor-pointer"
+                              onClick={() =>
+                                downloadMedia(item?.media[0]?.slug)
+                              }
+                            />
+                          </div>
                         </div>
                       )}
                     </div>

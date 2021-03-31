@@ -1,11 +1,11 @@
 import React from "react";
 import moment from "moment";
-import { CheckCircleOutlined } from "@ant-design/icons";
 
 import "./styles.scss";
 import { getImageUrl } from "helpers";
 
 const CommentProfile = ({ data }) => {
+  console.log(data);
   return (
     <div className="comment-profile" key={`comment-detail-${data.id}`}>
       <img
@@ -24,7 +24,7 @@ const CommentProfile = ({ data }) => {
           {data?.text}
         </p>
         <div className="comment-status status-active">
-          <CheckCircleOutlined className="icon-green" />
+          <div className="dotgreen" />
         </div>
       </div>
     </div>

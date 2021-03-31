@@ -129,12 +129,14 @@ const InfluencerCreativeModal = ({
           <RightOutlined className="ml-4" />
         </div>
       ) : (
-        <img
-          alt=""
-          onClick={() => setVisible(true)}
-          src={src}
-          className={`cursor-pointer ${className}`}
-        />
+        <div className="icon-gray">
+          <img
+            alt=""
+            onClick={() => setVisible(true)}
+            src={src}
+            className={`cursor-pointer ${className}`}
+          />
+        </div>
       )}
 
       <Modal
@@ -142,7 +144,7 @@ const InfluencerCreativeModal = ({
         onOk={() => setVisible(false)}
         onCancel={() => closeModal(false)}
         width={1100}
-        style={{ top: 40 }}
+        centered
         className="custom-modal"
       >
         <div className="creative-modal">

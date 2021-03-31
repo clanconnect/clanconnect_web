@@ -24,24 +24,32 @@ const DemoHeader = (props) => {
   const menu = (
     <Menu>
       <Menu.Item key="0">
-        <img src={chatIcon} className="icon" />
-        <p className="option-title">Inbox</p>
+        <img src={chatIcon} className="icon" alt="icon" />
+        <a href="https://cheetah.irida-test.c66.me/inbox">
+          <p className="option-title">Inbox</p>
+        </a>
       </Menu.Item>
       <Menu.Item key="1">
-        <img src={folderIcon} className="icon" />
-        <p className="option-title">Projects</p>
+        <img src={folderIcon} className="icon" alt="icon" />
+        <a href="https://cheetah.irida-test.c66.me/projects">
+          <p className="option-title">Projects</p>
+        </a>
       </Menu.Item>
       <Menu.Item key="3">
-        <img src={filterIcon} className="icon" />
-        <p className="option-title">Profile Settings</p>
+        <img src={filterIcon} className="icon" alt="icon" />
+        <a href="https://cheetah.irida-test.c66.me/clan_profile">
+          <p className="option-title">Profile Settings</p>
+        </a>
       </Menu.Item>
       <Menu.Item key="4">
-        <img src={coinsIcon} className="icon" />
+        <img src={coinsIcon} className="icon" alt="icon" />
         <p className="option-title">Clan Coins 0</p>
       </Menu.Item>
       <Menu.Item key="5">
-        <img src={logoutIcon} className="icon" />
-        <p className="option-title no-b"> Logout</p>
+        <img src={logoutIcon} className="icon" alt="icon" />
+        <a href="https://cheetah.irida-test.c66.me/users/sign_out">
+          <p className="option-title no-b"> Logout</p>
+        </a>
       </Menu.Item>
     </Menu>
   );
@@ -66,7 +74,7 @@ const DemoHeader = (props) => {
               onClick={(e) => e.preventDefault()}
             >
               <img
-                src={dummy}
+                src={props?.user?.image ? props.user.image : dummy}
                 alt="logo"
                 className="logo"
                 className="profile-img"

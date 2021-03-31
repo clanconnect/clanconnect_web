@@ -32,15 +32,26 @@
 .icons-row {
   width: 100%;
   position: absolute;
-  bottom: 16px;
-  padding: 0 16px;
+  bottom: 10px;
+  padding: 0 10px;
   display: flex;
   justify-content: space-between;
 }
 
 .icons-custom {
-  height: 16px;
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 2px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   filter: drop-shadow(1px 1px 1px rgba(white, 1));
+  img {
+    width: 14px;
+    opacity: 0.5;
+  }
 }
 
 .chat-icon {
@@ -49,7 +60,8 @@
   right: 16px;
 
   .icons-custom {
-    height: 24px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0);
   }
 
   .number {
