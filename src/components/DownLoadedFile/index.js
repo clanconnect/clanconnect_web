@@ -40,7 +40,9 @@ const DownLoadedFile = ({ creative = {}, project }) => {
             />
           )}
           <div className="chat-icon">
-            <span className="number">{creative.stats.unreadComments}</span>
+            {creative.stats.unreadComments ? (
+              <span className="number"> {creative.stats.unreadComments}</span>
+            ) : null}
             <InfluencerCreativeModal
               src={chat}
               project={project}

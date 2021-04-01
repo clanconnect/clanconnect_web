@@ -129,14 +129,12 @@ const InfluencerCreativeModal = ({
           <RightOutlined className="ml-4" />
         </div>
       ) : (
-        <div className="icon-gray">
-          <img
-            alt=""
-            onClick={() => setVisible(true)}
-            src={src}
-            className={`cursor-pointer ${className}`}
-          />
-        </div>
+        <img
+          alt=""
+          onClick={() => setVisible(true)}
+          src={src}
+          className={`cursor-pointer ${className}`}
+        />
       )}
 
       <Modal

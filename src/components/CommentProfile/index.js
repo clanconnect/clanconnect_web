@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
+import { connect } from "react-redux";
 
 import "./styles.scss";
 import { getImageUrl } from "helpers";
 
-const CommentProfile = ({ data }) => {
-  console.log(data);
+const CommentProfile = ({ data, user }) => {
+  const [hasRead, setHasRead] = useState(false);
+  console.log("data", data);
+  useEffect(() => {
+    if (user.user_type === "influencer") {
+      setHasRead(data.has_influencer_read);
+    }
+    if (user.user_type === "advertiser") {
+      setHasRead(data.has_advertiser_read);
+    }
+  }, []);
   return (
     <div className="comment-profile" key={`comment-detail-${data.id}`}>
       <img
@@ -23,12 +33,22 @@ const CommentProfile = ({ data }) => {
         <p className="msg-para" style={{ whiteSpace: "pre-line" }}>
           {data?.text}
         </p>
-        <div className="comment-status status-active">
+        <div
+          className={
+            hasRead ? "comment-status" : "comment-status status-active"
+          }
+        >
           <div className="dotgreen" />
         </div>
       </div>
     </div>
   );
 };
+const mapStateToProps = ({ user }, ownProps) => {
+  return {
+    user: user.user,
+  };
+};
 
-export default CommentProfile;
+export default connect(mapStateToProps)(CommentProfile);
+// export default CommentProfile;

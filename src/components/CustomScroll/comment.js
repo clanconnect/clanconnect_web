@@ -18,23 +18,23 @@ const Comment = (props) => {
   );
 
   const { creativeId } = props;
-  useEffect(() => {
-    getCommentsData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  //   useEffect(() => {
+  //     getCommentsData();
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, []);
 
-  const getCommentsData = () => {
-    setLoader(true);
+  //   const getCommentsData = () => {
+  //     setLoader(true);
 
-    dispatch(getCommentsAction({ page, id: creativeId }));
-  };
+  //     dispatch(getCommentsAction({ page, id: creativeId }));
+  //   };
 
-  useEffect(() => {
-    if (commentDataTs !== commentsDataLocalTs && commentData) {
-      setCommentsData(commentData);
-      setLoader(false);
-    }
-  }, [commentData, commentDataTs, commentsDataLocalTs]);
+  //   useEffect(() => {
+  //     if (commentDataTs !== commentsDataLocalTs && commentData) {
+  //       setCommentsData(commentData);
+  //       setLoader(false);
+  //     }
+  //   }, []);
 
   return (
     <div className="demo-class">
@@ -43,14 +43,14 @@ const Comment = (props) => {
           if (index === commentData.length - 1) {
             return (
               <>
-                <CommentProfile data={item} key={`comment-${index}`} />
+                <CommentProfile data={item} key={`comment-${item.id}`} />
                 {!loader && page < meta?.totalPages && (
                   <Waypoint onEnter={() => setPage(page + 1)} />
                 )}
               </>
             );
           }
-          return <CommentProfile data={item} key={`comment-${index}`} />;
+          return <CommentProfile data={item} key={`comment-${item.id}`} />;
         })}
       {/* {loader && Loading} */}
       {!loader ? null : (

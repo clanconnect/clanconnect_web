@@ -1,10 +1,9 @@
-import React from 'react';
-import { Spin } from 'antd';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import CommentProfile from '../CommentProfile';
-import { connect } from 'react-redux';
+import React from "react";
+import { Spin } from "antd";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CommentProfile from "../CommentProfile";
 // import { commentData } from 'common/dataManager';
-import './styles.scss';
+import "./styles.scss";
 
 export default class CustomScroll extends React.Component {
   state = {
@@ -43,22 +42,22 @@ export default class CustomScroll extends React.Component {
         next={this.fetchMoreData}
         hasMore={this.state.hasMore}
         loader={
-          <div className='loader-row'>
+          <div className="loader-row">
             <Spin />
           </div>
         }
         height={300}
         endMessage={
           this.state.emptystate ? (
-            <p className='seen-text'>No Comments...</p>
+            <p className="seen-text">No Comments...</p>
           ) : (
-            <p className='seen-text'>Yay! You have seen it all Comments</p>
+            <p className="seen-text">Yay! You have seen it all Comments</p>
           )
         }
       >
         <div>
-          {this.state.items.map((item, index) => (
-            <CommentProfile data={item} key={index} />
+          {this.state.items.map((item) => (
+            <CommentProfile data={item} key={item.id} />
           ))}
         </div>
       </InfiniteScroll>
