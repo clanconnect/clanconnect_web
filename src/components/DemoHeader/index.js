@@ -61,7 +61,11 @@ const DemoHeader = (props) => {
         </a>
 
         <div>
-          <h1 className="header-title">Discover. Partner. Influence</h1>
+          <h1 className="header-title">
+            {props?.user?.user_type === "influencer"
+              ? "Discover. Partner. Influence"
+              : "Find projects. Influence. Earn"}
+          </h1>
         </div>
         <div className="profile-dropdown">
           {/* <Link to={routeConstants.allCreativesLists}>

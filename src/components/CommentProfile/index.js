@@ -7,7 +7,6 @@ import { getImageUrl } from "helpers";
 
 const CommentProfile = ({ data, user }) => {
   const [hasRead, setHasRead] = useState(false);
-  console.log("data", data);
   useEffect(() => {
     if (user.user_type === "influencer") {
       setHasRead(data.has_influencer_read);

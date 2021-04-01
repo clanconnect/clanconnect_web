@@ -13,7 +13,6 @@ const DownLoadedFile = ({ creative = {}, project }) => {
   const [imageUrl, setImageUrl] = useState(
     `${process.env.REACT_APP_IMAGE_BASE_URL}/${media?.slug || "default"}`
   );
-  console.log("stats", creative.stats, project);
   return (
     <div className="influncer-file-container">
       <div className="influncer-file-subcontainer">
