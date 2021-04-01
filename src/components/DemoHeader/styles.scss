@@ -1,5 +1,6 @@
 @import "styles/_colors";
 @import "styles/_mixins";
+@import "styles/_fonts";
 
 .header {
   position: fixed;
@@ -46,13 +47,15 @@
     font-size: 30px;
     margin: 0;
     padding-left: 20px;
-
-    @include mobile {
-      font-size: 12px;
-    }
+    font-family: "Miso";
+    font-weight: 300;
+    font-size: 50px;
 
     @include tablet {
-      font-size: 20px;
+      font-size: 14px;
+    }
+    @include mobile {
+      font-size: 14px;
     }
   }
 
@@ -129,8 +132,9 @@
     }
 
     p {
-      font-size: 16px;
-      font-weight: 600;
+      font-family: "Roboto Condensed";
+      font-size: 18px;
+      font-weight: 400;
     }
   }
 

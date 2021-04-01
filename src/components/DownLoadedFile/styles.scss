@@ -41,6 +41,7 @@
 .icons-custom {
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+  filter: opacity(0.6);
   border-radius: 2px;
   padding: 4px;
   width: 22px;
@@ -57,11 +58,12 @@
 .chat-icon {
   position: absolute;
   top: 8px;
-  right: 12px;
+  right: 10px;
 
   .icons-custom {
     height: 25px;
     width: 25px;
+    filter: opacity(0.8);
   }
 
   .number {
