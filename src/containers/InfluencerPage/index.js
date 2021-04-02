@@ -22,7 +22,7 @@ const InfluencerPage = (props) => {
       <div className="flex top-space-commom">
         <SideNav />
         <div className="content-wrapper">
-          <LineHeading title="Invites" />
+          {/* <LineHeading title="Invites" /> */}
           <div className="tabs-container">
             <div className="con-mb">
               {myTabs.map((tab, index) => (

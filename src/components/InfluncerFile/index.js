@@ -84,7 +84,7 @@ const InfluncerFile = ({
                       // </div>
                       null}
                       {!showSelectAllActive && (
-                        <div className="icons-row sasasas">
+                        <div className="icons-row">
                           <CreativeModal
                             src={fullScreen}
                             className="icons-custom icon-sec"

@@ -18,6 +18,8 @@
   .user-chat {
     padding-left: 20px;
     width: 100%;
+  }
+  .user-chat > div {
     position: relative;
   }
 
@@ -40,15 +42,15 @@
 
   .comment-status {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    right: 70px;
+    top: 4px;
     display: none;
 
     .icon-green {
-      color: green;
+      color: rgb(0, 128, 60);
     }
     &.status-active {
-      display: block;
+      display: inline;
     }
   }
   .dotgreen {

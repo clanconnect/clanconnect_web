@@ -7,6 +7,7 @@ import fullScreen from "assets/images/full-screen.svg";
 import chat from "assets/images/chat.svg";
 import VideoPlayer from "react-player";
 import { downloadMedia } from "helpers";
+import moment from "moment";
 
 const DownLoadedFile = ({ creative = {}, project }) => {
   const media = creative.media ? creative.media[0] : {};
@@ -69,7 +70,7 @@ const DownLoadedFile = ({ creative = {}, project }) => {
         <p className="date-box">
           <CalendarOutlined />
           <span className="date-text">
-            {new Date(creative.createdAt).toISOString().split("T")[0]}
+            {moment(creative.createdAt).format("DD/MM/YYYY")}
           </span>
         </p>
       </div>

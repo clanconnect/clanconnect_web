@@ -25,6 +25,13 @@ const CommentProfile = ({ data, user }) => {
       <div className="user-chat">
         <div className="flex justify-between">
           <h4 className="msg-title">{data?.author?.name}</h4>
+          <div
+            className={
+              hasRead ? "comment-status" : "comment-status status-active"
+            }
+          >
+            <div className="dotgreen" />
+          </div>
           <span className="msg-date">
             {moment(data?.createdAt).format("DD/MM/YYYY")}
           </span>
@@ -32,13 +39,6 @@ const CommentProfile = ({ data, user }) => {
         <p className="msg-para" style={{ whiteSpace: "pre-line" }}>
           {data?.text}
         </p>
-        <div
-          className={
-            hasRead ? "comment-status" : "comment-status status-active"
-          }
-        >
-          <div className="dotgreen" />
-        </div>
       </div>
     </div>
   );
