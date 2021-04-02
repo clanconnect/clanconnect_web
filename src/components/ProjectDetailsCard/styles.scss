@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .card-wrapper {
   display: flex;
@@ -36,15 +36,30 @@
       padding-left: 0px;
     }
   }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
 
-  .project-title {
-    font-size: 30px;
-    font-weight: 400;
-    text-transform: uppercase;
+    .project-title {
+      font-size: 30px;
+      font-weight: 400;
+      text-transform: uppercase;
 
-    @include mobile {
-      font-size: 20px;
-      margin-top: 19px;
+      @include mobile {
+        font-size: 20px;
+        margin-top: 19px;
+      }
+    }
+    .edit-icon {
+      font-size: 22px;
+      padding: 10px 3px 0px 0px;
+      a {
+        color: $primary;
+        text-decoration: none;
+        &:hover {
+          color: $tertiary;
+        }
+      }
     }
   }
 
@@ -55,5 +70,6 @@
     font-weight: 300;
     margin-bottom: 15px;
     line-height: 1.5;
+    word-break: break-word;
   }
 }

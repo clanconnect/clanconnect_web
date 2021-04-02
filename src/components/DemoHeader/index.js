@@ -25,19 +25,19 @@ const DemoHeader = (props) => {
     <Menu>
       <Menu.Item key="0">
         <img src={chatIcon} className="icon" alt="icon" />
-        <a href="https://cheetah.irida-test.c66.me/inbox">
+        <a href={`${process.env.REACT_APP_WEB_HOST}/inbox`}>
           <p className="option-title">Inbox</p>
         </a>
       </Menu.Item>
       <Menu.Item key="1">
         <img src={folderIcon} className="icon" alt="icon" />
-        <a href="https://cheetah.irida-test.c66.me/projects">
+        <a href={`${process.env.REACT_APP_WEB_HOST}/projects`}>
           <p className="option-title">Projects</p>
         </a>
       </Menu.Item>
       <Menu.Item key="3">
         <img src={filterIcon} className="icon" alt="icon" />
-        <a href="https://cheetah.irida-test.c66.me/clan_profile">
+        <a href={`${process.env.REACT_APP_WEB_HOST}/clan_profile`}>
           <p className="option-title">Profile Settings</p>
         </a>
       </Menu.Item>
@@ -47,7 +47,7 @@ const DemoHeader = (props) => {
       </Menu.Item>
       <Menu.Item key="5">
         <img src={logoutIcon} className="icon" alt="icon" />
-        <a href="https://cheetah.irida-test.c66.me/users/sign_out">
+        <a href={`${process.env.REACT_APP_WEB_HOST}/users/sign_out`}>
           <p className="option-title no-b"> Logout</p>
         </a>
       </Menu.Item>
@@ -62,7 +62,7 @@ const DemoHeader = (props) => {
 
         <div>
           <h1 className="header-title">
-            {props?.user?.user_type === "influencer"
+            {!props?.user?.user_type === "influencer"
               ? "Discover. Partner. Influence"
               : "Find projects. Influence. Earn"}
           </h1>

@@ -51,10 +51,11 @@
     font-weight: 300;
     font-size: 50px;
 
-    @include tablet {
+    @include mobile {
       font-size: 14px;
     }
-    @include mobile {
+
+    @include tablet {
       font-size: 14px;
     }
   }
