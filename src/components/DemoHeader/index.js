@@ -62,9 +62,9 @@ const DemoHeader = (props) => {
 
         <div>
           <h1 className="header-title">
-            {!props?.user?.user_type === "influencer"
-              ? "Discover. Partner. Influence"
-              : "Find projects. Influence. Earn"}
+            {props?.user?.user_type === "influencer"
+              ? "Find projects. Influence. Earn"
+              : "Discover. Partner. Influence"}
           </h1>
         </div>
         <div className="profile-dropdown">
