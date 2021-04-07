@@ -46,7 +46,6 @@ const ProjectListCard = ({
   className,
   rightspace,
 }) => {
-  console.log(project, disableAction);
   return (
     <div className={`brand-list ${className}`}>
       <div className="brand-list-img">
