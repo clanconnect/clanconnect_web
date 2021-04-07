@@ -7,6 +7,7 @@ import CreativeModal from "../CreativeModal";
 import download from "assets/images/download.svg";
 import fullScreen from "assets/images/full-screen.svg";
 import moment from "moment";
+import chat from "assets/images/chat.svg";
 import "./styles.scss";
 
 const InfluncerFile = ({
@@ -74,15 +75,22 @@ const InfluncerFile = ({
                           }}
                           checked={selectedCreatives.includes(item.id)}
                         ></Checkbox>
-                      ) : // <div className="chat-icon">
-                      //   <CreativeModal
-                      //     src={chat}
-                      //     className="icons-custom"
-                      //     creative={item}
-                      //     influncerName={data.user.name}
-                      //   />
-                      // </div>
-                      null}
+                      ) : (
+                        <div className="chat-icon">
+                          {item?.stats?.unreadComments ? (
+                            <span className="number">
+                              {" "}
+                              {item?.stats?.unreadComments}
+                            </span>
+                          ) : null}
+                          <CreativeModal
+                            src={chat}
+                            className="icons-custom"
+                            creative={item}
+                            influncerName={data.user.name}
+                          />
+                        </div>
+                      )}
                       {!showSelectAllActive && (
                         <div className="icons-row">
                           <CreativeModal
