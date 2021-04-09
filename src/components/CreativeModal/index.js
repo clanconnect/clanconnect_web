@@ -98,9 +98,9 @@ const CreativeModal = ({
       creativeUpdateStatusAction({
         status: value,
         projectId: id,
-        creativeId: creative?.id,
-        mediaId: currentMedia?.id,
-        currentStatus: creative?.status,
+        creativeId: creative.id,
+        mediaId: currentMedia.id,
+        currentStatus: creative.status,
       })
     );
     setCreativeStatus(value);
