@@ -1,4 +1,4 @@
-import { all, takeLatest, put, call } from "redux-saga/effects";
+import { all, takeLatest, put, call, select } from "redux-saga/effects";
 import actionConstants from "./actions";
 import {
   getCreativesAPI,
@@ -79,6 +79,37 @@ export function* getAllCreatives(action) {
     console.log(err);
   }
 }
+// update stats (unread comments)
+export function* updateCreativeStats(payload) {
+  const creativeDetails = yield select(
+    (store) => store.creatives.creativeDetails
+  );
+
+  for (const arr1 of creativeDetails) {
+    for (const obj1 in arr1) {
+      if (obj1 === "creatives") {
+        for (const creative of arr1[obj1]) {
+          console.log("creative", creative);
+          console.log("creative stats payload", payload, creative.stats);
+          if (creative.id === payload.id) {
+            console.log("creative stats", creative.stats);
+            creative.stats.unreadComments = 0;
+          }
+        }
+      }
+    }
+  }
+  const creative = creativeDetails[0].creatives.filter(
+    (creative) => creative.id === payload.id
+  );
+  yield put({
+    type: actionConstants.SET_STATE,
+    payload: {
+      creatives: creativeDetails,
+    },
+  });
+  console.log("erghfgdv", creative, payload);
+}
 
 export default function* proposalsSaga() {
   yield all([
@@ -86,5 +117,6 @@ export default function* proposalsSaga() {
     takeLatest(actionConstants.CREATIVE_UPDATE_STATUS, updateCreativeStatus),
     takeLatest(actionConstants.CREATIVE_BULK_UPDATE, creativesBulkUpdate),
     takeLatest(actionConstants.GET_ALL_CREATIVES, getAllCreatives),
+    takeLatest(actionConstants.UPDATE_STATS, updateCreativeStats),
   ]);
 }

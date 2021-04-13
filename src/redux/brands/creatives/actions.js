@@ -1,9 +1,10 @@
 const actionConstants = {
-  GET_CREATIVES: 'creatives/GET_CREATIVES',
-  CREATIVE_UPDATE_STATUS: 'creatives/CREATIVE_UPDATE_STATUS',
-  CREATIVE_BULK_UPDATE: 'creatives/CREATIVE_BULK_UPDATE',
-  GET_ALL_CREATIVES: 'creatives/GET_ALL_CREATIVES',
-  SET_STATE: 'creatives/SET_STATE',
+  GET_CREATIVES: "creatives/GET_CREATIVES",
+  CREATIVE_UPDATE_STATUS: "creatives/CREATIVE_UPDATE_STATUS",
+  CREATIVE_BULK_UPDATE: "creatives/CREATIVE_BULK_UPDATE",
+  GET_ALL_CREATIVES: "creatives/GET_ALL_CREATIVES",
+  SET_STATE: "creatives/SET_STATE",
+  UPDATE_STATS: "creatives/UPDATE_STATS",
 };
 
 export default actionConstants;
@@ -25,5 +26,10 @@ export const creativeUpdateBulkAction = (payload) => ({
 
 export const getAllCreativesAction = (payload) => ({
   type: actionConstants.GET_ALL_CREATIVES,
+  payload,
+});
+
+export const updateCreativeStats = (payload) => ({
+  type: actionConstants.UPDATE_STATS,
   payload,
 });

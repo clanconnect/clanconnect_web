@@ -177,6 +177,8 @@ const CreativeModal = ({
       {/* Modal */}
       <Modal
         visible={visible}
+        destroyOnClose={true}
+        on
         onOk={() => setVisible(false)}
         onCancel={() => closeModal(false)}
         width={1100}

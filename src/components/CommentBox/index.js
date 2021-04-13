@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import CustomScroll from "../CustomScroll/comment";
-import {
-  getCommentsAction,
-  postCommentsAction,
-} from "redux/brands/comments/actions";
+import { postCommentsAction } from "redux/brands/comments/actions";
+import { updateCreativeStats } from "redux/brands/creatives/actions";
 
 import "./styles.scss";
 
 const CommentBox = ({ creativeId, showFiles }) => {
   const dispatch = useDispatch();
-  const { commentData } = useSelector((store) => store.comments);
   const [text, setText] = useState("");
-  const [page] = useState(1);
   const [errorState, setErrorState] = useState(false);
 
   const handleSubmit = () => {
@@ -34,12 +30,13 @@ const CommentBox = ({ creativeId, showFiles }) => {
   const handleChange = (value) => {
     setText(value);
   };
-
   useEffect(() => {
-    dispatch(getCommentsAction({ page, id: creativeId }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("COMPONENT DID MOUNT");
+    return () => {
+      console.log("******************* UNMOUNTED");
+      dispatch(updateCreativeStats({ id: creativeId }));
+    };
   }, []);
-
   return (
     <div
       className="comment-box animate__animated animate__fadeIn"
@@ -49,7 +46,7 @@ const CommentBox = ({ creativeId, showFiles }) => {
         <div className="flex justify-between">
           <h3 className="chat-title">Comments</h3>
         </div>
-        <CustomScroll creativeId={creativeId} commentData={commentData} />
+        <CustomScroll creativeId={creativeId} />
       </div>
 
       <textarea
