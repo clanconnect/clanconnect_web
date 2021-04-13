@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .tab-applied-proposal {
   width: 100%;
@@ -22,6 +22,9 @@
   .view-title {
     color: $text;
     cursor: pointer;
+    &:hover {
+      color: $secondary;
+    }
   }
 
   .file-influencer-row {

@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .tab-creative {
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -65,4 +65,7 @@
 .view-title {
   color: $text;
   cursor: pointer;
+  &:hover {
+    color: $secondary;
+  }
 }

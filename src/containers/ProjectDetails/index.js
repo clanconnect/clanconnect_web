@@ -23,7 +23,7 @@ const ProjectDetails = (props) => {
   const { proposalDetails } = useSelector((store) => store.proposals);
   const { creativeDetails } = useSelector((store) => store.creatives);
 
-  const [activeTab, setActiveTab] = useState("Snapshot");
+  const [activeTab, setActiveTab] = useState("Creatives Approval");
   const [defaultActiveKeyProposals, setDefaultActiveKeyProposals] = useState(
     "sent"
   );
