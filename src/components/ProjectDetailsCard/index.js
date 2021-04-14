@@ -22,7 +22,14 @@ const ProjectDetailsCard = ({ projectDetail }) => {
             </a>
           </span> */}
         </div>
-        <p className="project-para">{projectDetail?.shortDesc}</p>
+        {/* <p className="project-para">{projectDetail?.shortDesc}</p> */}
+        <div className="view-link">
+          <a
+            href={`${process.env.REACT_APP_WEB_HOST}/clan_project_show?id=${projectDetail.id}`}
+          >
+            Go to Project Detail
+          </a>
+        </div>
       </div>
     </div>
   ) : (

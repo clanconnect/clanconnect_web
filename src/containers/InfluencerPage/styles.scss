@@ -1,7 +1,9 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
+@import "styles/_fonts";
 
 .main-wrapper-influncer {
+  font-family: "Roboto Condensed";
   .content-wrapper {
     padding: 40px 30px;
     overflow-x: hidden;
@@ -9,6 +11,18 @@
     @include mobile {
       width: 100%;
       margin-bottom: 50px;
+    }
+    .view-link {
+      margin-top: 10px;
+      a {
+        color: $text;
+        text-decoration: none;
+        font-size: 20px;
+        cursor: pointer;
+        &:hover {
+          color: $secondary;
+        }
+      }
     }
   }
 
@@ -32,6 +46,10 @@
     .active-tab {
       background-color: $primary;
       color: white;
+      font-size: 20px;
+      font-weight: 300;
+      border-radius: 5px;
+      padding: 5px 15px;
     }
   }
 

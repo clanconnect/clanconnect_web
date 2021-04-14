@@ -1,7 +1,9 @@
 @import "styles/_colors";
 @import "styles/_mixins";
+@import "styles/_fonts";
 
 .tab-creative {
+  font-family: "Roboto Condensed";
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: $secondary;
   }
@@ -16,6 +18,7 @@
 
   .ant-tabs-tab {
     padding-top: 0px;
+    font-size: 16px;
   }
 
   .btn-row {
@@ -64,6 +67,7 @@
 
 .view-title {
   color: $text;
+  font-size: 16px;
   cursor: pointer;
   &:hover {
     color: $secondary;

@@ -10,7 +10,7 @@ import { myTabs } from "./dataManager";
 import "./styles.scss";
 
 const InfluencerPage = (props) => {
-  const [activeTab, setActiveTab] = useState("Applied Proposals");
+  const [activeTab, setActiveTab] = useState("Creatives");
 
   const handleActiveTab = (index) => {
     setActiveTab(index);
@@ -23,8 +23,14 @@ const InfluencerPage = (props) => {
         <SideNav />
         <div className="content-wrapper">
           {/* <LineHeading title="Invites" /> */}
+          <div className="view-link">
+            <a href={`${process.env.REACT_APP_WEB_HOST}/projects`}>
+              Go to Project Proposals
+            </a>
+          </div>
           <div className="tabs-container">
-            <div className="con-mb">
+            <LineHeading title="Creatives" />
+            {/* <div className="con-mb">
               {myTabs.map((tab, index) => (
                 <button
                   key={tab.name}
@@ -44,7 +50,8 @@ const InfluencerPage = (props) => {
               </div>
             )}
 
-            {activeTab === "Creatives" && <InfluncerCreativeApprovalTab />}
+            {activeTab === "Creatives" && <InfluncerCreativeApprovalTab />} */}
+            <InfluncerCreativeApprovalTab />
           </div>
           {/* <LineHeading title='Ongoing Projects' style='mt-30' />
           <LineHeading title='Completed Projects' style='mt-30' />

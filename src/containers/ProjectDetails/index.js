@@ -11,6 +11,7 @@ import { getProjectsAction } from "redux/brands/projects/actions";
 import { getProposalsAction } from "redux/brands/proposals/actions";
 import { getCreativesAction } from "redux/brands/creatives/actions";
 import { useDispatch, useSelector } from "react-redux";
+import LineHeading from "components/LineHeading";
 
 import { myTabs } from "./dataManager";
 
@@ -93,7 +94,8 @@ const ProjectDetails = (props) => {
           <ProjectDetailsCard projectDetail={projectDetail} />
 
           <div className="tabs-container">
-            <div className="con-mb">
+            <LineHeading title="Creatives Approval" />
+            {/* <div className="con-mb">
               {myTabs.map((tab, index) => (
                 <button
                   key={tab.name}
@@ -131,7 +133,12 @@ const ProjectDetails = (props) => {
                 getCreatives={getCreatives}
                 creativeDetails={creativeDetails}
               />
-            )}
+            )} */}
+            <CreativeApprovalData
+              defaultActiveKey={defaultActiveKeyCreative}
+              getCreatives={getCreatives}
+              creativeDetails={creativeDetails}
+            />
           </div>
         </div>
       </div>
