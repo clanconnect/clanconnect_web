@@ -80,7 +80,7 @@ export function* getAllCreatives(action) {
   }
 }
 // update stats (unread comments)
-export function* updateCreativeStats(payload) {
+export function* updateCreativeStats(action) {
   const creativeDetails = yield select(
     (store) => store.creatives.creativeDetails
   );
@@ -89,26 +89,23 @@ export function* updateCreativeStats(payload) {
     for (const obj1 in arr1) {
       if (obj1 === "creatives") {
         for (const creative of arr1[obj1]) {
-          console.log("creative", creative);
-          console.log("creative stats payload", payload, creative.stats);
-          if (creative.id === payload.id) {
-            console.log("creative stats", creative.stats);
+          console.log("creative", creative, action.payload.id);
+          if (creative.id === action.payload.id) {
             creative.stats.unreadComments = 0;
           }
         }
       }
     }
   }
-  const creative = creativeDetails[0].creatives.filter(
-    (creative) => creative.id === payload.id
-  );
+  // const creative = creativeDetails[0].creatives.filter(
+  //   (creative) => creative.id === action.payload.id
+  // );
   yield put({
     type: actionConstants.SET_STATE,
     payload: {
-      creatives: creativeDetails,
+      creativeDetails,
     },
   });
-  console.log("erghfgdv", creative, payload);
 }
 
 export default function* proposalsSaga() {

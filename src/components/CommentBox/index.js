@@ -30,10 +30,9 @@ const CommentBox = ({ creativeId, showFiles }) => {
   const handleChange = (value) => {
     setText(value);
   };
+  // Alter unread comments directly in the store
   useEffect(() => {
-    console.log("COMPONENT DID MOUNT");
     return () => {
-      console.log("******************* UNMOUNTED");
       dispatch(updateCreativeStats({ id: creativeId }));
     };
   }, []);

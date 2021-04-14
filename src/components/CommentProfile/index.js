@@ -14,7 +14,7 @@ const CommentProfile = ({ data, user }) => {
     if (user.user_type === "advertiser") {
       setHasRead(data.has_advertiser_read);
     }
-  }, []);
+  }, [data, user]);
   return (
     <div className="comment-profile" key={`comment-detail-${data.id}`}>
       <img
