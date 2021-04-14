@@ -3,8 +3,8 @@
     "static/js/0.0b8322bb.chunk.js": "https://web.clanconnect.sbtechzone.com/static/js/0.0b8322bb.chunk.js",
     "static/js/0.0b8322bb.chunk.js.map": "https://web.clanconnect.sbtechzone.com/static/js/0.0b8322bb.chunk.js.map",
     "static/css/1.b85f2cdf.chunk.css": "https://web.clanconnect.sbtechzone.com/static/css/1.b85f2cdf.chunk.css",
-    "static/js/1.f201d926.chunk.js": "https://web.clanconnect.sbtechzone.com/static/js/1.f201d926.chunk.js",
-    "static/js/1.f201d926.chunk.js.map": "https://web.clanconnect.sbtechzone.com/static/js/1.f201d926.chunk.js.map",
+    "static/js/1.f130921c.chunk.js": "https://web.clanconnect.sbtechzone.com/static/js/1.f130921c.chunk.js",
+    "static/js/1.f130921c.chunk.js.map": "https://web.clanconnect.sbtechzone.com/static/js/1.f130921c.chunk.js.map",
     "static/js/2.3116c699.chunk.js": "https://web.clanconnect.sbtechzone.com/static/js/2.3116c699.chunk.js",
     "static/js/2.3116c699.chunk.js.map": "https://web.clanconnect.sbtechzone.com/static/js/2.3116c699.chunk.js.map",
     "static/js/3.fba44864.chunk.js": "https://web.clanconnect.sbtechzone.com/static/js/3.fba44864.chunk.js",
@@ -22,10 +22,10 @@
     "ProjectDetails.js": "https://web.clanconnect.sbtechzone.com/static/js/ProjectDetails.6a99cf30.chunk.js",
     "ProjectDetails.js.map": "https://web.clanconnect.sbtechzone.com/static/js/ProjectDetails.6a99cf30.chunk.js.map",
     "main.css": "https://web.clanconnect.sbtechzone.com/static/css/main.dcda91a4.chunk.css",
-    "main.js": "https://web.clanconnect.sbtechzone.com/static/js/main.e2858042.chunk.js",
-    "main.js.map": "https://web.clanconnect.sbtechzone.com/static/js/main.e2858042.chunk.js.map",
-    "runtime-main.js": "https://web.clanconnect.sbtechzone.com/static/js/runtime-main.9bdca30c.js",
-    "runtime-main.js.map": "https://web.clanconnect.sbtechzone.com/static/js/runtime-main.9bdca30c.js.map",
+    "main.js": "https://web.clanconnect.sbtechzone.com/static/js/main.b206e20b.chunk.js",
+    "main.js.map": "https://web.clanconnect.sbtechzone.com/static/js/main.b206e20b.chunk.js.map",
+    "runtime-main.js": "https://web.clanconnect.sbtechzone.com/static/js/runtime-main.4bb88f71.js",
+    "runtime-main.js.map": "https://web.clanconnect.sbtechzone.com/static/js/runtime-main.4bb88f71.js.map",
     "static/css/10.b8fc3940.chunk.css": "https://web.clanconnect.sbtechzone.com/static/css/10.b8fc3940.chunk.css",
     "static/js/10.95c2ca1d.chunk.js": "https://web.clanconnect.sbtechzone.com/static/js/10.95c2ca1d.chunk.js",
     "static/js/10.95c2ca1d.chunk.js.map": "https://web.clanconnect.sbtechzone.com/static/js/10.95c2ca1d.chunk.js.map",
@@ -57,10 +57,10 @@
     "static/media/upload.0221ee00.svg": "https://web.clanconnect.sbtechzone.com/static/media/upload.0221ee00.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9bdca30c.js",
+    "static/js/runtime-main.4bb88f71.js",
     "static/css/10.b8fc3940.chunk.css",
     "static/js/10.95c2ca1d.chunk.js",
     "static/css/main.dcda91a4.chunk.css",
-    "static/js/main.e2858042.chunk.js"
+    "static/js/main.b206e20b.chunk.js"
   ]
 }
