@@ -2,7 +2,7 @@
 @import "styles/_mixins";
 
 .sidenav {
-  background: #f1f1f2;
+  background: #ffffff;
   color: #fff;
   transition: all 0.1s;
   // padding-top: 80px;
@@ -10,7 +10,7 @@
   width: 60px;
 
   &:hover {
-    background: #f1f1f2;
+    background: #ffffff;
     color: #fff;
     transition: all 0.1s;
     // padding-top: 80px;
@@ -25,6 +25,9 @@
     .right-menu {
       .link-item {
         display: inline-block;
+      }
+      .link-li {
+        width: 250px;
       }
     }
   }
@@ -53,9 +56,10 @@
 
     .link-li {
       list-style: none;
-      width: 250px;
+      width: 60px;
       padding: 10px;
       position: relative;
+      font-size: 24px;
 
       @include mobile {
         width: 100%;
@@ -78,15 +82,15 @@
     }
 
     .icon {
-      width: 20px;
-      height: 20px;
+      width: 28px;
+      height: 28px;
     }
 
     .link-item {
       // height: 60px;
       color: #5d5d5d;
       display: none;
-      font-size: 20px;
+      font-size: 24px;
       margin-left: 10px;
 
       @include mobile {
