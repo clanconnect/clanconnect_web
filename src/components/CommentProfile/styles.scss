@@ -44,13 +44,17 @@
     position: absolute;
     right: 70px;
     top: 4px;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s 2s, opacity 2s linear;
 
     .icon-green {
       color: rgb(0, 128, 60);
     }
     &.status-active {
-      display: inline;
+      visibility: visible;
+      opacity: 1;
+      // transition: opacity 2s linear;
     }
   }
   .dotgreen {

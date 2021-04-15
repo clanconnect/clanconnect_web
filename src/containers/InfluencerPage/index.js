@@ -25,7 +25,7 @@ const InfluencerPage = (props) => {
           {/* <LineHeading title="Invites" /> */}
           <div className="view-link">
             <a href={`${process.env.REACT_APP_WEB_HOST}/projects`}>
-              Go to Project Proposals
+              Go to Applied Proposals
             </a>
           </div>
           <div className="tabs-container">

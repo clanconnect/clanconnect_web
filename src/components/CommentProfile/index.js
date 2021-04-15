@@ -6,7 +6,7 @@ import "./styles.scss";
 import { getImageUrl } from "helpers";
 
 const CommentProfile = ({ data, user }) => {
-  const [hasRead, setHasRead] = useState(false);
+  const [hasRead, setHasRead] = useState(true);
   useEffect(() => {
     if (user.user_type === "influencer") {
       setHasRead(data.has_influencer_read);
@@ -15,6 +15,15 @@ const CommentProfile = ({ data, user }) => {
       setHasRead(data.has_advertiser_read);
     }
   }, [data, user]);
+  useEffect(() => {
+    if (hasRead === false) {
+      const timer = setTimeout(() => {
+        console.log("Timer Logged");
+        setHasRead(true);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [hasRead]);
   return (
     <div className="comment-profile" key={`comment-detail-${data.id}`}>
       <img
