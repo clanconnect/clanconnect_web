@@ -96,8 +96,9 @@
   }
 
   .profile-name {
-    color: #5d5d5d;
+    color: #212529;
     font-weight: 500;
+    font-size: 16px;
     padding-right: 10px;
 
     @include mobile {
