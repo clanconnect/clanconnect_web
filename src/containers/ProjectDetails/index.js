@@ -94,6 +94,13 @@ const ProjectDetails = (props) => {
           <ProjectDetailsCard projectDetail={projectDetail} />
 
           <div className="tabs-container">
+            <div className="view-link">
+              <a
+                href={`${process.env.REACT_APP_WEB_HOST}/clan_project_show?id=${projectDetail.id}`}
+              >
+                Go to Project Detail Page
+              </a>
+            </div>
             <LineHeading title="Creatives Approval" />
             {/* <div className="con-mb">
               {myTabs.map((tab, index) => (

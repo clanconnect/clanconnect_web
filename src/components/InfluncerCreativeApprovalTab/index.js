@@ -12,7 +12,7 @@ import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";
 const ProjectList = (projects) => {
   return projects.length !== 0 ? (
     projects
-      .filter((project) => ["active", "ongoing"].includes(project.status))
+      .filter((project) => ["active"].includes(project.status))
       .map((project) => (
         <ProjectListCard
           project={project}
@@ -88,16 +88,16 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   const { TabPane } = Tabs;
   function callback(key) {
     if (key === "projects") {
-      loadProjects({ status: "ongoing" });
+      loadProjects({ proposalStatus: "accepted" });
     } else {
       loadCreatives({ status: key });
     }
   }
 
-  const loadProjects = ({ status }) => {
+  const loadProjects = ({ proposalStatus }) => {
     dispatch({
       type: PROJECT_ACTIONS.GET_INDEX,
-      payload: { query: { status } },
+      payload: { query: { proposalStatus } },
     });
   };
 
@@ -109,7 +109,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   };
 
   useEffect(() => {
-    loadProjects({ status: "ongoing" });
+    loadProjects({ proposalStatus: "accepted" });
     loadCreatives({ status: "pending" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

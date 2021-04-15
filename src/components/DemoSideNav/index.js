@@ -19,13 +19,14 @@ const DemoSideNav = (props) => {
               </a>
             </li>
             <li className="link-li">
-              <img className="icon" src={icon2} alt="icon" />
+              <img className="icon" src={icon3} alt="icon" />
               <a href="/clan_brand_list" className="link-item">
                 My lists
               </a>
             </li>
             <li className="link-li">
-              <img className="icon" src={icon3} alt="icon" />
+              <img className="icon" src={icon2} alt="icon" />
+
               <a href="/clan_create_project" className="link-item">
                 Create a project
               </a>

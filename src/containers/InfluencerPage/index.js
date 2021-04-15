@@ -24,7 +24,10 @@ const InfluencerPage = (props) => {
         <div className="content-wrapper">
           {/* <LineHeading title="Invites" /> */}
           <div className="view-link">
-            <a href={`${process.env.REACT_APP_WEB_HOST}/projects`}>
+            <a
+              href={`${process.env.REACT_APP_WEB_HOST}/projects`}
+              target="AppliedProposalsPage"
+            >
               Go to Applied Proposals
             </a>
           </div>
