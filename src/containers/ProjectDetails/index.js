@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import queryString from "query-string";
 import Header from "components/DemoHeader";
 import SideNav from "components/DemoSideNav";
 import Breadcrumb from "components/Breadcrumb";
@@ -19,6 +20,8 @@ import "./styles.scss";
 
 const ProjectDetails = (props) => {
   let { id } = useParams();
+  const { status } = queryString.parse(props.location.search);
+  const defaultActiveKeyCreativeTabStatus = status;
   const dispatch = useDispatch();
   const { projectDetail } = useSelector((store) => store.projects);
   const { proposalDetails } = useSelector((store) => store.proposals);
@@ -29,7 +32,7 @@ const ProjectDetails = (props) => {
     "sent"
   );
   const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
-    "pending"
+    defaultActiveKeyCreativeTabStatus || "pending"
   );
 
   const handleActiveTab = (index) => {
@@ -97,6 +100,7 @@ const ProjectDetails = (props) => {
             <div className="view-link">
               <a
                 href={`${process.env.REACT_APP_WEB_HOST}/clan_project_show?id=${projectDetail.id}`}
+                target={`ClanconnectProjectDetailPage-${projectDetail.id}`}
               >
                 Go to Project Detail Page
               </a>
