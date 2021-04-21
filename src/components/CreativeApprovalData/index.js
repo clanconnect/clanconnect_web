@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Tabs, Empty } from 'antd';
-import routeConstant from 'common/routeConstants';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Tabs, Empty } from "antd";
+import routeConstant from "common/routeConstants";
 
-import InfluncerFile from '../InfluncerFile';
+import InfluncerFile from "../InfluncerFile";
 import {
   getCreativesAction,
   creativeUpdateBulkAction,
-} from 'redux/brands/creatives/actions';
+} from "redux/brands/creatives/actions";
 
 import {
   influncerNameDataApproved,
   influncerNameDataPending,
   influncerNameDataRejected,
-} from 'common/dataManager';
+} from "common/dataManager";
 
-import './styles.scss';
-import { useDispatch } from 'react-redux';
+import "./styles.scss";
+import { useDispatch } from "react-redux";
 
 const CreativeApprovalData = ({
   defaultActiveKey,
@@ -75,22 +75,27 @@ const CreativeApprovalData = ({
   };
 
   useEffect(() => {
-    if (defaultActiveKey === 'pending') {
-      let params = {
-        include: 'media,user',
-        status: 'pending',
-      };
-      dispatch(getCreativesAction({ params, id }));
-    }
+    // if (defaultActiveKey === 'pending') {
+    //   let params = {
+    //     include: 'media,user',
+    //     status: 'pending',
+    //   };
+    //   dispatch(getCreativesAction({ params, id }));
+    // }
+    let params = {
+      include: "media,user",
+      status: defaultActiveKey,
+    };
+    dispatch(getCreativesAction({ params, id }));
   }, []);
   const operations = (
     <Link to={routeConstant.allCreativesListsBrand}>
-      <p className='cursor-pointer view-title'>View all creatives</p>
+      <p className="cursor-pointer view-title">View all creatives</p>
     </Link>
   );
 
   return (
-    <div className='tab-creative'>
+    <div className="tab-creative">
       <Tabs
         defaultActiveKey={defaultActiveKey}
         onChange={(key) => {
@@ -100,40 +105,40 @@ const CreativeApprovalData = ({
         }}
         tabBarExtraContent={operations}
       >
-        <TabPane tab='Pending' key='pending'>
+        <TabPane tab="Pending" key="pending">
           {creativeDetails.length !== 0 && (
-            <div className='btn-row'>
+            <div className="btn-row">
               <div>
                 {showSelectAllActive ? (
                   <>
                     <button
-                      className='outline-btn bg-green'
+                      className="outline-btn bg-green"
                       onClick={handleSelectAll}
                     >
                       Select All
                     </button>
 
                     <button
-                      className='outline-btn btn-gray'
+                      className="outline-btn btn-gray"
                       onClick={() => setSelectedCreatives([])}
                     >
                       Deselect All
                     </button>
 
                     <button
-                      className='outline-btn bg-green-outline'
+                      className="outline-btn bg-green-outline"
                       onClick={() => {
                         onClickSelect(false);
-                        handleBulkCreatives('accepted', 'pending');
+                        handleBulkCreatives("accepted", "pending");
                       }}
                     >
                       Approve
                     </button>
                     <button
-                      className='outline-btn bg-red'
+                      className="outline-btn bg-red"
                       onClick={() => {
                         onClickSelect(false);
-                        handleBulkCreatives('rejected', 'pending');
+                        handleBulkCreatives("rejected", "pending");
                       }}
                     >
                       Reject
@@ -141,7 +146,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className='outline-btn bg-green'
+                    className="outline-btn bg-green"
                     onClick={() => onClickSelect(true)}
                   >
                     Select
@@ -149,7 +154,7 @@ const CreativeApprovalData = ({
                 )}
               </div>
               <button
-                className='outline-btn bg-blue'
+                className="outline-btn bg-blue"
                 onClick={() => {
                   onClickSelect(false);
                 }}
@@ -169,30 +174,30 @@ const CreativeApprovalData = ({
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </TabPane>
-        <TabPane tab='Approved' key='accepted'>
+        <TabPane tab="Approved" key="accepted">
           {creativeDetails.length !== 0 && (
-            <div className='btn-row'>
+            <div className="btn-row">
               <div>
                 {showSelectAllActive ? (
                   <>
                     <button
-                      className='outline-btn bg-green'
+                      className="outline-btn bg-green"
                       onClick={handleSelectAll}
                     >
                       Select All
                     </button>
 
                     <button
-                      className='outline-btn btn-gray'
+                      className="outline-btn btn-gray"
                       onClick={() => setSelectedCreatives([])}
                     >
                       Deselect All
                     </button>
                     <button
-                      className='outline-btn bg-red'
+                      className="outline-btn bg-red"
                       onClick={() => {
                         onClickSelect(false);
-                        handleBulkCreatives('rejected', 'accepted');
+                        handleBulkCreatives("rejected", "accepted");
                       }}
                     >
                       Reject
@@ -200,7 +205,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className='outline-btn bg-green'
+                    className="outline-btn bg-green"
                     onClick={() => onClickSelect(true)}
                   >
                     Select
@@ -208,7 +213,7 @@ const CreativeApprovalData = ({
                 )}
               </div>
               <button
-                className='outline-btn bg-blue'
+                className="outline-btn bg-blue"
                 onClick={() => {
                   onClickSelect(false);
                 }}
@@ -230,30 +235,30 @@ const CreativeApprovalData = ({
           )}
         </TabPane>
 
-        <TabPane tab='Rejected' key='rejected'>
+        <TabPane tab="Rejected" key="rejected">
           {creativeDetails.length !== 0 && (
-            <div className='btn-row'>
+            <div className="btn-row">
               <div>
                 {showSelectAllActive ? (
                   <>
                     <button
-                      className='outline-btn bg-green'
+                      className="outline-btn bg-green"
                       onClick={handleSelectAll}
                     >
                       Select All
                     </button>
 
                     <button
-                      className='outline-btn btn-gray'
+                      className="outline-btn btn-gray"
                       onClick={() => setSelectedCreatives([])}
                     >
                       Deselect All
                     </button>
                     <button
-                      className='outline-btn bg-green-outline'
+                      className="outline-btn bg-green-outline"
                       onClick={() => {
                         onClickSelect(false);
-                        handleBulkCreatives('accepted', 'rejected');
+                        handleBulkCreatives("accepted", "rejected");
                       }}
                     >
                       Approved
@@ -261,7 +266,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className='outline-btn bg-green'
+                    className="outline-btn bg-green"
                     onClick={() => onClickSelect(true)}
                   >
                     Select
@@ -269,7 +274,7 @@ const CreativeApprovalData = ({
                 )}
               </div>
               <button
-                className='outline-btn bg-blue'
+                className="outline-btn bg-blue"
                 onClick={() => {
                   onClickSelect(false);
                 }}

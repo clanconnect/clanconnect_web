@@ -34,7 +34,7 @@ const ProjectDetails = (props) => {
   const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
     defaultActiveKeyCreativeTabStatus || "pending"
   );
-
+  console.log(defaultActiveKeyCreative);
   const handleActiveTab = (index) => {
     setActiveTab(index);
   };
