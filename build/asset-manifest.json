@@ -19,13 +19,13 @@
     "InfluencerPage.js": "https://web.clanconnect.sbtechzone.com/static/js/InfluencerPage.6826fa85.chunk.js",
     "InfluencerPage.js.map": "https://web.clanconnect.sbtechzone.com/static/js/InfluencerPage.6826fa85.chunk.js.map",
     "ProjectDetails.css": "https://web.clanconnect.sbtechzone.com/static/css/ProjectDetails.aadb0998.chunk.css",
-    "ProjectDetails.js": "https://web.clanconnect.sbtechzone.com/static/js/ProjectDetails.cac0a998.chunk.js",
-    "ProjectDetails.js.map": "https://web.clanconnect.sbtechzone.com/static/js/ProjectDetails.cac0a998.chunk.js.map",
+    "ProjectDetails.js": "https://web.clanconnect.sbtechzone.com/static/js/ProjectDetails.f5cc426e.chunk.js",
+    "ProjectDetails.js.map": "https://web.clanconnect.sbtechzone.com/static/js/ProjectDetails.f5cc426e.chunk.js.map",
     "main.css": "https://web.clanconnect.sbtechzone.com/static/css/main.dcda91a4.chunk.css",
-    "main.js": "https://web.clanconnect.sbtechzone.com/static/js/main.cb397be1.chunk.js",
-    "main.js.map": "https://web.clanconnect.sbtechzone.com/static/js/main.cb397be1.chunk.js.map",
-    "runtime-main.js": "https://web.clanconnect.sbtechzone.com/static/js/runtime-main.229f5b97.js",
-    "runtime-main.js.map": "https://web.clanconnect.sbtechzone.com/static/js/runtime-main.229f5b97.js.map",
+    "main.js": "https://web.clanconnect.sbtechzone.com/static/js/main.05119989.chunk.js",
+    "main.js.map": "https://web.clanconnect.sbtechzone.com/static/js/main.05119989.chunk.js.map",
+    "runtime-main.js": "https://web.clanconnect.sbtechzone.com/static/js/runtime-main.2eb91d67.js",
+    "runtime-main.js.map": "https://web.clanconnect.sbtechzone.com/static/js/runtime-main.2eb91d67.js.map",
     "static/css/10.b8fc3940.chunk.css": "https://web.clanconnect.sbtechzone.com/static/css/10.b8fc3940.chunk.css",
     "static/js/10.cf3af2e0.chunk.js": "https://web.clanconnect.sbtechzone.com/static/js/10.cf3af2e0.chunk.js",
     "static/js/10.cf3af2e0.chunk.js.map": "https://web.clanconnect.sbtechzone.com/static/js/10.cf3af2e0.chunk.js.map",
@@ -57,10 +57,10 @@
     "static/media/upload.0221ee00.svg": "https://web.clanconnect.sbtechzone.com/static/media/upload.0221ee00.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.229f5b97.js",
+    "static/js/runtime-main.2eb91d67.js",
     "static/css/10.b8fc3940.chunk.css",
     "static/js/10.cf3af2e0.chunk.js",
     "static/css/main.dcda91a4.chunk.css",
-    "static/js/main.cb397be1.chunk.js"
+    "static/js/main.05119989.chunk.js"
   ]
 }
