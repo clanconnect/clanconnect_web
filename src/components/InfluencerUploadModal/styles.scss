@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .influencer-upload-modal {
   padding-bottom: 30px;
@@ -109,7 +109,6 @@
     border-bottom: 2px solid #f0f0f0;
     margin-bottom: 30px;
     padding-bottom: 5px;
-    text-transform: uppercase;
     color: $text;
 
     .text-sm {

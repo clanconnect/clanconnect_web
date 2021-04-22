@@ -7,7 +7,7 @@ import UploadAttchmentFile from "../UploadAttchmentFile";
 import { connect } from "react-redux";
 import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
-import { remove } from "lodash";
+import { remove, startCase, toLower } from "lodash";
 
 const UploadTypes = [
   { label: "Uploading a new creative", value: "upload new" },
@@ -306,7 +306,7 @@ const InfluencerUploadModal = ({
       <Modal {...ModalProps}>
         {fileUploadStage < 2 && (
           <div className="comapign-text">
-            <span>{project.title}</span>
+            <span>{startCase(toLower(project.title))}</span>
             {showFile && (
               <span className="text-sm">{files.length} File(s) Selected</span>
             )}
