@@ -94,10 +94,11 @@ const CreativeModal = ({
   };
 
   const updateStatus = (value) => {
+    console.log("id", creative.project.id, "creative.id", creative.id);
     dispatch(
       creativeUpdateStatusAction({
         status: value,
-        projectId: id,
+        projectId: creative.project.id,
         creativeId: creative.id,
         mediaId: currentMedia.id,
         currentStatus: creative.status,
