@@ -18,13 +18,12 @@ axiosInstance.interceptors.request.use((config) => {
   };
 
   if (process.env.REACT_APP_STAGE === "local") {
-    console.log(process.env.REACT_APP_STAGE);
+    //console.log(process.env.REACT_APP_STAGE);
     headers["sess-token"] =
-      "_irida_session=NB3kmZU4hw%2BtbjVQI4JG7o%2FYmlMC9jCE5uspyw0uP7xRjgBi1pkTfqKfy9Sq5492K1lb3U0S7KlcCrC7rJ5GYmubKEqixZCnzgZsHaH6rMTIkx4wSteIoHT7SBwnmW%2BU4mADIYGZJHsWRihdAX7nx%2Bwgsu%2BXfkI7QzIrTOyl5CrvOL4n3k0fpTwlS9Hcjpz70HeCYxv0ezQsDfE86WKUOHeZrld3Rp%2B5OyIGiFYtSVYbFmv%2Foi9UVneDOuwuDWNXjCmm1Q%3D%3D--XeiBMVcDvGonOFoK--ouHQw%2Bv00ILE0YJ1R4eVfA%3D%3D";
     // // influencer
-    // "_irida_session=nRu14cgCz%2FCM4TV4QDeSvzzEUULUOvhmz3H10bQ4ABrCTpO8mxUlAnQd%2Bq3HIhMwr52s5Em%2FQip0ED1rCtl64Ucc2iYT0H3TeZp7UlPiZfOf8rBcavHj%2BomE8STLIPQICasv64RR43qSSkEY4iyeHYWNtLU5cXnhUKp8aQ6aYTcBby5H6Bv4vDOMn00wlzyPGb7JIbdnwAnNICIYPE0t8qca556nSN9AWajDhUly8AsGUDBbgDhTMBek9VzyVY6st21YLg%3D%3D--eDeNMoZ96bvDKhuQ--%2FIOTH%2BCpIwdASbnVwtwelg%3D%3D",
+     //"_irida_session=IHB9EhXoMO0aB608hGHaHPhloCOpT6annHpAQsIU4M7RQJxacJuQr08Gl9lRafgHGtJzKLJngTKl87HEraxGMPuGCjdicJVmWN9BH6QdM3rS8ciWwp8kHPPKi4Y7KqXwlx0%2BmnzzGNPemDT4zp%2BIpqXRFt%2F3Gt%2B5faL0IwlMaWjL3ATy8za8R72r36%2BhB%2Fe9%2Bt2o2k7f8jMifI8hbKkXBkE20xK8LsYpyu4WNHVQL%2BoIR3J2sMTw16%2BEiYYS0HuObe9vuQ%3D%3D--iPcixv6Unrlpz9iE--Wlnk7jNOYzSZgA23nJiLxg%3D%3D"
     // // advertiser
-    // // "_irida_session=NB3kmZU4hw%2BtbjVQI4JG7o%2FYmlMC9jCE5uspyw0uP7xRjgBi1pkTfqKfy9Sq5492K1lb3U0S7KlcCrC7rJ5GYmubKEqixZCnzgZsHaH6rMTIkx4wSteIoHT7SBwnmW%2BU4mADIYGZJHsWRihdAX7nx%2Bwgsu%2BXfkI7QzIrTOyl5CrvOL4n3k0fpTwlS9Hcjpz70HeCYxv0ezQsDfE86WKUOHeZrld3Rp%2B5OyIGiFYtSVYbFmv%2Foi9UVneDOuwuDWNXjCmm1Q%3D%3D--XeiBMVcDvGonOFoK--ouHQw%2Bv00ILE0YJ1R4eVfA%3D%3D",
+    "_irida_session=LrRLpI1oMBI3ApZyn8o2Z4s4JHyxKkq5aWLQT4eGXusbWTNajnzOsbW7fsJtztnF15N2KjKZP1fBbEPXRv82nHew1VWnT3omIe3OqgN9ny97uSaxBYXGzmafuxO86bsXRkEersgINpsKMjkEGQ%2ByKSkfXN99FzvJEUBN2ucZd3%2FXSOSCzQzp--kz%2FA1HebTF0w7h6H--KQnLbf8glrB2kxcniHNIQw%3D%3D"
   }
   config.headers = headers;
   return config;

@@ -26,6 +26,7 @@ const CreativeModal = ({
   versionTrue,
   influencerStatus,
   creative,
+  projectId,
   influncerName,
 }) => {
   const dispatch = useDispatch();
@@ -94,11 +95,10 @@ const CreativeModal = ({
   };
 
   const updateStatus = (value) => {
-    console.log("id", creative.project.id, "creative.id", creative.id);
     dispatch(
       creativeUpdateStatusAction({
         status: value,
-        projectId: creative.project.id,
+        projectId: projectId.id,
         creativeId: creative.id,
         mediaId: currentMedia.id,
         currentStatus: creative.status,

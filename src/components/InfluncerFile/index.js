@@ -9,6 +9,7 @@ import fullScreen from "assets/images/full-screen.svg";
 import moment from "moment";
 import chat from "assets/images/chat.svg";
 import "./styles.scss";
+import { useParams } from "react-router";
 
 const InfluncerFile = ({
   showSelectAllActive,
@@ -25,6 +26,8 @@ const InfluncerFile = ({
     }
     setSelectedCreatives(Array.from(uppdatedCreative));
   };
+  const projectId = useParams();
+  
 
   return creativeDetails
     ? creativeDetails.map((data, index) => {
@@ -87,6 +90,7 @@ const InfluncerFile = ({
                             src={chat}
                             className="icons-custom"
                             creative={item}
+                            projectId={projectId}
                             influncerName={data.user.name}
                           />
                         </div>
@@ -97,6 +101,7 @@ const InfluncerFile = ({
                             src={fullScreen}
                             className="icons-custom icon-sec"
                             creative={item}
+                            projectId={projectId}
                             influncerName={data.user.name}
                           />
                           <div className="icon-sec">
