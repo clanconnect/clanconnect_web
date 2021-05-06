@@ -12,7 +12,7 @@ import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";
 const ProjectList = (projects) => {
   return projects.length !== 0 ? (
     projects
-      .filter((project) => ["active"].includes(project.status))
+      .filter((project) => ["active", "ongoing"].includes(project.status))
       .map((project) => (
         <ProjectListCard
           project={project}
