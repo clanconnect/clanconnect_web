@@ -9,6 +9,7 @@ import BrandUploadDocumentModal from "../BrandUploadDocumentModal";
 import download from "assets/images/download.svg";
 import paperclip from "assets/images/paperclip.svg";
 import { downloadMedia } from "helpers";
+import InfluencerDrawer from "components/InfluencerDrawer";
 
 const statusTags = {
   rejected: (
@@ -71,6 +72,7 @@ const InfluencerCreativeModal = ({
   const [visible, setVisible] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
   const [creativeStatus, setCreativeStatus] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setCreativeStatus(creative?.media[0]?.status || "pending");
@@ -89,6 +91,14 @@ const InfluencerCreativeModal = ({
   const showAttachFiles = () => {
     setShowAttachments(!showAttachments);
   };
+
+  const closeDrawer = () => {
+    setIsVisible(false);
+  }
+
+  const showDrawer = () => {
+    setIsVisible(true);
+  }
 
   const closeModal = (val) => setVisible(false);
 
@@ -137,6 +147,8 @@ const InfluencerCreativeModal = ({
         />
       )}
 
+      <InfluencerDrawer isVisible={isVisible} closeDrawer={closeDrawer} />
+
       <Modal
         visible={visible}
         onOk={() => setVisible(false)}
@@ -147,7 +159,7 @@ const InfluencerCreativeModal = ({
       >
         <div className="creative-modal">
           <div className="creative-modal-header flex justify-between">
-            <p className="title">{project.title}</p>
+            <p className="title">{project.title}<button className="btn-submit" onClick={()=>{ showDrawer();setVisible(false) }}>Schedule</button></p>
             <div className="flex align-items">
               <span>Status: </span>
               <div className="" style={{ marginLeft: "10px" }}>

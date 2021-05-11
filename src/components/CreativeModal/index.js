@@ -18,6 +18,7 @@ import download from "assets/images/download.svg";
 import paperclip from "assets/images/paperclip.svg";
 import { creativeUpdateStatusAction } from "redux/brands/creatives/actions";
 import "./styles.scss";
+import BrandDrawer from "components/BrandDrawer";
 
 const { confirm } = Modal;
 const CreativeModal = ({
@@ -36,6 +37,7 @@ const CreativeModal = ({
   const [playing, setPlaying] = useState(false);
   const [creativeStatus, setCreativeStatus] = useState("");
   const [currentMedia, setCurrentMedia] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
   const slider = useRef(null);
   const statusMap = {
     accepted: {
@@ -121,6 +123,14 @@ const CreativeModal = ({
     updateStatus(value);
   };
 
+  const closeDrawer = () => {
+    setIsVisible(false);
+  }
+
+  const showDrawer = () => {
+    setIsVisible(true);
+  }
+
   const closeModal = () => {
     setPlaying(false);
     setVisible(false);
@@ -175,6 +185,8 @@ const CreativeModal = ({
         />
       )}
 
+      <BrandDrawer isVisible={isVisible} closeDrawer={closeDrawer} />
+
       {/* Modal */}
       <Modal
         visible={visible}
@@ -188,7 +200,7 @@ const CreativeModal = ({
       >
         <div className="creative-modal">
           <div className="creative-modal-header flex justify-between">
-            <p className="title">{influncerName}</p>
+            <p className="title">{influncerName}<button className="btn-submit" onClick={()=>{ showDrawer();setVisible(false) }}>View Schedule</button></p>
             <div className="">
               {influencerStatus ? (
                 <div>

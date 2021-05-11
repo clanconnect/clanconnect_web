@@ -1,0 +1,79 @@
+@import "styles/_colors";
+@import "styles/_mixins";
+
+.custom-modal{
+    .creative-modal-body{
+        .ant-form{
+            padding: 0em 1em 0em 1em;
+            .tag-feild{
+                .site-tag-plus {
+                background: #fff;
+                border-style: dashed;
+                }
+                .edit-tag {
+                position: relative;
+                user-select: none;
+                }
+                .tag-input {
+                position: relative;
+                width: 78px;
+                }
+            }
+        }
+    }
+    .ant-modal-close {
+        border: 2px solid #dacfcf;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+        background: white;
+        top: -25px;
+        right: -50px;
+        color: black;
+        font-weight: 900;
+    
+        @include mobile {
+          top: -35px;
+          right: 0;
+        }
+    
+        @include tablet {
+          top: -35px;
+          right: 0;
+        }
+    }
+    
+    .ant-modal-close-x {
+        display: initial;
+        width: 25px;
+        height: 25px;
+        font-size: 13px;
+        line-height: 21px;
+    }
+    
+    .ant-modal-body {
+        padding: 0px !important;
+    }
+
+    .creative-modal-header {
+        border-bottom: 2px solid #ceb8b830;
+        padding: 24px 24px 19px 24px;
+        margin-bottom: 20px;
+    
+        @include mobile {
+          padding-bottom: 20px;
+        }
+    }
+    
+    .title {
+        font-weight: 600;
+        font-size: 20px;
+        text-transform: uppercase;
+        margin-top: 0px;
+    
+        @include mobile {
+          font-size: 12px;
+        }
+    }
+}

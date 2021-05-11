@@ -250,3 +250,18 @@
   opacity: 0.01;
   transition: opacity 800ms ease-in;
 }
+
+.btn-submit {
+  background: $secondary;
+  padding: 6px 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
