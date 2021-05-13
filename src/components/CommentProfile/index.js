@@ -11,7 +11,7 @@ const CommentProfile = ({ data, user }) => {
     if (user.user_type === "influencer") {
       setHasRead(data.has_influencer_read);
     }
-    if (user.user_type === "advertiser") {
+    if (user.user_type === "advertiser" || user.user_type === "agency") {
       setHasRead(data.has_advertiser_read);
     }
   }, [data, user]);
