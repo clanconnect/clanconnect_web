@@ -1,116 +1,229 @@
 
 import './styles.scss';
-import { Modal, Form, Input, Button, Upload, DatePicker, TimePicker, Checkbox, Select, Switch } from "antd";
+import { Form, Input, Button, Upload, DatePicker, TimePicker, Select, Switch } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useState } from 'react';
-import { useDispatch} from "react-redux";
+import { useState, useEffect } from 'react';
+import { useDispatch, connect} from "react-redux";
 import { ACTIONS } from "redux/creators/youtube/actions";
 
-const defaultYTFormState = {
-  title: "",
-  description: "",
-  thumbnail: "",
-  tags: [],
-  selfDeclaredMadeForKids: true,
-  scheduleDate: null,
-  scheduleTime: null
-}
+const { Option } = Select ;
 
-const YoutubeUploadForm = ({show, hide}) => {
+const YoutubeUploadForm = ({title, 
+  description, 
+  thumbnail, 
+  tags, 
+  scheduleDate, 
+  scheduleTime, 
+  forChild, 
+  country, 
+  category, 
+  defaultLanguage, 
+  statsVisible, 
+  license, 
+  notifySubscriber, 
+  privacyStatus, 
+  approvalStatus, 
+  uploadStatus
+}) => {  
+  
+  const [formDataYT, setFormDataYT] = useState({
+    title:title, 
+    description:description, 
+    thumbnail:thumbnail, 
+    tags:tags, 
+    scheduleDate: scheduleDate, 
+    scheduleTime: scheduleTime, 
+    forChild: forChild, 
+    country: country, 
+    category: category, 
+    defaultLanguage: defaultLanguage, 
+    statsVisible: statsVisible,
+    license: license,
+    notifySubscriber: notifySubscriber,
+    privacyStatus: privacyStatus,
+    approvalStatus: approvalStatus,
+    uploadStatus: uploadStatus
+  });
 
-    const [formDataYT, setFormDataYT] = useState(defaultYTFormState);
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const onFinish = () => {
+    useEffect(() => {
       dispatch({
-          type: ACTIONS.SET_FORM,
-          payload: {...formDataYT}
-        });
-        hide();
-      };
+        type: ACTIONS.GET_FORM_ADMIN
+      });
+    }, [dispatch]);
+
+  const onFinish = () => {
+    try{
+      dispatch({
+        type: ACTIONS.SET_FORM,
+        payload: {...formDataYT}
+      });
+      alert("Youtube Dispatch Complete");
+    }catch(e){
+      alert(e);
+    }
+    };
     
-      const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-      };
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
+
+  const handleTitleChange = (e) => {
+    setFormDataYT({...formDataYT, title:e.target.value});
+  }
+
+  const handleDescriptionChange = (e) => {
+    setFormDataYT({...formDataYT, description:e.target.value});
+  }
     
-      const normFile = (e) => {
-        setFormDataYT({...formDataYT, thumbnail:e.fileList});
-        return e && e.fileList;
-      };
+  const normFile = (e) => {
+    setFormDataYT({...formDataYT, thumbnail:e.fileList});
+    return e && e.fileList;
+  };
     
-      const handleTagChange = (value) => {
-        setFormDataYT({...formDataYT, tags: value})
-      }
+  const handleTagChange = (value) => {
+    setFormDataYT({...formDataYT, tags: value});
+  }
     
-      const handleScheduleDate = (e) =>{
-        setFormDataYT({...formDataYT, scheduleDate: e._d});
-      }
+  const handleScheduleDate = (e) =>{
+    setFormDataYT({...formDataYT, scheduleDate: e._d});
+  }
     
-      const handleScheduleTime = (e) => {
-        setFormDataYT({...formDataYT, scheduleTime: e._d});
-      }
+  const handleScheduleTime = (e) => {
+    setFormDataYT({...formDataYT, scheduleTime: e._d});
+  }
 
-      const handleExplicitContent = (value) => {
-        setFormDataYT({...formDataYT, selfDeclaredMadeForKids: !value});
-      }
+  const handleExplicitContent = (value) => {
+    setFormDataYT({...formDataYT, selfDeclaredMadeForKids: value});
+  }
 
-    return (
-        <>
-            <Modal
-                visible={show}
-                onCancel={() => hide}
-                width={1100}
-                centered
-                className="custom-modal"
-            >
-                <div className="creative-modal">
-                <div className="creative-modal-header flex justify-between">
-                    <p className="title">Upload on Youtube</p>
-                </div>
+  const handleCountryChange = (value) => {
+    setFormDataYT({...formDataYT, country: value});
+  }
 
-                <div className="creative-modal-body">
-                    <Form layout="vertical" className="flex flex-column" name="basic" initialValues={{remember: true}} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                    <Form.Item label="Video Title" name="title" rules={[{ required: true, message: 'Please input the video title!'}]} onChange={(e)=>{setFormDataYT({...formDataYT, title:e.target.value})}}>
-                        <Input />
-                    </Form.Item>
+  const handleCategoryChange = (value) => {
+    setFormDataYT({...formDataYT, category: value});
+  }
 
-                    <Form.Item name="upload" label="Video Thumbnail" valuePropName="fileList" rules={[{ required: true, message: 'Please upload the video thumbnail!'}]} getValueFromEvent={normFile} extra="Upload you thumbnail">
-                        <Upload name="thumbnail">
-                        <Button icon={<UploadOutlined />}>Click to upload</Button>
-                        </Upload>
-                    </Form.Item>
+  const handleLanguageChange = (value) => {
+    setFormDataYT({...formDataYT, defaultLanguage: value});
+  }
 
-                    <Form.Item label="Video Description" name="description" rules={[{required: true, message: 'Please input your video description!'}]} onChange={(e)=>{setFormDataYT({...formDataYT, description:e.target.value})}}>
-                        <Input.TextArea rows={5} />
-                    </Form.Item>
+  const handleLicenseChange = (value) => {
+    setFormDataYT({...formDataYT, license: value});
+  }
 
-                    <Form.Item>
-                    <Select mode="tags" style={{ width: '100%' }} placeholder="Tags" onChange={handleTagChange} />
-                    </Form.Item>
+  const handlePrivacyStatusChange = (value) => {
+    setFormDataYT({...formDataYT, privacyStatus: value});
+  }
 
-                    <Form.Item label="Schedule Date & Time">
-                    <DatePicker onChange={handleScheduleDate} />
-                    <TimePicker className="ml-4" use12Hours onChange={handleScheduleTime} format="HH:mm" />
-                    </Form.Item>
+  const handleStatVisibleChange = (value) => {
+    setFormDataYT({...formDataYT, statsVisible: value});
+  }
 
-                    <Form.Item label="Explicit Content">
-                    <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={handleExplicitContent} />
-                    </Form.Item>
+  const handleNotifySubscriberChange = (value) => {
+    setFormDataYT({...formDataYT, notifySubscriber: value});
+  }
 
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                        Submit
-                        </Button>
-                        <Button className="ml-4" type="danger" onClick={hide}>
-                        Close
-                        </Button>
-                    </Form.Item>
-                    </Form>
-                </div>
-                </div>
-            </Modal>
-        </>
-    )
+  return (
+    <>
+      <Form layout="vertical" className="flex flex-column" name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form.Item label="Video Title"  onChange={handleTitleChange} >
+          <Input required />
+        </Form.Item>
+
+        <Form.Item name="upload" label="Video Thumbnail" valuePropName="fileList" rules={[{ required: true, message: 'Please upload the video thumbnail!'}]} getValueFromEvent={normFile} extra="Upload you thumbnail">
+          <Upload name="thumbnail">
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload>
+        </Form.Item>
+
+        <Form.Item label="Video Description" name="description" rules={[{required: true, message: 'Please input your video description!'}]} onChange={handleDescriptionChange}>
+          <Input.TextArea rows={5} />
+        </Form.Item>
+
+        <Form.Item label="Country & Category">
+          <Select defaultValue="Select a Country" onChange={handleCountryChange}>
+            <Option value="india">India</Option>
+            <Option value="others">Others</Option>
+          </Select>
+          <Select defaultValue="Select a Category" className="mt-30" onChange={handleCategoryChange}>
+            <Option value="india">India</Option>
+            <Option value="others">Others</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="Video Tags" name="videoTags" rules={[{required: true, message: 'Please enter video tags'}]} >
+          <Select mode="tags" style={{ width: '100%' }} placeholder="Tags" onChange={handleTagChange} />
+        </Form.Item>
+
+        <Form.Item label="Schedule Date & Time" >
+          <DatePicker onChange={handleScheduleDate} />
+          <TimePicker className="ml-4" minuteStep={10} use12Hours onChange={handleScheduleTime} format="HH:mm" />
+        </Form.Item>
+
+        <Form.Item label="Is the video suitable for childerns?">
+          <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={handleExplicitContent} />
+        </Form.Item>
+
+        <Form.Item label="Default Language">
+          <Select defaultValue="en" onChange={handleLanguageChange}>
+            <Option value="en">English</Option>
+            <Option value="others">Others</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="License Information">
+          <Select defaultValue="youtube" onChange={handleLicenseChange}>
+            <Option value="youtube">Youtube</Option>
+            <Option value="creativeCommons">Creative Commons</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="Privacy Status">
+          <Select defaultValue="public" onChange={handlePrivacyStatusChange}>
+            <Option value="public">Public</Option>
+            <Option value="private">Private</Option>
+            <Option value="unlisted">Unlisted</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="Show Satistics Information to Public">
+          <Switch defaultChecked checkedChildren="Yes" unCheckedChildren="No" onChange={handleStatVisibleChange} />
+        </Form.Item>
+
+        <Form.Item label="Notify Subscriber">
+          <Switch defaultChecked checkedChildren="Yes" unCheckedChildren="No" onChange={handleNotifySubscriberChange} />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
+  )
 }
 
-export default YoutubeUploadForm;
+const mapStateToProps = ({ CreatorYoutube }) => ({
+  title: CreatorYoutube.title,
+  description: CreatorYoutube.description,
+  thumbnail: CreatorYoutube.thumbnail.name,
+  tags: CreatorYoutube.tags,
+  forChild: CreatorYoutube.selfDeclaredMadeForKids,
+  scheduleDate: CreatorYoutube.scheduleDate?.toLocaleDateString(),
+  scheduleTime: CreatorYoutube.scheduleTime?.toLocaleTimeString(),
+  country: CreatorYoutube.country,
+  category: CreatorYoutube.category,
+  defaultLanguage: CreatorYoutube.defaultLanguage,
+  license: CreatorYoutube.license,
+  statsVisible: CreatorYoutube.statsVisible,
+  notifySubscriber: CreatorYoutube.notifySubscriber,
+  privacyStatus: CreatorYoutube.privacyStatus,
+  approvalStatus: CreatorYoutube.approvalStatus,
+  uploadStatus: CreatorYoutube.uploadStatus
+});
+
+export default connect(mapStateToProps)(YoutubeUploadForm);

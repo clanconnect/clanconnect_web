@@ -185,7 +185,7 @@ const CreativeModal = ({
         />
       )}
 
-      <BrandDrawer isVisible={isVisible} closeDrawer={closeDrawer} />
+      <BrandDrawer isVisible={isVisible} closeDrawer={closeDrawer} setVisible={setVisible} />
 
       {/* Modal */}
       <Modal
