@@ -38,6 +38,14 @@ const BrandDrawer = ({setVisible, isVisible, closeDrawer, title, description, th
         alert("Instagram Form Approved");
     }
 
+    const declineIGForm = () => {
+        alert("Instagram Form Declined");
+    }
+
+    const declineYTForm = () => {
+        alert("Youtube Form Declined");
+    }
+
     return (
         <>
             <Drawer
@@ -83,7 +91,8 @@ const BrandDrawer = ({setVisible, isVisible, closeDrawer, title, description, th
                             <Descriptions.Item label="Approval Status" span={2}>{approvalStatus}</Descriptions.Item>
                             <Descriptions.Item label="Upload Status" span={2}>{uploadStatus}</Descriptions.Item>
                         </Descriptions>
-                        <Button ref={commentBlockBtn} type="primary" onClick={approveYTForm} className="mt-30">Approve</Button>
+                        <Button type="primary" onClick={approveYTForm} className="mt-30 mr-10">Approve</Button>
+                        <Button danger type="primary" onClick={declineYTForm}>Cancel</Button>
                     </TabPane>
                     <TabPane tab="Instagram" key="ig">
                         <Descriptions bordered>
@@ -93,7 +102,8 @@ const BrandDrawer = ({setVisible, isVisible, closeDrawer, title, description, th
                             <Descriptions.Item label="Approval Status" span={2}>{approvalStatusIG}</Descriptions.Item>
                             <Descriptions.Item label="Upload Status" span={2}>{uploadStatusIG}</Descriptions.Item>
                         </Descriptions>
-                        <Button ref={commentBlockBtn} type="primary" onClick={approveIGForm} className="mt-30">Approve</Button>
+                        <Button type="primary" onClick={approveIGForm} className="mt-30 mr-10">Approve</Button>
+                        <Button danger type="primary" onClick={declineIGForm}>Cancel</Button>
                     </TabPane>
                 </Tabs>
             </Drawer>  

@@ -53,6 +53,10 @@ const InstagramUploadForm = ({caption, scheduleDate, scheduleTime, approvalStatu
     setFormDataYT({...formDataIG, scheduleTime: e._d});
   }
 
+  const declineIGForm = () => {
+    alert("Youtube Form Declined");
+  }
+
   return (
     <>
       <Form layout="vertical" className="flex flex-column" name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -66,8 +70,11 @@ const InstagramUploadForm = ({caption, scheduleDate, scheduleTime, approvalStatu
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button className="mr-10" type="primary" htmlType="submit">
             Submit
+          </Button>
+          <Button danger type="primary" onClick={declineIGForm}>
+            Cancel
           </Button>
         </Form.Item>
       </Form>

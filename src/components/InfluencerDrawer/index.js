@@ -7,8 +7,8 @@ const InfluencerDrawer = ({isVisible, closeDrawer}) => {
 
     const { TabPane } = Tabs;
 
-    const onTabChange = () => {
-
+    const triggerScheduler = () => {
+        alert("Scheduler Triggered");
     }
 
     return (
@@ -25,13 +25,16 @@ const InfluencerDrawer = ({isVisible, closeDrawer}) => {
                         textAlign: 'right',
                     }}
                     >
+                    <Button type="primary" onClick={triggerScheduler} style={{ marginRight: 8 }}>
+                        Go Live!
+                    </Button>
                     <Button danger type="primary" onClick={closeDrawer} style={{ marginRight: 8 }}>
                         Close Drawer
                     </Button>
                     </div>
                 }
                 >
-                <Tabs defaultActiveKey="yt" onChange={onTabChange}>
+                <Tabs defaultActiveKey="yt">
                     <TabPane tab="Youtube" key="yt">
                     <YoutubeUploadForm />
                     </TabPane>

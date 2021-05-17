@@ -45,6 +45,8 @@ const YoutubeUploadForm = ({title,
     uploadStatus: uploadStatus
   });
 
+  const [formSubmitted, setFormSubitted] = useState(true);
+
   const dispatch = useDispatch();
 
     useEffect(() => {
@@ -125,9 +127,17 @@ const YoutubeUploadForm = ({title,
     setFormDataYT({...formDataYT, notifySubscriber: value});
   }
 
+  const declineYTForm = () => {
+    alert("Youtube Form Declined");
+  }
+
+  const changeFormState = () => {
+    setFormSubitted(false);
+  }
+
   return (
     <>
-      <Form layout="vertical" className="flex flex-column" name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+      { !formSubmitted ? <Form layout="vertical" className="flex flex-column" name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <Form.Item label="Video Title"  onChange={handleTitleChange} >
           <Input required />
         </Form.Item>
@@ -197,11 +207,20 @@ const YoutubeUploadForm = ({title,
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" className="mr-10">
             Submit
           </Button>
+          <Button danger type="primary" onClick={declineYTForm}>
+            Cancel
+          </Button>
         </Form.Item>
-      </Form>
+      </Form> : <>
+          <div>Schedule form already submitted</div>
+          <Button type="primary" htmlType="submit" className="mt-30" onClick={changeFormState}>
+            Edit Form
+          </Button>
+        </>
+      }
     </>
   )
 }
