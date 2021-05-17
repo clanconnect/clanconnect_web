@@ -1,5 +1,5 @@
 import './styles.scss';
-import { Button, Descriptions, Divider, Drawer, Tag, Image, Tabs} from 'antd';
+import { Button, Descriptions, Drawer, Tag, Image, Tabs} from 'antd';
 import { useDispatch, connect } from "react-redux";
 import { ACTIONS } from 'redux/creators/youtube/actions';
 import { ACTIONS as ACTIONS_IG } from 'redux/creators/instagram/actions';

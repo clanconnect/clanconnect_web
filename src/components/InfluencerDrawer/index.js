@@ -1,5 +1,5 @@
 import './styles.scss';
-import { Button, Descriptions, Divider, Drawer, Tag, Image, Tabs} from 'antd';
+import { Button, Drawer, Tabs} from 'antd';
 import YoutubeUploadForm from 'components/YoutubeUploadForm';
 import InstagramUploadForm from 'components/InstagramUploadForm';
 

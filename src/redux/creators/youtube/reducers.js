@@ -19,14 +19,6 @@ const initialState = {
   uploadStatus: false
 }
 
-const initialStateIg = {
-  caption: "",
-  scheduleDate: null,
-  scheduleTime: null,
-  approvalStatus: false,
-  uploadStatus: false
-}
-
 const returnState = {
   title: "This is a test title",
   description: "This is a test description. Lorem Ipsum Dolar Sit Amet.",
@@ -42,14 +34,6 @@ const returnState = {
   privacyStatus: "public",
   statsVisible: true,
   notifySubscriber: true,
-  approvalStatus: false,
-  uploadStatus: false
-};
-
-const returnStateIg = {
-  title: "This is a test title",
-  scheduleDate: new Date("Tue May 25 2021 15:51:53 GMT+0530 (India Standard Time)"),
-  scheduleTime: new Date("Mon May 10 2021 04:04:00 GMT+0530 (India Standard Time)"),
   approvalStatus: false,
   uploadStatus: false
 };
@@ -73,16 +57,7 @@ export default function reducer(state = initialState, action) {
       case ACTIONS.SET_SCHEDULE:
         return { ...state, scheduleDate: action.payload.date, scheduleTime: action.payload.time };
 
-      case ACTIONS.SET_FORM_IG:
-        return { ...initialStateIg, ...action.payload };
-
-      case ACTIONS.GET_FORM_IG:
-        return { ...initialStateIg };
-
-      case ACTIONS.GET_FORM_ADMIN_IG:
-        return { ...returnStateIg };
-
       default:
-        return state;
+        return initialState;
     }
   }

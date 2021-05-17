@@ -29,6 +29,6 @@ export default function reducer(state = initialStateIg, action) {
         return { ...returnStateIg };
 
       default:
-        return state;
+        return initialStateIg;
     }
   }

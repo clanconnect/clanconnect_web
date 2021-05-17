@@ -59,7 +59,6 @@ const YoutubeUploadForm = ({title,
         type: ACTIONS.SET_FORM,
         payload: {...formDataYT}
       });
-      alert("Youtube Dispatch Complete");
     }catch(e){
       alert(e);
     }
