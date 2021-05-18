@@ -72,14 +72,21 @@ const DemoHeader = ({ dispatch, user }) => {
           {/* <Link to={routeConstants.allCreativesLists}>
             <span className='mr-30 profile-name'>ALL CREATIVES</span>
           </Link> */}
-          <img
-            src={user?.brand?.image ? user.brand.image : dummy}
-            alt="logo"
-            className="logo"
-            className="brand-profile-img"
-          />
+          <div>
+            {user.brand.name && (
+              <img
+                src={
+                  user?.brand?.logo
+                    ? `https://irida-data.s3.amazonaws.com/uploads/brand_account/${user.brand._id}/logo/${user.brand.logo}`
+                    : dummy
+                }
+                alt="logo"
+                className="logo"
+                className="brand-profile-img"
+              />
+            )}
+          </div>
           <span className="profile-name">{user?.brand?.name}</span>
-
           <span className="profile-name">{user?.name}</span>
           <Dropdown overlay={menu} trigger={["click"]}>
             <a
