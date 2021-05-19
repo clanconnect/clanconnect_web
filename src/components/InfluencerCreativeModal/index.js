@@ -9,6 +9,7 @@ import BrandUploadDocumentModal from "../BrandUploadDocumentModal";
 import download from "assets/images/download.svg";
 import paperclip from "assets/images/paperclip.svg";
 import { downloadMedia } from "helpers";
+import _ from "lodash";
 
 const statusTags = {
   rejected: (
@@ -147,7 +148,7 @@ const InfluencerCreativeModal = ({
       >
         <div className="creative-modal">
           <div className="creative-modal-header flex justify-between">
-            <p className="title">{project.title}</p>
+            <p className="title">{_.startCase(_.camelCase(project.title))}</p>
             <div className="flex align-items">
               <span>Status: </span>
               <div className="" style={{ marginLeft: "10px" }}>

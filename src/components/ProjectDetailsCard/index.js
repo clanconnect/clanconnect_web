@@ -1,5 +1,6 @@
 import React from "react";
 import { Empty } from "antd";
+import * as _ from "lodash";
 import img1 from "assets/images/project1.jpg";
 import { FaEdit } from "react-icons/fa";
 
@@ -13,7 +14,9 @@ const ProjectDetailsCard = ({ projectDetail }) => {
       </div> */}
       <div className="card-content">
         <div className="card-header">
-          <h2 className="project-title">{projectDetail?.title}</h2>
+          <h2 className="project-title">
+            {_.startCase(_.camelCase(projectDetail?.title))}
+          </h2>
           {/* <span className="edit-icon">
             <a
               href={`${process.env.REACT_APP_WEB_HOST}/projects/${projectDetail?.slugs[0]}/edit`}
