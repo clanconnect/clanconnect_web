@@ -73,7 +73,7 @@ const DemoHeader = ({ dispatch, user }) => {
             <span className='mr-30 profile-name'>ALL CREATIVES</span>
           </Link> */}
           <div>
-            {user.brand.name && (
+            {user.brand && Object.keys(user?.brand).length !== 0 && (
               <img
                 src={
                   user?.brand?.logo
