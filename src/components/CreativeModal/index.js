@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { downloadMedia } from "helpers";
 import VideoPlayer from "react-player";
+import * as _ from "lodash";
 import { Modal, Menu, Dropdown, Carousel, Tag, Empty } from "antd";
 import {
   DownOutlined,
@@ -61,9 +62,8 @@ const CreativeModal = ({
     return (
       <Menu>
         <Menu.Item key="accepted">
-          <div className="flex flex-column">
-            <label className="flex justify-between items-center mb-10 cursor-pointer">
-              <span>Approved</span>
+          <div className="flex">
+            <label className="flex justify-between items-center cursor-pointer">
               <input
                 type="radio"
                 name="status"
@@ -72,13 +72,13 @@ const CreativeModal = ({
                 checked={status === "accepted"}
                 className="cursor-pointer"
               />
+              <span className="menu-item-status-text">Approve</span>
             </label>
           </div>
         </Menu.Item>
         <Menu.Item key="rejected">
-          <div className="flex flex-column">
-            <label className="flex justify-between items-center mb-10 cursor-pointer">
-              <span>Rejected</span>
+          <div className="flex">
+            <label className="flex justify-between items-center cursor-pointer">
               <input
                 type="radio"
                 name="status"
@@ -87,6 +87,7 @@ const CreativeModal = ({
                 onChange={(e) => handleMenuClick(e.target.value)}
                 className="cursor-pointer"
               />
+              <span className="menu-item-status-text">Reject</span>
             </label>
           </div>
         </Menu.Item>
@@ -188,7 +189,7 @@ const CreativeModal = ({
       >
         <div className="creative-modal">
           <div className="creative-modal-header flex justify-between">
-            <p className="title">{influncerName}</p>
+            <p className="title">{_.startCase(_.camelCase(influncerName))}</p>
             <div className="">
               {influencerStatus ? (
                 <div>
