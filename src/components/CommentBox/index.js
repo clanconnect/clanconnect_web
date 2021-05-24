@@ -55,7 +55,7 @@ const CommentBox = ({ creativeId, showFiles }) => {
         value={text}
       />
       {errorState ? (
-        <span className="error">filed should not be empty.</span>
+        <span className="error">Please write a message</span>
       ) : null}
       <div className="comment-btns">
         <button className="btn-submit" onClick={handleSubmit}>
