@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { downloadMedia } from "helpers";
 import VideoPlayer from "react-player";
+import * as _ from "lodash";
 import { Modal, Menu, Dropdown, Carousel, Tag, Empty } from "antd";
 import {
   DownOutlined,
@@ -19,6 +20,7 @@ import paperclip from "assets/images/paperclip.svg";
 import { creativeUpdateStatusAction } from "redux/brands/creatives/actions";
 import "./styles.scss";
 import BrandDrawer from "components/BrandDrawer";
+import { ACTIONS } from "redux/brands/socials/youtube/actions";
 
 const { confirm } = Modal;
 const CreativeModal = ({
@@ -63,9 +65,8 @@ const CreativeModal = ({
     return (
       <Menu>
         <Menu.Item key="accepted">
-          <div className="flex flex-column">
-            <label className="flex justify-between items-center mb-10 cursor-pointer">
-              <span>Approved</span>
+          <div className="flex">
+            <label className="flex justify-between items-center cursor-pointer">
               <input
                 type="radio"
                 name="status"
@@ -74,13 +75,13 @@ const CreativeModal = ({
                 checked={status === "accepted"}
                 className="cursor-pointer"
               />
+              <span className="menu-item-status-text">Approve</span>
             </label>
           </div>
         </Menu.Item>
         <Menu.Item key="rejected">
-          <div className="flex flex-column">
-            <label className="flex justify-between items-center mb-10 cursor-pointer">
-              <span>Rejected</span>
+          <div className="flex">
+            <label className="flex justify-between items-center cursor-pointer">
               <input
                 type="radio"
                 name="status"
@@ -89,6 +90,7 @@ const CreativeModal = ({
                 onChange={(e) => handleMenuClick(e.target.value)}
                 className="cursor-pointer"
               />
+              <span className="menu-item-status-text">Reject</span>
             </label>
           </div>
         </Menu.Item>
@@ -125,11 +127,11 @@ const CreativeModal = ({
 
   const closeDrawer = () => {
     setIsVisible(false);
-  }
+  };
 
   const showDrawer = () => {
     setIsVisible(true);
-  }
+  };
 
   const closeModal = () => {
     setPlaying(false);
@@ -185,7 +187,11 @@ const CreativeModal = ({
         />
       )}
 
-      <BrandDrawer isVisible={isVisible} closeDrawer={closeDrawer} setVisible={setVisible} />
+      <BrandDrawer
+        isVisible={isVisible}
+        closeDrawer={closeDrawer}
+        setVisible={setVisible}
+      />
 
       {/* Modal */}
       <Modal
@@ -200,7 +206,20 @@ const CreativeModal = ({
       >
         <div className="creative-modal">
           <div className="creative-modal-header flex justify-between">
-            <p className="title">{influncerName}<button className="btn-submit" onClick={()=>{ showDrawer();setVisible(false) }}>View Schedule</button></p>
+            <p className="title">{_.startCase(_.camelCase(influncerName))}</p>
+            <button
+              className="btn-submit"
+              onClick={() => {
+                dispatch({
+                  type: ACTIONS.GET_INDEX,
+                  payload: "6043533e6d206f62c8236b71",
+                });
+                showDrawer();
+                setVisible(false);
+              }}
+            >
+              View Schedule
+            </button>
             <div className="">
               {influencerStatus ? (
                 <div>

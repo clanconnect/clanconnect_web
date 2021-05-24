@@ -52,6 +52,38 @@ export class CreativeService {
   }
 }
 
+export class YoutubeService {
+  static index({ query }) {
+    // /creators/socials/youtube?creativeId=6043533e6d206f62c8236b71
+    return api.get(
+      "/creators/socials/youtube?" + (query && qs.stringify(query)) || ""
+    );
+  }
+  static addNewOrUpdate({ body }) {
+    // /creators/socials/youtube/schedule
+    return api.post("/creators/socials/youtube/schedule", body);
+  }
+  static cancel({ query }) {
+    // /creators/socials/youtube/cancel?socialId=60a398a099458eb97c58b076
+    return api.patch(
+      "/creators/socials/youtube/cancel?" + (query && qs.stringify(query)) || ""
+    );
+  }
+  static finalApprove({ query }) {
+    // /creators/socials/youtube/approve?socialId=60a398a099458eb97c58b076
+    return api.patch(
+      "/creators/socials/youtube/approve?" + (query && qs.stringify(query)) ||
+        ""
+    );
+  }
+  static getCategories({ query }) {
+    // /creators/socials/youtube/categories?regionCode=IN
+    return api.get(
+      "/creators/socials/youtube/categories?" +
+        (query && qs.stringify(query)) || ""
+    );
+  }
+}
 export class MediaService {
   static async uploadMultiple(files, setProgress) {
     const uploadUrls = await api.get(

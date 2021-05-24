@@ -10,6 +10,7 @@ import download from "assets/images/download.svg";
 import paperclip from "assets/images/paperclip.svg";
 import { downloadMedia } from "helpers";
 import InfluencerDrawer from "components/InfluencerDrawer";
+import _ from "lodash";
 
 const statusTags = {
   rejected: (
@@ -72,7 +73,7 @@ const InfluencerCreativeModal = ({
   const [visible, setVisible] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
   const [creativeStatus, setCreativeStatus] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
   useEffect(() => {
     setCreativeStatus(creative?.media[0]?.status || "pending");
@@ -93,12 +94,12 @@ const InfluencerCreativeModal = ({
   };
 
   const closeDrawer = () => {
-    setIsVisible(false);
-  }
+    setIsDrawerVisible(false);
+  };
 
   const showDrawer = () => {
-    setIsVisible(true);
-  }
+    setIsDrawerVisible(true);
+  };
 
   const closeModal = (val) => setVisible(false);
 
@@ -147,7 +148,10 @@ const InfluencerCreativeModal = ({
         />
       )}
 
-      <InfluencerDrawer isVisible={isVisible} closeDrawer={closeDrawer} />
+      <InfluencerDrawer
+        isDrawerVisible={isDrawerVisible}
+        closeDrawer={closeDrawer}
+      />
 
       <Modal
         visible={visible}
@@ -159,7 +163,19 @@ const InfluencerCreativeModal = ({
       >
         <div className="creative-modal">
           <div className="creative-modal-header flex justify-between">
-            <p className="title">{project.title}<button className="btn-submit" onClick={()=>{ showDrawer();setVisible(false) }}>Schedule</button></p>
+            <p className="title">
+              {_.startCase(_.camelCase(project.title))}
+              <button
+                className="btn-submit"
+                onClick={(e) => {
+                  console.log(e, "isDrawerVisible", isDrawerVisible);
+                  showDrawer();
+                  setVisible(false);
+                }}
+              >
+                Schedule
+              </button>
+            </p>
             <div className="flex align-items">
               <span>Status: </span>
               <div className="" style={{ marginLeft: "10px" }}>

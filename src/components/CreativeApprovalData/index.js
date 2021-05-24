@@ -264,6 +264,14 @@ const CreativeApprovalData = ({
                     >
                       Approved
                     </button>
+                    <button
+                      className="outline-btn bg-blue"
+                      onClick={() => {
+                        onClickSelect(false);
+                      }}
+                    >
+                      Done
+                    </button>
                   </>
                 ) : (
                   <button
@@ -274,14 +282,6 @@ const CreativeApprovalData = ({
                   </button>
                 )}
               </div>
-              <button
-                className="outline-btn bg-blue"
-                onClick={() => {
-                  onClickSelect(false);
-                }}
-              >
-                Done
-              </button>
             </div>
           )}
           <InfluncerFile

@@ -17,9 +17,10 @@ import coinsIcon from "assets/images/money.svg";
 
 import "./styles.scss";
 
-const DemoHeader = (props) => {
+const DemoHeader = ({ dispatch, user }) => {
+  console.log(user.brand);
   useEffect(() => {
-    props.dispatch();
+    dispatch();
   }, []);
   const menu = (
     <Menu>
@@ -62,7 +63,7 @@ const DemoHeader = (props) => {
 
         <div>
           <h1 className="header-title">
-            {props?.user?.user_type === "influencer"
+            {user?.user_type === "influencer"
               ? "Find projects. Influence. Earn"
               : "Discover. Partner. Influence"}
           </h1>
@@ -71,14 +72,29 @@ const DemoHeader = (props) => {
           {/* <Link to={routeConstants.allCreativesLists}>
             <span className='mr-30 profile-name'>ALL CREATIVES</span>
           </Link> */}
-          <span className="profile-name">{props?.user?.name}</span>
+          <div>
+            {user.brand && Object.keys(user?.brand).length !== 0 && (
+              <img
+                src={
+                  user?.brand?.logo
+                    ? `https://irida-data.s3.amazonaws.com/uploads/brand_account/${user.brand._id}/logo/${user.brand.logo}`
+                    : dummy
+                }
+                alt="logo"
+                className="logo"
+                className="brand-profile-img"
+              />
+            )}
+          </div>
+          <span className="profile-name">{user?.brand?.name}</span>
+          <span className="profile-name">{user?.name}</span>
           <Dropdown overlay={menu} trigger={["click"]}>
             <a
               className="ant-dropdown-link profile-link"
               onClick={(e) => e.preventDefault()}
             >
               <img
-                src={props?.user?.image ? props.user.image : dummy}
+                src={user?.image ? user.image : dummy}
                 alt="logo"
                 className="logo"
                 className="profile-img"

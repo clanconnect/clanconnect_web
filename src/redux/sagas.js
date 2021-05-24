@@ -7,6 +7,8 @@ import commentSaga from "./brands/comments/sagas";
 import creatorProjectSagas from "./creators/projects/sagas";
 import creatorCreativesSagas from "./creators/creatives/sagas";
 import UserSagas from "./users/sagas";
+import creatorYoutubeSagas from "./creators/socials/youtube/sagas";
+import brandYoutubeSagas from "./brands/socials/youtube/sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -18,5 +20,7 @@ export default function* rootSaga() {
     fork(creatorProjectSagas),
     fork(creatorCreativesSagas),
     fork(UserSagas),
+    fork(creatorYoutubeSagas),
+    fork(brandYoutubeSagas),
   ]);
 }
