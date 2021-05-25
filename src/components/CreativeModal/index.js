@@ -21,7 +21,6 @@ import { creativeUpdateStatusAction } from "redux/brands/creatives/actions";
 import "./styles.scss";
 import BrandDrawer from "components/BrandDrawer";
 import { ACTIONS } from "redux/brands/socials/youtube/actions";
-
 const { confirm } = Modal;
 const CreativeModal = ({
   src,
@@ -39,7 +38,7 @@ const CreativeModal = ({
   const [playing, setPlaying] = useState(false);
   const [creativeStatus, setCreativeStatus] = useState("");
   const [currentMedia, setCurrentMedia] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const slider = useRef(null);
   const statusMap = {
     accepted: {
@@ -126,11 +125,17 @@ const CreativeModal = ({
   };
 
   const closeDrawer = () => {
-    setIsVisible(false);
+    setIsDrawerVisible(false);
   };
 
   const showDrawer = () => {
-    setIsVisible(true);
+    dispatch({
+      type: ACTIONS.GET_INDEX,
+      payload: {
+        query: { creativeId: "6043533e6d206f62c8236b71" },
+      },
+    });
+    setIsDrawerVisible(true);
   };
 
   const closeModal = () => {
@@ -187,11 +192,13 @@ const CreativeModal = ({
         />
       )}
 
-      <BrandDrawer
-        isVisible={isVisible}
-        closeDrawer={closeDrawer}
-        setVisible={setVisible}
-      />
+      {creative?.status === "accepted" && (
+        <BrandDrawer
+          isDrawerVisible={isDrawerVisible}
+          closeDrawer={closeDrawer}
+          setVisible={setVisible}
+        />
+      )}
 
       {/* Modal */}
       <Modal
@@ -206,20 +213,20 @@ const CreativeModal = ({
       >
         <div className="creative-modal">
           <div className="creative-modal-header flex justify-between">
-            <p className="title">{_.startCase(_.camelCase(influncerName))}</p>
-            <button
-              className="btn-submit"
-              onClick={() => {
-                dispatch({
-                  type: ACTIONS.GET_INDEX,
-                  payload: "6043533e6d206f62c8236b71",
-                });
-                showDrawer();
-                setVisible(false);
-              }}
-            >
-              View Schedule
-            </button>
+            <p className="title">
+              {_.startCase(_.camelCase(influncerName))}
+              {creative?.status === "accepted" && (
+                <button
+                  className="btn-submit"
+                  onClick={() => {
+                    showDrawer();
+                    setVisible(false);
+                  }}
+                >
+                  View Schedule
+                </button>
+              )}
+            </p>
             <div className="">
               {influencerStatus ? (
                 <div>

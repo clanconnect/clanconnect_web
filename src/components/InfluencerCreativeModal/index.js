@@ -11,6 +11,8 @@ import paperclip from "assets/images/paperclip.svg";
 import { downloadMedia } from "helpers";
 import InfluencerDrawer from "components/InfluencerDrawer";
 import _ from "lodash";
+import { useDispatch } from "react-redux";
+import { ACTIONS } from "redux/creators/socials/youtube/actions";
 
 const statusTags = {
   rejected: (
@@ -74,6 +76,7 @@ const InfluencerCreativeModal = ({
   const [showAttachments, setShowAttachments] = useState(false);
   const [creativeStatus, setCreativeStatus] = useState("");
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setCreativeStatus(creative?.media[0]?.status || "pending");
@@ -98,6 +101,12 @@ const InfluencerCreativeModal = ({
   };
 
   const showDrawer = () => {
+    dispatch({
+      type: ACTIONS.GET_INDEX,
+      payload: {
+        query: { creativeId: "6043533e6d206f62c8236b71" },
+      },
+    });
     setIsDrawerVisible(true);
   };
 
@@ -148,10 +157,13 @@ const InfluencerCreativeModal = ({
         />
       )}
 
-      <InfluencerDrawer
-        isDrawerVisible={isDrawerVisible}
-        closeDrawer={closeDrawer}
-      />
+      {creative?.status === "accepted" && (
+        <InfluencerDrawer
+          isDrawerVisible={isDrawerVisible}
+          closeDrawer={closeDrawer}
+          setVisible={setVisible}
+        />
+      )}
 
       <Modal
         visible={visible}
@@ -167,8 +179,7 @@ const InfluencerCreativeModal = ({
               {_.startCase(_.camelCase(project.title))}
               <button
                 className="btn-submit"
-                onClick={(e) => {
-                  console.log(e, "isDrawerVisible", isDrawerVisible);
+                onClick={() => {
                   showDrawer();
                   setVisible(false);
                 }}
