@@ -104,7 +104,7 @@ const InfluencerCreativeModal = ({
     dispatch({
       type: ACTIONS.GET_INDEX,
       payload: {
-        query: { creativeId: "6043533e6d206f62c8236b71" },
+        query: { creativeId: creative.id },
       },
     });
     setIsDrawerVisible(true);
@@ -162,6 +162,7 @@ const InfluencerCreativeModal = ({
           isDrawerVisible={isDrawerVisible}
           closeDrawer={closeDrawer}
           setVisible={setVisible}
+          creative={creative}
         />
       )}
 

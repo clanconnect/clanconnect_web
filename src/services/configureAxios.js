@@ -33,9 +33,11 @@ axiosInstance.interceptors.request.use((config) => {
 
 axiosInstance.interceptors.response.use(
   (response) => {
+    console.log("response", response);
     return response.data;
   },
   (err) => {
+    console.log("err=>>", err);
     if (err.response.status !== 422) {
       toast.error(err.response.data.message);
     }

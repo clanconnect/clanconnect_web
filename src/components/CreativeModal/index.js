@@ -132,7 +132,7 @@ const CreativeModal = ({
     dispatch({
       type: ACTIONS.GET_INDEX,
       payload: {
-        query: { creativeId: "6043533e6d206f62c8236b71" },
+        query: { creativeId: creative.id },
       },
     });
     setIsDrawerVisible(true);

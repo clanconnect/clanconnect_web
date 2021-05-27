@@ -55,6 +55,7 @@ export class CreativeService {
 export class YoutubeService {
   static index({ query }) {
     // /creators/socials/youtube?creativeId=6043533e6d206f62c8236b71
+    console.log("query===.>", query);
     return api.get(
       "/creators/socials/youtube?" + (query && qs.stringify(query)) || ""
     );
@@ -103,6 +104,39 @@ export class MediaService {
         const res = await api.post("/creators/media/register", {
           key: url.key,
           originalName: file.originFileObj.name,
+        });
+
+        return { server: res.data, local: file };
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    const promises = [];
+    for (const index in urls) {
+      promises.push(uploadFile(urls[index], files[index]));
+    }
+
+    return Promise.all(promises);
+  }
+  static async uploadSingle(files, setProgress) {
+    const uploadUrls = await api.get(
+      "/creators/media/upload-url?" + qs.stringify({ n: files.length })
+    );
+
+    const urls = uploadUrls.data;
+    const uploadFile = async (url, file) => {
+      try {
+        await api.put(url.url, file, {
+          headers: { "content-type": file.type },
+          onUploadProgress: (e) => {
+            setProgress(file.uid, Math.floor((e.loaded / e.total) * 100));
+          },
+        });
+
+        const res = await api.post("/creators/media/register", {
+          key: url.key,
+          originalName: file.name,
         });
 
         return { server: res.data, local: file };

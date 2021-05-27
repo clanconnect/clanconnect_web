@@ -56,12 +56,16 @@ export function* finalApprove({ payload: { query } }) {
 
 export function* fetchCategories({ payload: { query } }) {
   try {
-    const response = yield call(YoutubeService.cancel, { query });
+    const response = yield call(YoutubeService.getCategories, { query });
     if (response.success) {
       yield put({
         type: ACTIONS.SET_STATE,
         payload: {
-          countryCategoriesYoutubeResponse: response.data,
+          countryCategoriesYoutubeResponse: response.data.items
+            .map((item) => {
+              return { id: item.id, snippet: item.snippet };
+            })
+            .filter((item) => item.snippet.assignable === true),
         },
       });
     }
