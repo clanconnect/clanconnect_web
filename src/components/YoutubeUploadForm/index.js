@@ -11,9 +11,10 @@ import {
   Switch,
   Row,
   Col,
+  Image,
 } from "antd";
 import moment from "moment";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, EditOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS } from "redux/creators/socials/youtube/actions";
@@ -43,24 +44,22 @@ const YoutubeUploadForm = ({
   const [isUploadComplete, setIsUploadComplete] = useState(false);
   const [uploadedMedia, setUploadedMedia] = useState([]);
   const [fileList, setFileList] = useState([]);
-  const [initialFormValues, setInitialFormValues] = useState({
-    madeForKids: false,
-    defaultLanguage: "en",
-    license: "youtube",
-    notifySubscribers: true,
-    privacyStatus: "private",
-    publicStatsVisible: true,
-    country: "IN",
-  });
+  const [prevThumbnail, setPrevThumbnail] = useState({});
+  const [showForm, setShowForm] = useState(true);
+  // const [initialFormValues, setInitialFormValues] = useState({
+
+  // });
 
   useEffect(() => {
     console.log("youtubeform", youtubeData, creative);
     if (youtubeData?.creative === creative.id) {
+      // setInitialFormValues({});
       form.setFieldsValue({
         title: youtubeData?.title,
         tags: youtubeData?.tags,
         description: youtubeData?.description,
-        category: youtubeData?.category,
+        country: "IN",
+        // category: youtubeData?.category,
         defaultLanguage: youtubeData?.defaultLanguage,
         license: youtubeData?.license,
         privacyStatus: youtubeData?.privacyStatus,
@@ -70,11 +69,17 @@ const YoutubeUploadForm = ({
         date: moment(youtubeData?.liveAt),
         time: moment(youtubeData?.liveAt),
       });
-      setInitialFormValues({});
+
+      setPrevThumbnail(youtubeData?.thumbnail);
+      setShowForm(false);
     }
   }, []);
   const handleMediaChange = (info) => {
     setFileList([info.file]);
+  };
+  const beforeImageUpload = (file) => {
+    validateFile(file);
+    return false;
   };
   const handleMediaUpload = () => {
     if (!validateFile(fileList[0])) {
@@ -129,7 +134,7 @@ const YoutubeUploadForm = ({
           tags: values.tags,
           description: values.description,
           category: categories.find((item) => item.id === values.category)
-            .snippet.title,
+            ?.snippet?.title,
           categoryId: values.category,
           defaultLanguage: values.defaultLanguage,
           license: values.license,
@@ -144,7 +149,10 @@ const YoutubeUploadForm = ({
           videoMediaId: creative.media.find(
             (item) => item.status === "accepted"
           ).id,
-          thumbnailMediaId: uploadedMedia[0].server.id,
+          thumbnailMediaId:
+            uploadedMedia.length !== 0
+              ? uploadedMedia[0].server.id
+              : prevThumbnail?.id,
         },
       },
     });
@@ -180,7 +188,15 @@ const YoutubeUploadForm = ({
           name="youtube"
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          initialValues={{ ...initialFormValues }}
+          initialValues={{
+            madeForKids: false,
+            defaultLanguage: "en",
+            license: "youtube",
+            notifySubscribers: true,
+            privacyStatus: "public",
+            publicStatsVisible: true,
+            country: "IN",
+          }}
         >
           <Form.Item
             name="title"
@@ -195,41 +211,60 @@ const YoutubeUploadForm = ({
             <Input />
           </Form.Item>
 
-          <Form.Item
-            name="upload"
-            label="Video Thumbnail"
-            valuePropName="fileList"
-            rules={[
-              { required: true, message: "Please upload the video thumbnail!" },
-            ]}
-            getValueFromEvent={normFile}
-            extra="Upload thumbnail"
-          >
-            <Upload
-              name="thumbnail"
-              onChange={handleMediaChange}
-              multiple={false}
-              beforeUpload={false}
-              progress={uploadProgress}
-              maxCount={1}
+          {showForm && (
+            <Form.Item
+              name="upload"
+              label="Video Thumbnail"
+              valuePropName="fileList"
+              rules={[
+                {
+                  required: true,
+                  message: "Please upload the video thumbnail!",
+                },
+              ]}
+              getValueFromEvent={normFile}
+              extra="Upload thumbnail"
             >
-              <Button icon={<UploadOutlined />}>Select File</Button>
-            </Upload>
-            {/* <input type="file" onChange={beforeImageUpload} /> */}
-            <Button
-              type="primary"
-              onClick={handleMediaUpload}
-              disabled={fileList.length === 0}
-              loading={uploadingFile}
-              style={{ marginTop: 16 }}
-            >
-              {isUploadComplete
-                ? "Uploaded"
-                : uploadingFile
-                ? "Uploading"
-                : "Upload"}
-            </Button>
-          </Form.Item>
+              <Upload
+                name="thumbnail"
+                onChange={handleMediaChange}
+                multiple={false}
+                beforeUpload={beforeImageUpload}
+                progress={uploadProgress}
+                maxCount={1}
+              >
+                <Button icon={<UploadOutlined />}>Select File</Button>
+              </Upload>
+              {/* <input type="file" onChange={beforeImageUpload} /> */}
+              <Button
+                type="primary"
+                onClick={handleMediaUpload}
+                disabled={fileList.length === 0}
+                loading={uploadingFile}
+                style={{ marginTop: 16 }}
+              >
+                {isUploadComplete
+                  ? "Uploaded"
+                  : uploadingFile
+                  ? "Uploading"
+                  : "Upload"}
+              </Button>
+            </Form.Item>
+          )}
+          {!showForm && (
+            <Row>
+              <Image
+                width={200}
+                src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${youtubeData?.thumbnail?.slug}`}
+              />
+              <Button
+                icon={<EditOutlined />}
+                onClick={() => {
+                  setShowForm(true);
+                }}
+              ></Button>
+            </Row>
+          )}
 
           <Form.Item
             label="Video Description"
@@ -424,7 +459,7 @@ const YoutubeUploadForm = ({
             ]}
           >
             <Switch
-              defaultChecked
+              defaultChecked={true}
               checkedChildren="Yes"
               unCheckedChildren="No"
             />

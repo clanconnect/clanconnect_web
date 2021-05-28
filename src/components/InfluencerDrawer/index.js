@@ -30,15 +30,9 @@ const InfluencerDrawer = ({
   const [approvalStatus, setApprovalStatus] = useState();
   // possible values - "Cancelled/Uploaded/Scheduled/Unknown"
   const [uploadStatus, setUploadStatus] = useState();
-  const [isGoLiveBtnDisabled, setIsGoLiveBtnDisabled] = useState(
-    youtubeData?.isApprovedByInfluencer
-  );
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState(
-    youtubeData?.isCancelled
-  );
-  const [isEditBtnDisabled, setIsEditBtnDisabled] = useState(
-    youtubeData?.isApprovedByInfluencer
-  );
+  const [isGoLiveBtnDisabled, setIsGoLiveBtnDisabled] = useState();
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState();
+  const [isEditBtnDisabled, setIsEditBtnDisabled] = useState(false);
   const [isFormDescriptionVisible, setIsFormDescriptionVisible] = useState(
     false
   );
@@ -84,15 +78,21 @@ const InfluencerDrawer = ({
     }
     if (youtubeData?.isUploaded) {
       setUploadStatus("Uploaded");
+      setIsCancelBtnDisabled(true);
+      setIsGoLiveBtnDisabled(true);
+      setIsEditBtnDisabled(true);
     } else if (youtubeData?.isCancelled) {
       setUploadStatus("Cancelled");
       setIsCancelBtnDisabled(true);
       setIsGoLiveBtnDisabled(true);
+      setIsEditBtnDisabled(false);
     } else if (
       youtubeData?.isApprovedByBrand &&
       youtubeData?.isApprovedByInfluencer
     ) {
       setIsEditBtnDisabled(true);
+      setIsCancelBtnDisabled(false);
+      setIsGoLiveBtnDisabled(true);
       setUploadStatus("Scheduled");
     } else {
       setUploadStatus("Unknown");
@@ -114,6 +114,7 @@ const InfluencerDrawer = ({
         width={720}
         onClose={closeDrawer}
         visible={isDrawerVisible}
+        destroyOnClose={true}
         bodyStyle={{ paddingBottom: 20 }}
       >
         <Tabs defaultActiveKey="yt">
@@ -130,11 +131,10 @@ const InfluencerDrawer = ({
                       {youtubeData?.description}
                     </Descriptions.Item>
                     <Descriptions.Item label="Thumbnail" span={4}>
-                      {
-                        <Image
-                          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${youtubeData?.thumbnail?.slug}`}
-                        />
-                      }
+                      <Image
+                        width={300}
+                        src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${youtubeData?.thumbnail?.slug}`}
+                      />
                     </Descriptions.Item>
                     <Descriptions.Item label="Tags" span={4}>
                       {youtubeData?.tags?.map((tag, index) => {

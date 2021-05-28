@@ -104,6 +104,7 @@ const BrandDrawer = ({ setVisible, isDrawerVisible, closeDrawer }) => {
         onClose={closeDrawer}
         visible={isDrawerVisible}
         bodyStyle={{ paddingBottom: 20 }}
+        destroyOnClose={true}
       >
         <Tabs defaultActiveKey="yt" onChange={onTabChange}>
           {youtubeData?.id && (
