@@ -46,6 +46,7 @@ const YoutubeUploadForm = ({
   const [fileList, setFileList] = useState([]);
   const [prevThumbnail, setPrevThumbnail] = useState({});
   const [showForm, setShowForm] = useState(true);
+  const [imageRequiredState, setImageRequiredState] = useState(true);
   // const [initialFormValues, setInitialFormValues] = useState({
 
   // });
@@ -59,7 +60,7 @@ const YoutubeUploadForm = ({
         tags: youtubeData?.tags,
         description: youtubeData?.description,
         country: "IN",
-        // category: youtubeData?.category,
+        categoryId: youtubeData?.categoryId,
         defaultLanguage: youtubeData?.defaultLanguage,
         license: youtubeData?.license,
         privacyStatus: youtubeData?.privacyStatus,
@@ -75,7 +76,7 @@ const YoutubeUploadForm = ({
     }
   }, []);
   const handleMediaChange = (info) => {
-    setFileList([info.file]);
+    setFileList(info.fileList);
   };
   const beforeImageUpload = (file) => {
     validateFile(file);
@@ -104,6 +105,7 @@ const YoutubeUploadForm = ({
         setUploadedMedia([...uploadedFiles]);
         setUploadingFile(false);
         setIsUploadComplete(true);
+        setImageRequiredState(false);
         console.log("uploaded Files", uploadedFiles);
         console.log("uploaded Media", uploadedMedia);
       })
@@ -133,9 +135,9 @@ const YoutubeUploadForm = ({
           title: values.title,
           tags: values.tags,
           description: values.description,
-          category: categories.find((item) => item.id === values.category)
+          category: categories.find((item) => item.id === values.categoryId)
             ?.snippet?.title,
-          categoryId: values.category,
+          categoryId: values.categoryId,
           defaultLanguage: values.defaultLanguage,
           license: values.license,
           privacyStatus: values.privacyStatus,
@@ -218,7 +220,7 @@ const YoutubeUploadForm = ({
               valuePropName="fileList"
               rules={[
                 {
-                  required: true,
+                  required: imageRequiredState,
                   message: "Please upload the video thumbnail!",
                 },
               ]}
@@ -302,7 +304,7 @@ const YoutubeUploadForm = ({
             <Col span={8}>
               <Form.Item
                 dependencies={["country"]}
-                name="category"
+                name="categoryId"
                 label="Category"
                 className="ml-4"
                 rules={[
