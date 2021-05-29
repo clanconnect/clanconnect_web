@@ -72,6 +72,7 @@ const InfluencerDrawer = ({
   useEffect(() => {
     if (youtubeData?.isApprovedByBrand) {
       setApprovalStatus(true);
+      setIsEditBtnDisabled(true);
     } else if (youtubeData?.isApprovedByBrand === false) {
       setApprovalStatus(false);
       setIsGoLiveBtnDisabled(true);
@@ -97,16 +98,11 @@ const InfluencerDrawer = ({
     } else {
       setUploadStatus("Unknown");
     }
-  }, [
-    youtubeData?.isApprovedByBrand,
-    youtubeData?.isApprovedByInfluencer,
-    youtubeData?.isCancelled,
-    youtubeData?.isUploaded,
-  ]);
+  }, [youtubeData]);
   useEffect(() => {
     setIsYtScheduleExistForCreative(youtubeData?.creative === creative.id);
     setIsFormDescriptionVisible(youtubeData?.creative === creative.id);
-  }, [youtubeData?.creative]);
+  }, [creative.id, youtubeData]);
   return (
     <>
       <Drawer

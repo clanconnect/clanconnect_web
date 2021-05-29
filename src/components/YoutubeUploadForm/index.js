@@ -54,7 +54,6 @@ const YoutubeUploadForm = ({
   useEffect(() => {
     console.log("youtubeform", youtubeData, creative);
     if (youtubeData?.creative === creative.id) {
-      // setInitialFormValues({});
       form.setFieldsValue({
         title: youtubeData?.title,
         tags: youtubeData?.tags,
@@ -367,6 +366,7 @@ const YoutubeUploadForm = ({
           <Form.Item
             name="madeForKids"
             label="Is the video made for Kids?"
+            valuePropName="checked"
             rules={[
               {
                 required: true,
@@ -374,11 +374,7 @@ const YoutubeUploadForm = ({
               },
             ]}
           >
-            <Switch
-              defaultChecked={true}
-              checkedChildren="Yes"
-              unCheckedChildren="No"
-            />
+            <Switch checkedChildren="Yes" unCheckedChildren="No" />
           </Form.Item>
 
           <Form.Item
@@ -436,6 +432,7 @@ const YoutubeUploadForm = ({
           <Form.Item
             name="publicStatsVisible"
             label="Show Satistics Information to Public"
+            valuePropName="checked"
             rules={[
               {
                 required: true,
@@ -443,16 +440,13 @@ const YoutubeUploadForm = ({
               },
             ]}
           >
-            <Switch
-              defaultChecked={true}
-              checkedChildren="Yes"
-              unCheckedChildren="No"
-            />
+            <Switch checkedChildren="Yes" unCheckedChildren="No" />
           </Form.Item>
 
           <Form.Item
             name="notifySubscribers"
             label="Notify Subscribers"
+            valuePropName="checked"
             rules={[
               {
                 required: true,
@@ -460,11 +454,7 @@ const YoutubeUploadForm = ({
               },
             ]}
           >
-            <Switch
-              defaultChecked={true}
-              checkedChildren="Yes"
-              unCheckedChildren="No"
-            />
+            <Switch checkedChildren="Yes" unCheckedChildren="No" />
           </Form.Item>
 
           <Form.Item>
