@@ -90,3 +90,27 @@ export class YoutubeService {
     );
   }
 }
+
+export class InstagramService {
+  static index({ query }) {
+    // /brands/socials/instagram?creativeId=6043533e6d206f62c8236b71
+    return axiosInstance.get(
+      "/brands/socials/instagram?" + (query && queryString.stringify(query)) ||
+        ""
+    );
+  }
+  static cancel({ query }) {
+    // /brands/socials/instagram/cancel?socialId=60a398a099458eb97c58b076
+    return axiosInstance.patch(
+      "/brands/socials/instagram/cancel?" +
+        (query && queryString.stringify(query)) || ""
+    );
+  }
+  static approve({ query }) {
+    // /brands/socials/instagram/approve?socialId=60a398a099458eb97c58b076
+    return axiosInstance.patch(
+      "/brands/socials/instagram/approve?" +
+        (query && queryString.stringify(query)) || ""
+    );
+  }
+}

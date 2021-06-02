@@ -1,19 +1,11 @@
 import "./styles.scss";
-import {
-  Button,
-  Drawer,
-  Tabs,
-  Descriptions,
-  Image,
-  Tag,
-  Popconfirm,
-  message,
-} from "antd";
+import { Drawer, Tabs } from "antd";
 import YoutubeUploadForm from "components/YoutubeUploadForm";
 import InstagramUploadForm from "components/InstagramUploadForm";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import YoutubeFormDescription from "./YoutubeFormDescription";
+import InstagramFormDescription from "./InstagramFormDescription";
 const InfluencerDrawer = ({
   isDrawerVisible,
   closeDrawer,
@@ -22,20 +14,32 @@ const InfluencerDrawer = ({
 }) => {
   const { TabPane } = Tabs;
   const youtubeData = useSelector((store) => store.CreatorYoutube.data);
+  const instagramData = useSelector((store) => store.CreatorInstagram.data);
 
   console.log("youtubeData", youtubeData);
+  console.log("instagram", instagramData);
 
-  const [isFormDescriptionVisible, setIsFormDescriptionVisible] = useState(
+  const [isYtFormDescriptionVisible, setIsYtFormDescriptionVisible] = useState(
     false
   );
   const [
     isYtScheduleExistForCreative,
     setIsYtScheduleExistForCreative,
   ] = useState(true);
+
+  const [isIgFormDescriptionVisible, setIsIgFormDescriptionVisible] = useState(
+    false
+  );
+  const [
+    isIgScheduleExistForCreative,
+    setIsIgScheduleExistForCreative,
+  ] = useState(true);
   useEffect(() => {
     setIsYtScheduleExistForCreative(youtubeData?.creative === creative.id);
-    setIsFormDescriptionVisible(youtubeData?.creative === creative.id);
-  }, [creative.id, youtubeData]);
+    setIsYtFormDescriptionVisible(youtubeData?.creative === creative.id);
+    setIsIgScheduleExistForCreative(instagramData?.creative === creative.id);
+    setIsIgFormDescriptionVisible(instagramData?.creative === creative.id);
+  }, [creative.id, youtubeData, instagramData]);
 
   return (
     <>
@@ -51,11 +55,11 @@ const InfluencerDrawer = ({
           <TabPane tab="Youtube" key="yt">
             {isYtScheduleExistForCreative &&
               youtubeData?.id &&
-              isFormDescriptionVisible && (
+              isYtFormDescriptionVisible && (
                 <YoutubeFormDescription
                   closeDrawer={closeDrawer}
                   setVisible={setVisible}
-                  setIsFormDescriptionVisible={setIsFormDescriptionVisible}
+                  setIsYtFormDescriptionVisible={setIsYtFormDescriptionVisible}
                   setIsYtScheduleExistForCreative={
                     setIsYtScheduleExistForCreative
                   }
@@ -64,7 +68,7 @@ const InfluencerDrawer = ({
               )}
             {!isYtScheduleExistForCreative && (
               <YoutubeUploadForm
-                setIsFormDescriptionVisible={setIsFormDescriptionVisible}
+                setIsYtFormDescriptionVisible={setIsYtFormDescriptionVisible}
                 setIsYtScheduleExistForCreative={
                   setIsYtScheduleExistForCreative
                 }
@@ -73,7 +77,28 @@ const InfluencerDrawer = ({
             )}
           </TabPane>
           <TabPane tab="Instagram" key="ig">
-            <InstagramUploadForm />
+            {isIgScheduleExistForCreative &&
+              instagramData?.id &&
+              isIgFormDescriptionVisible && (
+                <InstagramFormDescription
+                  closeDrawer={closeDrawer}
+                  setVisible={setVisible}
+                  setIsIgFormDescriptionVisible={setIsIgFormDescriptionVisible}
+                  setIsIgScheduleExistForCreative={
+                    setIsIgScheduleExistForCreative
+                  }
+                  instagramData={instagramData}
+                />
+              )}
+            {!isIgScheduleExistForCreative && (
+              <InstagramUploadForm
+                setIsIgFormDescriptionVisible={setIsIgFormDescriptionVisible}
+                setIsIgScheduleExistForCreative={
+                  setIsIgScheduleExistForCreative
+                }
+                creative={creative}
+              />
+            )}
           </TabPane>
         </Tabs>
       </Drawer>

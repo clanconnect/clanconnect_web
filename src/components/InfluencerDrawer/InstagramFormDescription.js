@@ -1,16 +1,15 @@
 import "./styles.scss";
-import { Button, Descriptions, Image, Tag, Popconfirm, message } from "antd";
+import { Button, Descriptions, Tag, Popconfirm, message } from "antd";
 import { useEffect, useState, useRef } from "react";
-import { languages } from "../../common/dataManager";
-import { ACTIONS } from "redux/creators/socials/youtube/actions";
+import { ACTIONS } from "redux/creators/socials/instagram/actions";
 import { useDispatch } from "react-redux";
 
-const YoutubeFormDescription = ({
+const InstagramFormDescription = ({
   closeDrawer,
   setVisible,
-  youtubeData,
-  setIsYtFormDescriptionVisible,
-  setIsYtScheduleExistForCreative,
+  instagramData,
+  setIsIgFormDescriptionVisible,
+  setIsIgScheduleExistForCreative,
 }) => {
   const dispatch = useDispatch();
 
@@ -35,7 +34,7 @@ const YoutubeFormDescription = ({
     dispatch({
       type: ACTIONS.FINAL_APPROVE,
       payload: {
-        query: { socialId: youtubeData?.id },
+        query: { socialId: instagramData?.id },
       },
     });
     setUploadStatus("Unknown");
@@ -47,7 +46,7 @@ const YoutubeFormDescription = ({
     dispatch({
       type: ACTIONS.CANCEL_POST,
       payload: {
-        query: { socialId: youtubeData?.id },
+        query: { socialId: instagramData?.id },
       },
     });
     setIsEditBtnDisabled(false);
@@ -57,27 +56,27 @@ const YoutubeFormDescription = ({
   };
   useEffect(() => {
     setEditBtnText("Edit");
-    if (youtubeData?.isApprovedByBrand) {
+    if (instagramData?.isApprovedByBrand) {
       setApprovalStatus(true);
       setIsEditBtnDisabled(true);
-    } else if (youtubeData?.isApprovedByBrand === false) {
+    } else if (instagramData?.isApprovedByBrand === false) {
       setApprovalStatus(false);
       setIsGoLiveBtnDisabled(true);
     }
-    if (youtubeData?.isUploaded) {
+    if (instagramData?.isUploaded) {
       setUploadStatus("Uploaded");
       setIsCancelBtnDisabled(true);
       setIsGoLiveBtnDisabled(true);
       setIsEditBtnDisabled(true);
-    } else if (youtubeData?.isCancelled) {
+    } else if (instagramData?.isCancelled) {
       setUploadStatus("Cancelled");
       setIsCancelBtnDisabled(true);
       setIsGoLiveBtnDisabled(true);
       setIsEditBtnDisabled(false);
       setEditBtnText("Create New");
     } else if (
-      youtubeData?.isApprovedByBrand &&
-      youtubeData?.isApprovedByInfluencer
+      instagramData?.isApprovedByBrand &&
+      instagramData?.isApprovedByInfluencer
     ) {
       setIsEditBtnDisabled(true);
       setIsCancelBtnDisabled(false);
@@ -86,63 +85,29 @@ const YoutubeFormDescription = ({
     } else {
       setUploadStatus("Unknown");
     }
-  }, [youtubeData]);
+  }, [instagramData]);
 
   useEffect(() => {
     const utcNow = new Date().getTime();
-    const fiveHoursBeforeliveAt = new Date(youtubeData?.liveAt).getTime();
+    const fiveHoursBeforeliveAt = new Date(instagramData?.liveAt).getTime();
     if (utcNow > fiveHoursBeforeliveAt) {
       setIsGoLiveBtnDisabled(true);
     }
   }, []);
-
   return (
     <>
       <Descriptions bordered>
-        <Descriptions.Item label="Video Title" span={4}>
-          {youtubeData?.title}
+        <Descriptions.Item label="Instagram Account" span={4}>
+          {instagramData?.account.name}
         </Descriptions.Item>
-        <Descriptions.Item label="Video Description" span={4}>
-          {youtubeData?.description}
-        </Descriptions.Item>
-        <Descriptions.Item label="Thumbnail" span={4}>
-          <Image
-            width={200}
-            src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${youtubeData?.thumbnail?.slug}`}
-          />
-        </Descriptions.Item>
-        <Descriptions.Item label="Tags" span={4}>
-          {youtubeData?.tags?.map((tag, index) => {
-            return <Tag key={index}>#{tag}</Tag>;
-          })}
+        <Descriptions.Item label="Caption" span={4}>
+          {instagramData?.caption}
         </Descriptions.Item>
         <Descriptions.Item label="Schedule Date" span={2}>
-          {new Date(youtubeData?.liveAt).toLocaleDateString()}
+          {new Date(instagramData?.liveAt).toLocaleDateString()}
         </Descriptions.Item>
         <Descriptions.Item label="Schedule Time" span={2}>
-          {new Date(youtubeData?.liveAt).toLocaleTimeString()}
-        </Descriptions.Item>
-        <Descriptions.Item label="Made for Kids" span={2}>
-          {youtubeData?.madeForKids ? "Yes" : "No"}
-        </Descriptions.Item>
-        <Descriptions.Item label="Category" span={2}>
-          {youtubeData?.category}
-        </Descriptions.Item>
-        <Descriptions.Item label="Default Language" span={2}>
-          {
-            languages.find((item) => {
-              return item.value === "en";
-            })?.name
-          }
-        </Descriptions.Item>
-        <Descriptions.Item label="License" span={2}>
-          {youtubeData?.license}
-        </Descriptions.Item>
-        <Descriptions.Item label="Statistics Visibility" span={2}>
-          {youtubeData?.publicStatsVisible ? "Visible" : "Not Visible"}
-        </Descriptions.Item>
-        <Descriptions.Item label="Notify Subscribers" span={2}>
-          {youtubeData?.notifySubscribers ? "Yes" : "No"}
+          {new Date(instagramData?.liveAt).toLocaleTimeString()}
         </Descriptions.Item>
         <Descriptions.Item label="Approval Status" span={2}>
           {approvalStatus ? (
@@ -163,8 +128,8 @@ const YoutubeFormDescription = ({
         placement="topLeft"
         title={`Are you sure you want to ${editBtnText} Form?`}
         onConfirm={() => {
-          setIsYtFormDescriptionVisible(false);
-          setIsYtScheduleExistForCreative(false);
+          setIsIgFormDescriptionVisible(false);
+          setIsIgScheduleExistForCreative(false);
         }}
         okText="Yes"
         cancelText="No"
@@ -216,4 +181,4 @@ const YoutubeFormDescription = ({
     </>
   );
 };
-export default YoutubeFormDescription;
+export default InstagramFormDescription;

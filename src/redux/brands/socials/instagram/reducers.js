@@ -2,8 +2,6 @@ import { ACTIONS } from "./actions";
 
 const initialState = {
   data: {},
-  fbPages: [],
-  igId: "",
 };
 
 export default function reducer(state = initialState, action) {

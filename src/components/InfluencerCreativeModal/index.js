@@ -12,7 +12,8 @@ import { downloadMedia } from "helpers";
 import InfluencerDrawer from "components/InfluencerDrawer";
 import _ from "lodash";
 import { useDispatch } from "react-redux";
-import { ACTIONS } from "redux/creators/socials/youtube/actions";
+import { ACTIONS as YT_ACTIONS } from "redux/creators/socials/youtube/actions";
+import { ACTIONS as IG_ACTIONS } from "redux/creators/socials/instagram/actions";
 
 const statusTags = {
   rejected: (
@@ -102,7 +103,13 @@ const InfluencerCreativeModal = ({
 
   const showDrawer = () => {
     dispatch({
-      type: ACTIONS.GET_INDEX,
+      type: YT_ACTIONS.GET_INDEX,
+      payload: {
+        query: { creativeId: creative.id },
+      },
+    });
+    dispatch({
+      type: IG_ACTIONS.GET_INDEX,
       payload: {
         query: { creativeId: creative.id },
       },

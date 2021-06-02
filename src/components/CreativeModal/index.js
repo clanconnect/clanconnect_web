@@ -20,7 +20,9 @@ import paperclip from "assets/images/paperclip.svg";
 import { creativeUpdateStatusAction } from "redux/brands/creatives/actions";
 import "./styles.scss";
 import BrandDrawer from "components/BrandDrawer";
-import { ACTIONS } from "redux/brands/socials/youtube/actions";
+import { ACTIONS as YT_ACTIONS } from "redux/brands/socials/youtube/actions";
+import { ACTIONS as IG_ACTIONS } from "redux/brands/socials/instagram/actions";
+
 const { confirm } = Modal;
 const CreativeModal = ({
   src,
@@ -130,7 +132,13 @@ const CreativeModal = ({
 
   const showDrawer = () => {
     dispatch({
-      type: ACTIONS.GET_INDEX,
+      type: YT_ACTIONS.GET_INDEX,
+      payload: {
+        query: { creativeId: creative.id },
+      },
+    });
+    dispatch({
+      type: IG_ACTIONS.GET_INDEX,
       payload: {
         query: { creativeId: creative.id },
       },

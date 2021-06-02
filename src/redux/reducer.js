@@ -9,6 +9,7 @@ import CreatorCreatives from "./creators/creatives/reducers";
 import CreatorYoutube from "./creators/socials/youtube/reducers";
 import CreatorInstagram from "./creators/socials/instagram/reducers";
 import BrandYoutube from "./brands/socials/youtube/reducers";
+import BrandInstagram from "./brands/socials/instagram/reducers";
 import user from "./users/reducers";
 
 const func = () =>
@@ -28,6 +29,7 @@ const func = () =>
     BrandYoutube,
 
     //Instagram Reducer
+    BrandInstagram,
     CreatorInstagram,
 
     // User Reducer

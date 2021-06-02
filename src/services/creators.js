@@ -85,6 +85,44 @@ export class YoutubeService {
     );
   }
 }
+
+export class InstagramService {
+  static index({ query }) {
+    // /creators/socials/instagram?creativeId=6043533e6d206f62c8236b71
+    return api.get(
+      "/creators/socials/instagram?" + (query && qs.stringify(query)) || ""
+    );
+  }
+  static addNewOrUpdate({ body }) {
+    // /creators/socials/instagram/schedule
+    return api.post("/creators/socials/instagram/schedule", body);
+  }
+  static cancel({ query }) {
+    // /creators/socials/instagram/cancel?socialId=60a398a099458eb97c58b076
+    return api.patch(
+      "/creators/socials/instagram/cancel?" + (query && qs.stringify(query)) ||
+        ""
+    );
+  }
+  static finalApprove({ query }) {
+    // /creators/socials/instagram/approve?socialId=60a398a099458eb97c58b076
+    return api.patch(
+      "/creators/socials/instagram/approve?" + (query && qs.stringify(query)) ||
+        ""
+    );
+  }
+}
+
+export class UserService {
+  static fetchFbPages() {
+    // /users/fb-pages
+    return api.get("/users/fb-pages");
+  }
+  static fetchIgUserId({ path }) {
+    // /users/fb-pages/:fbId/ig-user-id
+    return api.get(`/users/fb-pages/${path.fbId}/ig-user-id`);
+  }
+}
 export class MediaService {
   static async uploadMultiple(files, setProgress) {
     const uploadUrls = await api.get(

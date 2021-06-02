@@ -26,7 +26,7 @@ const { Option } = Select;
 
 const YoutubeUploadForm = ({
   creative,
-  setIsFormDescriptionVisible,
+  setIsYtFormDescriptionVisible,
   setIsYtScheduleExistForCreative,
 }) => {
   const [form] = Form.useForm();
@@ -127,6 +127,7 @@ const YoutubeUploadForm = ({
     const date = moment(values.data).format("MM/DD/YY");
     const time = moment(values.time).format("HH:mm:ss");
     const liveAt = new Date(`${date} ${time}`);
+    console.log(liveAt);
     dispatch({
       type: ACTIONS.ADD_POST,
       payload: {
@@ -158,7 +159,7 @@ const YoutubeUploadForm = ({
       },
     });
     message.success("Form Submitted");
-    setIsFormDescriptionVisible(true);
+    setIsYtFormDescriptionVisible(true);
     setIsYtScheduleExistForCreative(true);
     setFormSubitted(true);
   };

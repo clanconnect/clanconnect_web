@@ -9,6 +9,8 @@ import creatorCreativesSagas from "./creators/creatives/sagas";
 import UserSagas from "./users/sagas";
 import creatorYoutubeSagas from "./creators/socials/youtube/sagas";
 import brandYoutubeSagas from "./brands/socials/youtube/sagas";
+import creatorInstagramSagas from "./creators/socials/instagram/sagas";
+import brandInstagramSagas from "./brands/socials/instagram/sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -21,6 +23,8 @@ export default function* rootSaga() {
     fork(creatorCreativesSagas),
     fork(UserSagas),
     fork(creatorYoutubeSagas),
+    fork(creatorInstagramSagas),
     fork(brandYoutubeSagas),
+    fork(brandInstagramSagas),
   ]);
 }
