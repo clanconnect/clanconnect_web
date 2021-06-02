@@ -60,6 +60,7 @@ const YoutubeFormDescription = ({
     if (youtubeData?.isApprovedByBrand) {
       setApprovalStatus(true);
       setIsEditBtnDisabled(true);
+      setIsGoLiveBtnDisabled(false);
     } else if (youtubeData?.isApprovedByBrand === false) {
       setApprovalStatus(false);
       setIsGoLiveBtnDisabled(true);
@@ -86,15 +87,12 @@ const YoutubeFormDescription = ({
     } else {
       setUploadStatus("Unknown");
     }
-  }, [youtubeData]);
-
-  useEffect(() => {
     const utcNow = new Date().getTime();
-    const fiveHoursBeforeliveAt = new Date(youtubeData?.liveAt).getTime();
-    if (utcNow > fiveHoursBeforeliveAt) {
+    const liveAt_ = new Date(youtubeData?.liveAt).getTime();
+    if (utcNow > liveAt_) {
       setIsGoLiveBtnDisabled(true);
     }
-  }, []);
+  }, [youtubeData]);
 
   return (
     <>

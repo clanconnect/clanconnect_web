@@ -72,7 +72,9 @@ const InstagramUploadForm = ({
           mediaType: creative.media
             .find((item) => item.status === "accepted")
             .mimeType.split("/")?.[0],
-          accountName: "21jjj87",
+          accountName: fbPagesData.find(
+            (o) => o.id === form.getFieldValue("account")
+          ).name,
           // accountId: "17841447868680048",
           accountId: instagramUserId,
         },

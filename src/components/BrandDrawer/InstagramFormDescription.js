@@ -74,14 +74,6 @@ const InstagramFormDescription = ({
     } else {
       setUploadStatus("Unknown");
     }
-  }, [
-    instagramData?.isApprovedByBrand,
-    instagramData?.isApprovedByInfluencer,
-    instagramData?.isCancelled,
-    instagramData?.isUploaded,
-  ]);
-
-  useEffect(() => {
     const utcNow = new Date();
     const timeDelta = 5 * 60 * 60 * 1000;
     const fiveHoursBeforeliveAt =
@@ -89,7 +81,8 @@ const InstagramFormDescription = ({
     if (utcNow > fiveHoursBeforeliveAt) {
       setIsCancelBtnDisabled(true);
     }
-  }, []);
+  }, [instagramData]);
+
   return (
     <>
       <Descriptions bordered>

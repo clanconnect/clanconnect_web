@@ -71,14 +71,6 @@ const YoutubeFormDescription = ({ setVisible, closeDrawer, youtubeData }) => {
     } else {
       setUploadStatus("Unknown");
     }
-  }, [
-    youtubeData?.isApprovedByBrand,
-    youtubeData?.isApprovedByInfluencer,
-    youtubeData?.isCancelled,
-    youtubeData?.isUploaded,
-  ]);
-
-  useEffect(() => {
     const utcNow = new Date().getTime();
     const timeDelta = 5 * 60 * 60 * 1000;
     const fiveHoursBeforeliveAt =
@@ -86,7 +78,8 @@ const YoutubeFormDescription = ({ setVisible, closeDrawer, youtubeData }) => {
     if (utcNow > fiveHoursBeforeliveAt) {
       setIsCancelBtnDisabled(true);
     }
-  }, []);
+  }, [youtubeData]);
+
   return (
     <>
       <Descriptions bordered>

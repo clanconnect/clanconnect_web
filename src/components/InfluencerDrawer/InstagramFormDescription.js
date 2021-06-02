@@ -38,7 +38,7 @@ const InstagramFormDescription = ({
       },
     });
     setUploadStatus("Unknown");
-    message.info("Youtube Post Scheduled To Go Live");
+    message.info("Instagram Post Scheduled To Go Live");
     setIsGoLiveBtnDisabled(true);
     setIsEditBtnDisabled(true);
   };
@@ -52,13 +52,14 @@ const InstagramFormDescription = ({
     setIsEditBtnDisabled(false);
     setUploadStatus("Cancelled");
     setIsCancelBtnDisabled(true);
-    message.info("Youtube Post Cancelled");
+    message.info("Instagram Post Cancelled");
   };
   useEffect(() => {
     setEditBtnText("Edit");
     if (instagramData?.isApprovedByBrand) {
       setApprovalStatus(true);
       setIsEditBtnDisabled(true);
+      setIsGoLiveBtnDisabled(false);
     } else if (instagramData?.isApprovedByBrand === false) {
       setApprovalStatus(false);
       setIsGoLiveBtnDisabled(true);
@@ -85,15 +86,12 @@ const InstagramFormDescription = ({
     } else {
       setUploadStatus("Unknown");
     }
-  }, [instagramData]);
-
-  useEffect(() => {
     const utcNow = new Date().getTime();
-    const fiveHoursBeforeliveAt = new Date(instagramData?.liveAt).getTime();
-    if (utcNow > fiveHoursBeforeliveAt) {
+    const liveAt_ = new Date(instagramData?.liveAt).getTime();
+    if (utcNow > liveAt_) {
       setIsGoLiveBtnDisabled(true);
     }
-  }, []);
+  }, [instagramData]);
   return (
     <>
       <Descriptions bordered>
