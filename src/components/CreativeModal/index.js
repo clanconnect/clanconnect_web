@@ -205,6 +205,7 @@ const CreativeModal = ({
           isDrawerVisible={isDrawerVisible}
           closeDrawer={closeDrawer}
           setVisible={setVisible}
+          creative={creative}
         />
       )}
 

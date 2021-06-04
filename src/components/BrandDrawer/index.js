@@ -4,7 +4,12 @@ import { useSelector } from "react-redux";
 import YoutubeFormDescription from "./YoutubeFormDescription";
 import InstagramFormDescription from "./InstagramFormDescription";
 
-const BrandDrawer = ({ setVisible, isDrawerVisible, closeDrawer }) => {
+const BrandDrawer = ({
+  setVisible,
+  isDrawerVisible,
+  closeDrawer,
+  creative,
+}) => {
   const youtubeData = useSelector((store) => store.BrandYoutube.data);
   const instagramData = useSelector((store) => store.BrandInstagram.data);
   console.log("instagramData", instagramData);
@@ -22,26 +27,36 @@ const BrandDrawer = ({ setVisible, isDrawerVisible, closeDrawer }) => {
         bodyStyle={{ paddingBottom: 20 }}
         destroyOnClose={true}
       >
-        <Tabs defaultActiveKey="yt" onChange={onTabChange}>
-          <TabPane tab="Youtube" key="yt">
-            {!youtubeData?.id && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-            {youtubeData?.id && (
-              <YoutubeFormDescription
-                setVisible={setVisible}
-                closeDrawer={closeDrawer}
-                youtubeData={youtubeData}
-              />
-            )}
-          </TabPane>
+        <Tabs defaultActiveKey="ig" onChange={onTabChange}>
           <TabPane tab="Instagram" key="ig">
             {!instagramData?.id && (
-              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={<span>No Creative Scheduled</span>}
+              />
             )}
             {instagramData?.id && (
               <InstagramFormDescription
                 setVisible={setVisible}
                 closeDrawer={closeDrawer}
                 instagramData={instagramData}
+                creative={creative}
+              />
+            )}
+          </TabPane>
+          <TabPane tab="Youtube" key="yt">
+            {!youtubeData?.id && (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={<span>No Creative Scheduled</span>}
+              />
+            )}
+            {youtubeData?.id && (
+              <YoutubeFormDescription
+                setVisible={setVisible}
+                closeDrawer={closeDrawer}
+                youtubeData={youtubeData}
+                creative={creative}
               />
             )}
           </TabPane>

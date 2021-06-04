@@ -8,6 +8,7 @@ import {
   Select,
   message,
   Row,
+  Alert,
 } from "antd";
 import moment from "moment";
 import { useState, useEffect } from "react";
@@ -28,8 +29,66 @@ const InstagramUploadForm = ({
   const instagramUserId = useSelector((store) => store.CreatorInstagram.igId);
   console.log("fbPagesData", fbPagesData);
   const [formSubmitted, setFormSubitted] = useState(false);
+  const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
+  const [mediaValidateAlert, setMediaValidateAlert] = useState(null);
 
+  const validateImage = (image) => {
+    const sizeInMb = image.size / 1024 / 1024;
+    const format = image.mimeType.split("/")[1];
+    // const sizeInMb = 8488608 / 1024 / 1024
+    if (sizeInMb > 8) {
+      return false;
+    }
+    if (!["png", "jpg", "jpeg"].includes(format)) {
+      return false;
+    }
+    return true;
+  };
+  const validateVideo = (video) => {
+    const sizeInMb = video.size / 1024 / 1024;
+    const format = video.mimeType.split("/")[1];
+    // const sizeInMb = 848860834543 / 1024 / 1024
+    if (sizeInMb > 100) {
+      return false;
+    }
+    if (!["mp4", "mov"].includes(format)) {
+      return false;
+    }
+    return true;
+  };
+  const imageValidationAlert = (
+    <Alert
+      description="Please upload an image of format jpeg/png and size less than 8MB"
+      type="warning"
+      showIcon
+      closable
+    />
+  );
+  const videoValidationAlert = (
+    <Alert
+      description="Please upload a video of format mp4/mov and size less than 100MB"
+      type="warning"
+      showIcon
+      closable
+    />
+  );
   useEffect(() => {
+    const image = creative?.media.find(
+      (o) => o.mimeType.includes("image") && o.status === "accepted"
+    );
+    const video = creative?.media.find(
+      (o) => o.mimeType.includes("video") && o.status === "accepted"
+    );
+    console.log("video, image", video, image);
+    if (image && !validateImage(image)) {
+      console.log("image validated");
+      setSubmitBtnDisabled(true);
+      setMediaValidateAlert(imageValidationAlert);
+    }
+    if (video && !validateVideo(video)) {
+      setSubmitBtnDisabled(true);
+      setMediaValidateAlert(videoValidationAlert);
+    }
     if (instagramData?.creative === creative.id) {
       form.setFieldsValue({
         caption: instagramData?.caption,
@@ -94,6 +153,7 @@ const InstagramUploadForm = ({
 
   return (
     <>
+      {mediaValidateAlert}
       {!formSubmitted && (
         <Form
           form={form}
@@ -132,6 +192,32 @@ const InstagramUploadForm = ({
                 required: true,
                 message: "Please enter the caption",
               },
+              {
+                validator: (_, value) => {
+                  if (value.length >= 2200) {
+                    return Promise.reject(
+                      new Error("Character Limit of 2200 character exceeded")
+                    );
+                  }
+                  if (
+                    value.split(" ").filter((elem) => elem.includes("#"))
+                      .length > 30
+                  ) {
+                    return Promise.reject(
+                      new Error("Limit of 30 hashtags exceeded")
+                    );
+                  }
+                  if (
+                    value.split(" ").filter((elem) => elem.includes("@"))
+                      .length > 20
+                  ) {
+                    return Promise.reject(
+                      new Error("Limit of 20 usertags exceeded")
+                    );
+                  }
+                  return Promise.resolve();
+                },
+              },
             ]}
           >
             <Input.TextArea rows={2} />
@@ -139,7 +225,7 @@ const InstagramUploadForm = ({
 
           <Row>
             <Form.Item
-              label="Schedule Time"
+              label="Schedule Date"
               name="date"
               rules={[
                 {
@@ -148,7 +234,7 @@ const InstagramUploadForm = ({
                 },
               ]}
             >
-              <DatePicker />
+              <DatePicker format={"DD/MM/YYYY"} />
             </Form.Item>
             <Form.Item
               label="Schedule Time"
@@ -170,7 +256,11 @@ const InstagramUploadForm = ({
           </Row>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={submitBtnDisabled}
+            >
               Submit
             </Button>
           </Form.Item>

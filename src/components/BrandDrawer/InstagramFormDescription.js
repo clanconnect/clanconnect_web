@@ -1,5 +1,14 @@
 import "./styles.scss";
-import { Button, Descriptions, Tag, Popconfirm, message } from "antd";
+import {
+  Button,
+  Descriptions,
+  Tag,
+  Popconfirm,
+  message,
+  Badge,
+  Row,
+  Col,
+} from "antd";
 import { useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { ACTIONS } from "../../redux/brands/socials/instagram/actions";
@@ -8,11 +17,12 @@ const InstagramFormDescription = ({
   setVisible,
   closeDrawer,
   instagramData,
+  creative,
 }) => {
   const dispatch = useDispatch();
   // possible values - "Approved/Not Approved"
   const [approvalStatus, setApprovalStatus] = useState();
-  // possible values - "Cancelled/Uploaded/Scheduled/Unknown"
+  // possible values - "Cancelled/Uploaded/Scheduled/Pending"
   const [uploadStatus, setUploadStatus] = useState();
   const [isApproveBtnDisabled, setIsApproveBtnDisabled] = useState();
   // cancel btn will be disabled before the post is scheduled to go live or
@@ -33,10 +43,10 @@ const InstagramFormDescription = ({
       },
     });
     setApprovalStatus(true);
-    setUploadStatus("Unknown");
+    setUploadStatus("Scheduled");
     setIsApproveBtnDisabled(true);
     setIsCancelBtnDisabled(false);
-    message.info("Youtube Post Approved");
+    message.info("Instagram Post Approved");
   };
   const cancelConfirm = () => {
     dispatch({
@@ -48,7 +58,7 @@ const InstagramFormDescription = ({
     setApprovalStatus(false);
     setUploadStatus("Cancelled");
     setIsCancelBtnDisabled(true);
-    message.info("Youtube Post Cancelled");
+    message.info("Instagram Post Cancelled");
   };
   useEffect(() => {
     if (instagramData.isApprovedByBrand) {
@@ -72,7 +82,7 @@ const InstagramFormDescription = ({
       setIsCancelBtnDisabled(false);
       setUploadStatus("Scheduled");
     } else {
-      setUploadStatus("Unknown");
+      setUploadStatus("Pending");
     }
     const utcNow = new Date();
     const timeDelta = 5 * 60 * 60 * 1000;
@@ -80,6 +90,10 @@ const InstagramFormDescription = ({
       new Date(instagramData?.liveAt).getTime() - timeDelta;
     if (utcNow > fiveHoursBeforeliveAt) {
       setIsCancelBtnDisabled(true);
+    }
+    const liveAt_ = new Date(instagramData?.liveAt).getTime();
+    if (utcNow > liveAt_) {
+      setIsApproveBtnDisabled(true);
     }
   }, [instagramData]);
 
@@ -96,7 +110,10 @@ const InstagramFormDescription = ({
           {new Date(instagramData?.liveAt).toLocaleDateString()}
         </Descriptions.Item>
         <Descriptions.Item label="Schedule Time" span={2}>
-          {new Date(instagramData?.liveAt).toLocaleTimeString()}
+          {new Date(instagramData?.liveAt).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </Descriptions.Item>
         <Descriptions.Item label="Approval Status" span={2}>
           {approvalStatus ? (
@@ -106,47 +123,74 @@ const InstagramFormDescription = ({
           )}
         </Descriptions.Item>
         <Descriptions.Item label="Upload Status" span={2}>
-          {uploadStatus === "Uploaded" ? (
+          {uploadStatus === "Uploaded" && (
             <Tag color="#87d068">{uploadStatus}</Tag>
-          ) : (
+          )}
+          {["Pending", "Scheduled"].includes(uploadStatus) && (
+            <Tag color="#2db7f5">{uploadStatus}</Tag>
+          )}
+          {uploadStatus === "Cancelled" && (
             <Tag color="#f50">{uploadStatus}</Tag>
           )}
         </Descriptions.Item>
       </Descriptions>
-      <Popconfirm
-        placement="topLeft"
-        title="Are you sure you want to Approve?"
-        onConfirm={approveConfirm}
-        okText="Yes"
-        cancelText="No"
-      >
-        <Button
-          type="primary"
-          className="mt-30 mr-10"
-          disabled={isApproveBtnDisabled}
-        >
-          Approve
-        </Button>
-      </Popconfirm>
-      <Popconfirm
-        placement="topLeft"
-        title="Are you sure you want to Cancel?"
-        onConfirm={cancelConfirm}
-        okText="Yes"
-        cancelText="No"
-      >
-        <Button danger type="primary" disabled={isCancelBtnDisabled}>
-          Cancel Scheduled Post
-        </Button>
-      </Popconfirm>
-      <Button
-        ref={commentBlockBtn}
-        type="primary"
-        onClick={handleShowCommentBlock}
-        className="comment-form-btn"
-      >
-        Add Comments
-      </Button>
+      <Row justify="space-between">
+        <Col>
+          <Popconfirm
+            placement="topLeft"
+            title="Are you sure you want to Approve?"
+            onConfirm={approveConfirm}
+            okText="Yes"
+            cancelText="No"
+            disabled={isApproveBtnDisabled}
+          >
+            <Button
+              type="primary"
+              className="mt-30 mr-10"
+              disabled={isApproveBtnDisabled}
+            >
+              Approve
+            </Button>
+          </Popconfirm>
+          <Popconfirm
+            placement="topLeft"
+            title="Are you sure you want to Cancel?"
+            onConfirm={cancelConfirm}
+            okText="Yes"
+            cancelText="No"
+            disabled={isCancelBtnDisabled}
+          >
+            <Button
+              danger
+              type="primary"
+              disabled={isCancelBtnDisabled}
+              className="mt-30"
+            >
+              Cancel Scheduled Post
+            </Button>
+          </Popconfirm>
+        </Col>
+        <Col>
+          <Badge
+            size="small"
+            style={{
+              background: "mediumseagreen",
+              fontSize: "11px",
+            }}
+            count={creative.stats.unreadComments}
+            offset={[-8, +30]}
+          >
+            <Button
+              ref={commentBlockBtn}
+              type="primary"
+              onClick={handleShowCommentBlock}
+              className="mt-30 mr-3"
+            >
+              Add Comments
+            </Button>
+          </Badge>
+        </Col>
+      </Row>
     </>
   );
 };

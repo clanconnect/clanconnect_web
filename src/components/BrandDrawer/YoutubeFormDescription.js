@@ -1,15 +1,30 @@
 import "./styles.scss";
-import { Button, Descriptions, Tag, Image, Popconfirm, message } from "antd";
+import {
+  Button,
+  Descriptions,
+  Tag,
+  Image,
+  Popconfirm,
+  message,
+  Badge,
+  Row,
+  Col,
+} from "antd";
 import { useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { languages } from "../../common/dataManager";
 import { ACTIONS } from "../../redux/brands/socials/youtube/actions";
 
-const YoutubeFormDescription = ({ setVisible, closeDrawer, youtubeData }) => {
+const YoutubeFormDescription = ({
+  setVisible,
+  closeDrawer,
+  youtubeData,
+  creative,
+}) => {
   const dispatch = useDispatch();
   // possible values - "Approved/Not Approved"
   const [approvalStatus, setApprovalStatus] = useState();
-  // possible values - "Cancelled/Uploaded/Scheduled/Unknown"
+  // possible values - "Cancelled/Uploaded/Scheduled/Pending"
   const [uploadStatus, setUploadStatus] = useState();
   const [isApproveBtnDisabled, setIsApproveBtnDisabled] = useState();
   // cancel btn will be disabled before the post is scheduled to go live or
@@ -30,7 +45,7 @@ const YoutubeFormDescription = ({ setVisible, closeDrawer, youtubeData }) => {
       },
     });
     setApprovalStatus(true);
-    setUploadStatus("Unknown");
+    setUploadStatus("Scheduled");
     setIsApproveBtnDisabled(true);
     setIsCancelBtnDisabled(false);
     message.info("Youtube Post Approved");
@@ -69,7 +84,7 @@ const YoutubeFormDescription = ({ setVisible, closeDrawer, youtubeData }) => {
       setIsCancelBtnDisabled(false);
       setUploadStatus("Scheduled");
     } else {
-      setUploadStatus("Unknown");
+      setUploadStatus("Pending");
     }
     const utcNow = new Date().getTime();
     const timeDelta = 5 * 60 * 60 * 1000;
@@ -77,6 +92,10 @@ const YoutubeFormDescription = ({ setVisible, closeDrawer, youtubeData }) => {
       new Date(youtubeData?.liveAt).getTime() - timeDelta;
     if (utcNow > fiveHoursBeforeliveAt) {
       setIsCancelBtnDisabled(true);
+    }
+    const liveAt_ = new Date(youtubeData?.liveAt).getTime();
+    if (utcNow > liveAt_) {
+      setIsApproveBtnDisabled(true);
     }
   }, [youtubeData]);
 
@@ -106,7 +125,10 @@ const YoutubeFormDescription = ({ setVisible, closeDrawer, youtubeData }) => {
           {new Date(youtubeData?.liveAt).toLocaleDateString()}
         </Descriptions.Item>
         <Descriptions.Item label="Schedule Time" span={2}>
-          {new Date(youtubeData?.liveAt).toLocaleTimeString()}
+          {new Date(youtubeData?.liveAt).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </Descriptions.Item>
         <Descriptions.Item label="Made for Kids" span={2}>
           {youtubeData?.madeForKids ? "Yes" : "No"}
@@ -138,47 +160,66 @@ const YoutubeFormDescription = ({ setVisible, closeDrawer, youtubeData }) => {
           )}
         </Descriptions.Item>
         <Descriptions.Item label="Upload Status" span={2}>
-          {uploadStatus === "Uploaded" ? (
+          {uploadStatus === "Uploaded" && (
             <Tag color="#87d068">{uploadStatus}</Tag>
-          ) : (
+          )}
+          {["Pending", "Scheduled"].includes(uploadStatus) && (
+            <Tag color="#2db7f5">{uploadStatus}</Tag>
+          )}
+          {uploadStatus === "Cancelled" && (
             <Tag color="#f50">{uploadStatus}</Tag>
           )}
         </Descriptions.Item>
       </Descriptions>
-      <Popconfirm
-        placement="topLeft"
-        title="Are you sure you want to Approve?"
-        onConfirm={approveConfirm}
-        okText="Yes"
-        cancelText="No"
-      >
-        <Button
-          type="primary"
-          className="mt-30 mr-10"
-          disabled={isApproveBtnDisabled}
-        >
-          Approve
-        </Button>
-      </Popconfirm>
-      <Popconfirm
-        placement="topLeft"
-        title="Are you sure you want to Cancel?"
-        onConfirm={cancelConfirm}
-        okText="Yes"
-        cancelText="No"
-      >
-        <Button danger type="primary" disabled={isCancelBtnDisabled}>
-          Cancel Scheduled Post
-        </Button>
-      </Popconfirm>
-      <Button
-        ref={commentBlockBtn}
-        type="primary"
-        onClick={handleShowCommentBlock}
-        className="comment-form-btn"
-      >
-        Add Comments
-      </Button>
+      <Row justify="space-between">
+        <Col>
+          <Popconfirm
+            placement="topLeft"
+            title="Are you sure you want to Approve?"
+            onConfirm={approveConfirm}
+            okText="Yes"
+            cancelText="No"
+            disabled={isApproveBtnDisabled}
+          >
+            <Button
+              type="primary"
+              className="mt-30 mr-10"
+              disabled={isApproveBtnDisabled}
+            >
+              Approve
+            </Button>
+          </Popconfirm>
+          <Popconfirm
+            placement="topLeft"
+            title="Are you sure you want to Cancel?"
+            onConfirm={cancelConfirm}
+            okText="Yes"
+            cancelText="No"
+            disabled={isCancelBtnDisabled}
+          >
+            <Button danger type="primary" disabled={isCancelBtnDisabled}>
+              Cancel Scheduled Post
+            </Button>
+          </Popconfirm>
+        </Col>
+        <Col>
+          <Badge
+            size="small"
+            style={{ background: "mediumseagreen", fontSize: "11px" }}
+            count={creative.stats.unreadComments}
+            offset={[-8, +30]}
+          >
+            <Button
+              ref={commentBlockBtn}
+              type="primary"
+              onClick={handleShowCommentBlock}
+              className="mt-30"
+            >
+              Add Comments
+            </Button>
+          </Badge>
+        </Col>
+      </Row>
     </>
   );
 };
