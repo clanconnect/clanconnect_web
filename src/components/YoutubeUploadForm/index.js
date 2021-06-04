@@ -335,7 +335,7 @@ const YoutubeUploadForm = ({
           </Form.Item>
           <Row>
             <Form.Item
-              label="Schedule Time"
+              label="Schedule Date"
               name="date"
               rules={[
                 {
@@ -347,7 +347,7 @@ const YoutubeUploadForm = ({
               <DatePicker format={"DD/MM/YYYY"} />
             </Form.Item>
             <Form.Item
-              label="Schedule Date"
+              label="Schedule Time"
               name="time"
               rules={[
                 {
