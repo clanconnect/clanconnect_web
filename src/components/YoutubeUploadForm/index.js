@@ -124,7 +124,7 @@ const YoutubeUploadForm = ({
 
   const onFinish = (values) => {
     console.log(values);
-    const date = moment(values.data).format("MM/DD/YY");
+    const date = moment(values.date).format("YYYY-MM-DD");
     const time = moment(values.time).format("HH:mm:ss");
     const liveAt = new Date(`${date} ${time}`);
     console.log(liveAt);
