@@ -9,6 +9,7 @@ import {
   message,
   Row,
   Alert,
+  Collapse,
 } from "antd";
 import moment from "moment";
 import { useState, useEffect } from "react";
@@ -16,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS } from "redux/creators/socials/instagram/actions";
 
 const { Option } = Select;
+const { Panel } = Collapse;
 
 const InstagramUploadForm = ({
   creative,
@@ -151,6 +153,10 @@ const InstagramUploadForm = ({
     message.error("Form errored");
   };
 
+  function disabledDate(current) {
+    // Can not select days before today
+    return current && current < moment().subtract(1, "day").endOf("day");
+  }
   return (
     <>
       {mediaValidateAlert}
@@ -220,7 +226,10 @@ const InstagramUploadForm = ({
               },
             ]}
           >
-            <Input.TextArea rows={2} />
+            <Input.TextArea
+              placeholder="Add post body, hastags, etc."
+              rows={2}
+            />
           </Form.Item>
 
           <Row>
@@ -234,7 +243,7 @@ const InstagramUploadForm = ({
                 },
               ]}
             >
-              <DatePicker format={"DD/MM/YYYY"} />
+              <DatePicker disabledDate={disabledDate} format={"DD/MM/YYYY"} />
             </Form.Item>
             <Form.Item
               label="Schedule Time"
@@ -243,6 +252,16 @@ const InstagramUploadForm = ({
                 {
                   required: true,
                   message: "Please enter schedule",
+                },
+                {
+                  validator: (_, value) => {
+                    if (new Date(value) < Date.now()) {
+                      return Promise.reject(
+                        new Error("Please enter a valid time")
+                      );
+                    }
+                    return Promise.resolve();
+                  },
                 },
               ]}
             >

@@ -179,6 +179,10 @@ const YoutubeUploadForm = ({
     });
     setCategories(countryCategories);
   };
+  function disabledDate(current) {
+    // Can not select days before today
+    return current && current < moment().subtract(1, "day").endOf("day");
+  }
 
   return (
     <>
@@ -210,7 +214,7 @@ const YoutubeUploadForm = ({
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Add video title" />
           </Form.Item>
 
           {showForm && (
@@ -225,32 +229,37 @@ const YoutubeUploadForm = ({
                 },
               ]}
               getValueFromEvent={normFile}
-              extra="Upload thumbnail"
+              extra="Upload thumbnail of size less than 2MB and of format jpeg/png"
             >
-              <Upload
-                name="thumbnail"
-                onChange={handleMediaChange}
-                multiple={false}
-                beforeUpload={beforeImageUpload}
-                progress={uploadProgress}
-                maxCount={1}
-              >
-                <Button icon={<UploadOutlined />}>Select File</Button>
-              </Upload>
-              {/* <input type="file" onChange={beforeImageUpload} /> */}
-              <Button
-                type="primary"
-                onClick={handleMediaUpload}
-                disabled={fileList.length === 0}
-                loading={uploadingFile}
-                style={{ marginTop: 16 }}
-              >
-                {isUploadComplete
-                  ? "Uploaded"
-                  : uploadingFile
-                  ? "Uploading"
-                  : "Upload"}
-              </Button>
+              <Row justify="start" gutter={8}>
+                <Col>
+                  <Upload
+                    name="thumbnail"
+                    onChange={handleMediaChange}
+                    multiple={false}
+                    beforeUpload={beforeImageUpload}
+                    progress={uploadProgress}
+                    maxCount={1}
+                  >
+                    <Button icon={<UploadOutlined />}>Select File</Button>
+                  </Upload>
+                  {/* <input type="file" onChange={beforeImageUpload} /> */}
+                </Col>
+                <Col>
+                  <Button
+                    type="primary"
+                    onClick={handleMediaUpload}
+                    disabled={fileList.length === 0}
+                    loading={uploadingFile}
+                  >
+                    {isUploadComplete
+                      ? "Uploaded"
+                      : uploadingFile
+                      ? "Uploading"
+                      : "Upload"}
+                  </Button>
+                </Col>
+              </Row>
             </Form.Item>
           )}
           {!showForm && (
@@ -278,7 +287,7 @@ const YoutubeUploadForm = ({
               },
             ]}
           >
-            <Input.TextArea rows={5} />
+            <Input.TextArea rows={5} placeholder="Add video description" />
           </Form.Item>
           <Row>
             <Col span={8}>
@@ -344,7 +353,7 @@ const YoutubeUploadForm = ({
                 },
               ]}
             >
-              <DatePicker format={"DD/MM/YYYY"} />
+              <DatePicker disabledDate={disabledDate} format={"DD/MM/YYYY"} />
             </Form.Item>
             <Form.Item
               label="Schedule Time"
@@ -353,6 +362,16 @@ const YoutubeUploadForm = ({
                 {
                   required: true,
                   message: "Please enter schedule",
+                },
+                {
+                  validator: (_, value) => {
+                    if (new Date(value) < Date.now()) {
+                      return Promise.reject(
+                        new Error("Please enter a valid time")
+                      );
+                    }
+                    return Promise.resolve();
+                  },
                 },
               ]}
             >

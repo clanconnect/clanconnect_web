@@ -185,15 +185,17 @@ const InfluencerCreativeModal = ({
           <div className="creative-modal-header flex justify-between">
             <p className="title">
               {_.startCase(_.camelCase(project.title))}
-              <button
-                className="btn-submit"
-                onClick={() => {
-                  showDrawer();
-                  setVisible(false);
-                }}
-              >
-                Schedule
-              </button>
+              {creative?.status === "accepted" && (
+                <button
+                  className="btn-submit"
+                  onClick={() => {
+                    showDrawer();
+                    setVisible(false);
+                  }}
+                >
+                  Schedule
+                </button>
+              )}
             </p>
             <div className="flex align-items">
               <span>Status: </span>

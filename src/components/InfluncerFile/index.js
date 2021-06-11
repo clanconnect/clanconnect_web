@@ -1,7 +1,11 @@
 import React from "react";
 import { downloadMedia } from "helpers";
 import { Checkbox } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
+import {
+  CalendarOutlined,
+  YoutubeOutlined,
+  InstagramOutlined,
+} from "@ant-design/icons";
 import VideoPlayer from "react-player";
 import CreativeModal from "../CreativeModal";
 import download from "assets/images/download.svg";
@@ -27,8 +31,6 @@ const InfluncerFile = ({
     setSelectedCreatives(Array.from(uppdatedCreative));
   };
   const projectId = useParams();
-  
-
   return creativeDetails
     ? creativeDetails.map((data, index) => {
         return (
@@ -125,6 +127,9 @@ const InfluncerFile = ({
                         ).format("DD/MM/YYYY")}
                       </span>
                     </p>
+                    {(item.socials.youtube || item.socials.instagram) && (
+                      <SocialList creative={item} />
+                    )}
                   </div>
                 ) : null;
               })}
@@ -143,3 +148,37 @@ const InfluncerFile = ({
 };
 
 export default InfluncerFile;
+
+const SocialList = ({ creative }) => {
+  const instagramSocial = creative?.socials?.instagram;
+  const youtubeSocial = creative?.socials?.youtube;
+
+  return (
+    <div className="approved-schedules">
+      {instagramSocial && youtubeSocial && (
+        <>
+          <p>
+            <YoutubeOutlined style={{ color: "#FF0000" }} /> Scheduled at{" "}
+            {moment(youtubeSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+          </p>
+          <p>
+            <InstagramOutlined style={{ color: "#833AB4" }} /> Scheduled at{" "}
+            {moment(instagramSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+          </p>
+        </>
+      )}
+      {instagramSocial && !youtubeSocial && (
+        <p>
+          <InstagramOutlined style={{ color: "#833AB4" }} /> Scheduled at{" "}
+          {moment(instagramSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+        </p>
+      )}
+      {!instagramSocial && youtubeSocial && (
+        <p>
+          <YoutubeOutlined style={{ color: "#FF0000" }} /> Scheduled at{" "}
+          {moment(youtubeSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+        </p>
+      )}
+    </div>
+  );
+};

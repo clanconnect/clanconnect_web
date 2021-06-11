@@ -10,11 +10,14 @@ import {
   Col,
   Badge,
   Modal,
+  Space,
+  Alert,
 } from "antd";
 import { useEffect, useState, useRef } from "react";
 import { languages } from "../../common/dataManager";
 import { ACTIONS } from "redux/creators/socials/youtube/actions";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 
 const YoutubeFormDescription = ({
   closeDrawer,
@@ -37,8 +40,8 @@ const YoutubeFormDescription = ({
   const [isGoLiveBtnDisabled, setIsGoLiveBtnDisabled] = useState();
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState();
   const [isEditBtnDisabled, setIsEditBtnDisabled] = useState(false);
-
   const [isGoLiveModalVisible, setIsGoLiveModalVisible] = useState(false);
+  const [errorText, setErrorText] = useState(false);
 
   const commentBlockBtn = useRef();
   const handleShowCommentBlock = () => {
@@ -107,78 +110,91 @@ const YoutubeFormDescription = ({
     if (utcNow > liveAt_) {
       setIsGoLiveBtnDisabled(true);
     }
+    if (
+      utcNow > liveAt_ &&
+      youtubeData?.isApprovedByBrand &&
+      !youtubeData?.isApprovedByInfluencer
+    ) {
+      setErrorText(
+        <Alert
+          message="Since time has passed, you can’t make the post go live!"
+          type="warning"
+          showIcon
+          closable
+        />
+      );
+    }
   }, [youtubeData]);
 
   return (
     <>
-      <Descriptions bordered>
-        <Descriptions.Item label="Video Title" span={4}>
-          {youtubeData?.title}
-        </Descriptions.Item>
-        <Descriptions.Item label="Video Description" span={4}>
-          {youtubeData?.description}
-        </Descriptions.Item>
-        <Descriptions.Item label="Thumbnail" span={4}>
-          <Image
-            width={200}
-            src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${youtubeData?.thumbnail?.slug}`}
-          />
-        </Descriptions.Item>
-        <Descriptions.Item label="Tags" span={4}>
-          {youtubeData?.tags?.map((tag, index) => {
-            return <Tag key={index}>#{tag}</Tag>;
-          })}
-        </Descriptions.Item>
-        <Descriptions.Item label="Schedule Date" span={2}>
-          {new Date(youtubeData?.liveAt).toLocaleDateString()}
-        </Descriptions.Item>
-        <Descriptions.Item label="Schedule Time" span={2}>
-          {new Date(youtubeData?.liveAt).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </Descriptions.Item>
-        <Descriptions.Item label="Made for Kids" span={2}>
-          {youtubeData?.madeForKids ? "Yes" : "No"}
-        </Descriptions.Item>
-        <Descriptions.Item label="Category" span={2}>
-          {youtubeData?.category}
-        </Descriptions.Item>
-        <Descriptions.Item label="Default Language" span={2}>
-          {
-            languages.find((item) => {
-              return item.value === "en";
-            })?.name
-          }
-        </Descriptions.Item>
-        <Descriptions.Item label="License" span={2}>
-          {youtubeData?.license}
-        </Descriptions.Item>
-        <Descriptions.Item label="Statistics Visibility" span={2}>
-          {youtubeData?.publicStatsVisible ? "Visible" : "Not Visible"}
-        </Descriptions.Item>
-        <Descriptions.Item label="Notify Subscribers" span={2}>
-          {youtubeData?.notifySubscribers ? "Yes" : "No"}
-        </Descriptions.Item>
-        <Descriptions.Item label="Approval Status" span={2}>
-          {approvalStatus ? (
-            <Tag color="#87d068">Approved</Tag>
-          ) : (
-            <Tag color="#f50">Not Approved</Tag>
-          )}
-        </Descriptions.Item>
-        <Descriptions.Item label="Upload Status" span={2}>
-          {uploadStatus === "Uploaded" && (
-            <Tag color="#87d068">{uploadStatus}</Tag>
-          )}
-          {["Pending", "Scheduled"].includes(uploadStatus) && (
-            <Tag color="#2db7f5">{uploadStatus}</Tag>
-          )}
-          {uploadStatus === "Cancelled" && (
-            <Tag color="#f50">{uploadStatus}</Tag>
-          )}
-        </Descriptions.Item>
-      </Descriptions>
+      <Space direction="vertical" size="middle">
+        <Descriptions bordered labelStyle={{ width: "25%" }}>
+          <Descriptions.Item label="Video Title" span={4}>
+            {youtubeData?.title}
+          </Descriptions.Item>
+          <Descriptions.Item label="Video Description" span={4}>
+            {youtubeData?.description}
+          </Descriptions.Item>
+          <Descriptions.Item label="Thumbnail" span={4}>
+            <Image
+              width={200}
+              src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${youtubeData?.thumbnail?.slug}`}
+            />
+          </Descriptions.Item>
+          <Descriptions.Item label="Tags" span={4}>
+            {youtubeData?.tags?.map((tag, index) => {
+              return <Tag key={index}>#{tag}</Tag>;
+            })}
+          </Descriptions.Item>
+          <Descriptions.Item label="Schedule" span={4}>
+            {moment(youtubeData?.liveAt).format("h:mm A, DD/MM/YYYY")}
+          </Descriptions.Item>
+          <Descriptions.Item label="Made for Kids" span={2}>
+            {youtubeData?.madeForKids ? "Yes" : "No"}
+          </Descriptions.Item>
+          <Descriptions.Item label="Category" span={2}>
+            {youtubeData?.category}
+          </Descriptions.Item>
+          <Descriptions.Item label="Default Language" span={2}>
+            {
+              languages.find((item) => {
+                return item.value === "en";
+              })?.name
+            }
+          </Descriptions.Item>
+          <Descriptions.Item label="License" span={2}>
+            {youtubeData?.license}
+          </Descriptions.Item>
+          <Descriptions.Item label="Statistics Visibility" span={2}>
+            {youtubeData?.publicStatsVisible ? "Visible" : "Not Visible"}
+          </Descriptions.Item>
+          <Descriptions.Item label="Notify Subscribers" span={2}>
+            {youtubeData?.notifySubscribers ? "Yes" : "No"}
+          </Descriptions.Item>
+        </Descriptions>
+        <Descriptions bordered labelStyle={{ width: "25%" }}>
+          <Descriptions.Item label="Approval Status" span={4}>
+            {approvalStatus ? (
+              <Tag color="#87d068">Approved</Tag>
+            ) : (
+              <Tag color="#f50">Not Approved</Tag>
+            )}
+          </Descriptions.Item>
+          <Descriptions.Item label="Upload Status" span={4}>
+            {uploadStatus === "Uploaded" && (
+              <Tag color="#87d068">{uploadStatus}</Tag>
+            )}
+            {["Pending", "Scheduled"].includes(uploadStatus) && (
+              <Tag color="#2db7f5">{uploadStatus}</Tag>
+            )}
+            {uploadStatus === "Cancelled" && (
+              <Tag color="#f50">{uploadStatus}</Tag>
+            )}
+          </Descriptions.Item>
+        </Descriptions>
+      </Space>
+      {errorText && <div style={{ marginTop: "16px" }}>{errorText}</div>}
       <Row justify="space-between">
         <Col>
           <Popconfirm

@@ -32,7 +32,7 @@ const BrandDrawer = ({
             {!instagramData?.id && (
               <Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={<span>No Creative Scheduled</span>}
+                description={<span>No Creative Scheduled By Influencer</span>}
               />
             )}
             {instagramData?.id && (
@@ -48,7 +48,7 @@ const BrandDrawer = ({
             {!youtubeData?.id && (
               <Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={<span>No Creative Scheduled</span>}
+                description={<span>No Creative Scheduled By Influencer</span>}
               />
             )}
             {youtubeData?.id && (

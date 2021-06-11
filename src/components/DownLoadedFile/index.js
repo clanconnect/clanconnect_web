@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./styles.scss";
-import { CalendarOutlined } from "@ant-design/icons";
+import {
+  CalendarOutlined,
+  YoutubeOutlined,
+  InstagramOutlined,
+} from "@ant-design/icons";
 import InfluencerCreativeModal from "../InfluencerCreativeModal";
 import download from "assets/images/download.svg";
 import fullScreen from "assets/images/full-screen.svg";
@@ -14,6 +18,9 @@ const DownLoadedFile = ({ creative = {}, project }) => {
   const [imageUrl, setImageUrl] = useState(
     `${process.env.REACT_APP_IMAGE_BASE_URL}/${media?.slug || "default"}`
   );
+  const instagramSocial = creative?.socials?.instagram;
+  const youtubeSocial = creative?.socials?.youtube;
+
   return (
     <div className="influncer-file-container">
       <div className="influncer-file-subcontainer">
@@ -73,6 +80,35 @@ const DownLoadedFile = ({ creative = {}, project }) => {
             {moment(creative.createdAt).format("DD/MM/YYYY")}
           </span>
         </p>
+        {(instagramSocial || youtubeSocial) && (
+          <div className="approved-schedules">
+            {instagramSocial && youtubeSocial && (
+              <>
+                <p>
+                  <YoutubeOutlined style={{ color: "#FF0000" }} /> Scheduled at{" "}
+                  {moment(youtubeSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+                </p>
+                <p>
+                  <InstagramOutlined style={{ color: "#833AB4" }} /> Scheduled
+                  at{" "}
+                  {moment(instagramSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+                </p>
+              </>
+            )}
+            {instagramSocial && !youtubeSocial && (
+              <p>
+                <InstagramOutlined style={{ color: "#833AB4" }} /> Scheduled at{" "}
+                {moment(instagramSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+              </p>
+            )}
+            {!instagramSocial && youtubeSocial && (
+              <p>
+                <YoutubeOutlined style={{ color: "#FF0000" }} /> Scheduled at{" "}
+                {moment(youtubeSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

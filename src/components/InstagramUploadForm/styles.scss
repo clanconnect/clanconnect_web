@@ -1,2 +1,18 @@
 @import "styles/_colors";
 @import "styles/_mixins";
+
+// change asterik styling
+.ant-form-item-label
+  > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+  display: inline-block;
+  margin-right: 4px;
+  color: gray;
+  font-size: 16px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*";
+}
+.ant-form-item-label
+  > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  display: none;
+}

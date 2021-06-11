@@ -98,18 +98,17 @@
   }
 
   .date-box {
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .date-text {
-    margin-left: 8px;
+    margin-left: 4px;
     color: #5d5d5d;
     font-family: 300;
   }
-
   .influncer-file-row {
     display: flex;
-    align-items: center;
+    align-items: start;
     flex-wrap: wrap;
   }
 
@@ -122,4 +121,9 @@
       width: 42%;
     }
   }
+}
+
+.approved-schedules {
+  font-size: 13px;
+  color: #5d5d5d;
 }
