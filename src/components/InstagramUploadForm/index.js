@@ -253,16 +253,21 @@ const InstagramUploadForm = ({
                   required: true,
                   message: "Please enter schedule",
                 },
-                {
+                ({ getFieldValue }) => ({
                   validator: (_, value) => {
-                    if (new Date(value) < Date.now()) {
+                    const date = moment(getFieldValue("date")).format(
+                      "YYYY-MM-DD"
+                    );
+                    const time = moment(value).format("HH:mm:ss");
+                    const liveAt = new Date(`${date} ${time}`);
+                    if (liveAt < Date.now()) {
                       return Promise.reject(
                         new Error("Please enter a valid time")
                       );
                     }
                     return Promise.resolve();
                   },
-                },
+                }),
               ]}
             >
               <TimePicker

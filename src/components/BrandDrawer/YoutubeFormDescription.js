@@ -11,12 +11,16 @@ import {
   Col,
   Space,
   Alert,
+  Radio,
+  Input,
+  Modal,
 } from "antd";
 import { useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { languages } from "../../common/dataManager";
 import { ACTIONS } from "../../redux/brands/socials/youtube/actions";
 import moment from "moment";
+import { cancellationReasons } from "common/dataManager";
 
 const YoutubeFormDescription = ({
   setVisible,
@@ -25,15 +29,19 @@ const YoutubeFormDescription = ({
   creative,
 }) => {
   const dispatch = useDispatch();
+
   // possible values - "Approved/Not Approved"
   const [approvalStatus, setApprovalStatus] = useState();
-  // possible values - "Cancelled/Live/Scheduled/Pending"
+  // possible values - "Cancelled/Live/Scheduled/Pending/Errored"
   const [uploadStatus, setUploadStatus] = useState();
   const [isApproveBtnDisabled, setIsApproveBtnDisabled] = useState();
   // cancel btn will be disabled before the post is scheduled to go live or
   // or when the btn has been clicked.
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState(true);
   const [errorText, setErrorText] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
+  const [cancelReason, setCancelReason] = useState();
+  const [isCancelInputDisabled, setIsCancelInputDisabled] = useState(true);
   const commentBlockBtn = useRef();
   const handleShowCommentBlock = () => {
     closeDrawer();
@@ -54,16 +62,28 @@ const YoutubeFormDescription = ({
     message.info("Youtube Post Approved");
   };
   const cancelConfirm = () => {
-    dispatch({
-      type: ACTIONS.CANCEL_POST,
-      payload: {
-        query: { socialId: youtubeData?.id },
-      },
-    });
-    setApprovalStatus(false);
-    setUploadStatus("Cancelled");
-    setIsCancelBtnDisabled(true);
-    message.info("Youtube Post Cancelled");
+    if (cancelReason) {
+      dispatch({
+        type: ACTIONS.CANCEL_POST,
+        payload: {
+          query: { socialId: youtubeData?.id, reason: cancelReason },
+        },
+      });
+      setApprovalStatus(false);
+      setUploadStatus("Cancelled");
+      setIsCancelBtnDisabled(true);
+      message.info("Youtube Post Cancelled");
+      setIsCancelModalVisible(false);
+    }
+  };
+  const cancelRadioBtnOnChange = (e) => {
+    setCancelReason(e.target.value);
+    if (e.target.value === "Other") {
+      setIsCancelInputDisabled(false);
+    }
+  };
+  const cancelInputOnChange = (e) => {
+    setCancelReason(e.target.value);
   };
   useEffect(() => {
     if (youtubeData.isApprovedByBrand) {
@@ -86,6 +106,8 @@ const YoutubeFormDescription = ({
     ) {
       setIsCancelBtnDisabled(false);
       setUploadStatus("Scheduled");
+    } else if (youtubeData?.isErrored) {
+      setUploadStatus("Errored");
     } else {
       setUploadStatus("Pending");
     }
@@ -100,7 +122,11 @@ const YoutubeFormDescription = ({
     if (utcNow > liveAt_) {
       setIsApproveBtnDisabled(true);
     }
-    if (utcNow > liveAt_ && !youtubeData?.isApprovedByBrand) {
+    if (
+      utcNow > liveAt_ &&
+      !youtubeData?.isApprovedByBrand &&
+      !youtubeData?.isCancelled
+    ) {
       setErrorText(
         <Alert
           message="Since time has passed, you can’t approve the post"
@@ -160,6 +186,11 @@ const YoutubeFormDescription = ({
           <Descriptions.Item label="Notify Subscribers" span={2}>
             {youtubeData?.notifySubscribers ? "Yes" : "No"}
           </Descriptions.Item>
+          {youtubeData?.isCancelled && (
+            <Descriptions.Item label="Reason For Cancellation">
+              {youtubeData?.cancelReason}
+            </Descriptions.Item>
+          )}
         </Descriptions>
         <Descriptions bordered labelStyle={{ width: "25%" }}>
           <Descriptions.Item label="Approval Status" span={4}>
@@ -178,6 +209,9 @@ const YoutubeFormDescription = ({
             )}
             {uploadStatus === "Cancelled" && (
               <Tag color="#f50">{uploadStatus}</Tag>
+            )}
+            {uploadStatus === "Errored" && (
+              <Tag color="#f54">{uploadStatus}</Tag>
             )}
           </Descriptions.Item>
         </Descriptions>
@@ -201,18 +235,49 @@ const YoutubeFormDescription = ({
               Approve
             </Button>
           </Popconfirm>
-          <Popconfirm
-            placement="topLeft"
-            title="Are you sure you want to Cancel?"
-            onConfirm={cancelConfirm}
-            okText="Yes"
-            cancelText="No"
+          <Button
+            danger
+            type="primary"
+            className="mt-30 mr-10"
             disabled={isCancelBtnDisabled}
+            onClick={() => {
+              setIsCancelModalVisible(true);
+            }}
           >
-            <Button danger type="primary" disabled={isCancelBtnDisabled}>
-              Cancel Scheduled Post
-            </Button>
-          </Popconfirm>
+            Cancel
+          </Button>
+          <Modal
+            title="State Reason For Cancellation"
+            visible={isCancelModalVisible}
+            onOk={cancelConfirm}
+            onCancel={() => {
+              setIsCancelModalVisible(false);
+            }}
+            centered
+            cancelText="Close"
+          >
+            <Space direction="vertical" size="middle">
+              <p>Select Reasons</p>
+              <Radio.Group
+                name="radiogroup"
+                defaultValue={cancellationReasons[0]}
+                className="flex flex-column"
+                onChange={cancelRadioBtnOnChange}
+              >
+                {cancellationReasons.map((elem, idx) => (
+                  <Radio key={idx} value={elem}>
+                    {elem}
+                  </Radio>
+                ))}
+              </Radio.Group>
+              <Input.TextArea
+                showCount
+                maxLength={500}
+                onChange={cancelInputOnChange}
+                disabled={isCancelInputDisabled}
+              />
+            </Space>
+          </Modal>
         </Col>
         <Col>
           <Badge

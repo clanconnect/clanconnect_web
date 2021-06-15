@@ -11,11 +11,14 @@ import {
   Modal,
   Space,
   Alert,
+  Radio,
+  Input,
 } from "antd";
 import { useEffect, useState, useRef } from "react";
 import { ACTIONS } from "redux/creators/socials/instagram/actions";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import { cancellationReasons } from "common/dataManager";
 
 const InstagramFormDescription = ({
   closeDrawer,
@@ -29,7 +32,7 @@ const InstagramFormDescription = ({
 
   // possible values - "Approved/Not Approved"
   const [approvalStatus, setApprovalStatus] = useState();
-  // possible values - "Cancelled/Live/Scheduled/Pending
+  // possible values - "Cancelled/Live/Scheduled/Pending/Errored
   const [uploadStatus, setUploadStatus] = useState();
 
   // 'Edit' will be changed to 'Create New' once the post is cancelled
@@ -39,6 +42,9 @@ const InstagramFormDescription = ({
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState();
   const [isEditBtnDisabled, setIsEditBtnDisabled] = useState(false);
   const [isGoLiveModalVisible, setIsGoLiveModalVisible] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
+  const [cancelReason, setCancelReason] = useState();
+  const [isCancelInputDisabled, setIsCancelInputDisabled] = useState(true);
 
   const [errorText, setErrorText] = useState(false);
   const commentBlockBtn = useRef();
@@ -60,16 +66,28 @@ const InstagramFormDescription = ({
     setIsEditBtnDisabled(true);
   };
   const cancelConfirm = () => {
-    dispatch({
-      type: ACTIONS.CANCEL_POST,
-      payload: {
-        query: { socialId: instagramData?.id },
-      },
-    });
-    setIsEditBtnDisabled(false);
-    setUploadStatus("Cancelled");
-    setIsCancelBtnDisabled(true);
-    message.info("Instagram Post Cancelled");
+    if (cancelReason) {
+      dispatch({
+        type: ACTIONS.CANCEL_POST,
+        payload: {
+          query: { socialId: instagramData?.id, reason: cancelReason },
+        },
+      });
+      setIsEditBtnDisabled(false);
+      setUploadStatus("Cancelled");
+      setIsCancelBtnDisabled(true);
+      message.info("Instagram Post Cancelled");
+      setIsCancelModalVisible(false);
+    }
+  };
+  const cancelRadioBtnOnChange = (e) => {
+    setCancelReason(e.target.value);
+    if (e.target.value === "Other") {
+      setIsCancelInputDisabled(false);
+    }
+  };
+  const cancelInputOnChange = (e) => {
+    setCancelReason(e.target.value);
   };
   useEffect(() => {
     setEditBtnText("Edit");
@@ -100,6 +118,8 @@ const InstagramFormDescription = ({
       setIsCancelBtnDisabled(false);
       setIsGoLiveBtnDisabled(true);
       setUploadStatus("Scheduled");
+    } else if (instagramData?.isErrored) {
+      setUploadStatus("Errored");
     } else {
       setUploadStatus("Pending");
     }
@@ -111,7 +131,8 @@ const InstagramFormDescription = ({
     if (
       utcNow > liveAt_ &&
       instagramData?.isApprovedByBrand &&
-      !instagramData?.isApprovedByInfluencer
+      !instagramData?.isApprovedByInfluencer &&
+      !instagramData?.isCancelled
     ) {
       setErrorText(
         <Alert
@@ -136,6 +157,11 @@ const InstagramFormDescription = ({
           <Descriptions.Item label="Schedule" span={4}>
             {moment(instagramData?.liveAt).format("h:mm A, DD/MM/YYYY")}
           </Descriptions.Item>
+          {instagramData?.isCancelled && (
+            <Descriptions.Item label="Reason For Cancellation">
+              {instagramData?.cancelReason}
+            </Descriptions.Item>
+          )}
         </Descriptions>
         <Descriptions bordered labelStyle={{ width: "25%" }}>
           <Descriptions.Item label="Approval Status" span={4}>
@@ -154,6 +180,9 @@ const InstagramFormDescription = ({
             )}
             {uploadStatus === "Cancelled" && (
               <Tag color="#f50">{uploadStatus}</Tag>
+            )}
+            {uploadStatus === "Errored" && (
+              <span>{instagramData?.errorUserMessage}</span>
             )}
           </Descriptions.Item>
         </Descriptions>
@@ -181,19 +210,49 @@ const InstagramFormDescription = ({
               {editBtnText}
             </Button>
           </Popconfirm>
-          <Popconfirm
-            placement="topLeft"
-            title="Are you sure you want to Cancel?"
-            onConfirm={cancelConfirm}
+          <Button
+            danger
+            type="primary"
             className="mt-30 mr-10"
-            okText="Yes"
-            cancelText="No"
             disabled={isCancelBtnDisabled}
+            onClick={() => {
+              setIsCancelModalVisible(true);
+            }}
           >
-            <Button danger type="primary" disabled={isCancelBtnDisabled}>
-              Cancel
-            </Button>
-          </Popconfirm>
+            Cancel
+          </Button>
+          <Modal
+            title="State Reason For Cancellation"
+            visible={isCancelModalVisible}
+            onOk={cancelConfirm}
+            onCancel={() => {
+              setIsCancelModalVisible(false);
+            }}
+            centered
+            cancelText="Close"
+          >
+            <Space direction="vertical" size="middle">
+              <p>Select Reasons</p>
+              <Radio.Group
+                name="radiogroup"
+                defaultValue={cancellationReasons[0]}
+                className="flex flex-column"
+                onChange={cancelRadioBtnOnChange}
+              >
+                {cancellationReasons.map((elem, idx) => (
+                  <Radio key={idx} value={elem}>
+                    {elem}
+                  </Radio>
+                ))}
+              </Radio.Group>
+              <Input.TextArea
+                showCount
+                maxLength={500}
+                onChange={cancelInputOnChange}
+                disabled={isCancelInputDisabled}
+              />
+            </Space>
+          </Modal>
           <Button
             type="primary"
             className="mt-30 mr-10"

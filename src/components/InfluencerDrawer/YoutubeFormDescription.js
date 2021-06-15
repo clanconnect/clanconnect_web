@@ -12,12 +12,15 @@ import {
   Modal,
   Space,
   Alert,
+  Radio,
+  Input,
 } from "antd";
 import { useEffect, useState, useRef } from "react";
 import { languages } from "../../common/dataManager";
 import { ACTIONS } from "redux/creators/socials/youtube/actions";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import { cancellationReasons } from "common/dataManager";
 
 const YoutubeFormDescription = ({
   closeDrawer,
@@ -42,6 +45,9 @@ const YoutubeFormDescription = ({
   const [isEditBtnDisabled, setIsEditBtnDisabled] = useState(false);
   const [isGoLiveModalVisible, setIsGoLiveModalVisible] = useState(false);
   const [errorText, setErrorText] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
+  const [cancelReason, setCancelReason] = useState();
+  const [isCancelInputDisabled, setIsCancelInputDisabled] = useState(true);
 
   const commentBlockBtn = useRef();
   const handleShowCommentBlock = () => {
@@ -62,16 +68,29 @@ const YoutubeFormDescription = ({
     setIsEditBtnDisabled(true);
   };
   const cancelConfirm = () => {
-    dispatch({
-      type: ACTIONS.CANCEL_POST,
-      payload: {
-        query: { socialId: youtubeData?.id },
-      },
-    });
-    setIsEditBtnDisabled(false);
-    setUploadStatus("Cancelled");
-    setIsCancelBtnDisabled(true);
-    message.info("Youtube Post Cancelled");
+    if (cancelReason) {
+      dispatch({
+        type: ACTIONS.CANCEL_POST,
+        payload: {
+          query: { socialId: youtubeData?.id, reason: cancelReason },
+        },
+      });
+
+      setIsEditBtnDisabled(false);
+      setUploadStatus("Cancelled");
+      setIsCancelBtnDisabled(true);
+      message.info("Youtube Post Cancelled");
+      setIsCancelModalVisible(false);
+    }
+  };
+  const cancelRadioBtnOnChange = (e) => {
+    setCancelReason(e.target.value);
+    if (e.target.value === "Other") {
+      setIsCancelInputDisabled(false);
+    }
+  };
+  const cancelInputOnChange = (e) => {
+    setCancelReason(e.target.value);
   };
   useEffect(() => {
     setEditBtnText("Edit");
@@ -102,6 +121,8 @@ const YoutubeFormDescription = ({
       setIsCancelBtnDisabled(false);
       setIsGoLiveBtnDisabled(true);
       setUploadStatus("Scheduled");
+    } else if (youtubeData?.isErrored) {
+      setUploadStatus("Errored");
     } else {
       setUploadStatus("Pending");
     }
@@ -113,7 +134,8 @@ const YoutubeFormDescription = ({
     if (
       utcNow > liveAt_ &&
       youtubeData?.isApprovedByBrand &&
-      !youtubeData?.isApprovedByInfluencer
+      !youtubeData?.isApprovedByInfluencer &&
+      !youtubeData?.isCancelled
     ) {
       setErrorText(
         <Alert
@@ -172,6 +194,11 @@ const YoutubeFormDescription = ({
           <Descriptions.Item label="Notify Subscribers" span={2}>
             {youtubeData?.notifySubscribers ? "Yes" : "No"}
           </Descriptions.Item>
+          {youtubeData?.isCancelled && (
+            <Descriptions.Item label="Reason For Cancellation" span={4}>
+              {youtubeData?.cancelReason}
+            </Descriptions.Item>
+          )}
         </Descriptions>
         <Descriptions bordered labelStyle={{ width: "25%" }}>
           <Descriptions.Item label="Approval Status" span={4}>
@@ -190,6 +217,9 @@ const YoutubeFormDescription = ({
             )}
             {uploadStatus === "Cancelled" && (
               <Tag color="#f50">{uploadStatus}</Tag>
+            )}
+            {uploadStatus === "Errored" && (
+              <span>{youtubeData?.errorUserMessage}</span>
             )}
           </Descriptions.Item>
         </Descriptions>
@@ -217,19 +247,49 @@ const YoutubeFormDescription = ({
               {editBtnText}
             </Button>
           </Popconfirm>
-          <Popconfirm
-            placement="topLeft"
-            title="Are you sure you want to Cancel?"
-            onConfirm={cancelConfirm}
+          <Button
+            danger
+            type="primary"
             className="mt-30 mr-10"
-            okText="Yes"
-            cancelText="No"
             disabled={isCancelBtnDisabled}
+            onClick={() => {
+              setIsCancelModalVisible(true);
+            }}
           >
-            <Button danger type="primary" disabled={isCancelBtnDisabled}>
-              Cancel
-            </Button>
-          </Popconfirm>
+            Cancel
+          </Button>
+          <Modal
+            title="State Reason For Cancellation"
+            visible={isCancelModalVisible}
+            onOk={cancelConfirm}
+            onCancel={() => {
+              setIsCancelModalVisible(false);
+            }}
+            centered
+            cancelText="Close"
+          >
+            <Space direction="vertical" size="middle">
+              <p>Select Reasons</p>
+              <Radio.Group
+                name="radiogroup"
+                defaultValue={cancellationReasons[0]}
+                className="flex flex-column"
+                onChange={cancelRadioBtnOnChange}
+              >
+                {cancellationReasons.map((elem, idx) => (
+                  <Radio key={idx} value={elem}>
+                    {elem}
+                  </Radio>
+                ))}
+              </Radio.Group>
+              <Input.TextArea
+                showCount
+                maxLength={500}
+                onChange={cancelInputOnChange}
+                disabled={isCancelInputDisabled}
+              />
+            </Space>
+          </Modal>
           <Button
             type="primary"
             className="mt-30 mr-10"

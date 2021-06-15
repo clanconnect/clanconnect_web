@@ -1,5 +1,11 @@
 import demoImg from "assets/images/project1.jpg";
 import influencer from "assets/images/influencer.jpg";
+export const cancellationReasons = [
+  "The creative has an error",
+  "The campaign is postponed",
+  "The campaign is cancelled",
+  "Other",
+];
 export const languages = [
   { name: "Afrikaans", value: "af" },
   { name: "Amharic", value: "am" },
