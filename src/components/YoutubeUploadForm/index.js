@@ -105,6 +105,7 @@ const YoutubeUploadForm = ({
         setUploadingFile(false);
         setIsUploadComplete(true);
         setImageRequiredState(false);
+        form.setFieldsValue({ thumbnail: uploadedFiles[0].server });
         console.log("uploaded Files", uploadedFiles);
         console.log("uploaded Media", uploadedMedia);
       })
@@ -170,7 +171,9 @@ const YoutubeUploadForm = ({
     message.error("Form errored");
   };
 
-  const normFile = (e) => {};
+  const normFile = (e) => {
+    console.log(e);
+  };
 
   const handleCountryChange = (value) => {
     dispatch({
@@ -219,47 +222,40 @@ const YoutubeUploadForm = ({
 
           {showForm && (
             <Form.Item
-              name="upload"
+              name="thumbnail"
               label="Video Thumbnail"
               valuePropName="fileList"
+              shouldUpdate
               rules={[
                 {
                   required: imageRequiredState,
-                  message: "Please upload the video thumbnail!",
                 },
               ]}
               getValueFromEvent={normFile}
               extra="Upload thumbnail of size less than 2MB and of format jpeg/png"
             >
-              <Row justify="start" gutter={8}>
-                <Col>
-                  <Upload
-                    name="thumbnail"
-                    onChange={handleMediaChange}
-                    multiple={false}
-                    beforeUpload={beforeImageUpload}
-                    progress={uploadProgress}
-                    maxCount={1}
-                  >
-                    <Button icon={<UploadOutlined />}>Select File</Button>
-                  </Upload>
-                  {/* <input type="file" onChange={beforeImageUpload} /> */}
-                </Col>
-                <Col>
-                  <Button
-                    type="primary"
-                    onClick={handleMediaUpload}
-                    disabled={fileList.length === 0}
-                    loading={uploadingFile}
-                  >
-                    {isUploadComplete
-                      ? "Uploaded"
-                      : uploadingFile
-                      ? "Uploading"
-                      : "Upload"}
-                  </Button>
-                </Col>
-              </Row>
+              <Upload
+                onChange={handleMediaChange}
+                multiple={false}
+                beforeUpload={beforeImageUpload}
+                progress={uploadProgress}
+                maxCount={1}
+              >
+                <Button icon={<UploadOutlined />}>Select File</Button>
+              </Upload>
+              <Button
+                type="primary"
+                className="upload-btn"
+                onClick={handleMediaUpload}
+                disabled={fileList.length === 0}
+                loading={uploadingFile}
+              >
+                {isUploadComplete
+                  ? "Uploaded"
+                  : uploadingFile
+                  ? "Uploading"
+                  : "Upload"}
+              </Button>
             </Form.Item>
           )}
           {!showForm && (

@@ -294,6 +294,9 @@ const YoutubeFormDescription = ({
             type="primary"
             className="mt-30 mr-10"
             disabled={isGoLiveBtnDisabled}
+            onClick={() => {
+              setIsGoLiveModalVisible(true);
+            }}
           >
             Go Live
           </Button>
