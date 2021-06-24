@@ -126,6 +126,7 @@ const InstagramFormDescription = ({
     const liveAt_ = new Date(instagramData?.liveAt).getTime();
     if (utcNow > liveAt_) {
       setIsGoLiveBtnDisabled(true);
+      setIsCancelBtnDisabled(true);
     }
     if (
       utcNow > liveAt_ &&
@@ -156,11 +157,6 @@ const InstagramFormDescription = ({
           <Descriptions.Item label="Schedule" span={4}>
             {`${moment(instagramData?.liveAt).format("DD/MM/YYYY, h:mma")} IST`}
           </Descriptions.Item>
-          {instagramData?.isCancelled && (
-            <Descriptions.Item label="Reason For Cancellation">
-              {instagramData?.cancelReason}
-            </Descriptions.Item>
-          )}
         </Descriptions>
         <Descriptions bordered labelStyle={{ width: "25%" }}>
           <Descriptions.Item label="Approval Status" span={4}>
@@ -184,6 +180,13 @@ const InstagramFormDescription = ({
               <span>{instagramData?.errorUserMessage}</span>
             )}
           </Descriptions.Item>
+        </Descriptions>
+        <Descriptions bordered labelStyle={{ width: "25%" }}>
+          {instagramData?.isCancelled && (
+            <Descriptions.Item label="Reason For Cancellation">
+              {instagramData?.cancelReason}
+            </Descriptions.Item>
+          )}
         </Descriptions>
       </Space>
       {errorText && <div style={{ marginTop: "16px" }}>{errorText}</div>}

@@ -214,6 +214,13 @@ const YoutubeFormDescription = ({
             )}
           </Descriptions.Item>
         </Descriptions>
+        <Descriptions bordered labelStyle={{ width: "25%" }}>
+          {youtubeData?.isCancelled && (
+            <Descriptions.Item label="Reason For Cancellation" span={4}>
+              {youtubeData?.cancelReason}
+            </Descriptions.Item>
+          )}
+        </Descriptions>
       </Space>
       {errorText && <div style={{ marginTop: "16px" }}>{errorText}</div>}
       <Row justify="space-between">

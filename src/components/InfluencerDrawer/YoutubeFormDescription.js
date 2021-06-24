@@ -129,6 +129,7 @@ const YoutubeFormDescription = ({
     const liveAt_ = new Date(youtubeData?.liveAt).getTime();
     if (utcNow > liveAt_) {
       setIsGoLiveBtnDisabled(true);
+      setIsCancelBtnDisabled(true);
     }
     if (
       utcNow > liveAt_ &&
@@ -193,11 +194,6 @@ const YoutubeFormDescription = ({
           <Descriptions.Item label="Notify Subscribers" span={2}>
             {youtubeData?.notifySubscribers ? "Yes" : "No"}
           </Descriptions.Item>
-          {youtubeData?.isCancelled && (
-            <Descriptions.Item label="Reason For Cancellation" span={4}>
-              {youtubeData?.cancelReason}
-            </Descriptions.Item>
-          )}
         </Descriptions>
         <Descriptions bordered labelStyle={{ width: "25%" }}>
           <Descriptions.Item label="Approval Status" span={4}>
@@ -221,6 +217,13 @@ const YoutubeFormDescription = ({
               <span>{youtubeData?.errorUserMessage}</span>
             )}
           </Descriptions.Item>
+        </Descriptions>
+        <Descriptions bordered labelStyle={{ width: "25%" }}>
+          {youtubeData?.isCancelled && (
+            <Descriptions.Item label="Reason For Cancellation" span={4}>
+              {youtubeData?.cancelReason}
+            </Descriptions.Item>
+          )}
         </Descriptions>
       </Space>
       {errorText && <div style={{ marginTop: "16px" }}>{errorText}</div>}
