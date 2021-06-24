@@ -161,7 +161,7 @@ const YoutubeFormDescription = ({
             })}
           </Descriptions.Item>
           <Descriptions.Item label="Schedule" span={4}>
-            {moment(youtubeData?.liveAt).format("h:mm A, DD/MM/YYYY")}
+            {`${moment(youtubeData?.liveAt).format("DD/MM/YYYY, h:mma")} IST`}
           </Descriptions.Item>
           <Descriptions.Item label="Made for Kids" span={2}>
             {youtubeData?.madeForKids ? "Yes" : "No"}

@@ -154,7 +154,7 @@ const InstagramFormDescription = ({
             {instagramData?.caption}
           </Descriptions.Item>
           <Descriptions.Item label="Schedule" span={4}>
-            {moment(instagramData?.liveAt).format("h:mm A, DD/MM/YYYY")}
+            {`${moment(instagramData?.liveAt).format("DD/MM/YYYY, h:mma")} IST`}
           </Descriptions.Item>
           {instagramData?.isCancelled && (
             <Descriptions.Item label="Reason For Cancellation">
