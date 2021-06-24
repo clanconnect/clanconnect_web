@@ -5,7 +5,6 @@ import {
   Tag,
   Popconfirm,
   message,
-  Badge,
   Row,
   Col,
   Space,
@@ -244,24 +243,14 @@ const InstagramFormDescription = ({
           </Modal>
         </Col>
         <Col>
-          <Badge
-            size="small"
-            style={{
-              background: "mediumseagreen",
-              fontSize: "11px",
-            }}
-            count={creative.stats.unreadComments}
-            offset={[-8, +30]}
+          <Button
+            ref={commentBlockBtn}
+            type="primary"
+            onClick={handleShowCommentBlock}
+            className="mt-30 mr-3"
           >
-            <Button
-              ref={commentBlockBtn}
-              type="primary"
-              onClick={handleShowCommentBlock}
-              className="mt-30 mr-3"
-            >
-              Add Comments
-            </Button>
-          </Badge>
+            Add Comments
+          </Button>
         </Col>
       </Row>
     </>
