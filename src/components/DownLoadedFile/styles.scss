@@ -97,16 +97,20 @@
   margin-top: 30px;
 }
 
-.date-box {
+.creative-footer {
+  display: flex;
+  justify-content: space-between;
   margin-top: 4px;
-}
-
-.date-text {
-  margin-left: 4px;
   color: #5d5d5d;
-  font-family: 300;
+
+  .date-text {
+    margin-left: 4px;
+    color: #5d5d5d;
+    font-family: 300;
+  }
 }
 .approved-schedules {
+  margin-top: 3px;
   font-size: 13px;
   color: #5d5d5d;
 }

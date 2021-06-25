@@ -115,7 +115,7 @@ const CreativeModal = ({
         status: value,
         projectId: projectId.id,
         creativeId: creative.id,
-        mediaId: currentMedia.id,
+        mediaId: currentMedia?.id,
         currentStatus: creative.status,
       })
     );

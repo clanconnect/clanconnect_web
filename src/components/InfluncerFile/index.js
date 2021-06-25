@@ -1,6 +1,6 @@
 import React from "react";
 import { downloadMedia } from "helpers";
-import { Checkbox } from "antd";
+import { Checkbox, Tag } from "antd";
 import {
   CalendarOutlined,
   YoutubeOutlined,
@@ -30,6 +30,7 @@ const InfluncerFile = ({
     }
     setSelectedCreatives(Array.from(uppdatedCreative));
   };
+
   const projectId = useParams();
   return creativeDetails
     ? creativeDetails.map((data, index) => {
@@ -119,14 +120,17 @@ const InfluncerFile = ({
                         </div>
                       )}
                     </div>
-                    <p className="date-box">
-                      <CalendarOutlined />
-                      <span className="date-text">
-                        {moment(
-                          item.media[0].createdAt && item.media[0].createdAt
-                        ).format("DD/MM/YYYY")}
-                      </span>
-                    </p>
+                    <div className="creative-footer">
+                      <div className="date-box">
+                        <CalendarOutlined />
+                        <span className="date-text">
+                          {moment(item.media[0].createdAt).format("DD/MM/YYYY")}
+                        </span>
+                      </div>
+                      <div className="versions">
+                        Versions: {item.latestVersion}
+                      </div>
+                    </div>
                     {(item.socials.youtube || item.socials.instagram) && (
                       <SocialList creative={item} />
                     )}
@@ -158,25 +162,39 @@ const SocialList = ({ creative }) => {
       {instagramSocial && youtubeSocial && (
         <>
           <p>
-            <YoutubeOutlined style={{ color: "#FF0000" }} /> Scheduled at{" "}
-            {moment(youtubeSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+            <Tag color="red">
+              <YoutubeOutlined style={{ color: "#FF0000", fontSize: "14px" }} />{" "}
+              Scheduled At
+            </Tag>
+            {moment(youtubeSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
           </p>
           <p>
-            <InstagramOutlined style={{ color: "#833AB4" }} /> Scheduled at{" "}
-            {moment(instagramSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+            <Tag color="purple">
+              <InstagramOutlined
+                style={{ color: "#833AB4", fontSize: "14px" }}
+              />{" "}
+              Scheduled at
+            </Tag>
+            {moment(instagramSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
           </p>
         </>
       )}
       {instagramSocial && !youtubeSocial && (
         <p>
-          <InstagramOutlined style={{ color: "#833AB4" }} /> Scheduled at{" "}
-          {moment(instagramSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+          <Tag color="purple">
+            <InstagramOutlined style={{ color: "#833AB4", fontSize: "14px" }} />{" "}
+            Scheduled at
+          </Tag>
+          {moment(instagramSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
         </p>
       )}
       {!instagramSocial && youtubeSocial && (
         <p>
-          <YoutubeOutlined style={{ color: "#FF0000" }} /> Scheduled at{" "}
-          {moment(youtubeSocial.liveAt).format("h:mm A, DD/MM/YYYY")}
+          <Tag color="red">
+            <YoutubeOutlined style={{ color: "#FF0000", fontSize: "14px" }} />{" "}
+            Scheduled At
+          </Tag>
+          {moment(youtubeSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
         </p>
       )}
     </div>
