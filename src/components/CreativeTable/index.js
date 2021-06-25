@@ -29,6 +29,7 @@ const CreativeTable = ({ allCreativeDetails, pagination = {} }) => {
           versionTrue
           className="version-title"
           creative={record}
+          onAllCreativesPage={true}
         />
       ),
       key: "posts",

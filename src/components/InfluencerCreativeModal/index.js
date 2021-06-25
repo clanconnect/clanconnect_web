@@ -72,6 +72,7 @@ const InfluencerCreativeModal = ({
   creative = {},
   project = {},
   compactView,
+  onAllCreativesPage,
 }) => {
   const [visible, setVisible] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
@@ -206,7 +207,7 @@ const InfluencerCreativeModal = ({
           </div>
 
           <div className="creative-modal-body">
-            <div className="flex mobile-section">
+            <div className="flex justify-center mobile-section">
               <div className="carousal-section">
                 {creative?.media?.length > 1 ? (
                   <LeftOutlined
@@ -237,44 +238,46 @@ const InfluencerCreativeModal = ({
                   />
                 ) : null}
               </div>
-
-              <div className="comment-section">
-                <div className="flex justify-between items-center">
-                  <p className="view-title" onClick={showAttachFiles}>
-                    View Attachments{" "}
-                    <UpOutlined
-                      className={`${
-                        showAttachments ? "icon-animation" : "trans-icon"
-                      } ml-4 `}
-                    />
-                  </p>
-
-                  <BrandUploadDocumentModal
-                    src={paperclip}
-                    project={project}
-                    creative={creative}
-                  />
-                </div>
-
-                {showAttachments ? (
-                  <div
-                    className={`tarnsition animate__animated animate__fadeIn`}
-                  >
-                    {creative.attachments.length !== 0 ? (
-                      creative.attachments.map((media) => (
-                        <AttachmentFileCard media={media} />
-                      ))
-                    ) : (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        style={{ margin: "0px" }}
+              {/* Remove comment section when not on `All Creatives` Page */}
+              {!onAllCreativesPage && (
+                <div className="comment-section">
+                  <div className="flex justify-between items-center">
+                    <p className="view-title" onClick={showAttachFiles}>
+                      View Attachments{" "}
+                      <UpOutlined
+                        className={`${
+                          showAttachments ? "icon-animation" : "trans-icon"
+                        } ml-4 `}
                       />
-                    )}
+                    </p>
+
+                    <BrandUploadDocumentModal
+                      src={paperclip}
+                      project={project}
+                      creative={creative}
+                    />
                   </div>
-                ) : (
-                  <CommentBox creativeId={creative.id} />
-                )}
-              </div>
+
+                  {showAttachments ? (
+                    <div
+                      className={`tarnsition animate__animated animate__fadeIn`}
+                    >
+                      {creative.attachments.length !== 0 ? (
+                        creative.attachments.map((media) => (
+                          <AttachmentFileCard media={media} />
+                        ))
+                      ) : (
+                        <Empty
+                          image={Empty.PRESENTED_IMAGE_SIMPLE}
+                          style={{ margin: "0px" }}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <CommentBox creativeId={creative.id} />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

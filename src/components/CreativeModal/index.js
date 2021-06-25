@@ -32,6 +32,7 @@ const CreativeModal = ({
   creative,
   projectId,
   influncerName,
+  onAllCreativesPage,
 }) => {
   const dispatch = useDispatch();
   let { id } = useParams();
@@ -258,7 +259,7 @@ const CreativeModal = ({
             </div>
           </div>
           <div className="creative-modal-body">
-            <div className="flex mobile-section">
+            <div className="flex justify-center mobile-section">
               <div className="carousal-section">
                 {creative?.media?.length > 1 ? (
                   <LeftOutlined
@@ -320,48 +321,54 @@ const CreativeModal = ({
                   />
                 ) : null}
               </div>
-              <div className="comment-section">
-                <div className="flex justify-between items-center">
-                  <p
-                    className="view-title"
-                    onClick={() => setShowFiles(!showFiles)}
-                  >
-                    View Attachments{" "}
-                    <UpOutlined
-                      className={`${
-                        showFiles ? "icon-animation" : "trans-icon"
-                      } ml-4 `}
-                    />
-                  </p>
-
-                  <BrandUploadDocumentModal
-                    src={paperclip}
-                    creative={creative}
-                    project={{ id }}
-                  />
-                </div>
-                {showFiles ? (
-                  <div
-                    className={`tarnsition animate__animated animate__fadeIn`}
-                  >
-                    {creative.attachments.length !== 0 ? (
-                      creative.attachments.map((media) => (
-                        <AttachmentFileCard
-                          media={media}
-                          key={`attachment-media-${media.id}`}
-                        />
-                      ))
-                    ) : (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        style={{ margin: "0" }}
+              {/* Remove comment section when not on `All Creatives` Page */}
+              {!onAllCreativesPage && (
+                <div className="comment-section">
+                  <div className="flex justify-between items-center">
+                    <p
+                      className="view-title"
+                      onClick={() => setShowFiles(!showFiles)}
+                    >
+                      View Attachments{" "}
+                      <UpOutlined
+                        className={`${
+                          showFiles ? "icon-animation" : "trans-icon"
+                        } ml-4 `}
                       />
-                    )}
+                    </p>
+
+                    <BrandUploadDocumentModal
+                      src={paperclip}
+                      creative={creative}
+                      project={{ id }}
+                    />
                   </div>
-                ) : (
-                  <CommentBox creativeId={creative.id} showFiles={showFiles} />
-                )}
-              </div>
+                  {showFiles ? (
+                    <div
+                      className={`tarnsition animate__animated animate__fadeIn`}
+                    >
+                      {creative.attachments.length !== 0 ? (
+                        creative.attachments.map((media) => (
+                          <AttachmentFileCard
+                            media={media}
+                            key={`attachment-media-${media.id}`}
+                          />
+                        ))
+                      ) : (
+                        <Empty
+                          image={Empty.PRESENTED_IMAGE_SIMPLE}
+                          style={{ margin: "0" }}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <CommentBox
+                      creativeId={creative.id}
+                      showFiles={showFiles}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

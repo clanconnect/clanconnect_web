@@ -73,6 +73,7 @@ const CreativeTableInfluencer = ({ list, pagination, loading }) => {
           creative={row}
           src={download}
           compactView={true}
+          onAllCreativesPage={true}
         />
       ),
     },
