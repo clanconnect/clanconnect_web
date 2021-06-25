@@ -42,6 +42,7 @@ const CreativeModal = ({
   const [creativeStatus, setCreativeStatus] = useState("");
   const [currentMedia, setCurrentMedia] = useState(null);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const [viewScheduleBtnDisabled, setViewSheduleBtnDisabled] = useState(false);
   const slider = useRef(null);
   const statusMap = {
     accepted: {
@@ -62,6 +63,14 @@ const CreativeModal = ({
     setCurrentMedia(creative.media[0] || {});
     setCreativeStatus(creative.media[0]?.status || "pending");
   }, [creative.media]);
+
+  useEffect(() => {
+    const instagramSocial = creative?.socials?.instagram;
+    const youtubeSocial = creative?.socials?.youtube;
+    if (!instagramSocial && !youtubeSocial) {
+      setViewSheduleBtnDisabled(true);
+    }
+  }, [creative.socials]);
 
   const menu = (status) => {
     return (
@@ -228,6 +237,7 @@ const CreativeModal = ({
               {creative?.status === "accepted" && (
                 <button
                   className="btn-submit"
+                  disabled={viewScheduleBtnDisabled}
                   onClick={() => {
                     showDrawer();
                     setVisible(false);
