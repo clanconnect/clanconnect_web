@@ -266,7 +266,7 @@ const InstagramFormDescription = ({
             Go Live
           </Button>
           <Modal
-            title="Consent Form"
+            title="Consent Notice"
             visible={isGoLiveModalVisible}
             onOk={goLiveConfirm}
             onCancel={() => {
@@ -276,9 +276,8 @@ const InstagramFormDescription = ({
             cancelText="Close"
           >
             <p>
-              By clicking on OK, you give your consent to Clanconnect to publish
-              this creative on your Instagram at the scheduled time on your
-              behalf.
+              By clicking OK, you give consent to ClanConnect to publish this
+              creative on your Instagram account at the scheduled time.
             </p>
           </Modal>
         </Col>
