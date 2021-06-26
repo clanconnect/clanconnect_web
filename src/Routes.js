@@ -62,6 +62,13 @@ const Routes = ({ location }) => {
           component={AllCreativesListsInfluencer}
           exact
         />
+        <Route
+          path="*"
+          component={() => {
+            window.location.href = `${process.env.REACT_APP_WEB_HOST}/error`;
+            return null;
+          }}
+        />
       </Switch>
     </>
   );
