@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
 import { remove, startCase, toLower } from "lodash";
+import MediaRequirementAlert from "components/MediaRequirementAlert";
 
 const UploadTypes = [
   { label: "Uploading a new creative", value: "upload new" },
@@ -312,7 +313,7 @@ const InfluencerUploadModal = ({
             )}
           </div>
         )}
-
+        {files.length > 0 && <MediaRequirementAlert files={files} />}
         <ShowUploadConsentView
           key="show-upload-consent-view"
           disablePreviousVersionUpload={disablePreviousVersionUpload}
