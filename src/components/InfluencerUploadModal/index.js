@@ -261,13 +261,24 @@ const InfluencerUploadModal = ({
               Upload a version
             </span>
           )}
-
-          {uploadNewFile === "upload new" && (
+          {uploadNewFile === "upload new" && showOldFile && (
+            <span>
+              <ArrowLeftOutlined
+                onClick={() => handleUploadNewFile("")}
+                className="mr-5"
+              />{" "}
+              Upload a version
+            </span>
+          )}
+          {uploadNewFile === "upload new" && !showOldFile && (
             <span>
               <ArrowLeftOutlined
                 onClick={() => {
                   resetUpload();
                   showUploadFilesProgress(false);
+                  setFileUploadStage(0);
+                  setUploadNewFile("");
+                  setFiles([]);
                 }}
                 className="mr-5"
               />{" "}
