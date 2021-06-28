@@ -20,7 +20,7 @@ const MediaRequirementAlert = ({ files }) => {
   }
 
   return (
-    <div className="mb-10">
+    <div className="media-requirement-collapse">
       <Collapse
         expandIconPosition="right"
         expandIcon={({ isActive }) => (
