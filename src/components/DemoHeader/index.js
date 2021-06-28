@@ -18,10 +18,9 @@ import coinsIcon from "assets/images/money.svg";
 import "./styles.scss";
 
 const DemoHeader = ({ dispatch, user }) => {
-  console.log(user.brand);
-  useEffect(() => {
-    dispatch();
-  }, []);
+  // useEffect(() => {
+  //   dispatch();
+  // }, []);
   const menu = (
     <Menu>
       <Menu.Item key="0">
