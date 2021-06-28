@@ -1,4 +1,6 @@
-import api from "./configureAxios";
+import api, {
+  axiosInstanceMediaUpload as apiMediaUpload,
+} from "./configureAxios";
 import * as qs from "query-string";
 
 export class ProjectService {
@@ -61,7 +63,7 @@ export class MediaService {
     const urls = uploadUrls.data;
     const uploadFile = async (url, file) => {
       try {
-        await api.put(url.url, file.originFileObj, {
+        await apiMediaUpload.put(url.url, file.originFileObj, {
           headers: { "content-type": file.mimeType },
           onUploadProgress: (e) => {
             setProgress(file.uid, Math.floor((e.loaded / e.total) * 100));
