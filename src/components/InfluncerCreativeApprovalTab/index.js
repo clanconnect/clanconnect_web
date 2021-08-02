@@ -119,7 +119,84 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
       <p className="cursor-pointer view-title">View all creatives</p>
     </Link>
   );
-  console.log("project ===> ", projects, "creatives ====>", creatives);
+
+  const fetchNotScheduledCreatives = (projects) => {
+    projects = projects.filter(({ creatives }) => creatives.length !== 0);
+
+    projects = projects.filter(({ creatives }) => {
+      (creatives || []).forEach((c) => {
+        return !c.socials || !c.socials.youtube || !c.socials.instagram;
+      });
+      return true;
+    });
+
+    projects = projects.map(({ creatives, project }) => {
+      creatives = creatives.filter(
+        (c) => !c.socials || !c.socials.youtube || !c.socials.instagram
+      );
+      return { project, creatives };
+    });
+
+    return projects;
+  };
+
+  const fetchScheduledCreatives = (projects) => {
+    projects = projects.filter(({ creatives }) => creatives.length !== 0);
+
+    projects = projects.filter(({ creatives }) => {
+      (creatives || []).forEach(
+        (c) => c.socials && (c.socials.youtube || c.socials.instagram)
+      );
+      return true;
+    });
+
+    projects = projects
+      .map(({ creatives, project }) => {
+        creatives = creatives.filter(
+          (c) => c.socials && (c.socials.youtube || c.socials.instagram)
+        );
+        return { project, creatives };
+      })
+      .filter(({ creatives }) => creatives.length > 0);
+
+    return projects;
+  };
+
+  const fetchLiveCreatives = (projects) => {
+    projects = projects.filter(({ creatives }) => creatives.length !== 0);
+
+    projects = projects
+      .map(({ creatives, project }) => {
+        creatives = creatives.filter(
+          (c) =>
+            c.socials &&
+            (c.socials?.youtube?.isUploaded || c.socials?.instagram?.isUploaded)
+        );
+        return { project, creatives };
+      })
+      .filter(({ creatives }) => creatives.length > 0);
+
+    return projects;
+  };
+
+  const fetchCancelledCreatives = (projects) => {
+    projects = projects.filter(({ creatives }) => creatives.length !== 0);
+
+    projects = projects
+      .map(({ creatives, project }) => {
+        creatives = creatives.filter(
+          (c) =>
+            c.socials &&
+            (c.socials?.youtube?.isCancelled ||
+              c.socials?.instagram?.isCancelled)
+        );
+        return { project, creatives };
+      })
+      .filter(({ creatives }) => creatives.length > 0);
+
+    return projects;
+  };
+
   return (
     <div className="tab-applied-proposal">
       <Tabs
@@ -134,10 +211,37 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
 
         {AvailableTabs.map((o) => (
           <TabPane tab={o.label} key={o.value}>
-            {creatives && creatives?.length !== 0 ? (
+            {o.value === "accepted" && (
+              <Tabs>
+                <TabPane tab="Non-scheduled" key="non-scheduled">
+                  {fetchNotScheduledCreatives(creatives).map((obj, index) => {
+                    return ProjectCreatives(obj, index);
+                  })}
+                </TabPane>
+                <TabPane tab="Scheduled" key="scheduled">
+                  {fetchScheduledCreatives(creatives).map((obj, index) => {
+                    return ProjectCreatives(obj, index);
+                  })}
+                </TabPane>
+                <TabPane tab="Live" key="live">
+                  {fetchLiveCreatives(creatives).map((obj, index) => {
+                    return ProjectCreatives(obj, index);
+                  })}
+                </TabPane>
+                <TabPane tab="Cancelled" key="cancelled">
+                  {fetchCancelledCreatives(creatives).map((obj, index) => {
+                    return ProjectCreatives(obj, index);
+                  })}
+                </TabPane>
+              </Tabs>
+            )}
+
+            {o.value !== "accepted" && creatives && creatives?.length !== 0 ? (
               creatives
                 .filter(({ creatives }) => creatives.length !== 0)
-                .map((obj, index) => ProjectCreatives(obj, index))
+                .map((obj, index) => {
+                  return ProjectCreatives(obj, index);
+                })
             ) : (
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )}

@@ -6,7 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 
 //redux imports
-import { logger } from "redux-logger";
 import { createStore, applyMiddleware, compose } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
@@ -22,7 +21,7 @@ import App from "./App";
 //sass
 import "./index.scss";
 
-const middleWares = [logger];
+const middleWares = [];
 
 const sagaMiddleware = createSagaMiddleware();
 
