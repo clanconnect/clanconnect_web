@@ -29,6 +29,7 @@ axiosInstance.interceptors.request.use((config) => {
     // "_irida_session=hSNxvXmrnxg1Uql2etMePnSViHOJuhx7AIatB%2FwqkGlNc3CBKK8qOccVnpaXckbwv4MK6RVDPS6f2C6ROCteYJ7h%2ByPRrU5Z3A%2B4IoJWhKA%2F0yBHsL0W9e31k2npFOWPJK%2BLuinTTjjDL%2Bw%2B4JKMP6PUvQB7svAMv%2Fouwn9gOT55g09YW5ytEKxzixCOAtbudEZ045XekKclyywEO2WtnBFm%2B3MpCBDyqT4%2FF0AeHPRLSSNSi4QrHNDApTo9DK6z99WhaQ%3D%3D--DY4CCnUq%2Bfkxjt2S--1jZbi17UHaNOE9lgOSc5GA%3D%3D";
   }
   config.headers = headers;
+  console.log('CONFIG', config)
   return config;
 });
 
@@ -40,6 +41,7 @@ axiosInstance.interceptors.response.use(
   (err) => {
     console.log("err=>>", err);
     if (err.response.status !== 422) {
+      console.log('ERROR', err)
       toast.error(err.response.data.message);
     }
 

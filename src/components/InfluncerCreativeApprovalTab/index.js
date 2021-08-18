@@ -18,7 +18,7 @@ const ProjectList = (projects) => {
           project={project}
           key={`projects-${project.id}`}
           creatives={[]}
-          disablePreviousVersionUpload={true}
+          disablePreviousVersionUpload={false}
         />
       ))
   ) : (

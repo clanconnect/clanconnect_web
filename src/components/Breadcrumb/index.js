@@ -4,7 +4,7 @@ import './styles.scss';
 
 const Breadcrumb = ({ text }) => {
   return (
-    <div className='breadcrumb-custom'>
+    <div className='breadcrumb-custom dis-none'>
       <span>Dashboard </span>
       <span className='mlr-5'>{'>'}</span>
       <span>{text}</span>

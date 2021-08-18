@@ -10,8 +10,8 @@ const { Panel } = Collapse;
 const MediaRequirementAlert = ({ files }) => {
   const imageFile = files?.[0]?.type.includes("image") ? files[0] : null;
   const videoFile = files?.[0]?.type.includes("video") ? files[0] : null;
-  console.log(imageFile, videoFile);
-  let mediaRequirements;
+
+  let mediaRequirements = imageRequirements;
   if (imageFile) {
     mediaRequirements = imageRequirements;
   }
@@ -20,12 +20,10 @@ const MediaRequirementAlert = ({ files }) => {
   }
 
   return (
-    <div className="media-requirement-collapse">
+    <div className="media-requirement-collapse" >
       <Collapse
         expandIconPosition="right"
-        expandIcon={({ isActive }) => (
-          <CaretRightOutlined rotate={isActive ? 90 : 0} />
-        )}
+        defaultActiveKey={['1']}
       >
         <Panel
           header={
@@ -37,23 +35,39 @@ const MediaRequirementAlert = ({ files }) => {
                 }}
               />
               <span className="collapse-header-text">
-                {imageFile && "Image Requirements"}
-                {videoFile && "Video Requirements"}
+                {"Media Requirements"}
+                {/* {videoFile && "Video Requirements"} */}
               </span>
             </div>
           }
           key="1"
         >
-          {mediaRequirements?.map((o, idx) => (
-            <div key={idx}>
-              <h4>{o.socialMedia}</h4>
-              <ul>
-                {o.requirements.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <tr>
+            <td>
+              {imageRequirements?.map((o, idx) => (
+                <div key={idx}>
+                  <h4>{o.socialMedia} Image</h4>
+                  <ul>
+                    {o.requirements.map((item, idx) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </td>
+            <td>
+              {videoRequirements?.map((o, idx) => (
+                <div key={idx}>
+                  <h4>{o.socialMedia} Video</h4>
+                  <ul>
+                    {o.requirements.map((item, idx) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </td>
+          </tr>
         </Panel>
       </Collapse>
     </div>

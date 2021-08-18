@@ -37,3 +37,14 @@
     margin-left: 35px;
   }
 }
+
+.ant-upload {
+  span {
+    width: 100%;
+  }
+}
+
+
+.ant-upload.ant-upload-drag {
+  height: 80%;
+}

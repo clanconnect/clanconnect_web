@@ -47,9 +47,7 @@
     font-size: 30px;
     margin: 0;
     padding-left: 20px;
-    font-family: "Miso";
-    font-weight: 300;
-    font-size: 50px;
+    font-weight: 800;
 
     @include mobile {
       font-size: 14px;
@@ -145,7 +143,7 @@
     }
 
     p {
-      font-family: "Roboto Condensed";
+      font-family: 'Open Sans', sans-serif !important;
       font-size: 18px;
       font-weight: 400;
     }

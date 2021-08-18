@@ -112,21 +112,21 @@ const CreativeApprovalData = ({
                 {showSelectAllActive ? (
                   <>
                     <button
-                      className="outline-btn bg-green"
+                      className="btn btn-outline-primary"
                       onClick={handleSelectAll}
                     >
                       Select All
                     </button>
 
                     <button
-                      className="outline-btn btn-gray"
+                      className="btn btn-outline-grey"
                       onClick={() => setSelectedCreatives([])}
                     >
                       Deselect All
                     </button>
 
                     <button
-                      className="outline-btn bg-green-outline"
+                      className="btn btn-outline-green"
                       onClick={() => {
                         onClickSelect(false);
                         handleBulkCreatives("accepted", "pending");
@@ -135,7 +135,7 @@ const CreativeApprovalData = ({
                       Approve
                     </button>
                     <button
-                      className="outline-btn bg-red"
+                      className="btn btn-outline-secondary"
                       onClick={() => {
                         onClickSelect(false);
                         handleBulkCreatives("rejected", "pending");
@@ -145,7 +145,7 @@ const CreativeApprovalData = ({
                     </button>
 
                     <button
-                      className="outline-btn bg-blue"
+                      className="btn btn-primary"
                       onClick={() => {
                         onClickSelect(false);
                       }}
@@ -155,7 +155,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className="outline-btn bg-green"
+                    className="btn bg-green"
                     onClick={() => onClickSelect(true)}
                   >
                     Select
@@ -182,20 +182,20 @@ const CreativeApprovalData = ({
                 {showSelectAllActive ? (
                   <>
                     <button
-                      className="outline-btn bg-green"
+                      className="btn btn-outline-primary"
                       onClick={handleSelectAll}
                     >
                       Select All
                     </button>
 
                     <button
-                      className="outline-btn btn-gray"
+                      className="btn btn-outline-grey"
                       onClick={() => setSelectedCreatives([])}
                     >
                       Deselect All
                     </button>
                     <button
-                      className="outline-btn bg-red"
+                      className="btn btn-outline-secondary"
                       onClick={() => {
                         onClickSelect(false);
                         handleBulkCreatives("rejected", "accepted");
@@ -204,7 +204,7 @@ const CreativeApprovalData = ({
                       Reject
                     </button>
                     <button
-                      className="outline-btn bg-blue"
+                      className="btn btn-primary"
                       onClick={() => {
                         onClickSelect(false);
                       }}
@@ -214,7 +214,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className="outline-btn bg-green"
+                    className="btn bg-green"
                     onClick={() => onClickSelect(true)}
                   >
                     Select
@@ -243,29 +243,29 @@ const CreativeApprovalData = ({
                 {showSelectAllActive ? (
                   <>
                     <button
-                      className="outline-btn bg-green"
+                      className="btn btn-outline-primary"
                       onClick={handleSelectAll}
                     >
                       Select All
                     </button>
 
                     <button
-                      className="outline-btn btn-gray"
+                      className="btn btn-outline-grey"
                       onClick={() => setSelectedCreatives([])}
                     >
                       Deselect All
                     </button>
                     <button
-                      className="outline-btn bg-green-outline"
+                      className="btn btn-outline-green"
                       onClick={() => {
                         onClickSelect(false);
                         handleBulkCreatives("accepted", "rejected");
                       }}
                     >
-                      Approved
+                      Approve
                     </button>
                     <button
-                      className="outline-btn bg-blue"
+                      className="btn btn-primary"
                       onClick={() => {
                         onClickSelect(false);
                       }}
@@ -275,7 +275,7 @@ const CreativeApprovalData = ({
                   </>
                 ) : (
                   <button
-                    className="outline-btn bg-green"
+                    className="btn bg-green"
                     onClick={() => onClickSelect(true)}
                   >
                     Select
