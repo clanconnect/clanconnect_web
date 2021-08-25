@@ -41,10 +41,8 @@ const AllCreativesListsInfluencer = loadable(() =>
 const Routes = ({ location }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  useEffect(async () => {
-    setIsLoading(true);
-    await dispatch({ type: ACTIONS.GET_USER });
-    setIsLoading(false);
+  useEffect(() => {
+    dispatch({ type: ACTIONS.GET_USER });
   }, []);
 
   return (
