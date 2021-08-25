@@ -21,5 +21,5 @@ export function* fetchIndex() {
 }
 export default function* UserSagas() {
   // This is triggered by dispatch of GET_USER by the component
-  yield all([takeLatest(ACTIONS.GET_USER, fetchIndex)]);
+  yield all([takeLatest(ACTIONS.GET_USER, fetchIndex), fetchIndex()]);
 }

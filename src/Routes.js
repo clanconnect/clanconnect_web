@@ -44,6 +44,7 @@ const Routes = ({ location }) => {
   useEffect(() => {
     dispatch({ type: ACTIONS.GET_USER });
   }, []);
+
   return (
     <>
       <ToastContainer />
