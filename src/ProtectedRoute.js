@@ -9,7 +9,7 @@ const ProtectedRoute = ({ component: Component, user_type, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (user) {
+        if (Object.keys(user).length > 0) {
           if (user_type.includes(user.user_type)) {
             return <Component {...props} {...rest} />;
           } else {
