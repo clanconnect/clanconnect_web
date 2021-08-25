@@ -9,10 +9,12 @@ const ProtectedRoute = ({ component: Component, user_type, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (user && user_type.includes(user.user_type)) {
-          return <Component {...props} {...rest} />;
-        } else {
-          return <Redirect to={{ pathname: "/*" }} />;
+        if (user) {
+          if (user_type.includes(user.user_type)) {
+            return <Component {...props} {...rest} />;
+          } else {
+            return <Redirect to={{ pathname: "/*" }} />;
+          }
         }
       }}
     />
