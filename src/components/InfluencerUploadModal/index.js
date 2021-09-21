@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles.scss";
-import { Modal, Empty, Result } from "antd";
+import { Modal, Empty, Result, Popover, Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import UploadDocumentCard from "../UploadDocumentCard";
 import UploadAttchmentFile from "../UploadAttchmentFile";
@@ -9,11 +9,45 @@ import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
 import { remove, startCase, toLower } from "lodash";
 import MediaRequirementAlert from "components/MediaRequirementAlert";
+import { imageRequirements, videoRequirements } from "../MediaRequirementAlert/dataManager";
+
+import { Tooltip } from 'antd';
+//bootstrap icons
+import * as Icon from 'react-bootstrap-icons';
 
 const UploadTypes = [
   { label: "Uploading a new creative", value: "upload new" },
   { label: "A version of previously sent creative", value: "upload added" },
 ];
+
+const mediaRequirements = (
+  <tr>
+    <td>
+      {imageRequirements?.map((o, idx) => (
+        <div key={idx}>
+          <h4>{o.socialMedia} Image</h4>
+          <ul>
+            {o.requirements.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </td>
+    <td>
+      {videoRequirements?.map((o, idx) => (
+        <div key={idx}>
+          <h4>{o.socialMedia} Video</h4>
+          <ul>
+            {o.requirements.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </td>
+  </tr>
+)
 
 const ShowUploadConsentView = ({
   uploadNewFile,
@@ -273,7 +307,15 @@ const InfluencerUploadModal = ({
       <Modal {...ModalProps}>
         {fileUploadStage < 2 && (
           <div className="comapign-text">
-            <span>{startCase(toLower(project.title))}</span>
+            <span>
+              {startCase(toLower(project.title))}
+              <Popover content={mediaRequirements} placement="right" title="Media Requirements" trigger="hover">
+                <span><Icon.InfoCircle size={20} style={{verticalAlign: '-3px', marginLeft: '5px'}}/></span>
+              </Popover>
+              {/* <Tooltip title="prompt text" placement="bottom"> */}
+              {/*   <span><Icon.InfoCircle size={20} style={{verticalAlign: '-3px', marginLeft: '5px'}}/></span> */}
+              {/* </Tooltip> */}
+            </span>
             {showFile && (
               <span className="text-sm">{files.length} File(s) Selected</span>
             )}
@@ -355,7 +397,7 @@ const InfluencerUploadModal = ({
         </div>
 
         <div>
-          <MediaRequirementAlert files={files} />
+          {/* <MediaRequirementAlert files={files} /> */}
         </div>
       </Modal>
     </div>
