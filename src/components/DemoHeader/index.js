@@ -14,6 +14,7 @@ import folderIcon from "assets/images/folder.svg";
 import filterIcon from "assets/images/filter.svg";
 import logoutIcon from "assets/images/logout.svg";
 import coinsIcon from "assets/images/money.svg";
+import * as Icon from 'react-bootstrap-icons'
 
 import "./styles.scss";
 
@@ -24,7 +25,7 @@ const DemoHeader = ({ dispatch, user }) => {
   const menu = (
     <Menu>
       <Menu.Item key="0">
-        <img src={chatIcon} className="icon" alt="icon" />
+        <Icon.InboxFill size={20} style={{ marginRight: '5px' }} />
         <a href={`${process.env.REACT_APP_WEB_HOST}/inbox`}>
           <p className="option-title">Inbox</p>
         </a>
@@ -36,7 +37,7 @@ const DemoHeader = ({ dispatch, user }) => {
         </a>
       </Menu.Item>
       <Menu.Item key="3">
-        <img src={filterIcon} className="icon" alt="icon" />
+        <Icon.Person size={20} style={{ marginRight: '5px' }} />
         <a href={`${process.env.REACT_APP_WEB_HOST}/clan_profile`}>
           <p className="option-title">Profile Settings</p>
         </a>

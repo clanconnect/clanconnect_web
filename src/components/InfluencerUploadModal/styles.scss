@@ -1,9 +1,7 @@
 @import "styles/_colors";
 @import "styles/_mixins";
-
 .influencer-upload-modal {
   padding-bottom: 30px;
-
   .ant-modal-close {
     border: 2px solid #dacfcf;
     border-radius: 50%;
@@ -15,18 +13,15 @@
     right: -50px;
     color: black;
     font-weight: 900;
-
     @include mobile {
       top: -35px;
       right: 0;
     }
-
     @include tablet {
       top: -35px;
       right: 0;
     }
   }
-
   .ant-modal-close-x {
     display: initial;
     width: 25px;
@@ -34,24 +29,19 @@
     font-size: 13px;
     line-height: 21px;
   }
-
   .ant-modal-title {
     color: #5d5d5d;
   }
-
   .ant-modal-header {
     border-bottom: none;
     padding-bottom: 0px;
   }
-
   .upload-text {
     color: #707070;
   }
-
   .ant-modal-body {
     padding-top: 16px;
   }
-
   .btn-submit {
     background: $secondary;
     padding: 5px 16px;
@@ -66,7 +56,6 @@
       outline: none;
     }
   }
-
   .btn-cancel {
     background: none;
     border: none;
@@ -76,21 +65,18 @@
       outline: none;
     }
   }
-
   .ant-modal-footer {
     display: none;
   }
-
   .comment-btns {
-    margin-top: 45px;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
-
   .bg-outline {
     border: 1px solid $secondary;
     background-color: transparent;
     color: $secondary;
   }
-
   .conatiner-file {
     background-color: #f1f1f2;
     border: 1px solid #f0f0f0;
@@ -100,7 +86,6 @@
     max-height: 400px;
     overflow: auto;
   }
-
   .comapign-text {
     display: flex;
     justify-content: space-between;
@@ -110,14 +95,12 @@
     margin-bottom: 30px;
     padding-bottom: 5px;
     color: $text;
-
     .text-sm {
       font-weight: 300;
       font-size: 18px;
       text-transform: lowercase;
     }
   }
-
   .select-upload {
     border: 1px solid #707070;
     width: 48%;
@@ -128,33 +111,60 @@
     margin: 20px 0;
     border-radius: 10px;
     cursor: pointer;
-
     @include mobile {
       height: 120px;
       font-size: 14px;
     }
-
     &:focus {
       outline-color: $secondary;
       color: $secondary;
     }
   }
 }
+
 .width-50 {
   width: 50%;
   display: inline-block;
   margin-left: 10px;
 }
+
 .inf-upload-div {
   display: flex;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   span.new-creative-span {
     display: block;
     width: 50%;
     margin-right: 10px;
   }
 }
-.ant-modal-content {
-  margin-top: 50px;
+
+.ant-popover-content {
+  max-width: 500px;
+}
+
+.mediaRequirementContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mediaRequirementSec {
+  flex: 0 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mediaRequirementSec>.mediaRequirementSecInner {
+  flex: 1;
+}
+
+.uploadedSuccessMsg {
+  display: flex;
+  font-size: 14px;
+  .ant-result-title {
+    font-size: 16px;
+  }
+  .ant-result-icon .anticon {
+    font-size: 23px;
+  }
 }

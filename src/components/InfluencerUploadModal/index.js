@@ -21,10 +21,10 @@ const UploadTypes = [
 ];
 
 const mediaRequirements = (
-  <tr>
-    <td>
+  <div className="mediaRequirementContainer">
+    <div className="mediaRequirementSec">
       {imageRequirements?.map((o, idx) => (
-        <div key={idx}>
+        <div key={idx} className="mediaRequirementSecInner">
           <h4>{o.socialMedia} Image</h4>
           <ul>
             {o.requirements.map((item, idx) => (
@@ -33,10 +33,10 @@ const mediaRequirements = (
           </ul>
         </div>
       ))}
-    </td>
-    <td>
+    </div>
+    <div className="mediaRequirementSec">
       {videoRequirements?.map((o, idx) => (
-        <div key={idx}>
+        <div key={idx} className="mediaRequirementSecInner">
           <h4>{o.socialMedia} Video</h4>
           <ul>
             {o.requirements.map((item, idx) => (
@@ -45,8 +45,8 @@ const mediaRequirements = (
           </ul>
         </div>
       ))}
-    </td>
-  </tr>
+    </div>
+  </div>
 )
 
 const ShowUploadConsentView = ({
@@ -62,9 +62,8 @@ const ShowUploadConsentView = ({
     <div>
       <p className="text-center mt-30 mb-10">Please select one option:</p>
       <div
-        className={`flex ${
-          disablePreviousVersionUpload ? "justify-center" : "justify-between"
-        }`}
+        className={`flex ${disablePreviousVersionUpload ? "justify-center" : "justify-between"
+          }`}
       >
       </div>
     </div>
@@ -95,9 +94,8 @@ const UploadNewCreatives = ({
               </p>
               <UploadAttchmentFile
                 fileName={selectedCreative.id}
-                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                  selectedCreative?.media[0]?.slug || "default"
-                }`}
+                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${selectedCreative?.media[0]?.slug || "default"
+                  }`}
                 mimeType={selectedCreative?.media[0]?.mimeType || ""}
                 uploadedFile
               />
@@ -309,8 +307,8 @@ const InfluencerUploadModal = ({
           <div className="comapign-text">
             <span>
               {startCase(toLower(project.title))}
-              <Popover content={mediaRequirements} placement="right" title="Media Requirements" trigger="hover">
-                <span><Icon.InfoCircle size={20} style={{verticalAlign: '-3px', marginLeft: '5px'}}/></span>
+              <Popover content={mediaRequirements} placement="rightTop" title="Media Requirements" trigger="hover" arrowPointAtTop>
+                <span><Icon.InfoCircle size={20} style={{ verticalAlign: '-3px', marginLeft: '5px' }} /></span>
               </Popover>
               {/* <Tooltip title="prompt text" placement="bottom"> */}
               {/*   <span><Icon.InfoCircle size={20} style={{verticalAlign: '-3px', marginLeft: '5px'}}/></span> */}
@@ -351,7 +349,7 @@ const InfluencerUploadModal = ({
             }
           </span>
           {fileUploadStage === 2 && (
-            <Result
+            <Result className="uploadedSuccessMsg"
               status="success"
               title="All creatives sucesfully uploaded"
               subTitle="Would you like to upload more creatives?"
@@ -380,9 +378,8 @@ const InfluencerUploadModal = ({
                     <UploadAttchmentFile
                       key={`previous-creative-version-${creative.id}`}
                       fileName={creative.id}
-                      icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                        creative?.media[0]?.slug || "default"
-                      }`}
+                      icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug || "default"
+                        }`}
                       mimeType={creative?.media[0]?.mimeType}
                       uploadedFile
                       handleClick={() => selectCreative(creative)}
