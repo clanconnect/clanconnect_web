@@ -16,7 +16,7 @@ const AllCreativesListsInfluencer = (props) => {
 
           <div className="list-wrapper">
             <div>
-              <h2 className="list-title">All Creatives</h2>
+              <h2 className="title-w-bdr"><span>All Creatives</span></h2>
             </div>
             <CreativeTableInfluencer />
           </div>

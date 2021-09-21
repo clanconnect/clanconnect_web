@@ -9,7 +9,7 @@ import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
 import { remove, startCase, toLower } from "lodash";
 import MediaRequirementAlert from "components/MediaRequirementAlert";
-import { imageRequirements, videoRequirements } from "../MediaRequirementAlert/dataManager";
+import { instaRequirements, youtubeRequirements } from "../MediaRequirementAlert/dataManager";
 
 import { Tooltip } from 'antd';
 //bootstrap icons
@@ -21,11 +21,11 @@ const UploadTypes = [
 ];
 
 const mediaRequirements = (
-  <tr>
-    <td>
-      {imageRequirements?.map((o, idx) => (
-        <div key={idx}>
-          <h4>{o.socialMedia} Image</h4>
+  <div className="mediaRequirementContainer">
+    <div className="mediaRequirementSec">
+      {instaRequirements?.map((o, idx) => (
+        <div key={idx} className="mediaRequirementSecInner">
+          <h4><strong>{o.socialMedia} {o.mediaType}</strong></h4>
           <ul>
             {o.requirements.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -33,11 +33,11 @@ const mediaRequirements = (
           </ul>
         </div>
       ))}
-    </td>
-    <td>
-      {videoRequirements?.map((o, idx) => (
-        <div key={idx}>
-          <h4>{o.socialMedia} Video</h4>
+    </div>
+    <div className="mediaRequirementSec">
+      {youtubeRequirements?.map((o, idx) => (
+        <div key={idx} className="mediaRequirementSecInner">
+          <h4><strong>{o.socialMedia} {o.mediaType}</strong></h4>
           <ul>
             {o.requirements.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -45,8 +45,8 @@ const mediaRequirements = (
           </ul>
         </div>
       ))}
-    </td>
-  </tr>
+    </div>
+  </div>
 )
 
 const ShowUploadConsentView = ({
@@ -62,9 +62,8 @@ const ShowUploadConsentView = ({
     <div>
       <p className="text-center mt-30 mb-10">Please select one option:</p>
       <div
-        className={`flex ${
-          disablePreviousVersionUpload ? "justify-center" : "justify-between"
-        }`}
+        className={`flex ${disablePreviousVersionUpload ? "justify-center" : "justify-between"
+          }`}
       >
       </div>
     </div>
@@ -95,9 +94,8 @@ const UploadNewCreatives = ({
               </p>
               <UploadAttchmentFile
                 fileName={selectedCreative.id}
-                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                  selectedCreative?.media[0]?.slug || "default"
-                }`}
+                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${selectedCreative?.media[0]?.slug || "default"
+                  }`}
                 mimeType={selectedCreative?.media[0]?.mimeType || ""}
                 uploadedFile
               />
@@ -274,6 +272,9 @@ const InfluencerUploadModal = ({
       {fileUploadStage < 2 && (
         <>
           <span>Upload Creative</span>
+          <Popover overlayClassName="creativeInfoPopover" getPopupContainer={node => node.parentNode} autoAdjustOverflow="true" content={mediaRequirements} placement="rightTop" title="Media Requirements" trigger="click" arrowPointAtTop>
+            <span><Icon.InfoCircle size={15} style={{ verticalAlign: '-3px', marginLeft: '5px', cursor: 'pointer' }} /></span>
+          </Popover>
         </>
       )}
     </>
@@ -309,12 +310,6 @@ const InfluencerUploadModal = ({
           <div className="comapign-text">
             <span>
               {startCase(toLower(project.title))}
-              <Popover content={mediaRequirements} placement="right" title="Media Requirements" trigger="hover">
-                <span><Icon.InfoCircle size={20} style={{verticalAlign: '-3px', marginLeft: '5px'}}/></span>
-              </Popover>
-              {/* <Tooltip title="prompt text" placement="bottom"> */}
-              {/*   <span><Icon.InfoCircle size={20} style={{verticalAlign: '-3px', marginLeft: '5px'}}/></span> */}
-              {/* </Tooltip> */}
             </span>
             {showFile && (
               <span className="text-sm">{files.length} File(s) Selected</span>
@@ -329,9 +324,9 @@ const InfluencerUploadModal = ({
           uploadNewFile={uploadNewFile}
         />
 
-        <div class="inf-upload-div">
-          <span class="new-creative-span">
-            <p className="text-center mb-30">
+        <div class="inf-upload-div" >
+          <div class="creative-box new-creative-span" >
+            <p className="text-center  mb-30">
               Upload a new creative:
             </p>
             {
@@ -349,9 +344,9 @@ const InfluencerUploadModal = ({
                 uploadingFile,
               })
             }
-          </span>
+          </div>
           {fileUploadStage === 2 && (
-            <Result
+            <Result className="uploadedSuccessMsg"
               status="success"
               title="All creatives sucesfully uploaded"
               subTitle="Would you like to upload more creatives?"
@@ -370,19 +365,18 @@ const InfluencerUploadModal = ({
           )}
 
           {(
-            <div class="width-50">
-              <p className="text-center mb-30">
+            <div class="creative-box ">
+              <p className="text-center">
                 Please select one creative for which you want to upload a version:
               </p>
               <div className="conatiner-file">
                 {creatives.length !== 0 ? (
                   creatives.map((creative) => (
-                    <UploadAttchmentFile
+                    <UploadAttchmentFile className="uploadedFile"
                       key={`previous-creative-version-${creative.id}`}
                       fileName={creative.id}
-                      icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                        creative?.media[0]?.slug || "default"
-                      }`}
+                      icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug || "default"
+                        }`}
                       mimeType={creative?.media[0]?.mimeType}
                       uploadedFile
                       handleClick={() => selectCreative(creative)}

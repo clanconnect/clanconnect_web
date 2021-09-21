@@ -1,160 +1,207 @@
-@import "styles/_colors";
-@import "styles/_mixins";
-
-.influencer-upload-modal {
-  padding-bottom: 30px;
-
-  .ant-modal-close {
-    border: 2px solid #dacfcf;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    font-size: 12px;
-    background: white;
-    top: -25px;
-    right: -50px;
-    color: black;
-    font-weight: 900;
-
-    @include mobile {
-      top: -35px;
-      right: 0;
+    @import "styles/_colors";
+    @import "styles/_mixins";
+    .influencer-upload-modal {
+      padding-bottom: 30px;
+      .ant-modal-close {
+        border: 2px solid #dacfcf;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+        background: white;
+        top: -13px;
+        right: -13px;
+        color: black;
+        font-weight: 900;
+        @media only screen and (max-width: 767px) {
+          top: 4px;
+          right: 4px;
+        }
+      }
+      .ant-modal-close-x {
+        display: initial;
+        width: 25px;
+        height: 25px;
+        font-size: 13px;
+        line-height: 21px;
+      }
+      .ant-modal-title {
+        color: #5d5d5d;
+      }
+      .ant-modal-header {
+        border-bottom: none;
+        padding-bottom: 0px;
+      }
+      .upload-text {
+        color: #707070;
+      }
+      .ant-modal-body {
+        padding-top: 16px;
+      }
+      .btn-submit {
+        background: $secondary;
+        padding: 5px 16px;
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        border-radius: 5px;
+        border: none;
+        margin-right: 10px;
+        cursor: pointer;
+        &:focus {
+          outline: none;
+        }
+      }
+      .btn-cancel {
+        background: none;
+        border: none;
+        color: #5d5d5d;
+        cursor: pointer;
+        &:focus {
+          outline: none;
+        }
+      }
+      .ant-modal-footer {
+        display: none;
+      }
+      .comment-btns {
+        margin-top: 40px;
+        margin-bottom: 15px;
+      }
+      .bg-outline {
+        border: 1px solid $secondary;
+        background-color: transparent;
+        color: $secondary;
+      }
+      .conatiner-file {
+        background-color: #f1f1f2;
+        border: 1px solid #f0f0f0;
+        padding: 10px 15px;
+        border-radius: 10px;
+        padding-bottom: 20px;
+        min-height: 243px;
+        overflow: auto;
+      }
+      .comapign-text {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 600;
+        font-size: 20px;
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 30px;
+        padding-bottom: 5px;
+        color: $text;
+        .text-sm {
+          font-weight: 300;
+          font-size: 18px;
+          text-transform: lowercase;
+        }
+      }
+      .select-upload {
+        border: 1px solid #707070;
+        width: 48%;
+        height: 200px;
+        background-color: $white;
+        color: $text;
+        font-size: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+        cursor: pointer;
+        @include mobile {
+          height: 120px;
+          font-size: 14px;
+        }
+        &:focus {
+          outline-color: $secondary;
+          color: $secondary;
+        }
+      }
     }
-
-    @include tablet {
-      top: -35px;
-      right: 0;
+    
+    .width-50 {
+      width: 50%;
+      display: inline-block;
+      margin-left: 10px;
     }
-  }
-
-  .ant-modal-close-x {
-    display: initial;
-    width: 25px;
-    height: 25px;
-    font-size: 13px;
-    line-height: 21px;
-  }
-
-  .ant-modal-title {
-    color: #5d5d5d;
-  }
-
-  .ant-modal-header {
-    border-bottom: none;
-    padding-bottom: 0px;
-  }
-
-  .upload-text {
-    color: #707070;
-  }
-
-  .ant-modal-body {
-    padding-top: 16px;
-  }
-
-  .btn-submit {
-    background: $secondary;
-    padding: 5px 16px;
-    color: #fff;
-    text-align: center;
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
-    margin-right: 10px;
-    cursor: pointer;
-    &:focus {
-      outline: none;
+    
+    .inf-upload-div {
+      display: flex;
+      width: 100%;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+      span.new-creative-span {
+        display: block;
+        width: 50%;
+        margin-right: 10px;
+      }
+      .creative-box {
+        flex: 1;
+        margin: 0 10px;
+        display: flex;
+        flex-flow: column wrap;
+        p {
+          margin-bottom: 10px;
+          flex-shrink: 1;
+          &.mb-30 {
+            margin-bottom: 30px !important;
+          }
+        }
+        >span {
+          flex-grow: 1;
+        }
+        .ant-upload.ant-upload-drag {
+          height: 100%;
+        }
+      }
     }
-  }
-
-  .btn-cancel {
-    background: none;
-    border: none;
-    color: #5d5d5d;
-    cursor: pointer;
-    &:focus {
-      outline: none;
+    
+    .ant-popover-content {
+      max-width: 500px;
     }
-  }
-
-  .ant-modal-footer {
-    display: none;
-  }
-
-  .comment-btns {
-    margin-top: 45px;
-  }
-
-  .bg-outline {
-    border: 1px solid $secondary;
-    background-color: transparent;
-    color: $secondary;
-  }
-
-  .conatiner-file {
-    background-color: #f1f1f2;
-    border: 1px solid #f0f0f0;
-    padding: 10px 15px;
-    border-radius: 10px;
-    padding-bottom: 20px;
-    max-height: 400px;
-    overflow: auto;
-  }
-
-  .comapign-text {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 600;
-    font-size: 20px;
-    border-bottom: 2px solid #f0f0f0;
-    margin-bottom: 30px;
-    padding-bottom: 5px;
-    color: $text;
-
-    .text-sm {
-      font-weight: 300;
-      font-size: 18px;
-      text-transform: lowercase;
+    
+    .mediaRequirementContainer {
+      display: flex;
+      flex-wrap: wrap;
     }
-  }
-
-  .select-upload {
-    border: 1px solid #707070;
-    width: 48%;
-    height: 200px;
-    background-color: $white;
-    color: $text;
-    font-size: 20px;
-    margin: 20px 0;
-    border-radius: 10px;
-    cursor: pointer;
-
-    @include mobile {
-      height: 120px;
+    
+    .mediaRequirementSec {
+      flex: 0 0 100%;
+      display: flex;
+      flex-wrap: wrap;
+      @media only screen and (max-width: 575px) {
+        flex-flow: column nowrap;
+      }
+      >.mediaRequirementSecInner {
+        flex: 1;
+        ul {
+          padding-left: 15px;
+          font-size: 12px;
+        }
+      }
+    }
+    
+    .mediaRequirementSec .uploadedSuccessMsg {
+      display: flex;
       font-size: 14px;
+      .ant-result-title {
+        font-size: 16px;
+      }
+      .ant-result-icon .anticon {
+        font-size: 23px;
+      }
     }
-
-    &:focus {
-      outline-color: $secondary;
-      color: $secondary;
+    
+    @media only screen and (max-width:767px) {
+      .ant-popover-placement-rightTop {
+        &.creativeInfoPopover {
+          top: 50px !important;
+          left: 10px !important;
+          .ant-popover-arrow {
+            top: -5px;
+            border-bottom-color: transparent;
+            border-top-color: #fff;
+            left: 26px;
+          }
+        }
+      }
     }
-  }
-}
-.width-50 {
-  width: 50%;
-  display: inline-block;
-  margin-left: 10px;
-}
-.inf-upload-div {
-  display: flex;
-  width: 100%;
-  margin-bottom: 20px;
-  span.new-creative-span {
-    display: block;
-    width: 50%;
-    margin-right: 10px;
-  }
-}
-.ant-modal-content {
-  margin-top: 50px;
-}

@@ -200,6 +200,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   return (
     <div className="tab-applied-proposal">
       <Tabs
+        className="tab-main"
         defaultActiveKey="campaigns"
         onChange={callback}
         tabBarExtraContent={operations}
@@ -212,7 +213,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
         {AvailableTabs.map((o) => (
           <TabPane tab={o.label} key={o.value}>
             {o.value === "accepted" && (
-              <Tabs>
+              <Tabs className="tab-sub-tabs">
                 <TabPane tab="Non-scheduled" key="non-scheduled">
                   {fetchNotScheduledCreatives(creatives).map((obj, index) => {
                     return ProjectCreatives(obj, index);

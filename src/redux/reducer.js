@@ -11,6 +11,7 @@ import CreatorInstagram from "./creators/socials/instagram/reducers";
 import BrandYoutube from "./brands/socials/youtube/reducers";
 import BrandInstagram from "./brands/socials/instagram/reducers";
 import user from "./users/reducers";
+import mobileToggleReducer from './common-reducer/mobileToggleReducer'
 
 const func = () =>
   combineReducers({
@@ -34,6 +35,8 @@ const func = () =>
 
     // User Reducer
     user,
+    // Mobile Toggle Reducer
+    mobileToggleReducer
   });
 
 export default func;

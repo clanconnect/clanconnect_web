@@ -1,7 +1,6 @@
 @import "styles/_colors";
 @import "styles/_mixins";
 @import "styles/_fonts";
-
 .header {
   position: fixed;
   top: 0;
@@ -13,26 +12,33 @@
   padding: 12px 25px;
   top: 0;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-
+  @media only screen and (max-width: 991px) {
+    padding: 12px 0px;
+  }
   @include mobile {
     padding-left: 0px;
     padding-right: 0px;
   }
-
   .header-top {
     display: flex;
     align-items: center;
     padding-right: 15px;
     padding-left: 15px;
   }
-
   .logo {
     max-height: 70px;
     padding-left: 5px;
     padding-right: 30px;
     padding-top: 0px;
     border-right: 1px solid $secondary;
-
+    @media only screen and (max-width: 991px) {
+      max-height: 55px;
+      padding-right: 15px;
+    }
+    @media only screen and (max-width: 767px) {
+      padding-left: 0;
+      border-right: none;
+    }
     @include mobile {
       padding-right: 0px;
       max-height: 35px;
@@ -40,7 +46,6 @@
       border-right: 0;
     }
   }
-
   .header-title {
     color: $secondary;
     font-weight: 300;
@@ -48,21 +53,21 @@
     margin: 0;
     padding-left: 20px;
     font-weight: 800;
-
-    @include mobile {
-      font-size: 14px;
+    @media only screen and (max-width: 1200px) {
+      font-size: 24px;
     }
-
-    @include tablet {
-      font-size: 14px;
+    @media only screen and (max-width: 991px) {
+      font-size: 20px;
+    }
+    @media only screen and (max-width: 767px) {
+      display: none;
     }
   }
-
   .profile-img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-
+    display: block;
     @include mobile {
       width: 40px;
       height: 40px;
@@ -72,13 +77,11 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-
     @include mobile {
       width: 15px;
       height: 15px;
     }
   }
-
   .profile-link {
     margin-left: 10px;
     color: #fff;
@@ -90,26 +93,55 @@
     border-radius: 50%;
     width: 60px;
     height: 60px;
-
     @include mobile {
       width: 40px;
       height: 40px;
     }
   }
-
   .profile-dropdown {
     display: flex;
     align-items: center;
     margin-left: auto;
   }
-
-  .profile-name {
-    color: #212529;
-    font-weight: 500;
-    font-size: 16px;
+  .user-info {
     padding-right: 10px;
     padding-left: 10px;
-
+    text-align: right
+  }
+  .subs-header {
+    font-size: 13px;
+    display: block;
+    text-align: right;
+    margin-right: 0px;
+    font-weight: bold;
+    color: #5d5d5d;
+    a {
+      padding: 0 5px;
+      color: #fff;
+      background-color: #cd5a0c;
+      border: 1px solid #cd5a0c;
+      &:hover {
+        background-color: #fff;
+        color: rgb(205, 90, 12);
+      }
+    }
+    &.premium {
+      a {
+        background-color: transparent;
+        border: none;
+        color: #5d5d5d;
+        padding: 0;
+        margin-left: 2px;
+        color: rgb(205, 90, 12);
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .profile-name {
+    color: #212529;
+    font-size: 14px;
     @include mobile {
       display: none;
     }
@@ -117,7 +149,7 @@
 }
 
 .option-title {
-  padding: 5px 0;
+  padding: 0px 0;
   font-size: 14px;
   border-bottom: 1px solid #ccc;
   color: #5d5d5d;
@@ -126,10 +158,9 @@
 
 .ant-dropdown-menu {
   width: 220px;
-  padding: 10px;
+  padding: 7px 15px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
-
   .ant-dropdown-menu-item {
     display: flex;
     align-items: center;
@@ -137,25 +168,21 @@
     border-bottom: 1px solid #ccc;
     padding: 5px 0;
     color: #5d5d5d;
-
     &:last-child {
       border: none;
     }
-
     p {
       font-family: 'Open Sans', sans-serif !important;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 400;
     }
   }
-
   .icon {
-    width: 20px;
-    margin-right: 10px;
+    margin-right: 5px;
     color: #5d5d5d;
     opacity: 0.5;
+    max-width: 20px;
   }
-
   .option-title {
     border: none;
   }
