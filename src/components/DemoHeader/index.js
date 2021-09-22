@@ -88,6 +88,11 @@ const DemoHeader = ({ dispatch, user }) => {
           </div>
           <span className="profile-name">{user?.brand?.name}</span>
           <span className="profile-name">{user?.name}</span>
+
+          { user.user_type == 'influencer' && user.subscription_plan_name == 'Free' && (<div><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Limited access, Go Premium</a></div>)}
+
+          { user.user_type == 'influencer' && user.subscription_plan_name && user.subscription_plan_name !== 'Free' && (<div>Premium <span>{ user.plan_validity } days left</span><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Renew Now</a></div>)}
+
           <Dropdown overlay={menu} trigger={["click"]}>
             <a
               className="ant-dropdown-link profile-link"
