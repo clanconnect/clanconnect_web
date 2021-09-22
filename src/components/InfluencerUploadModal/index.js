@@ -272,6 +272,9 @@ const InfluencerUploadModal = ({
       {fileUploadStage < 2 && (
         <>
           <span>Upload Creative</span>
+          <Popover content={mediaRequirements} placement="rightTop" title="Media Requirements" trigger="hover" arrowPointAtTop>
+            <span><Icon.InfoCircle size={20} style={{ verticalAlign: '-3px', marginLeft: '5px' }} /></span>
+          </Popover>
         </>
       )}
     </>
@@ -307,12 +310,6 @@ const InfluencerUploadModal = ({
           <div className="comapign-text">
             <span>
               {startCase(toLower(project.title))}
-              <Popover content={mediaRequirements} placement="rightTop" title="Media Requirements" trigger="hover" arrowPointAtTop>
-                <span><Icon.InfoCircle size={20} style={{ verticalAlign: '-3px', marginLeft: '5px' }} /></span>
-              </Popover>
-              {/* <Tooltip title="prompt text" placement="bottom"> */}
-              {/*   <span><Icon.InfoCircle size={20} style={{verticalAlign: '-3px', marginLeft: '5px'}}/></span> */}
-              {/* </Tooltip> */}
             </span>
             {showFile && (
               <span className="text-sm">{files.length} File(s) Selected</span>
