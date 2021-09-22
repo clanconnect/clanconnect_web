@@ -9,7 +9,7 @@ import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
 import { remove, startCase, toLower } from "lodash";
 import MediaRequirementAlert from "components/MediaRequirementAlert";
-import { imageRequirements, videoRequirements } from "../MediaRequirementAlert/dataManager";
+import { instaRequirements, youtubeRequirements } from "../MediaRequirementAlert/dataManager";
 
 import { Tooltip } from 'antd';
 //bootstrap icons
@@ -23,9 +23,9 @@ const UploadTypes = [
 const mediaRequirements = (
   <div className="mediaRequirementContainer">
     <div className="mediaRequirementSec">
-      {imageRequirements?.map((o, idx) => (
+      {instaRequirements?.map((o, idx) => (
         <div key={idx} className="mediaRequirementSecInner">
-          <h4>{o.socialMedia} Image</h4>
+          <h4><strong>{o.socialMedia} {o.mediaType}</strong></h4>
           <ul>
             {o.requirements.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -35,9 +35,9 @@ const mediaRequirements = (
       ))}
     </div>
     <div className="mediaRequirementSec">
-      {videoRequirements?.map((o, idx) => (
+      {youtubeRequirements?.map((o, idx) => (
         <div key={idx} className="mediaRequirementSecInner">
-          <h4>{o.socialMedia} Video</h4>
+          <h4><strong>{o.socialMedia} {o.mediaType}</strong></h4>
           <ul>
             {o.requirements.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -272,8 +272,8 @@ const InfluencerUploadModal = ({
       {fileUploadStage < 2 && (
         <>
           <span>Upload Creative</span>
-          <Popover content={mediaRequirements} placement="rightTop" title="Media Requirements" trigger="hover" arrowPointAtTop>
-            <span><Icon.InfoCircle size={20} style={{ verticalAlign: '-3px', marginLeft: '5px' }} /></span>
+          <Popover overlayClassName="creativeInfoPopover" getPopupContainer={node => node.parentNode} autoAdjustOverflow="true" content={mediaRequirements} placement="rightTop" title="Media Requirements" trigger="click" arrowPointAtTop>
+            <span><Icon.InfoCircle size={15} style={{ verticalAlign: '-3px', marginLeft: '5px', cursor: 'pointer' }} /></span>
           </Popover>
         </>
       )}
@@ -324,9 +324,9 @@ const InfluencerUploadModal = ({
           uploadNewFile={uploadNewFile}
         />
 
-        <div class="inf-upload-div">
-          <span class="new-creative-span">
-            <p className="text-center mb-30">
+        <div class="inf-upload-div" >
+          <div class="creative-box new-creative-span" >
+            <p className="text-center  mb-30">
               Upload a new creative:
             </p>
             {
@@ -344,7 +344,7 @@ const InfluencerUploadModal = ({
                 uploadingFile,
               })
             }
-          </span>
+          </div>
           {fileUploadStage === 2 && (
             <Result className="uploadedSuccessMsg"
               status="success"
@@ -365,14 +365,14 @@ const InfluencerUploadModal = ({
           )}
 
           {(
-            <div class="width-50">
-              <p className="text-center mb-30">
+            <div class="creative-box ">
+              <p className="text-center">
                 Please select one creative for which you want to upload a version:
               </p>
               <div className="conatiner-file">
                 {creatives.length !== 0 ? (
                   creatives.map((creative) => (
-                    <UploadAttchmentFile
+                    <UploadAttchmentFile className="uploadedFile"
                       key={`previous-creative-version-${creative.id}`}
                       fileName={creative.id}
                       icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug || "default"

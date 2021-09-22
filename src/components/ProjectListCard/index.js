@@ -7,7 +7,7 @@ const StatusBasedActions = {
     <div className="brand-list-btn">
       <InfluencerUploadModal
         btnText={"Upload Creative"}
-        style={`view-btn`}
+        style={`btn btn-outline-primary`}
         creativeUploads
         project={project}
         creatives={creatives}
@@ -19,7 +19,7 @@ const StatusBasedActions = {
     <div className="brand-list-btn">
       <InfluencerUploadModal
         btnText={"Upload Creative"}
-        style={`view-btn`}
+        style={`btn btn-outline-primary`}
         creativeUploads
         project={project}
         creatives={creatives}
@@ -58,15 +58,15 @@ const ProjectListCard = ({
 
         {!disableAction && StatusBasedActions[project.status]
           ? StatusBasedActions[project.status](
-              project,
-              creatives || [],
-              disablePreviousVersionUpload
-            )
+            project,
+            creatives || [],
+            disablePreviousVersionUpload
+          )
           : StatusBasedActions["default"](
-              project,
-              creatives || [],
-              disablePreviousVersionUpload
-            )}
+            project,
+            creatives || [],
+            disablePreviousVersionUpload
+          )}
       </div>
     </div>
   );

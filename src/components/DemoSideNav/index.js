@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { ACTIONS } from "../../redux/users/actions";
 
 import "./styles.scss";
@@ -13,9 +13,13 @@ import icon3 from "../../assets/images/Review-icon.png";
 import icon4 from "../../assets/images/project-icon.png";
 import icon5 from "../../assets/images/arwo-sidebar-icon.png";
 
-const DemoSideNav = ({ user }) => {
+const DemoSideNav = ({ user, toggleHandler }) => {
+
+  const mobileToggleState = useSelector(state => state.mobileToggleReducer)
+  console.log(mobileToggleState)
   if (user?.user_type === "agency") {
     return (
+
       <nav className="sidenav">
         <div className="right-menu">
           <ul>
@@ -88,7 +92,51 @@ const DemoSideNav = ({ user }) => {
         </div>
       </nav>
     );
-  } else {
+  }
+  else if (user?.user_type === "influencer") {
+    return (
+
+      <nav className={toggleHandler ? "sidenav" : "sidenav  sidenav-active"}>
+        <>
+          {`mobileToggleState ${mobileToggleState}`}
+        </>
+        <div className="right-menu">
+          <ul>
+            <li className="link-li">
+              <a href="/home_creator" className="link-item">
+                <Icon.Grid3x3Gap size={20} />
+                Browse
+              </a>
+            </li>
+            <li className="link-li">
+              <a href="/projects" className="link-item">
+                <Icon.Folder2Open size={20} />
+                My Campaigns
+              </a>
+            </li>
+            <li className="link-li">
+              <a href="/finance/invoicing" className="link-item">
+                <Icon.PiggyBank size={20} />
+                Invoicing
+              </a>
+            </li>
+            <li className="link-li">
+              <a href="/influencer/view_profile" className="link-item">
+                <Icon.Person size={20} />
+                <span class="inner-menu-text">
+                  View profile
+                  <span>
+                    (as seen by brands)
+                  </span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    );
+  }
+  else {
     return <></>;
   }
 };
