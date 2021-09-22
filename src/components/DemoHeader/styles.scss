@@ -100,11 +100,49 @@
     align-items: center;
     margin-left: auto;
   }
+  .user-info {
+     padding-right: 10px;
+    padding-left: 10px;
+    text-align:right
+  }
+  .subs-header {
+    
+    font-size:13px;
+    display: block;
+    text-align: right;
+  
+    margin-right: 0px;
+    font-weight: bold;
+    color:#5d5d5d;
+    
+    a {
+      padding: 0 5px;
+      color: #fff;
+      background-color: #cd5a0c;
+      border: 1px solid #cd5a0c;
+      &:hover{
+        background-color: #fff;
+        color: rgb(205, 90, 12);
+      }
+    }
+    &.premium{
+      a{
+        background-color: transparent;
+        border: none;
+        color: #5d5d5d;
+        padding: 0;
+        margin-left:2px;
+        color: rgb(205, 90, 12);
+        &:hover{
+          text-decoration:underline;
+        }
+      }
+    }
+  } 
   .profile-name {
     color: #212529;
     font-size: 14px;
-    padding-right: 10px;
-    padding-left: 10px;
+   
     @include mobile {
       display: none;
     }

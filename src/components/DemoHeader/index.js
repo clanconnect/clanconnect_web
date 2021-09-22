@@ -72,26 +72,28 @@ const DemoHeader = ({ dispatch, user }) => {
           {/* <Link to={routeConstants.allCreativesLists}>
             <span className='mr-30 profile-name'>ALL CREATIVES</span>
           </Link> */}
-          <div>
             {user.brand && Object.keys(user?.brand).length !== 0 && (
-              <img
-                src={
-                  user?.brand?.logo
-                    ? `https://irida-data.s3.amazonaws.com/uploads/brand_account/${user.brand._id}/logo/${user.brand.logo}`
-                    : dummy
-                }
-                alt="logo"
-                className="logo"
-                className="brand-profile-img"
-              />
+              <div>
+                <img
+                  src={
+                    user?.brand?.logo
+                      ? `https://irida-data.s3.amazonaws.com/uploads/brand_account/${user.brand._id}/logo/${user.brand.logo}`
+                      : dummy
+                  }
+                  alt="logo"
+                  className="logo"
+                  className="brand-profile-img"
+                />
+              </div>
             )}
+          <div className="user-info">
+            {user?.brand?.name && (<span className="profile-name">{user?.brand?.name}</span>)}
+
+            <span className="profile-name">{user?.name}</span>
+             { user.user_type == 'influencer' && user.subscription_plan_name == 'Free' && (<div className="subs-header"><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Limited access, Go Premium</a></div>)}
+
+            { user.user_type == 'influencer' && user.subscription_plan_name && user.subscription_plan_name !== 'Free' && (<div className="subs-header premium"> <span>Premium { user.plan_validity } days left.</span><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Renew Now</a></div>)}
           </div>
-          <span className="profile-name">{user?.brand?.name}</span>
-          <span className="profile-name">{user?.name}</span>
-
-          { user.user_type == 'influencer' && user.subscription_plan_name == 'Free' && (<div><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Limited access, Go Premium</a></div>)}
-
-          { user.user_type == 'influencer' && user.subscription_plan_name && user.subscription_plan_name !== 'Free' && (<div>Premium <span>{ user.plan_validity } days left</span><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Renew Now</a></div>)}
 
           <Dropdown overlay={menu} trigger={["click"]}>
             <a
