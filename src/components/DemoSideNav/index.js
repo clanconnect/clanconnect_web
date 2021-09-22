@@ -16,7 +16,6 @@ import icon5 from "../../assets/images/arwo-sidebar-icon.png";
 const DemoSideNav = ({ user, toggleHandler }) => {
 
   const mobileToggleState = useSelector(state => state.mobileToggleReducer)
-  console.log(mobileToggleState)
   if (user?.user_type === "agency") {
     return (
 
@@ -97,9 +96,6 @@ const DemoSideNav = ({ user, toggleHandler }) => {
     return (
 
       <nav className={toggleHandler ? "sidenav" : "sidenav  sidenav-active"}>
-        <>
-          {`mobileToggleState ${mobileToggleState}`}
-        </>
         <div className="right-menu">
           <ul>
             <li className="link-li">
