@@ -673,3 +673,30 @@ export const menu = [
   //     </Menu.Item >
   //   </Menu >
 ];
+
+export const talentPartnerMenu = [
+  {
+    "id": 1,
+    "menuTitle": "Dashboard",
+    "link": "talent_partner/inbox",
+    "icon": "ClipboardData"
+  },
+  {
+    "id": 2,
+    "menuTitle": "Profile Settings",
+    "link": "clan_profile",
+    "icon": "Person"
+  },
+  {
+    "id": 3,
+    "menuTitle": "Invoicing",
+    "link": "finance/invoicing",
+    "icon": "PiggyBank"
+  },
+  {
+    "id": 4,
+    "menuTitle": "Logout",
+    "link": "users/sign_out",
+    "icon": "DoorOpen"
+  }
+];

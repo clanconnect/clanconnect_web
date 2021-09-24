@@ -12,7 +12,6 @@ import * as Icon from 'react-bootstrap-icons';
 const DemoSideNav = ({ user }) => {
 
   const drodpdownMenu = menu.slice(0, 1).map((item, index) => {
-    // let IconName = `Icon.${item.Icon}`;
     const { [item.icon]: IconName } = Icon
     return (
       <Menu.Item key={item.id}>
@@ -26,7 +25,6 @@ const DemoSideNav = ({ user }) => {
   })
 
   const drodpdownMenuBottom = menu.slice(2, 3).map((item, index) => {
-    // let IconName = `Icon.${item.Icon}`;
     const { [item.icon]: IconName } = Icon
     return (
       <Menu.Item key={item.id}>
@@ -185,6 +183,48 @@ const DemoSideNav = ({ user }) => {
         </div>
       </nav>
     );
+  }
+  else if (user?.user_type === "talent_partner") {
+    return (
+    <nav className={mobileToggleState ? "sidenav sidenav-active" : "sidenav"}>
+      <div className="right-menu">
+        <div className="right-menu-top">
+          <ul>
+            <li className="link-li">
+              <a href="/home_creator" className="link-item">
+                <Icon.Grid3x3Gap size={20} />
+                Browse
+              </a>
+            </li>
+            <li className="link-li">
+              <a href="/projects" className="link-item">
+                <Icon.Folder2Open size={20} />
+                My Campaigns
+              </a>
+            </li>
+            <li className="link-li">
+              <a href="/inbox" className="link-item">
+                <Icon.InboxFill size={20} />
+                Inbox (0)
+              </a>
+            </li>
+            <li className="link-li">
+              <a href="/influencer/view_profile" className="link-item">
+                <Icon.Person size={20} />
+                <span class="inner-menu-text">
+                  View profile
+                  <span>
+                    (as seen by brands)
+                  </span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    )
+
   }
   else {
     return <></>;

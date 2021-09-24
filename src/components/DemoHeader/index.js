@@ -15,7 +15,7 @@ import filterIcon from "assets/images/filter.svg";
 import logoutIcon from "assets/images/logout.svg";
 import coinsIcon from "assets/images/money.svg";
 import * as Icon from 'react-bootstrap-icons'
-import { menu } from '../../common/dataManager'
+import { menu, talentPartnerMenu } from '../../common/dataManager'
 
 import "./styles.scss";
 
@@ -38,10 +38,23 @@ const DemoHeader = ({ user }) => {
     )
 
   })
+
+  const talentdropDown = talentPartnerMenu.map((item, index) => {
+    const { [item.icon]: IconName } = Icon
+    return (
+      <Menu.Item key={item.id}>
+
+        <IconName size={20} style={{ marginRight: '5px' }} />
+        <a href={`${process.env.REACT_APP_WEB_HOST}/${item.link}`}>
+          <p className="option-title">{item.menuTitle}</p>
+        </a>
+      </Menu.Item>
+    )
+  })
+
   const dropdownWhole = () => {
-    console.log(drodpdownMenu)
     return <Menu>
-      {drodpdownMenu}
+      {user.user_type == 'influencer' ? drodpdownMenu : talentdropDown}
     </Menu>
   }
 
