@@ -28,5 +28,22 @@
   }
   .progress-custom {
     margin-left: auto;
+    width: 100% !important;
   }
+}
+
+.ant-result.ant-result-success.uploadedSuccessMsg {
+  width: 100%;
+}
+
+.uploadedSuccessMsg .ant-result-icon {
+  margin-bottom: 10px;
+}
+
+.ant-result.ant-result-success.uploadedSuccessMsg .ant-result-title {
+  font-size: 14px;
+}
+
+.uploadedSuccessMsg .ant-result-icon {
+  margin-bottom: 10px;
 }

@@ -1,24 +1,49 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { ACTIONS } from "../../redux/users/actions";
+import { Menu, Dropdown } from "antd";
+import { menu } from '../../common/dataManager'
 
 import "./styles.scss";
 
 //bootstrap icons
 import * as Icon from 'react-bootstrap-icons';
 
-import icon1 from "../../assets/images/dashboard-icon.png";
-import icon2 from "../../assets/images/list-icon.png";
-import icon3 from "../../assets/images/Review-icon.png";
-import icon4 from "../../assets/images/project-icon.png";
-import icon5 from "../../assets/images/arwo-sidebar-icon.png";
+const DemoSideNav = ({ user }) => {
 
-const DemoSideNav = ({ user, toggleHandler }) => {
+  const drodpdownMenu = menu.slice(0, 1).map((item, index) => {
+    // let IconName = `Icon.${item.Icon}`;
+    const { [item.icon]: IconName } = Icon
+    return (
+      <Menu.Item key={item.id}>
+        <IconName size={20} style={{ marginRight: '5px' }} />
+        <a href={`${process.env.REACT_APP_WEB_HOST}/${item.link}`}>
+          <p className="option-title">{item.menuTitle}</p>
+        </a>
+      </Menu.Item>
+    )
 
-  const mobileToggleState = useSelector(state => state.mobileToggleReducer)
+  })
+
+  const drodpdownMenuBottom = menu.slice(2, 3).map((item, index) => {
+    // let IconName = `Icon.${item.Icon}`;
+    const { [item.icon]: IconName } = Icon
+    return (
+      <Menu.Item key={item.id}>
+
+        <IconName size={12} style={{ marginRight: '5px' }} />
+        <a href={`${process.env.REACT_APP_WEB_HOST}/${item.link}`}>
+          <p className="option-title">{item.menuTitle}</p>
+        </a>
+      </Menu.Item>
+    )
+
+  })
+
+
+  const mobileToggleState = useSelector(state => state.mobileToggleReducer.isMobileMenuOpen)
   if (user?.user_type === "agency") {
     return (
-
       <nav className="sidenav">
         <div className="right-menu">
           <ul>
@@ -94,40 +119,69 @@ const DemoSideNav = ({ user, toggleHandler }) => {
   }
   else if (user?.user_type === "influencer") {
     return (
-
-      <nav className={toggleHandler ? "sidenav" : "sidenav  sidenav-active"}>
+      <nav className={mobileToggleState ? "sidenav sidenav-active" : "sidenav"}>
         <div className="right-menu">
-          <ul>
-            <li className="link-li">
-              <a href="/home_creator" className="link-item">
-                <Icon.Grid3x3Gap size={20} />
-                Browse
+          <div className="right-menu-top">
+            <div class="right-menu-userinfo">
+              <a
+                className="ant-dropdown-link profile-link"
+                onClick={(e) => e.preventDefault()}
+              >
+                <a href={`${process.env.REACT_APP_WEB_HOST}/clan_profile`}>
+                  <img
+                    src={user?.image ? user.image : "https://via.placeholder.com/100"}
+                    alt="logo"
+                    className="logo profile-img"
+                  />
+                </a>
+                <div className="prof-right-content">
+                  <a className="prof-name" href={`${process.env.REACT_APP_WEB_HOST}/clan_profile`}>
+                    {user?.brand?.name && (<span className="profile-name">{user?.brand?.name}</span>)}
+
+                    <span className="profile-name">{user?.name}</span>
+                  </a>
+                  {user.user_type == 'influencer' && user.subscription_plan_name == 'Free' && (<div className="subs-header"><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Limited access, Go Premium</a></div>)}
+
+                  {user.user_type == 'influencer' && user.subscription_plan_name && user.subscription_plan_name !== 'Free' && (<div className="subs-header premium"> <span>Premium {user.plan_validity} days left.</span><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Renew Now</a></div>)}
+                </div>
               </a>
-            </li>
-            <li className="link-li">
-              <a href="/projects" className="link-item">
-                <Icon.Folder2Open size={20} />
-                My Campaigns
-              </a>
-            </li>
-            <li className="link-li">
-              <a href="/finance/invoicing" className="link-item">
-                <Icon.PiggyBank size={20} />
-                Invoicing
-              </a>
-            </li>
-            <li className="link-li">
-              <a href="/influencer/view_profile" className="link-item">
-                <Icon.Person size={20} />
-                <span class="inner-menu-text">
-                  View profile
-                  <span>
-                    (as seen by brands)
+            </div>
+            <Menu>{drodpdownMenu}</Menu>
+            <ul>
+              <li className="link-li">
+                <a href="/home_creator" className="link-item">
+                  <Icon.Grid3x3Gap size={20} />
+                  Browse
+                </a>
+              </li>
+              <li className="link-li">
+                <a href="/projects" className="link-item">
+                  <Icon.Folder2Open size={20} />
+                  My Campaigns
+                </a>
+              </li>
+              <li className="link-li">
+                <a href="/finance/invoicing" className="link-item">
+                  <Icon.PiggyBank size={20} />
+                  Invoicing
+                </a>
+              </li>
+              <li className="link-li">
+                <a href="/influencer/view_profile" className="link-item">
+                  <Icon.Person size={20} />
+                  <span class="inner-menu-text">
+                    View profile
+                    <span>
+                      (as seen by brands)
+                    </span>
                   </span>
-                </span>
-              </a>
-            </li>
-          </ul>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="right-menu-bottom">
+            <Menu>{drodpdownMenuBottom}</Menu>
+          </div>
         </div>
       </nav>
     );
@@ -144,5 +198,9 @@ const mapStateToProps = ({ user }) => {
     user: user.user,
   };
 };
-
-export default connect(mapStateToProps)(DemoSideNav);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: () => dispatch({ type: ACTIONS.GET_USER }),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DemoSideNav);

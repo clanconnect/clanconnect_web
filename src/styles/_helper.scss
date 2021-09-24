@@ -83,8 +83,16 @@ html {
 .top-space-commom {
   margin-top: 94px;
   height: calc(100vh - 94px);
-  @include mobile {
-    margin-top: 50px;
+  // @include mobile {
+  //   margin-top: 50px;
+  // }
+  @media only screen and (max-width: 991px) {
+    margin-top: 84px;
+    height: calc(100vh - 84px);
+  }
+  @media only screen and (max-width: 767px) {
+    margin-top: 79px;
+    height: calc(100vh - 79px);
   }
 }
 

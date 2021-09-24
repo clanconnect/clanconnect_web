@@ -4,13 +4,9 @@
 .main-wrapper-influncer {
   font-family: 'Open Sans', sans-serif !important;
   .content-wrapper {
-    padding: 40px 30px;
+    padding: 0px 15px;
     overflow-x: hidden;
     width: 100%;
-    @include mobile {
-      width: 100%;
-      margin-bottom: 50px;
-    }
     .view-link {
       margin-top: 10px;
       a {
@@ -25,7 +21,7 @@
     }
   }
   .tabs-container {
-    margin-top: 50px;
+    margin-top: 15px;
     .tabs-btn {
       background-color: #fff;
       border: 1px solid $primary;

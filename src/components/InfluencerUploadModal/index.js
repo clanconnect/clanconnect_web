@@ -345,24 +345,7 @@ const InfluencerUploadModal = ({
               })
             }
           </div>
-          {fileUploadStage === 2 && (
-            <Result className="uploadedSuccessMsg"
-              status="success"
-              title="All creatives sucesfully uploaded"
-              subTitle="Would you like to upload more creatives?"
-              extra={[
-                <button
-                  className="btn-submit"
-                  onClick={() => handleUploadNewFile("")}
-                >
-                  Yes, Upload More{" "}
-                </button>,
-                <button className="btn-cancel" onClick={() => onCancel()}>
-                  No, Thanks!
-                </button>,
-              ]}
-            />
-          )}
+
 
           {(
             <div class="creative-box ">
@@ -387,6 +370,24 @@ const InfluencerUploadModal = ({
                 )}
               </div>
             </div>
+          )}
+          {fileUploadStage === 2 && (
+            <Result className="uploadedSuccessMsg"
+              status="success"
+              title="All creatives sucesfully uploaded"
+              subTitle="Would you like to upload more creatives?"
+              extra={[
+                <button
+                  className="btn-submit"
+                  onClick={() => handleUploadNewFile("")}
+                >
+                  Yes, Upload More{" "}
+                </button>,
+                <button className="btn-cancel" onClick={() => onCancel()}>
+                  No, Thanks!
+                </button>,
+              ]}
+            />
           )}
         </div>
 
