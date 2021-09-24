@@ -166,6 +166,7 @@
         }
       }
       .subs-header {
+        font-size: 12px;
         a {
           color: #fff;
           font-weight: bold;
@@ -175,6 +176,19 @@
           font-size: 12px;
           border: 1px solid rgb(205, 90, 12);
         }
+      &.premium {
+      a {
+        background-color: transparent;
+        border: none;
+        color: #5d5d5d;
+        padding: 0;
+        margin-left: 2px;
+        color: rgb(205, 90, 12);
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
       }
     }
     &:hover {
