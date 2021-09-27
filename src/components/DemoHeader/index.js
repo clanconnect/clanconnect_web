@@ -133,9 +133,9 @@ const DemoHeader = ({ user }) => {
             {user?.brand?.name && (<span className="profile-name">{user?.brand?.name}</span>)}
 
             <span className="profile-name">{user?.name}</span>
-            {user.user_type == 'influencer' && user.subscription_plan_name == 'Free' && (<div className="subs-header"><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Limited access, Go Premium</a></div>)}
+            {(user.user_type == 'influencer' || user.user_type == 'talent_partner') && (user.subscription_plan_name == 'Free' || !user.subscription_plan_name) && (<div className="subs-header"><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Limited access, Go Premium</a></div>)}
 
-            { user.user_type == 'influencer' && user.subscription_plan_name && user.subscription_plan_name !== 'Free' && (<div className="subs-header premium"> <span>Premium | { user.plan_validity } days left.</span><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Renew Now</a></div>)}
+            { (user.user_type == 'influencer' || user.user_type == 'talent_partner') && user.subscription_plan_name && user.subscription_plan_name !== 'Free' && (<div className="subs-header premium"> <span>Premium | { user.plan_validity } days left.</span><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Renew Now</a></div>)}
           </div>
 
           <Dropdown overlay={dropdownWhole} trigger={["click"]} placement="bottomCenter">
