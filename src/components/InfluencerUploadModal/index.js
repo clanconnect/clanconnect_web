@@ -284,7 +284,10 @@ const InfluencerUploadModal = ({
     title: ModalTitle,
     maskClosable: false,
     visible,
-    onOk: () => setVisible(false),
+    destroyOnClose: true,
+    onOk: () => {
+      setVisible(false)
+    },
     onCancel: (event) => {
       onCancel(false);
       event.stopPropagation();
@@ -348,9 +351,9 @@ const InfluencerUploadModal = ({
 
 
           {(
-            <div class="creative-box ">
+            <div class="creative-box upload-older-creative">
               <p className="text-center">
-                Please select one creative for which you want to upload a version:
+                Please select to upload a new version:
               </p>
               <div className="conatiner-file">
                 {creatives.length !== 0 ? (
@@ -362,7 +365,11 @@ const InfluencerUploadModal = ({
                         }`}
                       mimeType={creative?.media[0]?.mimeType}
                       uploadedFile
-                      handleClick={() => selectCreative(creative)}
+                      handleClick={() => {
+                        //hide older creative tab
+                        document.querySelector('.upload-older-creative').style.setProperty('display', 'none', 'important')
+                        selectCreative(creative);
+                      }}
                     />
                   ))
                 ) : (

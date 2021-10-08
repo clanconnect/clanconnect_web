@@ -36,6 +36,10 @@ const UploadDocumentCard = ({
     accept: fileTypes,
   };
 
+  function hidenewCreativeTab () {
+    document.querySelector('.upload-older-creative').style.setProperty('display', 'none', 'important')
+  }
+
   return (
     <Dragger {...props}>
       <p className="ant-upload-drag-icon">
@@ -44,7 +48,7 @@ const UploadDocumentCard = ({
       </p>
       <p className="upload-text">Drag a image/document here</p>
       <div className="upload-text mb-10">- or -</div>
-      <button className="upload-btn">Select a photo from you computer</button>
+      <button onClick={hidenewCreativeTab} className="upload-btn">Select a photo from your computer</button>
     </Dragger>
   );
 };
