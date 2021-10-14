@@ -36,7 +36,7 @@
         color: #707070;
       }
       .ant-modal-body {
-        padding-top: 16px;
+        padding-top: 8px;
       }
       .btn-submit {
         background: $secondary;
@@ -65,7 +65,7 @@
         display: none;
       }
       .comment-btns {
-        margin-top: 40px;
+        margin-top: 15px;
         margin-bottom: 15px;
       }
       .bg-outline {
@@ -74,19 +74,23 @@
         color: $secondary;
       }
       .conatiner-file {
-        background-color: #f1f1f2;
-        border: 1px solid #f0f0f0;
-        padding: 10px 15px;
+        // padding: 10px 15px;
         border-radius: 10px;
-        padding-bottom: 20px;
-        min-height: 243px;
+        padding-bottom: 0px;
+        // min-height: 243px;
         overflow: auto;
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center;
+        .ant-empty-normal {
+          height: auto;
+        }
       }
       .comapign-text {
         display: flex;
         justify-content: space-between;
         font-weight: 600;
-        font-size: 20px;
+        font-size: 18px;
         border-bottom: 2px solid #f0f0f0;
         margin-bottom: 30px;
         padding-bottom: 5px;
@@ -127,18 +131,39 @@
     .inf-upload-div {
       display: flex;
       width: 100%;
-      margin-bottom: 50px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       span.new-creative-span {
         display: block;
         width: 50%;
         margin-right: 10px;
       }
+      .new-creative-span {
+        .ant-upload-drag-container {
+          .ant-upload-drag-icon {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 0;
+          }
+          .upload-text {
+            display: inline-block;
+            padding: 0 10px;
+            &.mb-10 {
+              margin-bottom: 0;
+              margin:0 10px
+            }
+          }
+        }
+      }
       .creative-box {
         flex: 1;
-        margin: 0 10px;
+        margin: 0;
         display: flex;
-        flex-flow: column wrap;
+        flex-flow: column nowrap;
+        padding: 20px;
+        border: 1px solid #f0f0f0;
+        border-radius: 8px;
+        margin-right: 60px;
         p {
           margin-bottom: 10px;
           flex-shrink: 1;
@@ -150,7 +175,20 @@
           flex-grow: 1;
         }
         .ant-upload.ant-upload-drag {
-          height: 100%;
+          height: auto;
+        }
+        &.upload-older-creative {
+          margin-left: auto;
+          position: relative;
+
+        margin-right: 0px;
+          &:before {
+            right: 100%;
+            content: "OR";
+            position: absolute;
+            right: calc(100% + 18px);
+            font-size: 16px;
+        }
         }
       }
     }

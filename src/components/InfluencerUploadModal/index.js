@@ -60,7 +60,6 @@ const ShowUploadConsentView = ({
 
   return ["upload added", "upload new"].includes(uploadNewFile) ? null : (
     <div>
-      <p className="text-center mt-30 mb-10">Please select one option:</p>
       <div
         className={`flex ${disablePreviousVersionUpload ? "justify-center" : "justify-between"
           }`}
@@ -329,7 +328,7 @@ const InfluencerUploadModal = ({
 
         <div class="inf-upload-div" >
           <div class="creative-box new-creative-span" >
-            <p className="text-center  mb-30">
+            <p className="text-center mb-20">
               Upload a new creative:
             </p>
             {
