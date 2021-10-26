@@ -151,6 +151,7 @@ const InfluencerUploadModal = ({
   dispatch,
   creatives,
   disablePreviousVersionUpload,
+  tabType
 }) => {
   const [visible, setVisible] = useState(false);
   const [uploadNewFile, setUploadNewFile] = useState("");
@@ -298,15 +299,16 @@ const InfluencerUploadModal = ({
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
-      <button
-        className={style}
-        onClick={(event) => {
-          setVisible(true);
-          event.stopPropagation();
-        }}
-      >
-        {btnText}
-      </button>
+      { tabType == 'campaign' && (<button
+                    className={style}
+                    onClick={(event) => {
+                      setVisible(true);
+                      event.stopPropagation();
+                    }}
+                  >
+                    {btnText}
+                  </button>)
+      }
       <Modal {...ModalProps}>
         {fileUploadStage < 2 && (
           <div className="comapign-text">

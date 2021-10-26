@@ -19,6 +19,7 @@ const ProjectList = (projects) => {
           key={`projects-${project.id}`}
           creatives={[]}
           disablePreviousVersionUpload={false}
+          tabType="campaign"
         />
       ))
   ) : (
@@ -32,47 +33,55 @@ function callback(key) {
   console.log(key);
 }
 
-const ProjectCreatives = ({ project, creatives }, index) => {
-  return project.length !== 0 ? (
-    <div className="custom-project-collapse">
-      <div key={`project-creatives-${project.id}`}>
-        <Collapse
-          onChange={callback}
-          expandIconPosition={"right"}
-          accordion
-          defaultActiveKey={[index === 0 ? project.id : ""]}
-        >
-          <Panel
-            showArrow={true}
-            key={project.id}
-            header={
-              <ProjectListCard
-                project={project}
-                creatives={creatives}
-                className="shadow-none "
-                rightspace
-              />
-            }
+const ProjectCreatives = ({ project, creatives }, index, tabType) => {
+  return project.length !== 0 ? ( tabType == 'campaign' ? 
+      <ProjectListCard
+        project={project}
+        creatives={creatives}
+        className="shadow-none "
+        rightspace
+        tabType={tabType}
+      /> :
+      <div className="custom-project-collapse">
+        <div key={`project-creatives-${project.id}`}>
+          <Collapse
+            onChange={callback}
+            expandIconPosition={"right"}
+            accordion
+            defaultActiveKey={[index === 0 ? project.id : ""]}
           >
-            <div className="open-container">
-              <div className="file-influencer-row">
-                {creatives.length !== 0 ? (
-                  creatives.map((creative) => (
-                    <DownLoadedFile
-                      creative={creative}
-                      key={`creative-${creative.id}`}
-                      project={project}
-                    />
-                  ))
-                ) : (
-                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                )}
+            <Panel
+              showArrow={true}
+              key={project.id}
+              header={
+                <ProjectListCard
+                  project={project}
+                  creatives={creatives}
+                  className="shadow-none "
+                  rightspace
+                  tabType={tabType}
+                />
+              }
+            >
+              <div className="open-container">
+                <div className="file-influencer-row">
+                  {creatives.length !== 0 ? (
+                    creatives.map((creative) => (
+                      <DownLoadedFile
+                        creative={creative}
+                        key={`creative-${creative.id}`}
+                        project={project}
+                      />
+                    ))
+                  ) : (
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  )}
+                </div>
               </div>
-            </div>
-          </Panel>
-        </Collapse>
+            </Panel>
+          </Collapse>
+        </div>
       </div>
-    </div>
   ) : (
     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
   );
@@ -89,6 +98,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   function callback(key) {
     if (key === "projects") {
       loadProjects({ proposalStatus: "accepted" });
+      // loadCreatives({ status: key || "accepted" });
     } else {
       loadCreatives({ status: key });
     }
@@ -97,7 +107,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   const loadProjects = ({ proposalStatus }) => {
     dispatch({
       type: PROJECT_ACTIONS.GET_INDEX,
-      payload: { query: { proposalStatus } },
+      payload: { query: { proposalStatus: "accepted", include: "creatives" } },
     });
   };
 
@@ -206,8 +216,17 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
         tabBarExtraContent={operations}
       >
         {/* campaigns tab */}
+        {/* <TabPane tab="Campaigns" key="projects"> */}
+        {/*   {ProjectList(projects)} */}
+        {/* </TabPane> */}
+
         <TabPane tab="Campaigns" key="projects">
-          {ProjectList(projects)}
+          {
+            // loadCreatives({ status: 'pending' });
+            fetchNotScheduledCreatives(creatives).map((obj, index) => {
+              return ProjectCreatives(obj, index, 'campaign');
+            })
+          }
         </TabPane>
 
         {AvailableTabs.map((o) => (

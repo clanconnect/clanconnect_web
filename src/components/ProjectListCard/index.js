@@ -3,7 +3,7 @@ import "./styles.scss";
 import InfluencerUploadModal from "../InfluencerUploadModal";
 
 const StatusBasedActions = {
-  ongoing: (project, creatives, disablePreviousVersionUpload) => (
+  ongoing: (project, creatives, disablePreviousVersionUpload, tabType) => (
     <div className="brand-list-btn">
       <InfluencerUploadModal
         btnText={"Upload Creative"}
@@ -12,10 +12,11 @@ const StatusBasedActions = {
         project={project}
         creatives={creatives}
         disablePreviousVersionUpload={disablePreviousVersionUpload}
+        tabType={tabType}
       />
     </div>
   ),
-  active: (project, creatives, disablePreviousVersionUpload) => (
+  active: (project, creatives, disablePreviousVersionUpload, tabType) => (
     <div className="brand-list-btn">
       <InfluencerUploadModal
         btnText={"Upload Creative"}
@@ -24,6 +25,7 @@ const StatusBasedActions = {
         project={project}
         creatives={creatives}
         disablePreviousVersionUpload={disablePreviousVersionUpload}
+        tabType={tabType}
       />
     </div>
   ),
@@ -45,6 +47,7 @@ const ProjectListCard = ({
   disablePreviousVersionUpload,
   className,
   rightspace,
+  tabType
 }) => {
   return (
     <div className={`brand-list ${className}`}>
@@ -60,12 +63,14 @@ const ProjectListCard = ({
           ? StatusBasedActions[project.status](
             project,
             creatives || [],
-            disablePreviousVersionUpload
+            disablePreviousVersionUpload,
+            tabType
           )
           : StatusBasedActions["default"](
             project,
             creatives || [],
-            disablePreviousVersionUpload
+            disablePreviousVersionUpload,
+            tabType
           )}
       </div>
     </div>
