@@ -444,13 +444,15 @@ const YoutubeUploadForm = ({
             ]}
           >
 
-            <Input defaultValue="public" readonly="true" />
+            {/* <Input defaultValue="public" readonly="true" /> */}
 
-            {/* <Select> */}
-            {/*   <Option value="public">Public</Option> */}
-            {/*   <Option value="private">Private</Option> */}
-            {/*   <Option value="unlisted">Unlisted</Option> */}
-            {/* </Select> */}
+            <Select
+             defaultValue={['public']}
+            >
+              <Option value="public">Public</Option>
+              {/* <Option value="private">Private</Option> */}
+              {/* <Option value="unlisted">Unlisted</Option> */}
+            </Select>
           </Form.Item>
 
           <Form.Item
