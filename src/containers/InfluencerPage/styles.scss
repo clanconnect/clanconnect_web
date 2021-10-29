@@ -1,23 +1,18 @@
 @import "styles/_colors";
 @import "styles/_mixins";
 @import "styles/_fonts";
-
 .main-wrapper-influncer {
-  font-family: "Roboto Condensed";
+  font-family: 'Open Sans', sans-serif !important;
   .content-wrapper {
-    padding: 40px 30px;
+    padding: 0px 15px;
     overflow-x: hidden;
     width: 100%;
-    @include mobile {
-      width: 100%;
-      margin-bottom: 50px;
-    }
     .view-link {
       margin-top: 10px;
       a {
         color: $secondary;
         text-decoration: none;
-        font-size: 16px;
+        font-size: 14px;
         cursor: pointer;
         &:hover {
           color: $tertiary;
@@ -25,10 +20,8 @@
       }
     }
   }
-
   .tabs-container {
-    margin-top: 50px;
-
+    margin-top: 15px;
     .tabs-btn {
       background-color: #fff;
       border: 1px solid $primary;
@@ -42,7 +35,6 @@
         outline: none;
       }
     }
-
     .active-tab {
       background-color: $primary;
       color: white;
@@ -52,16 +44,13 @@
       padding: 5px 15px;
     }
   }
-
   .con-mb {
     margin-bottom: 40px;
-
     @include mobile {
       display: flex;
       overflow-x: auto;
     }
   }
-
   .mobile-res {
     @include mobile {
       flex-direction: column;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles.scss";
-import { Modal, Empty, Result } from "antd";
+import { Modal, Empty, Result, Popover, Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import UploadDocumentCard from "../UploadDocumentCard";
 import UploadAttchmentFile from "../UploadAttchmentFile";
@@ -9,11 +9,45 @@ import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
 import { remove, startCase, toLower } from "lodash";
 import MediaRequirementAlert from "components/MediaRequirementAlert";
+import { instaRequirements, youtubeRequirements } from "../MediaRequirementAlert/dataManager";
+
+import { Tooltip } from 'antd';
+//bootstrap icons
+import * as Icon from 'react-bootstrap-icons';
 
 const UploadTypes = [
   { label: "Uploading a new creative", value: "upload new" },
   { label: "A version of previously sent creative", value: "upload added" },
 ];
+
+const mediaRequirements = (
+  <div className="mediaRequirementContainer">
+    <div className="mediaRequirementSec">
+      {instaRequirements?.map((o, idx) => (
+        <div key={idx} className="mediaRequirementSecInner">
+          <h4><strong>{o.socialMedia} {o.mediaType}</strong></h4>
+          <ul>
+            {o.requirements.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <div className="mediaRequirementSec">
+      {youtubeRequirements?.map((o, idx) => (
+        <div key={idx} className="mediaRequirementSecInner">
+          <h4><strong>{o.socialMedia} {o.mediaType}</strong></h4>
+          <ul>
+            {o.requirements.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+)
 
 const ShowUploadConsentView = ({
   uploadNewFile,
@@ -26,24 +60,10 @@ const ShowUploadConsentView = ({
 
   return ["upload added", "upload new"].includes(uploadNewFile) ? null : (
     <div>
-      <p className="text-center mt-30">Please select one option:</p>
       <div
-        className={`flex ${
-          disablePreviousVersionUpload ? "justify-center" : "justify-between"
-        }`}
+        className={`flex ${disablePreviousVersionUpload ? "justify-center" : "justify-between"
+          }`}
       >
-        {types.map((o) => (
-          <button
-            key={`upload-type-${o.value}`}
-            className="select-upload"
-            onClick={(event) => {
-              handleUploadNewFile(o.value);
-              event.stopPropagation();
-            }}
-          >
-            {o.label}
-          </button>
-        ))}
       </div>
     </div>
   );
@@ -73,9 +93,8 @@ const UploadNewCreatives = ({
               </p>
               <UploadAttchmentFile
                 fileName={selectedCreative.id}
-                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                  selectedCreative?.media[0]?.slug || "default"
-                }`}
+                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${selectedCreative?.media[0]?.slug || "default"
+                  }`}
                 mimeType={selectedCreative?.media[0]?.mimeType || ""}
                 uploadedFile
               />
@@ -251,40 +270,10 @@ const InfluencerUploadModal = ({
     <>
       {fileUploadStage < 2 && (
         <>
-          {uploadNewFile === "" && <span>Upload Creative</span>}
-          {uploadNewFile === "upload added" && (
-            <span>
-              <ArrowLeftOutlined
-                onClick={() => handleUploadNewFile("")}
-                className="mr-5"
-              />{" "}
-              Upload a version
-            </span>
-          )}
-          {uploadNewFile === "upload new" && showOldFile && (
-            <span>
-              <ArrowLeftOutlined
-                onClick={() => handleUploadNewFile("")}
-                className="mr-5"
-              />{" "}
-              Upload a version
-            </span>
-          )}
-          {uploadNewFile === "upload new" && !showOldFile && (
-            <span>
-              <ArrowLeftOutlined
-                onClick={() => {
-                  resetUpload();
-                  showUploadFilesProgress(false);
-                  setFileUploadStage(0);
-                  setUploadNewFile("");
-                  setFiles([]);
-                }}
-                className="mr-5"
-              />{" "}
-              Upload a new creative
-            </span>
-          )}
+          <span>Upload Creative</span>
+          <Popover overlayClassName="creativeInfoPopover" getPopupContainer={node => node.parentNode} autoAdjustOverflow="true" content={mediaRequirements} placement="rightTop" title="Media Requirements" trigger="click" arrowPointAtTop>
+            <span><Icon.InfoCircle size={15} style={{ verticalAlign: '-3px', marginLeft: '5px', cursor: 'pointer' }} /></span>
+          </Popover>
         </>
       )}
     </>
@@ -294,14 +283,17 @@ const InfluencerUploadModal = ({
     title: ModalTitle,
     maskClosable: false,
     visible,
-    onOk: () => setVisible(false),
+    destroyOnClose: true,
+    onOk: () => {
+      setVisible(false)
+    },
     onCancel: (event) => {
       onCancel(false);
       event.stopPropagation();
     },
     className: "influencer-upload-modal",
     centered: true,
-    width: 700,
+    width: 700
   };
 
   return (
@@ -318,13 +310,15 @@ const InfluencerUploadModal = ({
       <Modal {...ModalProps}>
         {fileUploadStage < 2 && (
           <div className="comapign-text">
-            <span>{startCase(toLower(project.title))}</span>
+            <span>
+              {startCase(toLower(project.title))}
+            </span>
             {showFile && (
               <span className="text-sm">{files.length} File(s) Selected</span>
             )}
           </div>
         )}
-        {files.length > 0 && <MediaRequirementAlert files={files} />}
+
         <ShowUploadConsentView
           key="show-upload-consent-view"
           disablePreviousVersionUpload={disablePreviousVersionUpload}
@@ -332,66 +326,80 @@ const InfluencerUploadModal = ({
           uploadNewFile={uploadNewFile}
         />
 
-        {uploadNewFile === "upload new" &&
-          fileUploadStage < 2 &&
-          UploadNewCreatives({
-            onCancel,
-            setFiles,
-            handleUpload,
-            removeFileFromUpload,
-            fileUploadStage,
-            showFile,
-            showOldFile,
-            files,
-            uploadProgress,
-            selectedCreative,
-            uploadingFile,
-          })}
-
-        {fileUploadStage === 2 && (
-          <Result
-            status="success"
-            title="All creatives sucesfully uploaded"
-            subTitle="Would you like to upload more creatives?"
-            extra={[
-              <button
-                className="btn-submit"
-                onClick={() => handleUploadNewFile("")}
-              >
-                Yes, Upload More{" "}
-              </button>,
-              <button className="btn-cancel" onClick={() => onCancel()}>
-                No, Thanks!
-              </button>,
-            ]}
-          />
-        )}
-
-        {uploadNewFile === "upload added" && (
-          <div>
-            <p className="text-center mb-30">
-              Please select one creative for which you want to upload a version:
+        <div class="inf-upload-div" >
+          <div class="creative-box new-creative-span" >
+            <p className="text-center mb-20">
+              Upload a new creative:
             </p>
-            <div className="conatiner-file">
-              {creatives.length !== 0 ? (
-                creatives.map((creative) => (
-                  <UploadAttchmentFile
-                    key={`previous-creative-version-${creative.id}`}
-                    fileName={creative.id}
-                    icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                      creative?.media[0]?.slug || "default"
-                    }`}
-                    mimeType={creative?.media[0]?.mimeType}
-                    uploadedFile
-                    handleClick={() => selectCreative(creative)}
-                  />
-                ))
-              ) : (
-                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-              )}
-            </div>
+            {
+              UploadNewCreatives({
+                onCancel,
+                setFiles,
+                handleUpload,
+                removeFileFromUpload,
+                fileUploadStage,
+                showFile,
+                showOldFile,
+                files,
+                uploadProgress,
+                selectedCreative,
+                uploadingFile,
+              })
+            }
           </div>
-        )}
+
+
+          {(
+            <div class="creative-box upload-older-creative">
+              <p className="text-center">
+                Please select to upload a new version:
+              </p>
+              <div className="conatiner-file">
+                {creatives.length !== 0 ? (
+                  creatives.map((creative) => (
+                    <UploadAttchmentFile className="uploadedFile"
+                      key={`previous-creative-version-${creative.id}`}
+                      fileName={creative.id}
+                      icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug || "default"
+                        }`}
+                      mimeType={creative?.media[0]?.mimeType}
+                      uploadedFile
+                      handleClick={() => {
+                        //hide older creative tab
+                        document.querySelector('.upload-older-creative').style.setProperty('display', 'none', 'important')
+                        selectCreative(creative);
+                      }}
+                    />
+                  ))
+                ) : (
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                )}
+              </div>
+            </div>
+          )}
+          {fileUploadStage === 2 && (
+            <Result className="uploadedSuccessMsg"
+              status="success"
+              title="All creatives sucesfully uploaded"
+              subTitle="Would you like to upload more creatives?"
+              extra={[
+                <button
+                  className="btn-submit"
+                  onClick={() => handleUploadNewFile("")}
+                >
+                  Yes, Upload More{" "}
+                </button>,
+                <button className="btn-cancel" onClick={() => onCancel()}>
+                  No, Thanks!
+                </button>,
+              ]}
+            />
+          )}
+        </div>
+
+        <div>
+          {/* <MediaRequirementAlert files={files} /> */}
+        </div>
       </Modal>
     </div>
   );

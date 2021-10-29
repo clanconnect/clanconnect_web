@@ -1,6 +1,5 @@
 @import "styles/_colors";
 @import "styles/_mixins";
-
 .sidenav {
   background: #ffffff;
   color: #fff;
@@ -8,96 +7,271 @@
   // padding-top: 80px;
   position: relative;
   width: 60px;
-
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  @media only screen and (min-width: 768px) {
+    .right-menu-userinfo {
+      display: none;
+    }
+    .right-menu {
+      .ant-menu {
+        display: none;
+      }
+    }
+  }
   &:hover {
     background: #ffffff;
     color: #fff;
-    transition: all 0.1s;
+    transition: all 0.35s;
     // padding-top: 80px;
     position: relative;
-    width: 250px;
-
-    @include mobile {
-      width: 100%;
-      position: fixed;
+    @media only screen and (min-width: 768px) {
+      width: 250px;
     }
-
     .right-menu {
       .link-item {
         display: inline-block;
       }
       .link-li {
-        width: 250px;
+        @media only screen and (min-width: 768px) {
+          width: 250px;
+        }
+        svg {
+          display: inline-block;
+          vertical-align: middle;
+        }
+        .link-item {
+          font-size: 16px;
+        }
       }
     }
   }
-
-  @include mobile {
-    z-index: 1;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0px 3px 6px #0000009c;
-  }
-
   .right-menu {
-    // padding-top: 15px;
-
     ul {
       padding-left: 0;
       margin-bottom: 0;
-
-      @include mobile {
-        display: flex;
-        align-items: center;
-      }
     }
-
     .link-li {
       list-style: none;
       width: 60px;
       padding: 10px;
       position: relative;
-      font-size: 24px;
-
-      @include mobile {
-        width: 100%;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-      }
-
       &:hover {
         background: $secondary;
-
         .icon {
           filter: brightness(0) invert(1);
         }
         .link-item {
           color: $white;
+          font-size: 16px;
+          display: flex;
+        }
+        .inner-menu-text {
+          font-size: 12px;
+        }
+      }
+      .inner-menu-text {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0;
+        span {
+          display: block;
         }
       }
     }
-
-    .icon {
-      width: 28px;
-      height: 28px;
-    }
-
     .link-item {
-      // height: 60px;
       color: #5d5d5d;
-      display: none;
-      font-size: 24px;
+      font-size: 0;
       margin-left: 10px;
-
-      @include mobile {
-        font-size: 10px;
-        margin-left: 0;
-        margin-top: 10px;
+      transition: none;
+      svg {
+        margin-right: 10px;
         display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+  &:hover {
+    .right-menu {
+      .link-li {
+        .inner-menu-text {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width:767px) {
+  .sidenav {
+    display: none;
+    top: 79px;
+    bottom: 0;
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    transform: translateX(-300px);
+    transition: transform .35s ease;
+    &.sidenav-active {
+      display: block;
+      z-index: 99;
+      transform: translateX(0px);
+    }
+    .right-menu {
+      display: flex;
+      flex-flow: column nowrap;
+      height: calc(100% - 84px);
+      &-top {
+        flex-grow: 1;
+      }
+      &-bottom {
+        padding: 10px 20px;
+        flex-shrink: 1;
+        .ant-menu {
+          border: none;
+        }
+        .ant-menu-item {
+          padding: 8px 0;
+          border: none;
+          &:hover {
+            background-color: transparent;
+            a {
+              p {
+                color: #5d5d5d;
+              }
+            }
+            svg {
+              color: #5d5d5d;
+            }
+          }
+          a {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          }
+        }
+      }
+      .link-li {
+        align-items: flex-start;
+        flex-direction: column;
+        width: 100%;
+        padding-top: 13px;
+        padding-bottom: 13px;
+        border-bottom: 1px solid #eee;
+      }
+      .link-item {
+        font-size: 14px !important;
+        display: block;
+        .inner-menu-text {
+          font-size: 12px;
+        }
+      }
+      .subs-header {
+        font-size: 12px;
+        a {
+          color: #fff;
+          font-weight: bold;
+          background-color: rgb(205, 90, 12);
+          padding: 0 5px;
+          color: #fff;
+          font-size: 12px;
+          border: 1px solid rgb(205, 90, 12);
+        }
+      &.premium {
+      a {
+        background-color: transparent;
+        border: none;
+        color: #5d5d5d;
+        padding: 0;
+        margin-left: 2px;
+        color: rgb(205, 90, 12);
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+      }
+    }
+    &:hover {
+      position: fixed;
+    }
+    .right-menu-userinfo {
+      padding: 10px 10px 10px 20px;
+      border-bottom: 1px solid #eee;
+      background: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .profile-link {
+        display: flex;
+        font-size: 14px;
+        color: #5d5d5d;
+        width: 100%;
+        align-items: center;
+        border-radius: 0;
+        border: none;
+        height: 40px;
+        margin-left: 0;
+        .prof-right-content {
+          position: relative;
+          flex: 9999;
+          a.prof-name {
+            color: #5d5d5d;
+          }
+          &:after {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            right: 13px;
+            top: 8px;
+            border-top: 1px solid #5d5d5d;
+            width: 8px;
+            height: 8px;
+            border-right: 1px solid #5d5d5d;
+            transform: rotate(45deg);
+          }
+        }
+      }
+      .profile-name {
+        flex: 99999;
+      }
+      .profile-img {
+        margin-right: 10px;
+        border-radius: 50%;
+        border: 1px solid #eee;
+        width: 40px;
+        height: 40px;
+      }
+    }
+    .ant-menu-item {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      height: auto;
+      line-height: normal;
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+      a {
+        margin-left: 5px;
+        text-decoration: none;
+        p {
+          border-bottom: none;
+        }
+      }
+      svg {
+        margin-left: 5px;
+        color: #5d5d5d;
+      }
+      &:hover {
+        background: #00aae5;
+        svg {
+          color: #fff;
+        }
+        a {
+          p {
+            color: #fff;
+          }
+        }
       }
     }
   }

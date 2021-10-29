@@ -4,11 +4,11 @@ import "./styles.scss";
 
 const LineHeading = ({ title, style }) => {
   return (
-    <div className={`title-lineRow ${style}`}>
-      <div className="hdtitle">
-        <h2 className="line-title">{title}</h2>
-      </div>
-    </div>
+    <h2 className="title-w-bdr">
+      <span>
+        {title}
+      </span>
+    </h2>
   );
 };
 

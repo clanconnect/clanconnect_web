@@ -21,6 +21,7 @@ export async function getProposalsAPI(payload) {
 }
 
 export async function getCreativesAPI(payload) {
+  console.log('GETTING CREATIVES', payload)
   return await axiosInstance.get(
     apiConstant.GET_CREATIVES.replace(":id", payload.id),
     {

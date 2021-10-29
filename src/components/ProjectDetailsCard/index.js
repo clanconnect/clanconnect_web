@@ -14,8 +14,10 @@ const ProjectDetailsCard = ({ projectDetail }) => {
       </div> */}
       <div className="card-content">
         <div className="card-header">
-          <h2 className="project-title">
-            {_.startCase(_.camelCase(projectDetail?.title))}
+          <h2 className="title-w-bdr">
+            <span>
+              {_.startCase(_.camelCase(projectDetail?.title))}
+            </span>
           </h2>
           {/* <span className="edit-icon">
             <a

@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.scss";
 import { Upload } from "antd";
-import upload from "assets/images/upload.svg";
+import {CloudArrowUp} from 'react-bootstrap-icons'
 
 const allowedAccepts = {
   image: ".png,.jpg,.jpeg",
@@ -36,15 +36,19 @@ const UploadDocumentCard = ({
     accept: fileTypes,
   };
 
+  function hidenewCreativeTab () {
+    document.querySelector('.upload-older-creative').style.setProperty('display', 'none', 'important')
+  }
+
   return (
     <Dragger {...props}>
       <p className="ant-upload-drag-icon">
         {/* <InboxOutlined /> */}
-        <img src={upload} alt="upload" width="48" />
+      <CloudArrowUp size="24" style={{verticalAlign:'middle'}} />
       </p>
-      <p className="upload-text">Drag a image/document here</p>
-      <div className="upload-text mb-10">- or -</div>
-      <button className="upload-btn">Select a photo from you computer</button>
+      <p className="upload-text" onClick={hidenewCreativeTab}>Drag a image/document here or Browse</p>
+      {/* <div className="mb-10">- or -</div>
+      <button  className="upload-btn">Select a photo from your computer</button> */}
     </Dragger>
   );
 };

@@ -1,6 +1,5 @@
 @import 'styles/_colors';
 @import 'styles/_mixins';
-
 .file-card {
   display: flex;
   align-items: center;
@@ -9,18 +8,16 @@
   border: 1px solid #5d5d5d61;
   border-radius: 5px;
   margin-top: 10px;
-
+  flex-wrap: wrap;
   .file-date {
     margin: 0px;
     font-size: 12px;
     color: rgba(#5d5d5d, 0.6);
     margin-left: 20px;
   }
-
   .file-size {
     color: #5d5d5d;
   }
-
   .file-title {
     color: #5d5d5d;
     white-space: nowrap;
@@ -29,4 +26,24 @@
     text-overflow: ellipsis;
     margin-left: 20px;
   }
+  .progress-custom {
+    margin-left: auto;
+    width: 100% !important;
+  }
+}
+
+.ant-result.ant-result-success.uploadedSuccessMsg {
+  width: 100%;
+}
+
+.uploadedSuccessMsg .ant-result-icon {
+  margin-bottom: 10px;
+}
+
+.ant-result.ant-result-success.uploadedSuccessMsg .ant-result-title {
+  font-size: 14px;
+}
+
+.uploadedSuccessMsg .ant-result-icon {
+  margin-bottom: 10px;
 }

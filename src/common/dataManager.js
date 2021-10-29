@@ -1,3 +1,5 @@
+import { Menu, Dropdown } from "antd";
+import * as Icon from 'react-bootstrap-icons'
 import demoImg from "assets/images/project1.jpg";
 import influencer from "assets/images/influencer.jpg";
 export const cancellationReasons = [
@@ -618,4 +620,83 @@ export const compaignData = [
       },
     ],
   },
+];
+
+
+export const menu = [
+  {
+    "id": 1,
+    "menuTitle": "Inbox",
+    "link": "inbox",
+    "icon": "InboxFill"
+  }, {
+    "id": 2,
+    "menuTitle": "Profile Settings",
+    "link": "clan_profile",
+    "icon": "Person"
+  }
+  , {
+    "id": 3,
+    "menuTitle": "Logout",
+    "link": "users/sign_out",
+    "icon": "DoorOpen"
+  }
+
+  //   < Menu >
+  //   <Menu.Item key="0">
+  //     <Icon.InboxFill size={14} style={{ marginRight: '5px' }} />
+  //     <a href={`${process.env.REACT_APP_WEB_HOST}/inbox`}>
+  //       <p className="option-title">Inbox</p>
+  //     </a>
+  //   </Menu.Item>
+  //     {/* <Menu.Item key="1">
+  //       <Icon.Folder size={14} style={{ marginRight: '5px' }} />
+  //       <a href={`${process.env.REACT_APP_WEB_HOST}/projects`}>
+  //         <p className="option-title">Projects</p>
+  //       </a>
+  //     </Menu.Item> */}
+  //   < Menu.Item key = "3" >
+  //       <Icon.Person size={14} style={{ marginRight: '5px' }} />
+  //       <a href={`${process.env.REACT_APP_WEB_HOST}/clan_profile`}>
+  //         <p className="option-title">Profile Settings</p>
+  //       </a>
+  //     </Menu.Item >
+  // {/* <Menu.Item key="4">
+  //       <Icon.Coin size={14} style={{ marginRight: '5px' }} />
+  //       <p className="option-title">Clan Coins 0</p>
+  //     </Menu.Item> */}
+  //   < Menu.Item key = "5" >
+  //       <Icon.DoorOpen size={14} style={{ marginRight: '5px' }} />
+  //       <a href={`${process.env.REACT_APP_WEB_HOST}/users/sign_out`}>
+  //         <p className="option-title no-b"> Logout</p>
+  //       </a>
+  //     </Menu.Item >
+  //   </Menu >
+];
+
+export const talentPartnerMenu = [
+  {
+    "id": 1,
+    "menuTitle": "Dashboard",
+    "link": "talent_partner/inbox",
+    "icon": "ClipboardData"
+  },
+  {
+    "id": 2,
+    "menuTitle": "Profile Settings",
+    "link": "clan_profile",
+    "icon": "Person"
+  },
+  {
+    "id": 3,
+    "menuTitle": "Invoicing",
+    "link": "finance/invoicing",
+    "icon": "PiggyBank"
+  },
+  {
+    "id": 4,
+    "menuTitle": "Logout",
+    "link": "users/sign_out",
+    "icon": "DoorOpen"
+  }
 ];
