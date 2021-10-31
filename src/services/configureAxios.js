@@ -20,8 +20,7 @@ axiosInstance.interceptors.request.use((config) => {
   if (process.env.REACT_APP_STAGE === "local") {
     headers["sess-token"] =
       // // influencer
-      "_irida_session=mzVIYgalHLeLoITEJrDQFVog5wv0j3jJEBZiHqlOatRbWw6r%2B%2FGXzZsnNwS1DavWgpPZcFGOs%2FgTpKN2EqCtKCxSv6IcDLs%2FHnQU6WKYyNxJY%2FOmCaLktITEC78iJYjuLfLjHN1DOs6%2B8707uSiJvnwfro%2FLEDCwZbVssBUOz6VkMmp%2ByCel637IFpfTKFdTCAubgVLIZusymlnGKk1m3roePmAr7sXWBKjjHu1FoNy%2B%2FSVOXcwi6xP7UE2L8pdrimop%2Bg%3D%3D--pirS76CUk%2Fi5hYB4--jI6Yhq2JNeuTBE%2BmgSY1Yg%3D%3D";
-    // process.env.REACT_APP_INFLUENCER_SESSION_TOKEN;
+      process.env.REACT_APP_INFLUENCER_SESSION_TOKEN;
     // ("_irida_session=IHB9EhXoMO0aB608hGHaHPhloCOpT6annHpAQsIU4M7RQJxacJuQr08Gl9lRafgHGtJzKLJngTKl87HEraxGMPuGCjdicJVmWN9BH6QdM3rS8ciWwp8kHPPKi4Y7KqXwlx0%2BmnzzGNPemDT4zp%2BIpqXRFt%2F3Gt%2B5faL0IwlMaWjL3ATy8za8R72r36%2BhB%2Fe9%2Bt2o2k7f8jMifI8hbKkXBkE20xK8LsYpyu4WNHVQL%2BoIR3J2sMTw16%2BEiYYS0HuObe9vuQ%3D%3D--iPcixv6Unrlpz9iE--Wlnk7jNOYzSZgA23nJiLxg%3D%3D");
     // // advertiser
     // "_irida_session=LrRLpI1oMBI3ApZyn8o2Z4s4JHyxKkq5aWLQT4eGXusbWTNajnzOsbW7fsJtztnF15N2KjKZP1fBbEPXRv82nHew1VWnT3omIe3OqgN9ny97uSaxBYXGzmafuxO86bsXRkEersgINpsKMjkEGQ%2ByKSkfXN99FzvJEUBN2ucZd3%2FXSOSCzQzp--kz%2FA1HebTF0w7h6H--KQnLbf8glrB2kxcniHNIQw%3D%3D"
@@ -29,7 +28,6 @@ axiosInstance.interceptors.request.use((config) => {
     // "_irida_session=hSNxvXmrnxg1Uql2etMePnSViHOJuhx7AIatB%2FwqkGlNc3CBKK8qOccVnpaXckbwv4MK6RVDPS6f2C6ROCteYJ7h%2ByPRrU5Z3A%2B4IoJWhKA%2F0yBHsL0W9e31k2npFOWPJK%2BLuinTTjjDL%2Bw%2B4JKMP6PUvQB7svAMv%2Fouwn9gOT55g09YW5ytEKxzixCOAtbudEZ045XekKclyywEO2WtnBFm%2B3MpCBDyqT4%2FF0AeHPRLSSNSi4QrHNDApTo9DK6z99WhaQ%3D%3D--DY4CCnUq%2Bfkxjt2S--1jZbi17UHaNOE9lgOSc5GA%3D%3D";
   }
   config.headers = headers;
-  console.log('CONFIG', config)
   return config;
 });
 
@@ -41,7 +39,7 @@ axiosInstance.interceptors.response.use(
   (err) => {
     console.log("err=>>", err);
     if (err.response.status !== 422) {
-      console.log('ERROR', err)
+      console.log("ERROR", err);
       toast.error(err.response.data.message);
     }
 

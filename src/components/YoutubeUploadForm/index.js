@@ -436,19 +436,8 @@ const YoutubeUploadForm = ({
           <Form.Item
             name="privacyStatus"
             label="Privacy Status"
-            rules={[
-              {
-                required: true,
-                message: "Please enter Privacy Status",
-              },
-            ]}
+            rules={[{ required: true, message: "Please enter Privacy Status" }]}
           >
-
-            {/* <Input defaultValue="public" readonly="true" /> */}
-
-            {/* <Select
-             defaultValue={['public']}
-            > */}
             <Select>
               <Option value="public">Public</Option>
               <Option value="private">Private</Option>

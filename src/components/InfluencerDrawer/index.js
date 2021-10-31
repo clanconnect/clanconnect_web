@@ -6,36 +6,32 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import YoutubeFormDescription from "./YoutubeFormDescription";
 import InstagramFormDescription from "./InstagramFormDescription";
+
 const InfluencerDrawer = ({
   isDrawerVisible,
   closeDrawer,
   setVisible,
   creative,
+  project,
 }) => {
   const { TabPane } = Tabs;
   const youtubeData = useSelector((store) => store.CreatorYoutube.data);
   const instagramData = useSelector((store) => store.CreatorInstagram.data);
+  const user = useSelector((store) => store.user.user);
 
-  console.log("youtubeData", youtubeData);
-  console.log("instagram", instagramData);
+  const [isYtFormDescriptionVisible, setIsYtFormDescriptionVisible] =
+    useState(false);
+  const [isYtScheduleExistForCreative, setIsYtScheduleExistForCreative] =
+    useState(true);
 
-  const [isYtFormDescriptionVisible, setIsYtFormDescriptionVisible] = useState(
-    false
-  );
-  const [
-    isYtScheduleExistForCreative,
-    setIsYtScheduleExistForCreative,
-  ] = useState(true);
-
-  const [isIgFormDescriptionVisible, setIsIgFormDescriptionVisible] = useState(
-    false
-  );
-  const [
-    isIgScheduleExistForCreative,
-    setIsIgScheduleExistForCreative,
-  ] = useState(true);
-
+  const [isIgFormDescriptionVisible, setIsIgFormDescriptionVisible] =
+    useState(false);
+  const [isIgScheduleExistForCreative, setIsIgScheduleExistForCreative] =
+    useState(true);
   const [isYtTabDisabled, setIsYtTabDisabled] = useState(false);
+  const [isIgTabDisabled, setIsIgTabDisabled] = useState(false);
+
+  console.log("creative inside drawer ===> ", creative, project);
   useEffect(() => {
     setIsYtScheduleExistForCreative(youtubeData?.creative === creative.id);
     setIsYtFormDescriptionVisible(youtubeData?.creative === creative.id);
@@ -46,20 +42,22 @@ const InfluencerDrawer = ({
         ?.find((o) => o.status === "accepted")
         ?.mimeType.includes("image")
     );
+    setIsYtTabDisabled(isYtTabDisabled && !user.youtube_auth);
+    setIsIgTabDisabled(isIgTabDisabled && !user.instagram_auth);
   }, [creative, youtubeData, instagramData]);
 
   return (
     <>
       <Drawer
         title="Schedule your post"
-        width={720}
+        width={Math.min(window.innerWidth, 700)}
         onClose={closeDrawer}
         visible={isDrawerVisible}
         destroyOnClose={true}
         bodyStyle={{ paddingBottom: 20 }}
       >
         <Tabs defaultActiveKey="ig">
-          <TabPane tab="Instagram" key="ig">
+          <TabPane tab="Instagram" key="ig" disabled={isIgTabDisabled}>
             {isIgScheduleExistForCreative &&
               instagramData?.id &&
               isIgFormDescriptionVisible && (

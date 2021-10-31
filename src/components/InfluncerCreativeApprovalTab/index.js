@@ -132,7 +132,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
 
     projects = projects.map(({ creatives, project }) => {
       creatives = creatives.filter(
-        (c) => !c.socials || !c.socials.youtube || !c.socials.instagram
+        (c) => !c.socials && !c.socials.youtube && !c.socials.instagram
       );
       return { project, creatives };
     });

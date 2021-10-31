@@ -171,6 +171,7 @@ const InfluencerCreativeModal = ({
           closeDrawer={closeDrawer}
           setVisible={setVisible}
           creative={creative}
+          project={project}
         />
       )}
 
