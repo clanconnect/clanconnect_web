@@ -157,6 +157,7 @@ const InstagramUploadForm = ({
     // Can not select days before today
     return current && current < moment().subtract(1, "day").endOf("day");
   }
+
   return (
     <>
       {mediaValidateAlert}
@@ -200,6 +201,7 @@ const InstagramUploadForm = ({
               },
               {
                 validator: (_, value) => {
+                  value = value || "";
                   if (value.length >= 2200) {
                     return Promise.reject(
                       new Error("Character Limit of 2200 character exceeded")
@@ -236,12 +238,7 @@ const InstagramUploadForm = ({
             <Form.Item
               label="Schedule Date"
               name="date"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter schedule",
-                },
-              ]}
+              rules={[{ required: true, message: "Please enter schedule" }]}
             >
               <DatePicker disabledDate={disabledDate} format={"DD/MM/YYYY"} />
             </Form.Item>

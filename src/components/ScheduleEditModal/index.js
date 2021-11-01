@@ -22,10 +22,7 @@ const ScheduleEditModal = ({ visible, closeModal, setDateTime }) => {
 
   const editSchedule = () => {
     setDateTime(schedule.date, schedule.time);
-    dispatch({
-      type: ACTIONS.SET_SCHEDULE,
-      payload: { ...schedule },
-    });
+    dispatch({ type: ACTIONS.SET_SCHEDULE, payload: { ...schedule } });
     closeModal();
   };
 
