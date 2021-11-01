@@ -44,7 +44,15 @@ const InfluencerDrawer = ({
     );
     setIsYtTabDisabled(isYtTabDisabled && !user.youtube_auth);
     setIsIgTabDisabled(isIgTabDisabled && !user.instagram_auth);
-  }, [creative, youtubeData, instagramData]);
+    if (project) {
+      setIsIgTabDisabled(
+        isIgTabDisabled && !project.primarySocialMedia.includes("Instagram")
+      );
+      setIsYtTabDisabled(
+        isYtTabDisabled && !project.primarySocialMedia.includes("Youtube")
+      );
+    }
+  }, [project, user, creative, youtubeData, instagramData]);
 
   return (
     <>
