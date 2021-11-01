@@ -299,22 +299,21 @@ const InfluencerUploadModal = ({
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
-      { tabType == 'campaign' && (<button
-                    className={style}
-                    onClick={(event) => {
-                      setVisible(true);
-                      event.stopPropagation();
-                    }}
-                  >
-                    {btnText}
-                  </button>)
-      }
+      {tabType == "campaign" && (
+        <button
+          className={style}
+          onClick={(event) => {
+            setVisible(true);
+            event.stopPropagation();
+          }}
+        >
+          {btnText}
+        </button>
+      )}
       <Modal {...ModalProps}>
         {fileUploadStage < 2 && (
           <div className="comapign-text">
-            <span>
-              {startCase(toLower(project.title))}
-            </span>
+            <span>{startCase(toLower(project.title))}</span>
             {showFile && (
               <span className="text-sm">{files.length} File(s) Selected</span>
             )}
@@ -328,59 +327,10 @@ const InfluencerUploadModal = ({
           uploadNewFile={uploadNewFile}
         />
 
-        <div class="inf-upload-div" >
-          <div class="creative-box new-creative-span" >
-            <p className="text-center mb-20">
-              Upload a new creative:
-            </p>
-            {
-              UploadNewCreatives({
-                onCancel,
-                setFiles,
-                handleUpload,
-                removeFileFromUpload,
-                fileUploadStage,
-                showFile,
-                showOldFile,
-                files,
-                uploadProgress,
-                selectedCreative,
-                uploadingFile,
-              })
-            }
-          </div>
-
-
-          {(
-            <div class="creative-box upload-older-creative">
-              <p className="text-center">
-                Please select to upload a new version:
-              </p>
-              <div className="conatiner-file">
-                {creatives.length !== 0 ? (
-                  creatives.map((creative) => (
-                    <UploadAttchmentFile className="uploadedFile"
-                      key={`previous-creative-version-${creative.id}`}
-                      fileName={creative.id}
-                      icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug || "default"
-                        }`}
-                      mimeType={creative?.media[0]?.mimeType}
-                      uploadedFile
-                      handleClick={() => {
-                        //hide older creative tab
-                        document.querySelector('.upload-older-creative').style.setProperty('display', 'none', 'important')
-                        selectCreative(creative);
-                      }}
-                    />
-                  ))
-                ) : (
-                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                )}
-              </div>
-            </div>
-          )}
+        <div class="inf-upload-div">
           {fileUploadStage === 2 && (
-            <Result className="uploadedSuccessMsg"
+            <Result
+              className="uploadedSuccessMsg"
               status="success"
               title="All creatives sucesfully uploaded"
               subTitle="Would you like to upload more creatives?"
@@ -397,11 +347,59 @@ const InfluencerUploadModal = ({
               ]}
             />
           )}
+          <div class="creative-box new-creative-span">
+            <p className="text-center mb-20">
+              {fileUploadStage ? "" : "Upload a new creative:"}
+            </p>
+            {UploadNewCreatives({
+              onCancel,
+              setFiles,
+              handleUpload,
+              removeFileFromUpload,
+              fileUploadStage,
+              showFile,
+              showOldFile,
+              files,
+              uploadProgress,
+              selectedCreative,
+              uploadingFile,
+            })}
+          </div>
+          {
+            <div class="creative-box upload-older-creative">
+              <p className="text-center">
+                Please select to upload a new version:
+              </p>
+              <div className="conatiner-file">
+                {creatives.length !== 0 ? (
+                  creatives.map((creative) => (
+                    <UploadAttchmentFile
+                      className="uploadedFile"
+                      key={`previous-creative-version-${creative.id}`}
+                      fileName={creative.id}
+                      icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
+                        creative?.media[0]?.slug || "default"
+                      }`}
+                      mimeType={creative?.media[0]?.mimeType}
+                      uploadedFile
+                      handleClick={() => {
+                        //hide older creative tab
+                        document
+                          .querySelector(".upload-older-creative")
+                          .style.setProperty("display", "none", "important");
+                        selectCreative(creative);
+                      }}
+                    />
+                  ))
+                ) : (
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                )}
+              </div>
+            </div>
+          }
         </div>
 
-        <div>
-          {/* <MediaRequirementAlert files={files} /> */}
-        </div>
+        <div>{/* <MediaRequirementAlert files={files} /> */}</div>
       </Modal>
     </div>
   );

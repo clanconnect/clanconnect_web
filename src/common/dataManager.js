@@ -700,3 +700,23 @@ export const talentPartnerMenu = [
     "icon": "DoorOpen"
   }
 ];
+export const agencyMenu = [
+  {
+    "id": 1,
+    "menuTitle": "Dashboard",
+    "link": "talent_partner/inbox",
+    "icon": "ClipboardData"
+  },
+  {
+    "id": 2,
+    "menuTitle": "Profile Settings",
+    "link": "clan_profile",
+    "icon": "Person"
+  },
+  {
+    "id": 4,
+    "menuTitle": "Logout",
+    "link": "users/sign_out",
+    "icon": "DoorOpen"
+  }
+];

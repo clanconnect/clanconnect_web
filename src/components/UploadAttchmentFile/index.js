@@ -80,12 +80,12 @@ const UploadAttchmentFile = ({
           )}
           <p className="file-title">{fileName}</p>
         </div>
-        {uploadedFile ? null : (
+        {/* {uploadedFile ? null : (
           <div style={{ width: "35%" }} className="progress-custom">
             <Progress percent={percenter} size="small" />
             <DeleteOutlined onClick={onDelete} />
           </div>
-        )}
+        )} */}
       </div>
     </>
   );
