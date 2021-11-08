@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "components/DemoHeader";
 import SideNav from "components/DemoSideNav";
 import LineHeading from "components/LineHeading";
-import InfluncerAppliedProposalsTab from "components/InfluncerAppliedProposalsTab";
 import InfluncerCreativeApprovalTab from "components/InfluncerCreativeApprovalTab";
 
 import { myTabs } from "./dataManager";
