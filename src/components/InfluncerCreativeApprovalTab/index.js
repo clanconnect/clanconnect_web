@@ -227,6 +227,15 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
           {
             // loadCreatives({ status: 'pending' });
             fetchNotScheduledCreatives(creatives).map((obj, index) => {
+              return ProjectCreatives(obj, index, "campaign");
+            })
+          }
+        </TabPane> */}
+
+        {/* <TabPane tab="Campaigns" key="projects">
+          {
+            // loadCreatives({ status: 'pending' });
+            fetchNotScheduledCreatives(creatives).map((obj, index) => {
               return ProjectCreatives(obj, index, 'campaign');
             })
           }
