@@ -34,14 +34,16 @@ function callback(key) {
 }
 
 const ProjectCreatives = ({ project, creatives }, index, tabType) => {
-  return project.length !== 0 ? ( tabType == 'campaign' ? 
+  return project.length !== 0 ? (
+    tabType == "campaign" ? (
       <ProjectListCard
         project={project}
         creatives={creatives}
         className="shadow-none "
         rightspace
         tabType={tabType}
-      /> :
+      />
+    ) : (
       <div className="custom-project-collapse">
         <div key={`project-creatives-${project.id}`}>
           <Collapse
@@ -82,6 +84,7 @@ const ProjectCreatives = ({ project, creatives }, index, tabType) => {
           </Collapse>
         </div>
       </div>
+    )
   ) : (
     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
   );
@@ -216,18 +219,18 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
         tabBarExtraContent={operations}
       >
         {/* campaigns tab */}
-        {/* <TabPane tab="Campaigns" key="projects"> */}
-        {/*   {ProjectList(projects)} */}
-        {/* </TabPane> */}
-
         <TabPane tab="Campaigns" key="projects">
+          {ProjectList(projects)}
+        </TabPane>
+
+        {/* <TabPane tab="Campaigns" key="projects">
           {
             // loadCreatives({ status: 'pending' });
             fetchNotScheduledCreatives(creatives).map((obj, index) => {
               return ProjectCreatives(obj, index, 'campaign');
             })
           }
-        </TabPane>
+        </TabPane> */}
 
         {AvailableTabs.map((o) => (
           <TabPane tab={o.label} key={o.value}>
