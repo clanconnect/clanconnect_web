@@ -15,7 +15,7 @@ import filterIcon from "assets/images/filter.svg";
 import logoutIcon from "assets/images/logout.svg";
 import coinsIcon from "assets/images/money.svg";
 import * as Icon from 'react-bootstrap-icons'
-import { menu, talentPartnerMenu } from '../../common/dataManager'
+import { menu, talentPartnerMenu, agencyMenu } from '../../common/dataManager'
 
 import "./styles.scss";
 
@@ -51,11 +51,31 @@ const DemoHeader = ({ user }) => {
       </Menu.Item>
     )
   })
+  const agencydropDown = agencyMenu.map((item, index) => {
+    const { [item.icon]: IconName } = Icon
+    return (
+      <Menu.Item key={item.id}>
+
+        <IconName size={20} style={{ marginRight: '5px' }} />
+        <a href={`${process.env.REACT_APP_WEB_HOST}/${item.link}`}>
+          <p className="option-title">{item.menuTitle}</p>
+        </a>
+      </Menu.Item>
+    )
+  })
 
   const dropdownWhole = () => {
-    return <Menu>
-      {user.user_type == 'influencer' ? drodpdownMenu : talentdropDown}
-    </Menu>
+    return (
+      <Menu>
+        {user.user_type === "influencer"
+          ? drodpdownMenu
+          : user.user_type === "talent_partner"
+          ? talentdropDown
+          : user.user_type === "agency"
+          ? agencydropDown
+          : null}
+      </Menu>
+    );
   }
 
   const mobileToggleState = useSelector(state => state.mobileToggleReducer)
@@ -131,7 +151,6 @@ const DemoHeader = ({ user }) => {
           )}
           <div className="user-info">
             {user?.brand?.name && (<span className="profile-name">{user?.brand?.name}</span>)}
-
             <span className="profile-name">{user?.name}</span>
             {(user.user_type == 'influencer' || user.user_type == 'talent_partner') && (user.subscription_plan_name == 'Free' || !user.subscription_plan_name) && (<div className="subs-header"><a href={`${process.env.REACT_APP_WEB_HOST}/influencer/orders/subscription`} target="_blank">Limited access, Go Premium</a></div>)}
 

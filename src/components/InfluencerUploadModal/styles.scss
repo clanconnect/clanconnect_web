@@ -81,7 +81,8 @@
         overflow: auto;
         display: flex; 
         flex-direction: column; 
-        justify-content: center;
+        justify-content: flex-start;
+        max-height: 130px;
         .ant-empty-normal {
           height: auto;
         }
