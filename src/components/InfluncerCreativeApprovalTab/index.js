@@ -88,7 +88,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   const { TabPane } = Tabs;
   function callback(key) {
     if (key === "projects") {
-      loadProjects({ proposalStatus: "accepted,ongoing" });
+      loadProjects({ proposalStatus: "accepted" });
     } else {
       loadCreatives({ status: key });
     }
