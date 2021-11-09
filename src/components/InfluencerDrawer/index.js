@@ -47,11 +47,11 @@ const InfluencerDrawer = ({
 
     if (project) {
       setIsIgTabDisabled(
-        !user.instagram_auth &&
+        !user.instagram_auth ||
           !project.primarySocialMedia.includes("Instagram")
       );
       setIsYtTabDisabled(
-        !user.youtube_auth && !project.primarySocialMedia.includes("Youtube")
+        !user.youtube_auth || !project.primarySocialMedia.includes("Youtube")
       );
     }
   }, [project, user, creative, youtubeData, instagramData]);
