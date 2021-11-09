@@ -52,7 +52,6 @@ const YoutubeUploadForm = ({
   // });
 
   useEffect(() => {
-    console.log("youtubeform", youtubeData, creative);
     if (youtubeData?.creative === creative.id) {
       form.setFieldsValue({
         title: youtubeData?.title,
@@ -95,7 +94,6 @@ const YoutubeUploadForm = ({
 
     MediaService.uploadMultiple(fileList, updateProgress)
       .then((res) => {
-        console.log("res =====>", res);
         const uploadedFiles = [];
         for (const media of res) {
           uploadedFiles.push(media);
@@ -106,11 +104,10 @@ const YoutubeUploadForm = ({
         setIsUploadComplete(true);
         setImageRequiredState(false);
         form.setFieldsValue({ thumbnail: uploadedFiles[0].server });
-        console.log("uploaded Files", uploadedFiles);
-        console.log("uploaded Media", uploadedMedia);
       })
       .catch((e) => console.log(e));
   };
+
   const validateFile = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
@@ -124,11 +121,9 @@ const YoutubeUploadForm = ({
   };
 
   const onFinish = (values) => {
-    console.log(values);
     const date = moment(values.date).format("YYYY-MM-DD");
     const time = moment(values.time).format("HH:mm:ss");
     const liveAt = new Date(`${date} ${time}`);
-    console.log(liveAt);
     dispatch({
       type: ACTIONS.ADD_POST,
       payload: {
@@ -141,14 +136,12 @@ const YoutubeUploadForm = ({
           categoryId: values.categoryId,
           defaultLanguage: values.defaultLanguage,
           license: values.license,
-          privacyStatus: values.privacyStatus,
+          privacyStatus: "public",
           publicStatsVisible: values.publicStatsVisible,
           madeForKids: values.madeForKids,
           notifySubscribers: values.notifySubscribers,
           liveAt: liveAt.toISOString(),
           creativeId: creative.id,
-          // videoMediaId: "609136d8d0b39f1913a89155",
-          // thumbnailMediaId: "60a36c7ca3507cceb192f063",
           videoMediaId: creative.media.find(
             (item) => item.status === "accepted"
           ).id,
@@ -166,13 +159,8 @@ const YoutubeUploadForm = ({
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log(creative);
     console.log("Failed:", errorInfo);
     message.error("Form errored");
-  };
-
-  const normFile = (e) => {
-    console.log(e);
   };
 
   const handleCountryChange = (value) => {
@@ -231,8 +219,8 @@ const YoutubeUploadForm = ({
                   required: imageRequiredState,
                 },
               ]}
-              getValueFromEvent={normFile}
-              extra="Upload thumbnail of size less than 2MB and of format jpeg/png"
+              getValueFromEvent={() => {}}
+              extra="Upload thumbnail of size less than 2MB and of format jpeg/png. Please make sure to verify your mobile on youtube before scheduling post."
             >
               <Upload
                 onChange={handleMediaChange}
@@ -440,8 +428,6 @@ const YoutubeUploadForm = ({
           >
             <Select>
               <Option value="public">Public</Option>
-              <Option value="private">Private</Option>
-              <Option value="unlisted">Unlisted</Option>
             </Select>
           </Form.Item>
 
