@@ -1,5 +1,5 @@
 import "./styles.scss";
-import { Drawer, Tabs } from "antd";
+import { Drawer, Tabs, Empty } from "antd";
 import YoutubeUploadForm from "components/YoutubeUploadForm";
 import InstagramUploadForm from "components/InstagramUploadForm";
 import { useSelector } from "react-redux";
@@ -55,6 +55,16 @@ const InfluencerDrawer = ({
     }
   }, [project, user, creative, youtubeData, instagramData]);
 
+  const showIgForm =
+    isIgScheduleExistForCreative &&
+    instagramData?.id &&
+    isIgFormDescriptionVisible;
+
+  const showYtForm =
+    isYtScheduleExistForCreative &&
+    youtubeData?.id &&
+    isYtFormDescriptionVisible;
+
   return (
     <>
       <Drawer
@@ -67,21 +77,21 @@ const InfluencerDrawer = ({
       >
         <Tabs defaultActiveKey="ig">
           <TabPane tab="Instagram" key="ig" disabled={isIgTabDisabled}>
-            {isIgScheduleExistForCreative &&
-              instagramData?.id &&
-              isIgFormDescriptionVisible && (
-                <InstagramFormDescription
-                  closeDrawer={closeDrawer}
-                  setVisible={setVisible}
-                  setIsIgFormDescriptionVisible={setIsIgFormDescriptionVisible}
-                  setIsIgScheduleExistForCreative={
-                    setIsIgScheduleExistForCreative
-                  }
-                  instagramData={instagramData}
-                  creative={creative}
-                />
-              )}
-            {!isIgScheduleExistForCreative && (
+            {isIgTabDisabled && <Empty />}
+            {!isIgTabDisabled && showIgForm && (
+              <InstagramFormDescription
+                closeDrawer={closeDrawer}
+                setVisible={setVisible}
+                setIsIgFormDescriptionVisible={setIsIgFormDescriptionVisible}
+                setIsIgScheduleExistForCreative={
+                  setIsIgScheduleExistForCreative
+                }
+                instagramData={instagramData}
+                creative={creative}
+              />
+            )}
+
+            {!isIgTabDisabled && !isIgScheduleExistForCreative && (
               <InstagramUploadForm
                 setIsIgFormDescriptionVisible={setIsIgFormDescriptionVisible}
                 setIsIgScheduleExistForCreative={
@@ -92,21 +102,21 @@ const InfluencerDrawer = ({
             )}
           </TabPane>
           <TabPane tab="Youtube" key="yt" disabled={isYtTabDisabled}>
-            {isYtScheduleExistForCreative &&
-              youtubeData?.id &&
-              isYtFormDescriptionVisible && (
-                <YoutubeFormDescription
-                  closeDrawer={closeDrawer}
-                  setVisible={setVisible}
-                  setIsYtFormDescriptionVisible={setIsYtFormDescriptionVisible}
-                  setIsYtScheduleExistForCreative={
-                    setIsYtScheduleExistForCreative
-                  }
-                  youtubeData={youtubeData}
-                  creative={creative}
-                />
-              )}
-            {!isYtScheduleExistForCreative && (
+            {isYtTabDisabled && <Empty />}
+
+            {!isYtTabDisabled && showYtForm && (
+              <YoutubeFormDescription
+                closeDrawer={closeDrawer}
+                setVisible={setVisible}
+                setIsYtFormDescriptionVisible={setIsYtFormDescriptionVisible}
+                setIsYtScheduleExistForCreative={
+                  setIsYtScheduleExistForCreative
+                }
+                youtubeData={youtubeData}
+                creative={creative}
+              />
+            )}
+            {!isYtTabDisabled && !isYtScheduleExistForCreative && (
               <YoutubeUploadForm
                 setIsYtFormDescriptionVisible={setIsYtFormDescriptionVisible}
                 setIsYtScheduleExistForCreative={
