@@ -42,14 +42,15 @@ const InfluencerDrawer = ({
         ?.find((o) => o.status === "accepted")
         ?.mimeType.includes("image")
     );
-    setIsYtTabDisabled(isYtTabDisabled && !user.youtube_auth);
-    setIsIgTabDisabled(isIgTabDisabled && !user.instagram_auth);
+    setIsYtTabDisabled(!user.youtube_auth);
+    setIsIgTabDisabled(!user.instagram_auth);
+
     if (project) {
       setIsIgTabDisabled(
-        isIgTabDisabled && !project.primarySocialMedia.includes("Instagram")
+        !user.youtube_auth && !project.primarySocialMedia.includes("Instagram")
       );
       setIsYtTabDisabled(
-        isYtTabDisabled && !project.primarySocialMedia.includes("Youtube")
+        !user.instagram_auth && !project.primarySocialMedia.includes("Youtube")
       );
     }
   }, [project, user, creative, youtubeData, instagramData]);
