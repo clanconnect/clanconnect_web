@@ -5,7 +5,6 @@ import { YoutubeService } from "services/brands";
 export function* fetchIndex({ payload: { query } }) {
   try {
     const response = yield call(YoutubeService.index, { query });
-    console.log("response, query =>>>", response, query);
     if (response.success) {
       yield put({
         type: ACTIONS.SET_STATE,
