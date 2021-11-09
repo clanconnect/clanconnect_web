@@ -76,58 +76,71 @@ const InfluencerDrawer = ({
         destroyOnClose={true}
         bodyStyle={{ paddingBottom: 20 }}
       >
-        <Tabs defaultActiveKey="ig">
-          <TabPane tab="Instagram" key="ig" disabled={isIgTabDisabled}>
-            {isIgTabDisabled && <Empty />}
-            {!isIgTabDisabled && showIgForm && (
-              <InstagramFormDescription
-                closeDrawer={closeDrawer}
-                setVisible={setVisible}
-                setIsIgFormDescriptionVisible={setIsIgFormDescriptionVisible}
-                setIsIgScheduleExistForCreative={
-                  setIsIgScheduleExistForCreative
-                }
-                instagramData={instagramData}
-                creative={creative}
-              />
-            )}
+        {isIgTabDisabled && isYtTabDisabled ? (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        ) : (
+          <Tabs defaultActiveKey="ig">
+            {!isIgTabDisabled && (
+              <TabPane tab="Instagram" key="ig">
+                {showIgForm && (
+                  <InstagramFormDescription
+                    closeDrawer={closeDrawer}
+                    setVisible={setVisible}
+                    setIsIgFormDescriptionVisible={
+                      setIsIgFormDescriptionVisible
+                    }
+                    setIsIgScheduleExistForCreative={
+                      setIsIgScheduleExistForCreative
+                    }
+                    instagramData={instagramData}
+                    creative={creative}
+                  />
+                )}
 
-            {!isIgTabDisabled && !isIgScheduleExistForCreative && (
-              <InstagramUploadForm
-                setIsIgFormDescriptionVisible={setIsIgFormDescriptionVisible}
-                setIsIgScheduleExistForCreative={
-                  setIsIgScheduleExistForCreative
-                }
-                creative={creative}
-              />
+                {!isIgScheduleExistForCreative && (
+                  <InstagramUploadForm
+                    setIsIgFormDescriptionVisible={
+                      setIsIgFormDescriptionVisible
+                    }
+                    setIsIgScheduleExistForCreative={
+                      setIsIgScheduleExistForCreative
+                    }
+                    creative={creative}
+                  />
+                )}
+              </TabPane>
             )}
-          </TabPane>
-          <TabPane tab="Youtube" key="yt" disabled={isYtTabDisabled}>
-            {isYtTabDisabled && <Empty />}
-
-            {!isYtTabDisabled && showYtForm && (
-              <YoutubeFormDescription
-                closeDrawer={closeDrawer}
-                setVisible={setVisible}
-                setIsYtFormDescriptionVisible={setIsYtFormDescriptionVisible}
-                setIsYtScheduleExistForCreative={
-                  setIsYtScheduleExistForCreative
-                }
-                youtubeData={youtubeData}
-                creative={creative}
-              />
+            {!isYtTabDisabled && (
+              <TabPane tab="Youtube" key="yt" disabled={isYtTabDisabled}>
+                {showYtForm && (
+                  <YoutubeFormDescription
+                    closeDrawer={closeDrawer}
+                    setVisible={setVisible}
+                    setIsYtFormDescriptionVisible={
+                      setIsYtFormDescriptionVisible
+                    }
+                    setIsYtScheduleExistForCreative={
+                      setIsYtScheduleExistForCreative
+                    }
+                    youtubeData={youtubeData}
+                    creative={creative}
+                  />
+                )}
+                {!isYtScheduleExistForCreative && (
+                  <YoutubeUploadForm
+                    setIsYtFormDescriptionVisible={
+                      setIsYtFormDescriptionVisible
+                    }
+                    setIsYtScheduleExistForCreative={
+                      setIsYtScheduleExistForCreative
+                    }
+                    creative={creative}
+                  />
+                )}
+              </TabPane>
             )}
-            {!isYtTabDisabled && !isYtScheduleExistForCreative && (
-              <YoutubeUploadForm
-                setIsYtFormDescriptionVisible={setIsYtFormDescriptionVisible}
-                setIsYtScheduleExistForCreative={
-                  setIsYtScheduleExistForCreative
-                }
-                creative={creative}
-              />
-            )}
-          </TabPane>
-        </Tabs>
+          </Tabs>
+        )}
       </Drawer>
     </>
   );
