@@ -31,7 +31,7 @@ const InfluencerDrawer = ({
   const [isYtTabDisabled, setIsYtTabDisabled] = useState(false);
   const [isIgTabDisabled, setIsIgTabDisabled] = useState(false);
 
-  console.log("creative inside drawer ===> ", creative, project);
+  console.log("creative inside drawer ===> ", user, creative, project);
   useEffect(() => {
     setIsYtScheduleExistForCreative(youtubeData?.creative === creative.id);
     setIsYtFormDescriptionVisible(youtubeData?.creative === creative.id);
