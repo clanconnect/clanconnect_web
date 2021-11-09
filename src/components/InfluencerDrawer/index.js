@@ -77,7 +77,10 @@ const InfluencerDrawer = ({
         bodyStyle={{ paddingBottom: 20 }}
       >
         {isIgTabDisabled && isYtTabDisabled ? (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description="Please log into either Instagram or Youtube to schedule your post"
+          />
         ) : (
           <Tabs defaultActiveKey="ig">
             {!isIgTabDisabled && (
