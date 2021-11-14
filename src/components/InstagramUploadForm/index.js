@@ -74,7 +74,7 @@ const InstagramUploadForm = ({
   };
 
   const validationAlert = (msg) => (
-    <Alert description={msg} type="warning" showIcon closable />
+    <Alert description={msg} type="warning" showIcon />
   );
 
   useEffect(() => {
