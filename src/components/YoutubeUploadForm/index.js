@@ -12,6 +12,7 @@ import {
   Row,
   Col,
   Image,
+  Alert,
 } from "antd";
 import moment from "moment";
 import { UploadOutlined, EditOutlined } from "@ant-design/icons";
@@ -47,11 +48,23 @@ const YoutubeUploadForm = ({
   const [prevThumbnail, setPrevThumbnail] = useState({});
   const [showForm, setShowForm] = useState(true);
   const [imageRequiredState, setImageRequiredState] = useState(true);
-  // const [initialFormValues, setInitialFormValues] = useState({
-
-  // });
+  const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
+  const [mediaValidateAlert, setMediaValidateAlert] = useState(null);
 
   useEffect(() => {
+    const video = creative?.media.find(
+      (o) => o.mimeType.includes("video") && o.status === "accepted"
+    );
+
+    if (!video) {
+      setSubmitBtnDisabled(true);
+      setMediaValidateAlert(
+        validationAlert(
+          "Cannot find any approved version of video for this creative"
+        )
+      );
+    }
+
     if (youtubeData?.creative === creative.id) {
       form.setFieldsValue({
         title: youtubeData?.title,
@@ -73,13 +86,16 @@ const YoutubeUploadForm = ({
       setShowForm(false);
     }
   }, []);
+
   const handleMediaChange = (info) => {
     setFileList(info.fileList);
   };
+
   const beforeImageUpload = (file) => {
     validateFile(file);
     return false;
   };
+
   const handleMediaUpload = () => {
     if (!validateFile(fileList[0])) {
       return;
@@ -170,13 +186,20 @@ const YoutubeUploadForm = ({
     });
     setCategories(countryCategories);
   };
+
   function disabledDate(current) {
     // Can not select days before today
     return current && current < moment().subtract(1, "day").endOf("day");
   }
 
+  const validationAlert = (msg) => (
+    <Alert description={msg} type="warning" showIcon />
+  );
+
   return (
     <>
+      {mediaValidateAlert}
+
       {!formSubmitted && (
         <Form
           form={form}
@@ -433,7 +456,7 @@ const YoutubeUploadForm = ({
 
           <Form.Item
             name="publicStatsVisible"
-            label="Show Satistics Information to Public"
+            label="Show Statistics Information to Public"
             valuePropName="checked"
             rules={[
               {
@@ -460,7 +483,11 @@ const YoutubeUploadForm = ({
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={submitBtnDisabled}
+            >
               Submit
             </Button>
           </Form.Item>
