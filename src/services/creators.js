@@ -132,7 +132,7 @@ export class MediaService {
     );
 
     const urls = uploadUrls.data;
-    const uploadFile = async (url, file) => {
+    const uploadFile = async (url, file, meta) => {
       try {
         await apiMediaUpload.put(url.url, file.originFileObj, {
           headers: { "content-type": file.mimeType },
@@ -142,6 +142,7 @@ export class MediaService {
         });
 
         const res = await api.post("/creators/media/register", {
+          meta,
           key: url.key,
           originalName: file.originFileObj.name,
         });
@@ -152,13 +153,62 @@ export class MediaService {
       }
     };
 
+    const uploadImage = async (url, file) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const that = this;
+        console.log(that);
+        img.onload = async function () {
+          var sizes = { width: this.width, height: this.height };
+          URL.revokeObjectURL(this.src);
+          resolve(
+            await uploadFile(url, file, { ...sizes, mimeType: file.type })
+          );
+        };
+
+        const objectURL = URL.createObjectURL(file.originFileObj);
+        img.src = objectURL;
+      });
+    };
+
+    const uploadVideo = async (url, file) => {
+      return new Promise((resolve) => {
+        const video = document.createElement("video");
+        video.addEventListener(
+          "loadedmetadata",
+          function () {
+            const meta = {
+              width: this.videoWidth,
+              height: this.videoHeight,
+              mimeType: file.type,
+              duration: parseInt(this.duration),
+            };
+            URL.revokeObjectURL(this.src);
+            resolve(uploadFile(url, file, { ...meta }));
+          },
+          false
+        );
+
+        video.src = URL.createObjectURL(file.originFileObj);
+      });
+    };
+
     const promises = [];
     for (const index in urls) {
-      promises.push(uploadFile(urls[index], files[index]));
+      const file = files[index];
+      console.log(file.type);
+      if (file.type.includes("image/")) {
+        promises.push(uploadImage(urls[index], file));
+      } else if (file.type.includes("video/")) {
+        promises.push(uploadVideo(urls[index], file));
+      } else {
+        promises.push(uploadFile(urls[index], file, {}));
+      }
     }
 
     return Promise.all(promises);
   }
+
   static async uploadSingle(files, setProgress) {
     const uploadUrls = await api.get(
       "/creators/media/upload-url?" + qs.stringify({ n: files.length })
@@ -166,13 +216,16 @@ export class MediaService {
 
     const urls = uploadUrls.data;
     const uploadFile = async (url, file) => {
+      console.log(file);
       try {
-        await api.put(url.url, file, {
-          headers: { "content-type": file.type },
-          onUploadProgress: (e) => {
-            setProgress(file.uid, Math.floor((e.loaded / e.total) * 100));
-          },
-        });
+        // await api.put(url.url, file, {
+        //   headers: { "content-type": file.type },
+        //   onUploadProgress: (e) => {
+        //     setProgress(file.uid, Math.floor((e.loaded / e.total) * 100));
+        //   },
+        // });
+
+        console.log(file);
 
         const res = await api.post("/creators/media/register", {
           key: url.key,

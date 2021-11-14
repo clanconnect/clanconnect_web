@@ -35,7 +35,7 @@ function callback(key) {
 
 const ProjectCreatives = ({ project, creatives }, index, tabType) => {
   return project.length !== 0 ? (
-    tabType == "campaign" ? (
+    tabType === "campaign" ? (
       <ProjectListCard
         project={project}
         creatives={creatives}
@@ -271,9 +271,7 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
             {o.value !== "accepted" && creatives && creatives?.length !== 0 ? (
               creatives
                 .filter(({ creatives }) => creatives.length !== 0)
-                .map((obj, index) => {
-                  return ProjectCreatives(obj, index);
-                })
+                .map((obj, index) => ProjectCreatives(obj, index))
             ) : (
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )}

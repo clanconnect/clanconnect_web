@@ -9,11 +9,14 @@ import { ACTIONS } from "redux/creators/creatives/actions";
 import { MediaService } from "services/creators";
 import { remove, startCase, toLower } from "lodash";
 import MediaRequirementAlert from "components/MediaRequirementAlert";
-import { instaRequirements, youtubeRequirements } from "../MediaRequirementAlert/dataManager";
+import {
+  instaRequirements,
+  youtubeRequirements,
+} from "../MediaRequirementAlert/dataManager";
 
-import { Tooltip } from 'antd';
+import { Tooltip } from "antd";
 //bootstrap icons
-import * as Icon from 'react-bootstrap-icons';
+import * as Icon from "react-bootstrap-icons";
 
 const UploadTypes = [
   { label: "Uploading a new creative", value: "upload new" },
@@ -25,7 +28,11 @@ const mediaRequirements = (
     <div className="mediaRequirementSec">
       {instaRequirements?.map((o, idx) => (
         <div key={idx} className="mediaRequirementSecInner">
-          <h4><strong>{o.socialMedia} {o.mediaType}</strong></h4>
+          <h4>
+            <strong>
+              {o.socialMedia} {o.mediaType}
+            </strong>
+          </h4>
           <ul>
             {o.requirements.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -37,7 +44,11 @@ const mediaRequirements = (
     <div className="mediaRequirementSec">
       {youtubeRequirements?.map((o, idx) => (
         <div key={idx} className="mediaRequirementSecInner">
-          <h4><strong>{o.socialMedia} {o.mediaType}</strong></h4>
+          <h4>
+            <strong>
+              {o.socialMedia} {o.mediaType}
+            </strong>
+          </h4>
           <ul>
             {o.requirements.map((item, idx) => (
               <li key={idx}>{item}</li>
@@ -47,7 +58,7 @@ const mediaRequirements = (
       ))}
     </div>
   </div>
-)
+);
 
 const ShowUploadConsentView = ({
   uploadNewFile,
@@ -61,10 +72,10 @@ const ShowUploadConsentView = ({
   return ["upload added", "upload new"].includes(uploadNewFile) ? null : (
     <div>
       <div
-        className={`flex ${disablePreviousVersionUpload ? "justify-center" : "justify-between"
-          }`}
-      >
-      </div>
+        className={`flex ${
+          disablePreviousVersionUpload ? "justify-center" : "justify-between"
+        }`}
+      ></div>
     </div>
   );
 };
@@ -93,8 +104,9 @@ const UploadNewCreatives = ({
               </p>
               <UploadAttchmentFile
                 fileName={selectedCreative.id}
-                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${selectedCreative?.media[0]?.slug || "default"
-                  }`}
+                icon={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
+                  selectedCreative?.media[0]?.slug || "default"
+                }`}
                 mimeType={selectedCreative?.media[0]?.mimeType || ""}
                 uploadedFile
               />
@@ -151,7 +163,7 @@ const InfluencerUploadModal = ({
   dispatch,
   creatives,
   disablePreviousVersionUpload,
-  tabType
+  tabType,
 }) => {
   const [visible, setVisible] = useState(false);
   const [uploadNewFile, setUploadNewFile] = useState("");
@@ -272,8 +284,26 @@ const InfluencerUploadModal = ({
       {fileUploadStage < 2 && (
         <>
           <span>Upload Creative</span>
-          <Popover overlayClassName="creativeInfoPopover" getPopupContainer={node => node.parentNode} autoAdjustOverflow="true" content={mediaRequirements} placement="rightTop" title="Media Requirements" trigger="click" arrowPointAtTop>
-            <span><Icon.InfoCircle size={15} style={{ verticalAlign: '-3px', marginLeft: '5px', cursor: 'pointer' }} /></span>
+          <Popover
+            overlayClassName="creativeInfoPopover"
+            getPopupContainer={(node) => node.parentNode}
+            autoAdjustOverflow="true"
+            content={mediaRequirements}
+            placement="rightTop"
+            title="Media Requirements"
+            trigger="click"
+            arrowPointAtTop
+          >
+            <span>
+              <Icon.InfoCircle
+                size={15}
+                style={{
+                  verticalAlign: "-3px",
+                  marginLeft: "5px",
+                  cursor: "pointer",
+                }}
+              />
+            </span>
           </Popover>
         </>
       )}
@@ -286,7 +316,7 @@ const InfluencerUploadModal = ({
     visible,
     destroyOnClose: true,
     onOk: () => {
-      setVisible(false)
+      setVisible(false);
     },
     onCancel: (event) => {
       onCancel(false);
@@ -294,7 +324,7 @@ const InfluencerUploadModal = ({
     },
     className: "influencer-upload-modal",
     centered: true,
-    width: 700
+    width: 700,
   };
 
   return (
@@ -327,7 +357,7 @@ const InfluencerUploadModal = ({
           uploadNewFile={uploadNewFile}
         />
 
-        <div class="inf-upload-div">
+        <div className="inf-upload-div">
           {fileUploadStage === 2 && (
             <Result
               className="uploadedSuccessMsg"
@@ -347,7 +377,7 @@ const InfluencerUploadModal = ({
               ]}
             />
           )}
-          <div class="creative-box new-creative-span">
+          <div className="creative-box new-creative-span">
             <p className="text-center mb-20">
               {fileUploadStage ? "" : "Upload a new creative:"}
             </p>
@@ -366,7 +396,7 @@ const InfluencerUploadModal = ({
             })}
           </div>
           {
-            <div class="creative-box upload-older-creative">
+            <div className="creative-box upload-older-creative">
               <p className="text-center">
                 Please select to upload a new version:
               </p>

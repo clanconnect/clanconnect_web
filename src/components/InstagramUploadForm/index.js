@@ -9,7 +9,6 @@ import {
   message,
   Row,
   Alert,
-  Collapse,
 } from "antd";
 import moment from "moment";
 import { useState, useEffect } from "react";
@@ -17,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS } from "redux/creators/socials/instagram/actions";
 
 const { Option } = Select;
-const { Panel } = Collapse;
 
 const InstagramUploadForm = ({
   creative,
@@ -35,45 +33,50 @@ const InstagramUploadForm = ({
   const [mediaValidateAlert, setMediaValidateAlert] = useState(null);
 
   const validateImage = (image) => {
+    const aspectRatio = image.meta.width / image.meta.height;
+    if (aspectRatio < 0.8 || aspectRatio > 1.91) {
+      return "Image's aspect ratio should either be 4:5 or 16:9";
+    }
+
     const sizeInMb = image.size / 1024 / 1024;
     const format = image.mimeType.split("/")[1];
-    // const sizeInMb = 8488608 / 1024 / 1024
     if (sizeInMb > 8) {
-      return false;
+      return "Image's size should be less than 8MBs";
     }
     if (!["png", "jpg", "jpeg"].includes(format)) {
-      return false;
+      return "Image's format should either be .png or .jpg/.jpeg";
     }
-    return true;
+
+    return false;
   };
+
   const validateVideo = (video) => {
+    if (video.duration < 3 || video.duration > 60) {
+      return "Allowed duration of video is 3 seconds minimum and 60 seconds maximum";
+    }
+
+    const aspectRatio = video.meta.width / video.meta.height;
+    if (aspectRatio < 0.8 || aspectRatio > 1.91) {
+      return "Video's aspect ratio should either be 4:5 or 16:9";
+    }
+
     const sizeInMb = video.size / 1024 / 1024;
-    const format = video.mimeType.split("/")[1];
-    // const sizeInMb = 848860834543 / 1024 / 1024
     if (sizeInMb > 100) {
-      return false;
+      return "Video's size should be less than 100MBs";
     }
+
+    const format = video.mimeType.split("/")[1];
     if (!["mp4", "mov"].includes(format)) {
-      return false;
+      return "Video's format should either be .mp4 or .mov";
     }
-    return true;
+
+    return false;
   };
-  const imageValidationAlert = (
-    <Alert
-      description="Please upload an image of format jpeg/png and size less than 8MB"
-      type="warning"
-      showIcon
-      closable
-    />
+
+  const validationAlert = (msg) => (
+    <Alert description={msg} type="warning" showIcon closable />
   );
-  const videoValidationAlert = (
-    <Alert
-      description="Please upload a video of format mp4/mov and size less than 100MB"
-      type="warning"
-      showIcon
-      closable
-    />
-  );
+
   useEffect(() => {
     const image = creative?.media.find(
       (o) => o.mimeType.includes("image") && o.status === "accepted"
@@ -81,16 +84,23 @@ const InstagramUploadForm = ({
     const video = creative?.media.find(
       (o) => o.mimeType.includes("video") && o.status === "accepted"
     );
-    console.log("video, image", video, image);
-    if (image && !validateImage(image)) {
-      console.log("image validated");
-      setSubmitBtnDisabled(true);
-      setMediaValidateAlert(imageValidationAlert);
+
+    if (image) {
+      const imageError = validateImage(image);
+      if (imageError) {
+        setSubmitBtnDisabled(true);
+        setMediaValidateAlert(validationAlert(imageError));
+      }
     }
-    if (video && !validateVideo(video)) {
-      setSubmitBtnDisabled(true);
-      setMediaValidateAlert(videoValidationAlert);
+
+    if (video) {
+      const videoError = validateVideo(video);
+      if (videoError) {
+        setSubmitBtnDisabled(true);
+        setMediaValidateAlert(validationAlert(videoError));
+      }
     }
+
     if (instagramData?.creative === creative.id) {
       form.setFieldsValue({
         caption: instagramData?.caption,
@@ -99,10 +109,9 @@ const InstagramUploadForm = ({
       });
     }
   }, []);
+
   useEffect(() => {
-    dispatch({
-      type: ACTIONS.FETCH_FB_PAGES,
-    });
+    dispatch({ type: ACTIONS.FETCH_FB_PAGES });
   }, []);
 
   const handleAccountChange = (values) => {
