@@ -38,6 +38,11 @@ axiosInstance.interceptors.response.use(
   },
   (err) => {
     console.log("err=>>", err);
+    if (err.response.status === 401) {
+      toast.error("Please login again");
+      window.location = process.env.REACT_APP_WEB_HOST + "/login-as-advertiser";
+      return;
+    }
     if (err.response.status !== 422) {
       console.log("ERROR", err);
       toast.error(err.response.data.message);
