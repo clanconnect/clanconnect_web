@@ -228,7 +228,7 @@ const YoutubeUploadForm = ({
               },
             ]}
           >
-            <Input placeholder="Add video title" />
+            <Input placeholder="Add video title" disabled={submitBtnDisabled} />
           </Form.Item>
 
           {showForm && (
@@ -251,6 +251,7 @@ const YoutubeUploadForm = ({
                 beforeUpload={beforeImageUpload}
                 progress={uploadProgress}
                 maxCount={1}
+                disabled={submitBtnDisabled}
               >
                 <Button icon={<UploadOutlined />}>Select File</Button>
               </Upload>
@@ -294,7 +295,11 @@ const YoutubeUploadForm = ({
               },
             ]}
           >
-            <Input.TextArea rows={5} placeholder="Add video description" />
+            <Input.TextArea
+              rows={5}
+              placeholder="Add video description"
+              disabled={submitBtnDisabled}
+            />
           </Form.Item>
           <Row>
             <Col span={8}>
@@ -308,7 +313,10 @@ const YoutubeUploadForm = ({
                   },
                 ]}
               >
-                <Select onChange={handleCountryChange}>
+                <Select
+                  onChange={handleCountryChange}
+                  disabled={submitBtnDisabled}
+                >
                   {countries.map((o, idx) => (
                     <Option key={idx} value={o.code}>
                       {o.name}
@@ -330,7 +338,10 @@ const YoutubeUploadForm = ({
                   },
                 ]}
               >
-                <Select placeholder="Select a Category">
+                <Select
+                  placeholder="Select a Category"
+                  disabled={submitBtnDisabled}
+                >
                   {categories &&
                     categories.map((o, idx) => (
                       <Option key={idx} value={o.id}>
@@ -343,26 +354,32 @@ const YoutubeUploadForm = ({
           </Row>
 
           <Form.Item
+            disabled={submitBtnDisabled}
             label="Video Tags"
             name="tags"
             rules={[{ required: true, message: "Please enter video tags" }]}
           >
-            <Select mode="tags" style={{ width: "100%" }} placeholder="Tags" />
+            <Select
+              mode="tags"
+              style={{ width: "100%" }}
+              placeholder="Tags"
+              disabled={submitBtnDisabled}
+            />
           </Form.Item>
           <Row>
             <Form.Item
               label="Schedule Date"
               name="date"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter Date",
-                },
-              ]}
+              rules={[{ required: true, message: "Please enter Date" }]}
             >
-              <DatePicker disabledDate={disabledDate} format={"DD/MM/YYYY"} />
+              <DatePicker
+                disabledDate={disabledDate}
+                format={"DD/MM/YYYY"}
+                disabled={submitBtnDisabled}
+              />
             </Form.Item>
             <Form.Item
+              disabled={submitBtnDisabled}
               label="Schedule Time"
               name="time"
               rules={[
@@ -392,34 +409,33 @@ const YoutubeUploadForm = ({
                 minuteStep={5}
                 use12Hours
                 format="HH:mm"
+                disabled={submitBtnDisabled}
               />
             </Form.Item>
           </Row>
           <Form.Item
+            disabled={submitBtnDisabled}
             name="madeForKids"
             label="Is the video made for Kids?"
             valuePropName="checked"
-            rules={[
-              {
-                required: true,
-                message: "Please enter input",
-              },
-            ]}
+            rules={[{ required: true, message: "Please enter input" }]}
           >
-            <Switch checkedChildren="Yes" unCheckedChildren="No" />
+            <Switch
+              checkedChildren="Yes"
+              unCheckedChildren="No"
+              disabled={submitBtnDisabled}
+            />
           </Form.Item>
 
           <Form.Item
+            disabled={submitBtnDisabled}
             name="defaultLanguage"
             label="Default Language"
             rules={[
-              {
-                required: true,
-                message: "Please enter default lanuage",
-              },
+              { required: true, message: "Please enter default lanuage" },
             ]}
           >
-            <Select>
+            <Select disabled={submitBtnDisabled}>
               {languages.map((o, idx) => (
                 <Option key={idx} value={o.value}>
                   {o.name}
@@ -429,57 +445,56 @@ const YoutubeUploadForm = ({
           </Form.Item>
 
           <Form.Item
+            disabled={submitBtnDisabled}
             name="license"
             label="License Information"
             rules={[
-              {
-                required: true,
-                message: "Please enter license information",
-              },
+              { required: true, message: "Please enter license information" },
             ]}
           >
-            <Select>
+            <Select disabled={submitBtnDisabled}>
               <Option value="youtube">Youtube</Option>
               <Option value="creativeCommons">Creative Commons</Option>
             </Select>
           </Form.Item>
 
           <Form.Item
+            disabled={submitBtnDisabled}
             name="privacyStatus"
             label="Privacy Status"
             rules={[{ required: true, message: "Please enter Privacy Status" }]}
           >
-            <Select>
+            <Select disabled={submitBtnDisabled}>
               <Option value="public">Public</Option>
             </Select>
           </Form.Item>
 
           <Form.Item
+            disabled={submitBtnDisabled}
             name="publicStatsVisible"
             label="Show Statistics Information to Public"
             valuePropName="checked"
-            rules={[
-              {
-                required: true,
-                message: "Please enter input",
-              },
-            ]}
+            rules={[{ required: true, message: "Please enter input" }]}
           >
-            <Switch checkedChildren="Yes" unCheckedChildren="No" />
+            <Switch
+              checkedChildren="Yes"
+              unCheckedChildren="No"
+              disabled={submitBtnDisabled}
+            />
           </Form.Item>
 
           <Form.Item
+            disabled={submitBtnDisabled}
             name="notifySubscribers"
             label="Notify Subscribers"
             valuePropName="checked"
-            rules={[
-              {
-                required: true,
-                message: "Please enter input",
-              },
-            ]}
+            rules={[{ required: true, message: "Please enter input" }]}
           >
-            <Switch checkedChildren="Yes" unCheckedChildren="No" />
+            <Switch
+              checkedChildren="Yes"
+              unCheckedChildren="No"
+              disabled={submitBtnDisabled}
+            />
           </Form.Item>
 
           <Form.Item>

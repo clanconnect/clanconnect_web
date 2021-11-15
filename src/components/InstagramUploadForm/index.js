@@ -191,7 +191,7 @@ const InstagramUploadForm = ({
               },
             ]}
           >
-            <Select>
+            <Select disabled={submitBtnDisabled}>
               {fbPagesData &&
                 fbPagesData?.map((o, idx) => (
                   <Option key={idx} value={o.id}>
@@ -240,6 +240,7 @@ const InstagramUploadForm = ({
             <Input.TextArea
               placeholder="Add post body, hastags, etc."
               rows={2}
+              disabled={submitBtnDisabled}
             />
           </Form.Item>
 
@@ -249,7 +250,11 @@ const InstagramUploadForm = ({
               name="date"
               rules={[{ required: true, message: "Please enter schedule" }]}
             >
-              <DatePicker disabledDate={disabledDate} format={"DD/MM/YYYY"} />
+              <DatePicker
+                disabledDate={disabledDate}
+                format={"DD/MM/YYYY"}
+                disabled={submitBtnDisabled}
+              />
             </Form.Item>
             <Form.Item
               label="Schedule Time"
@@ -281,6 +286,7 @@ const InstagramUploadForm = ({
                 minuteStep={5}
                 use12Hours
                 format="HH:mm"
+                disabled={submitBtnDisabled}
               />
             </Form.Item>
           </Row>
