@@ -166,7 +166,10 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
     projects = projects
       .map(({ creatives, project }) => {
         creatives = creatives.filter(
-          (c) => c.socials && (c.socials.youtube || c.socials.instagram)
+          (c) =>
+            c.socials &&
+            ((c.socials.youtube && !c.socials.youtube?.isUploaded) ||
+              (c.socials.instagram && !c.socials.instagram.isUploaded))
         );
         return { project, creatives };
       })
@@ -200,8 +203,10 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
         creatives = creatives.filter(
           (c) =>
             c.socials &&
-            (c.socials?.youtube?.isCancelled ||
-              c.socials?.instagram?.isCancelled)
+            (c.socials?.youtube?.isErrored ||
+              c.socials?.youtube?.cancelReason ||
+              c.socials?.instagram?.isErrored ||
+              c.socials?.instagram?.cancelReason)
         );
         return { project, creatives };
       })

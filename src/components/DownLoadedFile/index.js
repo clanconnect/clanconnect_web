@@ -66,14 +66,16 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               className="icons-custom cursor-pointer"
               creative={creative}
             />
-            <div className="icon-sec">
-              <img
-                src={download}
-                alt=""
-                className="icons-custom cursor-pointer"
-                onClick={() => downloadMedia(media.slug)}
-              />
-            </div>
+            {creative.status === "accepted" && (
+              <div className="icon-sec">
+                <img
+                  src={download}
+                  alt=""
+                  className="icons-custom cursor-pointer"
+                  onClick={() => downloadMedia(media.slug)}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="creative-footer">
