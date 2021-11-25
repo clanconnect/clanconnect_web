@@ -28,9 +28,8 @@ const ProjectDetails = (props) => {
   const { creativeDetails } = useSelector((store) => store.creatives);
 
   const [activeTab, setActiveTab] = useState("Creatives Approval");
-  const [defaultActiveKeyProposals, setDefaultActiveKeyProposals] = useState(
-    "sent"
-  );
+  const [defaultActiveKeyProposals, setDefaultActiveKeyProposals] =
+    useState("sent");
   const [defaultActiveKeyCreative, setDefaultActiveKeyCreative] = useState(
     defaultActiveKeyCreativeTabStatus || "pending"
   );
@@ -106,45 +105,7 @@ const ProjectDetails = (props) => {
               </a>
             </div>
             <LineHeading title="Creatives Approval" />
-            {/* <div className="con-mb">
-              {myTabs.map((tab, index) => (
-                <button
-                  key={tab.name}
-                  className={`tabs-btn ${
-                    activeTab === tab.name ? "active-tab" : null
-                  }`}
-                  onClick={() => handleActiveTab(tab.name)}
-                >
-                  {tab.name}
-                </button>
-              ))}
-            </div>
 
-            {activeTab === "Snapshot" && (
-              <div className="flex justify-between mobile-res">
-                <SnapshotTabData
-                  handleTabs={handleTabs}
-                  handleCreativeTabs={handleCreativeTabs}
-                  projectDetail={projectDetail}
-                />
-              </div>
-            )}
-
-            {activeTab === "Proposals" && (
-              <ProposalsTabData
-                defaultActiveKey={defaultActiveKeyProposals}
-                getProposals={getProposals}
-                proposalDetails={proposalDetails}
-              />
-            )}
-
-            {activeTab === "Creatives Approval" && (
-              <CreativeApprovalData
-                defaultActiveKey={defaultActiveKeyCreative}
-                getCreatives={getCreatives}
-                creativeDetails={creativeDetails}
-              />
-            )} */}
             <CreativeApprovalData
               defaultActiveKey={defaultActiveKeyCreative}
               getCreatives={getCreatives}

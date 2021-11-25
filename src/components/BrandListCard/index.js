@@ -1,9 +1,7 @@
 import React from "react";
 import "./styles.scss";
-import CreativeUploadModal from "../InfluencerUploadModal";
 
 const BrandListCard = ({ name, uploadCreative, img, disabled }) => {
-  console.log(img, 'img');
   return (
     <div className="brand-list">
       <div className="brand-list-img">

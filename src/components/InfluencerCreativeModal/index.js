@@ -59,7 +59,9 @@ const MediaView = ({ media, imageUrl, onImageError }) => {
           src={download}
           alt=""
           className="icons-custom cursor-pointer"
-          onClick={() => downloadMedia(media.slug)}
+          onClick={() => {
+            downloadMedia(media.slug);
+          }}
         />
       )}
     </div>
@@ -73,6 +75,8 @@ const InfluencerCreativeModal = ({
   project = {},
   compactView,
   onAllCreativesPage,
+  openModal,
+  setOpenModal,
 }) => {
   const [visible, setVisible] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
@@ -82,7 +86,12 @@ const InfluencerCreativeModal = ({
 
   useEffect(() => {
     setCreativeStatus(creative?.media[0]?.status || "pending");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setVisible(openModal);
+  }, [openModal]);
 
   const getImageUrl = (slug) => {
     return `${process.env.REACT_APP_IMAGE_BASE_URL}/${slug || "default"}`;
@@ -118,11 +127,13 @@ const InfluencerCreativeModal = ({
     setIsDrawerVisible(true);
   };
 
-  const closeModal = (val) => setVisible(false);
+  const closeModal = () => {
+    setVisible(false);
+    setOpenModal && setOpenModal(false);
+  };
 
   const handleCreativeChange = (val) => {
     const media = creative.media ? creative.media[val] : null;
-    console.log("media ====> ", media);
     setCreativeStatus(media?.status || "pending");
   };
 
@@ -159,7 +170,7 @@ const InfluencerCreativeModal = ({
       ) : (
         <img
           alt=""
-          onClick={() => setVisible(true)}
+          onClick={() => closeModal()}
           src={src}
           className={`cursor-pointer ${className}`}
         />
@@ -177,8 +188,8 @@ const InfluencerCreativeModal = ({
 
       <Modal
         visible={visible}
-        onOk={() => setVisible(false)}
-        onCancel={() => closeModal(false)}
+        onOk={() => closeModal()}
+        onCancel={closeModal}
         width={1100}
         centered
         className="custom-modal"
@@ -192,7 +203,7 @@ const InfluencerCreativeModal = ({
                   className="btn-submit"
                   onClick={() => {
                     showDrawer();
-                    setVisible(false);
+                    closeModal();
                   }}
                 >
                   Schedule

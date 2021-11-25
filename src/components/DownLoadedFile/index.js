@@ -20,11 +20,16 @@ const DownLoadedFile = ({ creative = {}, project }) => {
   const [imageUrl, setImageUrl] = useState(
     `${process.env.REACT_APP_IMAGE_BASE_URL}/${media?.slug || "default"}`
   );
+  const [openModal, setOpenModal] = useState(false);
+
   const instagramSocial = creative?.socials?.instagram;
   const youtubeSocial = creative?.socials?.youtube;
 
   return (
-    <div className="influncer-file-container">
+    <div
+      className="influncer-file-container "
+      onClick={() => setOpenModal(true)}
+    >
       <div className="influncer-file-subcontainer">
         <div className="img-box-download">
           {media?.mimeType?.includes("image") ? (
@@ -65,6 +70,8 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               project={project}
               className="icons-custom cursor-pointer"
               creative={creative}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
             />
             {creative.status === "accepted" && (
               <div className="icon-sec">
@@ -72,7 +79,10 @@ const DownLoadedFile = ({ creative = {}, project }) => {
                   src={download}
                   alt=""
                   className="icons-custom cursor-pointer"
-                  onClick={() => downloadMedia(media.slug)}
+                  onClick={() => {
+                    downloadMedia(media.slug);
+                    setOpenModal(false);
+                  }}
                 />
               </div>
             )}

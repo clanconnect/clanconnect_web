@@ -2,7 +2,6 @@ import React from "react";
 import { Spin } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import CommentProfile from "../CommentProfile";
-// import { commentData } from 'common/dataManager';
 import "./styles.scss";
 
 export default class CustomScroll extends React.Component {

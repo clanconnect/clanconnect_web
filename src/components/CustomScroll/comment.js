@@ -1,72 +1,3 @@
-/* eslint-disable no-unused-vars */
-// import React, { useEffect, useState } from "react";
-// import { Waypoint } from "react-waypoint";
-// import { useSelector, useDispatch } from "react-redux";
-// import CommentProfile from "../CommentProfile";
-// import { getCommentsAction } from "redux/brands/comments/actions";
-// import { Spin, Empty } from "antd";
-
-// const Comment = (props) => {
-//   const dispatch = useDispatch();
-//   const [page, setPage] = useState(1);
-//   const [loader, setLoader] = useState(false);
-//   const [commentsData, setCommentsData] = useState([]);
-//   const [commentsDataLocalTs, setCommentsDataTs] = useState([]);
-//   const [emptystate, setEmptystate] = useState(false);
-//   const { meta, commentData, commentDataTs } = useSelector(
-//     (store) => store.comments
-//   );
-
-//   const { creativeId } = props;
-//   //   useEffect(() => {
-//   //     getCommentsData();
-//   //     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   //   }, []);
-
-//   //   const getCommentsData = () => {
-//   //     setLoader(true);
-
-//   //     dispatch(getCommentsAction({ page, id: creativeId }));
-//   //   };
-
-//   //   useEffect(() => {
-//   //     if (commentDataTs !== commentsDataLocalTs && commentData) {
-//   //       setCommentsData(commentData);
-//   //       setLoader(false);
-//   //     }
-//   //   }, []);
-
-//   return (
-//     <div className="demo-class">
-//       {commentData &&
-//         commentData.map((item, index) => {
-//           if (index === commentData.length - 1) {
-//             return (
-//               <>
-//                 <CommentProfile data={item} key={`comment-${item.id}`} />
-//                 {!loader && page < meta?.totalPages && (
-//                   <Waypoint onEnter={() => setPage(page + 1)} />
-//                 )}
-//               </>
-//             );
-//           }
-//           return <CommentProfile data={item} key={`comment-${item.id}`} />;
-//         })}
-//       {/* {loader && Loading} */}
-//       {!loader ? null : (
-//         <div className="loader-row">
-//           <Spin />
-//         </div>
-//       )}
-
-//       {commentData.length === 0 && (
-//         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ margin: "0px" }} />
-//       )}
-//     </div>
-//   );
-// };
-// export default Comment;
-
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CommentProfile from "../CommentProfile";
@@ -79,10 +10,8 @@ const Comment = (props) => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const dispatch = useDispatch();
-  const { meta, commentData, commentDataTs } = useSelector(
-    (store) => store.comments
-  );
-  console.log("commentData ====>", commentData);
+  const { meta, commentData } = useSelector((store) => store.comments);
+
   useEffect(() => {
     dispatch(getCommentsAction({ page: 1, id: creativeId }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,20 +67,3 @@ const Comment = (props) => {
 };
 
 export default Comment;
-
-// const Comments = () => {
-//   const { meta, commentData, commentDataTs } = useSelector(
-//     (store) => store.comments
-//   );
-//   return (
-//     <>
-//       {commentData &&
-//         commentData.map((item, index) => {
-//           return <CommentProfile data={item} key={`comment-${item.id}`} />;
-//         })}
-//       {commentData.length === 0 && (
-//         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ margin: "0px" }} />
-//       )}
-//     </>
-//   );
-// };

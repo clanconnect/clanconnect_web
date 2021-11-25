@@ -88,11 +88,101 @@ const CreativeApprovalData = ({
     };
     dispatch(getCreativesAction({ params, id }));
   }, []);
+
   const operations = (
     <Link to={routeConstant.allCreativesListsBrand}>
       <p className="cursor-pointer view-title">View all creatives</p>
     </Link>
   );
+
+  const fetchNotScheduledCreatives = (creativeDetails) => {
+    creativeDetails = creativeDetails.filter(
+      ({ creatives }) => creatives.length !== 0
+    );
+
+    creativeDetails = creativeDetails.filter(({ creatives }) => {
+      (creatives || []).forEach((c) => {
+        return !c.socials || (!c.socials.youtube && !c.socials.instagram);
+      });
+      return true;
+    });
+
+    creativeDetails = creativeDetails.map(({ creatives, user }) => {
+      creatives = creatives.filter(
+        (c) => !c.socials || (!c.socials.youtube && !c.socials.instagram)
+      );
+      return { user, creatives };
+    });
+    return creativeDetails;
+  };
+
+  const fetchScheduledCreatives = (creativeDetails) => {
+    creativeDetails = creativeDetails.filter(
+      ({ creatives }) => creatives.length !== 0
+    );
+
+    creativeDetails = creativeDetails.filter(({ creatives }) => {
+      (creatives || []).forEach(
+        (c) => c.socials && (c.socials.youtube || c.socials.instagram)
+      );
+      return true;
+    });
+
+    creativeDetails = creativeDetails
+      .map(({ creatives, user }) => {
+        creatives = creatives.filter(
+          (c) =>
+            c.socials &&
+            ((c.socials.youtube && !c.socials.youtube?.isUploaded) ||
+              (c.socials.instagram && !c.socials.instagram.isUploaded))
+        );
+        return { user, creatives };
+      })
+      .filter(({ creatives }) => creatives.length > 0);
+
+    return creativeDetails;
+  };
+
+  const fetchLiveCreatives = (creativeDetails) => {
+    creativeDetails = creativeDetails.filter(
+      ({ creatives }) => creatives.length !== 0
+    );
+
+    creativeDetails = creativeDetails
+      .map(({ creatives, user }) => {
+        creatives = creatives.filter(
+          (c) =>
+            c.socials &&
+            (c.socials?.youtube?.isUploaded || c.socials?.instagram?.isUploaded)
+        );
+        return { user, creatives };
+      })
+      .filter(({ creatives }) => creatives.length > 0);
+
+    return creativeDetails;
+  };
+
+  const fetchCancelledCreatives = (creativeDetails) => {
+    creativeDetails = creativeDetails.filter(
+      ({ creatives }) => creatives.length !== 0
+    );
+
+    creativeDetails = creativeDetails
+      .map(({ creatives, user }) => {
+        creatives = creatives.filter(
+          (c) =>
+            c.socials &&
+            (c.socials?.youtube?.isErrored ||
+              c.socials?.youtube?.cancelReason ||
+              c.socials?.instagram?.isErrored ||
+              c.socials?.instagram?.cancelReason)
+        );
+        return { user, creatives };
+      })
+      .filter(({ creatives }) => creatives.length > 0);
+
+    return creativeDetails;
+  };
 
   return (
     <div className="tab-creative">
@@ -175,61 +265,239 @@ const CreativeApprovalData = ({
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </TabPane>
-        <TabPane tab="Approved" key="accepted">
-          {creativeDetails.length !== 0 && (
-            <div className="btn-row">
-              <div>
-                {showSelectAllActive ? (
-                  <>
-                    <button
-                      className="btn btn-outline-primary"
-                      onClick={handleSelectAll}
-                    >
-                      Select All
-                    </button>
 
-                    <button
-                      className="btn btn-outline-grey"
-                      onClick={() => setSelectedCreatives([])}
-                    >
-                      Deselect All
-                    </button>
-                    <button
-                      className="btn btn-outline-secondary"
-                      onClick={() => {
-                        onClickSelect(false);
-                        handleBulkCreatives("rejected", "accepted");
-                      }}
-                    >
-                      Reject
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => {
-                        onClickSelect(false);
-                      }}
-                    >
-                      Done
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    className="btn bg-green"
-                    onClick={() => onClickSelect(true)}
-                  >
-                    Select
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-          <InfluncerFile
-            influncerNameData={influncerNameDataApproved}
-            showSelectAllActive={showSelectAllActive}
-            creativeDetails={creativeDetails}
-            selectedCreatives={selectedCreatives}
-            setSelectedCreatives={setSelectedCreatives}
-          />
+        <TabPane tab="Approved" key="accepted">
+          <Tabs className="tab-sub-tabs mt-5">
+            <TabPane tab="Non-scheduled" key="non-scheduled">
+              {fetchNotScheduledCreatives(creativeDetails).length !== 0 && (
+                <div className="btn-row">
+                  <div>
+                    {showSelectAllActive ? (
+                      <>
+                        <button
+                          className="btn btn-outline-primary"
+                          onClick={handleSelectAll}
+                        >
+                          Select All
+                        </button>
+
+                        <button
+                          className="btn btn-outline-grey"
+                          onClick={() => setSelectedCreatives([])}
+                        >
+                          Deselect All
+                        </button>
+                        <button
+                          className="btn btn-outline-secondary"
+                          onClick={() => {
+                            onClickSelect(false);
+                            handleBulkCreatives("rejected", "accepted");
+                          }}
+                        >
+                          Reject
+                        </button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                            onClickSelect(false);
+                          }}
+                        >
+                          Done
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="btn bg-green"
+                        onClick={() => onClickSelect(true)}
+                      >
+                        Select
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+              <InfluncerFile
+                influncerNameData={influncerNameDataApproved}
+                showSelectAllActive={showSelectAllActive}
+                creativeDetails={fetchNotScheduledCreatives(creativeDetails)}
+                selectedCreatives={selectedCreatives}
+                setSelectedCreatives={setSelectedCreatives}
+              />
+            </TabPane>
+
+            <TabPane tab="Scheduled" key="scheduled">
+              {fetchScheduledCreatives(creativeDetails).length !== 0 && (
+                <div className="btn-row">
+                  <div>
+                    {showSelectAllActive ? (
+                      <>
+                        <button
+                          className="btn btn-outline-primary"
+                          onClick={handleSelectAll}
+                        >
+                          Select All
+                        </button>
+
+                        <button
+                          className="btn btn-outline-grey"
+                          onClick={() => setSelectedCreatives([])}
+                        >
+                          Deselect All
+                        </button>
+                        <button
+                          className="btn btn-outline-secondary"
+                          onClick={() => {
+                            onClickSelect(false);
+                            handleBulkCreatives("rejected", "accepted");
+                          }}
+                        >
+                          Reject
+                        </button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                            onClickSelect(false);
+                          }}
+                        >
+                          Done
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="btn bg-green"
+                        onClick={() => onClickSelect(true)}
+                      >
+                        Select
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <InfluncerFile
+                influncerNameData={influncerNameDataApproved}
+                showSelectAllActive={showSelectAllActive}
+                creativeDetails={fetchScheduledCreatives(creativeDetails)}
+                selectedCreatives={selectedCreatives}
+                setSelectedCreatives={setSelectedCreatives}
+              />
+            </TabPane>
+
+            <TabPane tab="Live" key="live">
+              {fetchLiveCreatives(creativeDetails).length !== 0 && (
+                <div className="btn-row">
+                  <div>
+                    {showSelectAllActive ? (
+                      <>
+                        <button
+                          className="btn btn-outline-primary"
+                          onClick={handleSelectAll}
+                        >
+                          Select All
+                        </button>
+
+                        <button
+                          className="btn btn-outline-grey"
+                          onClick={() => setSelectedCreatives([])}
+                        >
+                          Deselect All
+                        </button>
+                        <button
+                          className="btn btn-outline-secondary"
+                          onClick={() => {
+                            onClickSelect(false);
+                            handleBulkCreatives("rejected", "accepted");
+                          }}
+                        >
+                          Reject
+                        </button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                            onClickSelect(false);
+                          }}
+                        >
+                          Done
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="btn bg-green"
+                        onClick={() => onClickSelect(true)}
+                      >
+                        Select
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+              <InfluncerFile
+                influncerNameData={influncerNameDataApproved}
+                showSelectAllActive={showSelectAllActive}
+                creativeDetails={fetchLiveCreatives(creativeDetails)}
+                selectedCreatives={selectedCreatives}
+                setSelectedCreatives={setSelectedCreatives}
+              />
+            </TabPane>
+
+            <TabPane tab="Cancelled" key="cancelled">
+              {fetchCancelledCreatives(creativeDetails).length !== 0 && (
+                <div className="btn-row">
+                  <div>
+                    {showSelectAllActive ? (
+                      <>
+                        <button
+                          className="btn btn-outline-primary"
+                          onClick={handleSelectAll}
+                        >
+                          Select All
+                        </button>
+
+                        <button
+                          className="btn btn-outline-grey"
+                          onClick={() => setSelectedCreatives([])}
+                        >
+                          Deselect All
+                        </button>
+                        <button
+                          className="btn btn-outline-secondary"
+                          onClick={() => {
+                            onClickSelect(false);
+                            handleBulkCreatives("rejected", "accepted");
+                          }}
+                        >
+                          Reject
+                        </button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                            onClickSelect(false);
+                          }}
+                        >
+                          Done
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="btn bg-green"
+                        onClick={() => onClickSelect(true)}
+                      >
+                        Select
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <InfluncerFile
+                influncerNameData={influncerNameDataApproved}
+                showSelectAllActive={showSelectAllActive}
+                creativeDetails={fetchCancelledCreatives(creativeDetails)}
+                selectedCreatives={selectedCreatives}
+                setSelectedCreatives={setSelectedCreatives}
+              />
+            </TabPane>
+          </Tabs>
 
           {creativeDetails.length === 0 && (
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />

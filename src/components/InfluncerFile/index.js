@@ -1,6 +1,6 @@
 import React from "react";
 import { downloadMedia } from "helpers";
-import { Checkbox, Tag } from "antd";
+import { Checkbox, Tag, Empty } from "antd";
 import {
   CalendarOutlined,
   YoutubeOutlined,
@@ -32,123 +32,122 @@ const InfluncerFile = ({
   };
 
   const projectId = useParams();
-  return creativeDetails
-    ? creativeDetails.map((data, index) => {
-        return (
-          <div
-            className="common-uploads"
-            key={`creative-influencer-block-${data.user.id}`}
-          >
-            {data?.creatives[0]?.media?.length !== 0 && (
-              <h2 className="title">{data.user.name}</h2>
-            )}
+  return creativeDetails && creativeDetails.length > 0 ? (
+    creativeDetails.map((data, index) => {
+      return (
+        <div
+          className="common-uploads"
+          key={`creative-influencer-block-${data.user.id}`}
+        >
+          {data?.creatives[0]?.media?.length !== 0 && (
+            <h2 className="title">{data.user.name}</h2>
+          )}
+          <div className="influncer-file-row">
+            {data.creatives.map((item, index) => {
+              return item.media[0]?.mimeType ? (
+                <div
+                  className="influncer-file-container"
+                  key={`influencer-creative-block-${item.id}`}
+                >
+                  <div className="img-box-download">
+                    {item.media[0].mimeType &&
+                    item.media[0]?.mimeType.includes("image") ? (
+                      <img
+                        src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
+                          item?.media[0]?.slug || "default"
+                        }`}
+                        alt=""
+                        className="full-img"
+                        onError={(e) => {
+                          e.target.src = `${
+                            process.env.REACT_APP_MEDIA_ORIGINAL_URL
+                          }/${item?.media[0]?.slug || "default"}`;
+                        }}
+                      />
+                    ) : (
+                      <VideoPlayer
+                        url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${item?.media[0]?.slug}`}
+                        className=" full-video"
+                        controls={false}
+                      />
+                    )}
 
-            <div className="influncer-file-row">
-              {data.creatives.map((item, index) => {
-                return item.media[0]?.mimeType ? (
-                  <div
-                    className="influncer-file-container"
-                    key={`influencer-creative-block-${item.id}`}
-                  >
-                    <div className="img-box-download">
-                      {item.media[0].mimeType &&
-                      item.media[0]?.mimeType.includes("image") ? (
-                        <img
-                          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${
-                            item?.media[0]?.slug || "default"
-                          }`}
-                          alt=""
-                          className="full-img"
-                          onError={(e) => {
-                            e.target.src = `${
-                              process.env.REACT_APP_MEDIA_ORIGINAL_URL
-                            }/${item?.media[0]?.slug || "default"}`;
-                          }}
+                    {showSelectAllActive ? (
+                      <Checkbox
+                        className="chat-icon"
+                        onChange={() => {
+                          handleSelect(item.id);
+                        }}
+                        checked={selectedCreatives.includes(item.id)}
+                      ></Checkbox>
+                    ) : (
+                      <div className="chat-icon">
+                        {item?.stats?.unreadComments ? (
+                          <span className="number">
+                            {" "}
+                            {item?.stats?.unreadComments}
+                          </span>
+                        ) : null}
+                        <CreativeModal
+                          src={chat}
+                          className="icons-custom"
+                          creative={item}
+                          projectId={projectId}
+                          influncerName={data.user.name}
                         />
-                      ) : (
-                        <VideoPlayer
-                          url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${item?.media[0]?.slug}`}
-                          className=" full-video"
-                          controls={false}
+                      </div>
+                    )}
+                    {!showSelectAllActive && (
+                      <div className="icons-row">
+                        <CreativeModal
+                          src={fullScreen}
+                          className="icons-custom icon-sec"
+                          creative={item}
+                          projectId={projectId}
+                          influncerName={data.user.name}
                         />
-                      )}
-
-                      {showSelectAllActive ? (
-                        <Checkbox
-                          className="chat-icon"
-                          onChange={() => {
-                            handleSelect(item.id);
-                          }}
-                          checked={selectedCreatives.includes(item.id)}
-                        ></Checkbox>
-                      ) : (
-                        <div className="chat-icon">
-                          {item?.stats?.unreadComments ? (
-                            <span className="number">
-                              {" "}
-                              {item?.stats?.unreadComments}
-                            </span>
-                          ) : null}
-                          <CreativeModal
-                            src={chat}
-                            className="icons-custom"
-                            creative={item}
-                            projectId={projectId}
-                            influncerName={data.user.name}
+                        <div className="icon-sec">
+                          <img
+                            src={download}
+                            alt="download icon"
+                            className="icons-custom cursor-pointer"
+                            onClick={() => downloadMedia(item?.media[0]?.slug)}
                           />
                         </div>
-                      )}
-                      {!showSelectAllActive && (
-                        <div className="icons-row">
-                          <CreativeModal
-                            src={fullScreen}
-                            className="icons-custom icon-sec"
-                            creative={item}
-                            projectId={projectId}
-                            influncerName={data.user.name}
-                          />
-                          <div className="icon-sec">
-                            <img
-                              src={download}
-                              alt="download icon"
-                              className="icons-custom cursor-pointer"
-                              onClick={() =>
-                                downloadMedia(item?.media[0]?.slug)
-                              }
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div className="creative-footer">
-                      <div className="date-box">
-                        <CalendarOutlined />
-                        <span className="date-text">
-                          {moment(item.media[0].createdAt).format("DD/MM/YYYY")}
-                        </span>
                       </div>
-                      <div className="versions">
-                        Versions: {item.latestVersion}
-                      </div>
-                    </div>
-                    {(item.socials.youtube || item.socials.instagram) && (
-                      <SocialList creative={item} />
                     )}
                   </div>
-                ) : null;
-              })}
+                  <div className="creative-footer">
+                    <div className="date-box">
+                      <CalendarOutlined />
+                      <span className="date-text">
+                        {moment(item.media[0].createdAt).format("DD/MM/YYYY")}
+                      </span>
+                    </div>
+                    <div className="versions">
+                      Versions: {item.latestVersion}
+                    </div>
+                  </div>
+                  {(item.socials.youtube || item.socials.instagram) && (
+                    <SocialList creative={item} />
+                  )}
+                </div>
+              ) : null;
+            })}
 
-              {/* {data.novideo == false ? null : (
+            {/* {data.novideo == false ? null : (
                 <InfluncerFileVideo
                   showSelectAllActive={showSelectAllActive}
                   allChecked={allChecked}
                 />
               )} */}
-            </div>
           </div>
-        );
-      })
-    : null;
+        </div>
+      );
+    })
+  ) : (
+    <Empty />
+  );
 };
 
 export default InfluncerFile;
