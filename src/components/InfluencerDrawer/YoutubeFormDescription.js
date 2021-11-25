@@ -17,7 +17,7 @@ import {
 import { useEffect, useState, useRef } from "react";
 import { languages } from "../../common/dataManager";
 import { ACTIONS } from "redux/creators/socials/youtube/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { cancellationReasons } from "common/dataManager";
 
@@ -30,6 +30,7 @@ const YoutubeFormDescription = ({
   setIsYtScheduleExistForCreative,
 }) => {
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user.user);
 
   // possible values - "Approved/Not Approved"
   const [approvalStatus, setApprovalStatus] = useState();
@@ -292,16 +293,18 @@ const YoutubeFormDescription = ({
               />
             </Space>
           </Modal>
-          <Button
-            type="primary"
-            className="mt-30 mr-10"
-            disabled={isGoLiveBtnDisabled}
-            onClick={() => {
-              setIsGoLiveModalVisible(true);
-            }}
-          >
-            Go Live
-          </Button>
+          {user.user_type !== "influencer" && (
+            <Button
+              type="primary"
+              className="mt-30 mr-10"
+              disabled={isGoLiveBtnDisabled}
+              onClick={() => {
+                setIsGoLiveModalVisible(true);
+              }}
+            >
+              Go Live
+            </Button>
+          )}
           <Modal
             title="Consent Notice"
             visible={isGoLiveModalVisible}

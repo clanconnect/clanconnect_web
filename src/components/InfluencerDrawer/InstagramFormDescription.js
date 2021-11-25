@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { useEffect, useState, useRef } from "react";
 import { ACTIONS } from "redux/creators/socials/instagram/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { cancellationReasons } from "common/dataManager";
 
@@ -28,6 +28,8 @@ const InstagramFormDescription = ({
   setIsIgScheduleExistForCreative,
 }) => {
   const dispatch = useDispatch();
+
+  const user = useSelector((store) => store.user.user);
 
   // possible values - "Approved/Not Approved"
   const [approvalStatus, setApprovalStatus] = useState();
@@ -51,6 +53,7 @@ const InstagramFormDescription = ({
     closeDrawer();
     setVisible(true);
   };
+
   const goLiveConfirm = () => {
     dispatch({
       type: ACTIONS.FINAL_APPROVE,
@@ -64,6 +67,7 @@ const InstagramFormDescription = ({
     setIsGoLiveBtnDisabled(true);
     setIsEditBtnDisabled(true);
   };
+
   const cancelConfirm = () => {
     if (cancelReason) {
       dispatch({
@@ -255,16 +259,18 @@ const InstagramFormDescription = ({
               />
             </Space>
           </Modal>
-          <Button
-            type="primary"
-            className="mt-30 mr-10"
-            disabled={isGoLiveBtnDisabled}
-            onClick={() => {
-              setIsGoLiveModalVisible(true);
-            }}
-          >
-            Go Live
-          </Button>
+          {user.user_type !== "influencer" && (
+            <Button
+              type="primary"
+              className="mt-30 mr-10"
+              disabled={isGoLiveBtnDisabled}
+              onClick={() => {
+                setIsGoLiveModalVisible(true);
+              }}
+            >
+              Go Live
+            </Button>
+          )}
           <Modal
             title="Consent Notice"
             visible={isGoLiveModalVisible}
