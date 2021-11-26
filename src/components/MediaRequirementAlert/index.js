@@ -1,7 +1,6 @@
 import React from "react";
 import { Collapse } from "antd";
 import { WarningOutlined, CaretRightOutlined } from "@ant-design/icons";
-// import { imageRequirements, videoRequirements } from "./dataManager";
 
 import "./styles.scss";
 

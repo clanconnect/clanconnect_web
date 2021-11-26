@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { downloadMedia } from "helpers";
 import { Checkbox, Tag, Empty } from "antd";
 import {
@@ -21,6 +21,7 @@ const InfluncerFile = ({
   selectedCreatives,
   setSelectedCreatives,
 }) => {
+  const [openModal, setOpenModal] = useState(false);
   const handleSelect = (creativeId) => {
     const uppdatedCreative = new Set(selectedCreatives);
     if (uppdatedCreative.has(creativeId)) {
@@ -48,6 +49,7 @@ const InfluncerFile = ({
                 <div
                   className="influncer-file-container"
                   key={`influencer-creative-block-${item.id}`}
+                  onClick={() => setOpenModal(true)}
                 >
                   <div className="img-box-download">
                     {item.media[0].mimeType &&
@@ -105,6 +107,8 @@ const InfluncerFile = ({
                           creative={item}
                           projectId={projectId}
                           influncerName={data.user.name}
+                          openModal={openModal}
+                          setOpenModal={setOpenModal}
                         />
                         <div className="icon-sec">
                           <img

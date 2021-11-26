@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import queryString from "query-string";
 import Header from "components/DemoHeader";
 import SideNav from "components/DemoSideNav";
 import Breadcrumb from "components/Breadcrumb";
 import ProjectDetailsCard from "components/ProjectDetailsCard";
-import SnapshotTabData from "components/SnapshotTabData";
-import ProposalsTabData from "components/ProposalsTabData";
 import CreativeApprovalData from "components/CreativeApprovalData";
 import { getProjectsAction } from "redux/brands/projects/actions";
 import { getProposalsAction } from "redux/brands/proposals/actions";
 import { getCreativesAction } from "redux/brands/creatives/actions";
 import { useDispatch, useSelector } from "react-redux";
 import LineHeading from "components/LineHeading";
-
-import { myTabs } from "./dataManager";
 
 import "./styles.scss";
 
@@ -24,7 +20,6 @@ const ProjectDetails = (props) => {
   const defaultActiveKeyCreativeTabStatus = status;
   const dispatch = useDispatch();
   const { projectDetail } = useSelector((store) => store.projects);
-  const { proposalDetails } = useSelector((store) => store.proposals);
   const { creativeDetails } = useSelector((store) => store.creatives);
 
   const [activeTab, setActiveTab] = useState("Creatives Approval");

@@ -33,10 +33,12 @@ const CreativeModal = ({
   projectId,
   influncerName,
   onAllCreativesPage,
+  openModal,
+  setOpenModal,
 }) => {
   const dispatch = useDispatch();
   let { id } = useParams();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(openModal);
   const [showFiles, setShowFiles] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [creativeStatus, setCreativeStatus] = useState("");
@@ -71,6 +73,10 @@ const CreativeModal = ({
       setViewSheduleBtnDisabled(true);
     }
   }, [creative.socials]);
+
+  useEffect(() => {
+    setVisible(openModal || false);
+  }, [openModal]);
 
   const menu = (status) => {
     return (
@@ -157,6 +163,7 @@ const CreativeModal = ({
   };
 
   const closeModal = () => {
+    setOpenModal && setOpenModal(false);
     setPlaying(false);
     setVisible(false);
     setCurrentMedia(null);
@@ -171,7 +178,7 @@ const CreativeModal = ({
   return (
     <>
       {versionTrue ? (
-        <div className="version-text" onClick={() => setVisible(true)}>
+        <div className="version-text" onClick={() => closeModal()}>
           {creative?.media[0]?.mimeType.includes("image") ? (
             <img
               src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug}`}
@@ -203,7 +210,7 @@ const CreativeModal = ({
         <img
           alt=""
           onClick={() => {
-            setVisible(true);
+            closeModal();
           }}
           src={src}
           className={`cursor-pointer ${className}`}
@@ -214,7 +221,7 @@ const CreativeModal = ({
         <BrandDrawer
           isDrawerVisible={isDrawerVisible}
           closeDrawer={closeDrawer}
-          setVisible={setVisible}
+          setVisible={closeModal}
           creative={creative}
         />
       )}
@@ -224,8 +231,8 @@ const CreativeModal = ({
         visible={visible}
         destroyOnClose={true}
         on
-        onOk={() => setVisible(false)}
-        onCancel={() => closeModal(false)}
+        onOk={() => closeModal()}
+        onCancel={() => closeModal()}
         width={1100}
         style={{ top: 40 }}
         className="custom-modal"
@@ -240,7 +247,7 @@ const CreativeModal = ({
                   disabled={viewScheduleBtnDisabled}
                   onClick={() => {
                     showDrawer();
-                    setVisible(false);
+                    closeModal();
                   }}
                 >
                   View Schedule
