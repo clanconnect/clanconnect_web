@@ -70,9 +70,7 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               className="icons-custom cursor-pointer"
               creative={creative}
               openModal={openModal}
-              setOpenModal={(value) => {
-                setOpenModal(value);
-              }}
+              setOpenModal={(value) => setOpenModal(value)}
             />
             {creative.status === "accepted" && (
               <div className="icon-sec">
