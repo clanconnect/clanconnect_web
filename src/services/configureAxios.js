@@ -19,12 +19,10 @@ axiosInstance.interceptors.request.use((config) => {
 
   if (process.env.REACT_APP_STAGE === "local") {
     headers["sess-token"] =
-      //  influencer
-      // process.env.REACT_APP_INFLUENCER_SESSION_TOKEN;
-
-      // advertiser
-
-      process.env.REACT_APP_BRAND_SESSION_TOKEN;
+      // influencer
+      process.env.REACT_APP_INFLUENCER_SESSION_TOKEN;
+    // advertiser
+    // process.env.REACT_APP_BRAND_SESSION_TOKEN;
   }
   config.headers = headers;
   return config;

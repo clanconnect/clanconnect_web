@@ -37,6 +37,7 @@ const ProjectCreatives = ({ project, creatives }, index, tabType) => {
   return project.length !== 0 ? (
     tabType === "campaign" ? (
       <ProjectListCard
+        key="project-list-card"
         project={project}
         creatives={creatives}
         className="shadow-none "
@@ -44,8 +45,11 @@ const ProjectCreatives = ({ project, creatives }, index, tabType) => {
         tabType={tabType}
       />
     ) : (
-      <div className="custom-project-collapse">
-        <div key={`project-creatives-${project.id}`}>
+      <div
+        className="custom-project-collapse"
+        key={`project-creatives-${project.id}`}
+      >
+        <div>
           <Collapse
             onChange={callback}
             expandIconPosition={"right"}
@@ -101,7 +105,6 @@ const InfluncerCreativeApprovalTab = ({ creatives, projects, dispatch }) => {
   function callback(key) {
     if (key === "projects") {
       loadProjects({ proposalStatus: "accepted" });
-      // loadCreatives({ status: key || "accepted" });
     } else {
       loadCreatives({ status: key });
     }

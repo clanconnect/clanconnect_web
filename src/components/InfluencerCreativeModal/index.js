@@ -170,7 +170,7 @@ const InfluencerCreativeModal = ({
       ) : (
         <img
           alt=""
-          onClick={() => closeModal()}
+          onClick={() => setOpenModal(true)}
           src={src}
           className={`cursor-pointer ${className}`}
         />
