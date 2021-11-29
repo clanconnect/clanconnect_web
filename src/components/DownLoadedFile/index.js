@@ -56,12 +56,7 @@ const DownLoadedFile = ({ creative = {}, project }) => {
             {creative.stats.unreadComments ? (
               <span className="number"> {creative.stats.unreadComments}</span>
             ) : null}
-            <InfluencerCreativeModal
-              src={chat}
-              project={project}
-              className="icons-custom"
-              creative={creative}
-            />
+            <img alt="" src={chat} className={`cursor-pointer icons-custom`} />
           </div>
           <div className="icons-row">
             <InfluencerCreativeModal

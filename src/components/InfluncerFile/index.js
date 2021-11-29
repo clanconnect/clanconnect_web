@@ -90,12 +90,10 @@ const InfluncerFile = ({
                             {item?.stats?.unreadComments}
                           </span>
                         ) : null}
-                        <CreativeModal
+                        <img
+                          alt=""
                           src={chat}
-                          className="icons-custom"
-                          creative={item}
-                          projectId={projectId}
-                          influncerName={data.user.name}
+                          className={`cursor-pointer icons-custom`}
                         />
                       </div>
                     )}
