@@ -163,9 +163,9 @@ const CreativeModal = ({
   };
 
   const closeModal = () => {
-    handleModalVisibility(false);
     setPlaying(false);
     setCurrentMedia(null);
+    handleModalVisibility(false);
   };
 
   const handleCreativeChange = (val) => {
@@ -176,7 +176,7 @@ const CreativeModal = ({
 
   const handleModalVisibility = (v) => {
     setOpenModal && setOpenModal(v);
-    !setOpenModal && setVisible(v);
+    setVisible(v);
   };
 
   return (

@@ -108,7 +108,7 @@ const InfluncerFile = ({
                           projectId={projectId}
                           influncerName={data.user.name}
                           openModal={openModal}
-                          setOpenModal={setOpenModal}
+                          setOpenModal={(v) => setOpenModal(v)}
                         />
                         <div className="icon-sec">
                           <img
