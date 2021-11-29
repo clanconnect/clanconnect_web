@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./styles.scss";
 import { Tag } from "antd";
-
 import {
   CalendarOutlined,
   YoutubeOutlined,
@@ -28,9 +27,7 @@ const DownLoadedFile = ({ creative = {}, project }) => {
   return (
     <div
       className="influncer-file-container "
-      onClick={() => {
-        setOpenModal(true);
-      }}
+      onClick={() => setOpenModal(true)}
     >
       <div className="influncer-file-subcontainer">
         <div className="img-box-download">
@@ -73,7 +70,9 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               className="icons-custom cursor-pointer"
               creative={creative}
               openModal={openModal}
-              setOpenModal={(value) => setOpenModal(value)}
+              setOpenModal={(value) => {
+                setOpenModal(value);
+              }}
             />
             {creative.status === "accepted" && (
               <div className="icon-sec">

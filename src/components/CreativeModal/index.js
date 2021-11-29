@@ -163,9 +163,8 @@ const CreativeModal = ({
   };
 
   const closeModal = () => {
-    setOpenModal && setOpenModal(false);
+    handleModalVisibility(false);
     setPlaying(false);
-    setVisible(false);
     setCurrentMedia(null);
   };
 
@@ -173,6 +172,11 @@ const CreativeModal = ({
     const media = creative.media ? creative.media[val] : null;
     setCurrentMedia(media);
     setCreativeStatus(media.status);
+  };
+
+  const handleModalVisibility = (v) => {
+    setOpenModal && setOpenModal(v);
+    !setOpenModal && setVisible(v);
   };
 
   return (
@@ -209,9 +213,7 @@ const CreativeModal = ({
       ) : (
         <img
           alt=""
-          onClick={() => {
-            closeModal();
-          }}
+          onClick={() => handleModalVisibility(true)}
           src={src}
           className={`cursor-pointer ${className}`}
         />
@@ -221,7 +223,7 @@ const CreativeModal = ({
         <BrandDrawer
           isDrawerVisible={isDrawerVisible}
           closeDrawer={closeDrawer}
-          setVisible={closeModal}
+          setVisible={handleModalVisibility}
           creative={creative}
         />
       )}
@@ -233,6 +235,7 @@ const CreativeModal = ({
         on
         onOk={() => closeModal()}
         onCancel={() => closeModal()}
+        afterClose={() => closeModal()}
         width={1100}
         style={{ top: 40 }}
         className="custom-modal"

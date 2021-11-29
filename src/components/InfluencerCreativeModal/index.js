@@ -79,6 +79,7 @@ const InfluencerCreativeModal = ({
   setOpenModal,
 }) => {
   const [visible, setVisible] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
   const [creativeStatus, setCreativeStatus] = useState("");
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -128,8 +129,8 @@ const InfluencerCreativeModal = ({
   };
 
   const closeModal = () => {
-    setVisible(false);
-    setOpenModal && setOpenModal(false);
+    setPlaying(false);
+    handleModalVisibility(false);
   };
 
   const handleCreativeChange = (val) => {
@@ -137,10 +138,18 @@ const InfluencerCreativeModal = ({
     setCreativeStatus(media?.status || "pending");
   };
 
+  const handleModalVisibility = (v) => {
+    setOpenModal && setOpenModal(v);
+    setVisible(v);
+  };
+
   return (
     <>
       {compactView ? (
-        <div className="version-text" onClick={() => setVisible(true)}>
+        <div
+          className="version-text"
+          onClick={() => handleCreativeChange(true)}
+        >
           {creative?.media[0]?.mimeType.includes("image") ? (
             <img
               src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${creative?.media[0]?.slug}`}
@@ -160,6 +169,7 @@ const InfluencerCreativeModal = ({
               controls={false}
               style={{ height: "80px", width: "80px" }}
               className="short-video"
+              playing={playing}
             />
           )}
           <span className={"version-title"}>
@@ -170,7 +180,7 @@ const InfluencerCreativeModal = ({
       ) : (
         <img
           alt=""
-          onClick={() => setOpenModal(true)}
+          onClick={() => handleModalVisibility(true)}
           src={src}
           className={`cursor-pointer ${className}`}
         />
@@ -180,7 +190,7 @@ const InfluencerCreativeModal = ({
         <InfluencerDrawer
           isDrawerVisible={isDrawerVisible}
           closeDrawer={closeDrawer}
-          setVisible={setVisible}
+          setVisible={handleModalVisibility}
           creative={creative}
           project={project}
         />
@@ -189,7 +199,9 @@ const InfluencerCreativeModal = ({
       <Modal
         visible={visible}
         onOk={() => closeModal()}
-        onCancel={closeModal}
+        onCancel={() => closeModal()}
+        afterClose={() => closeModal()}
+        destroyOnClose={true}
         width={1100}
         centered
         className="custom-modal"

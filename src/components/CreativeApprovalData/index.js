@@ -2,19 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Tabs, Empty } from "antd";
 import routeConstant from "common/routeConstants";
-
 import InfluncerFile from "../InfluncerFile";
 import {
   getCreativesAction,
   creativeUpdateBulkAction,
 } from "redux/brands/creatives/actions";
-
 import {
   influncerNameDataApproved,
   influncerNameDataPending,
   influncerNameDataRejected,
 } from "common/dataManager";
-
 import "./styles.scss";
 import { useDispatch } from "react-redux";
 
