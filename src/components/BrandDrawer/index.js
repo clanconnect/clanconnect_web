@@ -12,7 +12,6 @@ const BrandDrawer = ({
 }) => {
   const youtubeData = useSelector((store) => store.BrandYoutube.data);
   const instagramData = useSelector((store) => store.BrandInstagram.data);
-  console.log("instagramData", instagramData);
 
   const onTabChange = () => {};
 

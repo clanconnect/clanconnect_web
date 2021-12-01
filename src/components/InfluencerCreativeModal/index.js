@@ -52,6 +52,7 @@ const MediaView = ({ media, imageUrl, onImageError }) => {
           url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media.slug}`}
           className="video-contentStyle"
           controls={true}
+          light
         />
       )}
       {media.mimeType.includes("image") && (
@@ -126,6 +127,7 @@ const InfluencerCreativeModal = ({
       },
     });
     setIsDrawerVisible(true);
+    handleModalVisibility(false);
   };
 
   const closeModal = () => {

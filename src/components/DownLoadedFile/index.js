@@ -25,15 +25,13 @@ const DownLoadedFile = ({ creative = {}, project }) => {
   const youtubeSocial = creative?.socials?.youtube;
 
   return (
-    <div
-      className="influncer-file-container "
-      onClick={() => setOpenModal(true)}
-    >
+    <div className="influncer-file-container ">
       <div className="influncer-file-subcontainer">
         <div className="img-box-download">
           {media?.mimeType?.includes("image") ? (
             // eslint-disable-next-line jsx-a11y/img-redundant-alt
             <img
+              onClick={() => setOpenModal(true)}
               src={imageUrl}
               alt=""
               className="full-img"
@@ -47,6 +45,7 @@ const DownLoadedFile = ({ creative = {}, project }) => {
             />
           ) : (
             <VideoPlayer
+              onClick={() => setOpenModal(true)}
               url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media?.slug}`}
               className="full-video"
               controls={false}
@@ -56,7 +55,12 @@ const DownLoadedFile = ({ creative = {}, project }) => {
             {creative.stats.unreadComments ? (
               <span className="number"> {creative.stats.unreadComments}</span>
             ) : null}
-            <img alt="" src={chat} className={`cursor-pointer icons-custom`} />
+            <img
+              alt=""
+              src={chat}
+              className={`cursor-pointer icons-custom`}
+              onClick={() => setOpenModal(true)}
+            />
           </div>
           <div className="icons-row">
             <InfluencerCreativeModal

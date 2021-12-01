@@ -29,7 +29,6 @@ const InfluencerCreativeBox = ({
     <div
       className="influncer-file-container"
       key={`influencer-creative-block-${item.id}`}
-      onClick={() => setOpenModal(true)}
     >
       <div className="img-box-download">
         {item.media[0].mimeType && item.media[0]?.mimeType.includes("image") ? (
@@ -38,6 +37,7 @@ const InfluencerCreativeBox = ({
               item?.media[0]?.slug || "default"
             }`}
             alt=""
+            onClick={() => setOpenModal(true)}
             className="full-img"
             onError={(e) => {
               e.target.src = `${process.env.REACT_APP_MEDIA_ORIGINAL_URL}/${
@@ -50,6 +50,7 @@ const InfluencerCreativeBox = ({
             url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${item?.media[0]?.slug}`}
             className=" full-video"
             controls={false}
+            onClick={() => setOpenModal(true)}
           />
         )}
 
@@ -67,7 +68,12 @@ const InfluencerCreativeBox = ({
             {item?.stats?.unreadComments ? (
               <span className="number"> {item?.stats?.unreadComments}</span>
             ) : null}
-            <img alt="" src={chat} className={`cursor-pointer icons-custom`} />
+            <img
+              alt=""
+              src={chat}
+              className={`cursor-pointer icons-custom`}
+              onClick={() => setOpenModal(true)}
+            />
           </div>
         )}
         {!showSelectAllActive && (
@@ -113,7 +119,6 @@ const InfluncerFile = ({
   selectedCreatives,
   setSelectedCreatives,
 }) => {
-  const [openModal, setOpenModal] = useState(false);
   const handleSelect = (creativeId) => {
     const uppdatedCreative = new Set(selectedCreatives);
     if (uppdatedCreative.has(creativeId)) {
