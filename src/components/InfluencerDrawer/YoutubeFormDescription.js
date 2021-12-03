@@ -317,7 +317,7 @@ const YoutubeFormDescription = ({
           >
             <p>
               By clicking OK, you give consent to ClanConnect to publish this
-              creative on your Youtube channel at the scheduled time.
+              creative on your YouTube channel at the scheduled time.
             </p>
           </Modal>
         </Col>

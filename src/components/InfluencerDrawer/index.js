@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import YoutubeFormDescription from "./YoutubeFormDescription";
 import InstagramFormDescription from "./InstagramFormDescription";
+import { Instagram, Youtube } from "react-bootstrap-icons";
 
 const InfluencerDrawer = ({
   isDrawerVisible,
@@ -81,9 +82,11 @@ const InfluencerDrawer = ({
             description="Please log into either Instagram or Youtube to schedule your post"
           />
         ) : (
-          <Tabs defaultActiveKey="ig">
+          <Tabs className="scheduleModal" defaultActiveKey="ig">
             {!isIgTabDisabled && (
-              <TabPane tab="Instagram" key="ig">
+              <TabPane tab={<span className="icon-instagram"><Instagram className="icon-insta" />
+              <span className="icons8-instagram"></span>&nbsp;Instagram</span>} key="ig">
+                
                 {showIgForm && (
                   <InstagramFormDescription
                     closeDrawer={closeDrawer}
@@ -113,7 +116,7 @@ const InfluencerDrawer = ({
               </TabPane>
             )}
             {!isYtTabDisabled && (
-              <TabPane tab="Youtube" key="yt" disabled={isYtTabDisabled}>
+              <TabPane tab={<span><Youtube className="icon-youtube" style={{verticalAlign:'middle', fontSize:"29px", marginRight:'5px'}} />&nbsp;YouTube</span>}  key="yt" >
                 {showYtForm && (
                   <YoutubeFormDescription
                     closeDrawer={closeDrawer}

@@ -211,7 +211,7 @@ const YoutubeUploadForm = ({
           initialValues={{
             madeForKids: false,
             defaultLanguage: "en",
-            license: "youtube",
+            license: "YouTube",
             notifySubscribers: true,
             privacyStatus: "public",
             publicStatsVisible: true,
@@ -243,7 +243,7 @@ const YoutubeUploadForm = ({
                 },
               ]}
               getValueFromEvent={() => {}}
-              extra="Upload thumbnail of size less than 2MB and of format jpeg/png. Please make sure to verify your mobile on youtube before scheduling post."
+              extra="Upload thumbnail of size less than 2MB and of format jpeg/png. Please make sure to verify your mobile on YouTube before scheduling post."
             >
               <Upload
                 onChange={handleMediaChange}
@@ -453,12 +453,12 @@ const YoutubeUploadForm = ({
             ]}
           >
             <Select disabled={submitBtnDisabled}>
-              <Option value="youtube">Youtube</Option>
+              <Option value="youtube">YouTube</Option>
               <Option value="creativeCommons">Creative Commons</Option>
             </Select>
           </Form.Item>
 
-          <Form.Item
+          <Form.Item className="privacy-status"
             disabled={submitBtnDisabled}
             name="privacyStatus"
             label="Privacy Status"
