@@ -85,7 +85,7 @@ const InfluencerDrawer = ({
           <Tabs className="scheduleModal" defaultActiveKey="ig">
             {!isIgTabDisabled && (
               <TabPane tab={<span className="icon-instagram"><Instagram className="icon-insta" />
-              <span className="icons8-instagram"></span>&nbsp;Instagram</span>} key="ig">
+              &nbsp;Instagram</span>} key="ig">
                 
                 {showIgForm && (
                   <InstagramFormDescription
