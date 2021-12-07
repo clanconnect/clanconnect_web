@@ -14,3 +14,22 @@
 .ant-space {
   display: flex;
 }
+
+.ant-descriptions-item-content.license {
+  text-transform:capitalize
+}
+
+
+.icon-youtube {
+  color: #f00;
+}
+
+.icon-insta {
+  font-size: 22px;
+  vertical-align: middle;
+  margin-right: 2px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: inherit;
+}

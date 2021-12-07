@@ -3,6 +3,7 @@ import { Drawer, Tabs, Empty } from "antd";
 import { useSelector } from "react-redux";
 import YoutubeFormDescription from "./YoutubeFormDescription";
 import InstagramFormDescription from "./InstagramFormDescription";
+import { Youtube, Instagram } from "react-bootstrap-icons";
 
 const BrandDrawer = ({
   setVisible,
@@ -14,7 +15,6 @@ const BrandDrawer = ({
   const instagramData = useSelector((store) => store.BrandInstagram.data);
 
   const onTabChange = () => {};
-
   const { TabPane } = Tabs;
   return (
     <>
@@ -27,7 +27,15 @@ const BrandDrawer = ({
         destroyOnClose={true}
       >
         <Tabs defaultActiveKey="ig" onChange={onTabChange}>
-          <TabPane tab="Instagram" key="ig">
+          <TabPane
+            tab={
+              <span className="icon-instagram">
+                <Instagram className="icon-insta" />
+                &nbsp;Instagram
+              </span>
+            }
+            key="ig"
+          >
             {!instagramData?.id && (
               <Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -43,7 +51,10 @@ const BrandDrawer = ({
               />
             )}
           </TabPane>
-          <TabPane tab="Youtube" key="yt">
+          <TabPane
+            tab={<span><Youtube className="icon-youtube" style={{verticalAlign:'middle', fontSize:"29px", marginRight:'5px'}} />&nbsp;YouTube</span>}
+            key="yt"
+          >
             {!youtubeData?.id && (
               <Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
