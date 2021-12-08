@@ -4,6 +4,7 @@ const initialState = {
   data: {},
   fbPages: [],
   igId: "",
+  shouldConnectFbAccount: false,
 };
 
 export default function reducer(state = initialState, action) {

@@ -53,26 +53,29 @@ export function* finalApprove({ payload: { query } }) {
     console.log(err);
   }
 }
+
 export function* fetchFbPages() {
   try {
     const response = yield call(UserService.fetchFbPages);
     if (response.success) {
-      console.log("data", response.data);
+      const fbPages = response.data
+        ?.filter((o) =>
+          ["CREATE_CONTENT", "MANAGE"].every((i) => o.tasks.includes(i))
+        )
+        ?.map((o) => ({ name: o.name, id: o.id }));
       yield put({
         type: ACTIONS.SET_STATE,
-        payload: {
-          fbPages: response.data
-            ?.filter((o) =>
-              ["CREATE_CONTENT", "MANAGE"].every((i) => o.tasks.includes(i))
-            )
-            ?.map((o) => ({ name: o.name, id: o.id })),
-        },
+        payload: { fbPages, shouldConnectFbAccount: false },
       });
     }
   } catch (err) {
-    console.log(err);
+    yield put({
+      type: ACTIONS.SET_STATE,
+      payload: { fbPages: [], shouldConnectFbAccount: true },
+    });
   }
 }
+
 export function* fetchIgUserId({ payload: { path } }) {
   try {
     const response = yield call(UserService.fetchIgUserId, { path });

@@ -9,15 +9,19 @@ import {
   message,
   Row,
   Alert,
+  Modal,
 } from "antd";
 import moment from "moment";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS } from "redux/creators/socials/instagram/actions";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
+const { confirm } = Modal;
 
 const InstagramUploadForm = ({
+  closeDrawer,
   creative,
   setIsIgFormDescriptionVisible,
   setIsIgScheduleExistForCreative,
@@ -26,8 +30,11 @@ const InstagramUploadForm = ({
   const dispatch = useDispatch();
   const instagramData = useSelector((store) => store.CreatorInstagram.data);
   const fbPagesData = useSelector((store) => store.CreatorInstagram.fbPages);
+  const shouldConnectFbAccount = useSelector(
+    (store) => store.CreatorInstagram.shouldConnectFbAccount
+  );
+
   const instagramUserId = useSelector((store) => store.CreatorInstagram.igId);
-  console.log("fbPagesData", fbPagesData);
   const [formSubmitted, setFormSubitted] = useState(false);
   const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
   const [mediaValidateAlert, setMediaValidateAlert] = useState(null);
@@ -127,6 +134,7 @@ const InstagramUploadForm = ({
       });
     }
   };
+
   const onFinish = (values) => {
     const date = moment(values.date).format("YYYY-MM-DD");
     const time = moment(values.time).format("HH:mm:ss");
@@ -165,6 +173,28 @@ const InstagramUploadForm = ({
   function disabledDate(current) {
     // Can not select days before today
     return current && current < moment().subtract(1, "day").endOf("day");
+  }
+
+  if (shouldConnectFbAccount) {
+    confirm({
+      title: "Attention",
+      icon: <ExclamationCircleOutlined />,
+      content:
+        "Your Instagram account is not connected. To schedule, you need to connect your account. Do you wish to connect now?",
+      okText: "Yes",
+      cancelText: "No",
+      onOk() {
+        window.location.href = "/clan_profile?openPopup=facebook";
+        console.log("OK");
+      },
+      onCancel() {
+        dispatch({
+          type: ACTIONS.SET_STATE,
+          payload: { shouldConnectFbAccount: false },
+        });
+        closeDrawer();
+      },
+    });
   }
 
   return (

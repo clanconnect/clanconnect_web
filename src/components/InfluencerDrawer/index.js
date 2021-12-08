@@ -84,9 +84,15 @@ const InfluencerDrawer = ({
         ) : (
           <Tabs className="scheduleModal" defaultActiveKey="ig">
             {!isIgTabDisabled && (
-              <TabPane tab={<span className="icon-instagram"><Instagram className="icon-insta" />
-              &nbsp;Instagram</span>} key="ig">
-                
+              <TabPane
+                tab={
+                  <span className="icon-instagram">
+                    <Instagram className="icon-insta" />
+                    &nbsp;Instagram
+                  </span>
+                }
+                key="ig"
+              >
                 {showIgForm && (
                   <InstagramFormDescription
                     closeDrawer={closeDrawer}
@@ -104,6 +110,7 @@ const InfluencerDrawer = ({
 
                 {!isIgScheduleExistForCreative && (
                   <InstagramUploadForm
+                    closeDrawer={closeDrawer}
                     setIsIgFormDescriptionVisible={
                       setIsIgFormDescriptionVisible
                     }
@@ -116,7 +123,22 @@ const InfluencerDrawer = ({
               </TabPane>
             )}
             {!isYtTabDisabled && (
-              <TabPane tab={<span><Youtube className="icon-youtube" style={{verticalAlign:'middle', fontSize:"29px", marginRight:'5px'}} />&nbsp;YouTube</span>}  key="yt" >
+              <TabPane
+                tab={
+                  <span>
+                    <Youtube
+                      className="icon-youtube"
+                      style={{
+                        verticalAlign: "middle",
+                        fontSize: "29px",
+                        marginRight: "5px",
+                      }}
+                    />
+                    &nbsp;YouTube
+                  </span>
+                }
+                key="yt"
+              >
                 {showYtForm && (
                   <YoutubeFormDescription
                     closeDrawer={closeDrawer}
