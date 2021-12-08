@@ -186,7 +186,7 @@ const YoutubeFormDescription = ({
               })?.name
             }
           </Descriptions.Item>
-          <Descriptions.Item label="License" span={2}>
+          <Descriptions.Item className="license" label="License" span={2}>
             {`${youtubeData?.license.substr(0,3)}${youtubeData?.license.charAt(3).toUpperCase()}${youtubeData?.license.substr(4)}`}
           </Descriptions.Item>
           <Descriptions.Item label="Statistics Visibility" span={2}>
