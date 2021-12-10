@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import YoutubeFormDescription from "./YoutubeFormDescription";
 import InstagramFormDescription from "./InstagramFormDescription";
 import { Instagram, Youtube } from "react-bootstrap-icons";
-
 const InfluencerDrawer = ({
   isDrawerVisible,
   closeDrawer,
@@ -33,6 +32,13 @@ const InfluencerDrawer = ({
   const [isIgTabDisabled, setIsIgTabDisabled] = useState(false);
 
   useEffect(() => {
+    if (project) {
+      setIsIgTabDisabled(!project.primarySocialMedia.includes("Instagram"));
+      setIsYtTabDisabled(!project.primarySocialMedia.includes("Youtube"));
+    }
+  }, [project, user.youtube_auth]);
+
+  useEffect(() => {
     setIsYtScheduleExistForCreative(youtubeData?.creative === creative.id);
     setIsYtFormDescriptionVisible(youtubeData?.creative === creative.id);
     setIsIgScheduleExistForCreative(instagramData?.creative === creative.id);
@@ -42,19 +48,7 @@ const InfluencerDrawer = ({
         ?.find((o) => o.status === "accepted")
         ?.mimeType.includes("image")
     );
-    setIsYtTabDisabled(!user.youtube_auth);
-    setIsIgTabDisabled(!user.instagram_auth);
-
-    if (project) {
-      setIsIgTabDisabled(
-        !user.instagram_auth ||
-          !project.primarySocialMedia.includes("Instagram")
-      );
-      setIsYtTabDisabled(
-        !user.youtube_auth || !project.primarySocialMedia.includes("Youtube")
-      );
-    }
-  }, [project, user, creative, youtubeData, instagramData]);
+  }, [user, creative, youtubeData, instagramData]);
 
   const showIgForm =
     isIgScheduleExistForCreative &&
@@ -155,6 +149,7 @@ const InfluencerDrawer = ({
                 )}
                 {!isYtScheduleExistForCreative && (
                   <YoutubeUploadForm
+                    closeDrawer={closeDrawer}
                     setIsYtFormDescriptionVisible={
                       setIsYtFormDescriptionVisible
                     }

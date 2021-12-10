@@ -175,27 +175,31 @@ const InstagramUploadForm = ({
     return current && current < moment().subtract(1, "day").endOf("day");
   }
 
-  if (shouldConnectFbAccount) {
-    confirm({
-      title: "Attention",
-      icon: <ExclamationCircleOutlined />,
-      content:
-        "Your Instagram account is not connected. To schedule, you need to connect your account. Do you wish to connect now?",
-      okText: "Yes",
-      cancelText: "No",
-      onOk() {
-        window.location.href = "/clan_profile?openPopup=facebook";
-        console.log("OK");
-      },
-      onCancel() {
-        dispatch({
-          type: ACTIONS.SET_STATE,
-          payload: { shouldConnectFbAccount: false },
-        });
-        closeDrawer();
-      },
-    });
-  }
+  useEffect(() => {
+    shouldConnectFbAccount &&
+      confirm({
+        title: "Attention",
+        icon: <ExclamationCircleOutlined />,
+        content:
+          "Your Instagram account is not connected. To schedule, you need to connect your account. Do you wish to connect now?",
+        okText: "Yes",
+        cancelText: "No",
+        onOk() {
+          dispatch({
+            type: ACTIONS.SET_STATE,
+            payload: { shouldConnectFbAccount: false },
+          });
+          window.location.href = "/clan_profile?openPopup=facebook";
+        },
+        onCancel() {
+          dispatch({
+            type: ACTIONS.SET_STATE,
+            payload: { shouldConnectFbAccount: false },
+          });
+          closeDrawer();
+        },
+      });
+  }, [shouldConnectFbAccount]);
 
   return (
     <>

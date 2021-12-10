@@ -16,11 +16,6 @@ import { ACTIONS as YT_ACTIONS } from "redux/creators/socials/youtube/actions";
 import { ACTIONS as IG_ACTIONS } from "redux/creators/socials/instagram/actions";
 import { ACTIONS } from "../../redux/users/actions";
 
-
-
-
-
-
 const statusTags = {
   rejected: (
     <Tag color="#f50" style={{ position: "relative", top: 0, left: 0 }}>
@@ -75,7 +70,6 @@ const MediaView = ({ media, imageUrl, onImageError }) => {
   );
 };
 
-
 const InfluencerCreativeModal = ({
   src,
   className,
@@ -85,7 +79,7 @@ const InfluencerCreativeModal = ({
   onAllCreativesPage,
   openModal,
   setOpenModal,
-  user
+  user,
 }) => {
   const [visible, setVisible] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -195,7 +189,7 @@ const InfluencerCreativeModal = ({
         />
       )}
 
-      {creative?.status === "accepted" && (
+      {creative?.status === "accepted" && isDrawerVisible && (
         <InfluencerDrawer
           isDrawerVisible={isDrawerVisible}
           closeDrawer={closeDrawer}
@@ -220,19 +214,18 @@ const InfluencerCreativeModal = ({
             <p className="title">
               {_.startCase(_.camelCase(project.title))}
               <>
-              {user?.user_type !== "talent_partner" &&
-                creative?.status === "accepted" && (
-                  <button
-                    className="btn-submit"
-                    onClick={() => {
-                      showDrawer();
-                      closeModal();
-                    }}
-                  >
-                    Schedule
-                  </button>
-                )
-              }
+                {user?.user_type !== "talent_partner" &&
+                  creative?.status === "accepted" && (
+                    <button
+                      className="btn-submit"
+                      onClick={() => {
+                        showDrawer();
+                        closeModal();
+                      }}
+                    >
+                      Schedule
+                    </button>
+                  )}
               </>
             </p>
             <div className="flex align-items">
@@ -333,4 +326,7 @@ const mapDispatchToProps = (dispatch) => {
     dispatch: () => dispatch({ type: ACTIONS.GET_USER }),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(InfluencerCreativeModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InfluencerCreativeModal);

@@ -1,4 +1,4 @@
-import { all, takeLatest, put, call } from "redux-saga/effects";
+import { all, takeLatest, put, call, select } from "redux-saga/effects";
 import { ACTIONS } from "./actions";
 import { InstagramService, UserService } from "services/creators";
 
@@ -55,6 +55,16 @@ export function* finalApprove({ payload: { query } }) {
 }
 
 export function* fetchFbPages() {
+  const user = yield select((store) => store.user.user);
+  if (!user.instagram_auth) {
+    console.log("user inside====> ", user);
+    yield put({
+      type: ACTIONS.SET_STATE,
+      payload: { fbPages: [], shouldConnectFbAccount: true },
+    });
+    return;
+  }
+
   try {
     const response = yield call(UserService.fetchFbPages);
     if (response.success) {
