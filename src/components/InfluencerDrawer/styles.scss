@@ -38,27 +38,6 @@
 }
 
 
-.privacy-status .ant-form-item-control .ant-select-selector {
-  background: transparent !important;
-  border: none;
-  color: #5d5d5d !important;
-  padding-left: 0;
-}
-.privacy-status .ant-form-item-control .ant-select-arrow {
-  display: none;
-}
-
-.privacy-status .ant-col.ant-form-item-label {
-  display: inline-block;
-  width: auto;
-  padding-bottom: 0;
-  padding-right: 10px;
-}
-.ant-row.ant-form-item.privacy-status {
-  flex-direction: row;
-  align-items: center;
-}
-
 
 .ant-descriptions-item-content.license {
   text-transform:capitalize
