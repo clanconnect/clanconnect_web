@@ -493,7 +493,6 @@ const YoutubeUploadForm = ({
           </Form.Item>
 
           <Form.Item
-            className="privacy-status"
             disabled={submitBtnDisabled}
             name="privacyStatus"
             label="Privacy Status"
@@ -501,6 +500,8 @@ const YoutubeUploadForm = ({
           >
             <Select disabled={submitBtnDisabled}>
               <Option value="public">Public</Option>
+              <Option value="private">Private</Option>
+              <Option value="unlisted">Unlisted</Option>
             </Select>
           </Form.Item>
 
