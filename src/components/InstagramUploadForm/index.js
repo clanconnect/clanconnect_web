@@ -9,16 +9,14 @@ import {
   message,
   Row,
   Alert,
-  Modal,
+  Space,
 } from "antd";
 import moment from "moment";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS } from "redux/creators/socials/instagram/actions";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
-const { confirm } = Modal;
 
 const InstagramUploadForm = ({
   closeDrawer,
@@ -38,6 +36,7 @@ const InstagramUploadForm = ({
   const [formSubmitted, setFormSubitted] = useState(false);
   const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
   const [mediaValidateAlert, setMediaValidateAlert] = useState(null);
+  const [connectAccountBanner, setConnectAccountBanner] = useState(null);
 
   const validateImage = (image) => {
     const aspectRatio = image.meta.width / image.meta.height;
@@ -176,34 +175,37 @@ const InstagramUploadForm = ({
   }
 
   useEffect(() => {
-    shouldConnectFbAccount &&
-      confirm({
-        title: "Attention",
-        icon: <ExclamationCircleOutlined />,
-        content:
-          "Your Instagram account is not connected. To schedule, you need to connect your account. Do you wish to connect now?",
-        okText: "Yes",
-        cancelText: "No",
-        onOk() {
-          dispatch({
-            type: ACTIONS.SET_STATE,
-            payload: { shouldConnectFbAccount: false },
-          });
-          window.location.href = "/clan_profile?openPopup=facebook";
-        },
-        onCancel() {
-          dispatch({
-            type: ACTIONS.SET_STATE,
-            payload: { shouldConnectFbAccount: false },
-          });
-          closeDrawer();
-        },
-      });
+    setConnectAccountBanner(
+      <Alert
+        description="Your Instagram account is not connected. To schedule, you need to connect your account. Do you wish to connect now?"
+        type="warning"
+        showIcon
+        action={
+          <Space direction="vertical">
+            <Button
+              size="small"
+              type="ghost"
+              onClick={() => {
+                dispatch({
+                  type: ACTIONS.SET_STATE,
+                  payload: { shouldConnectFbAccount: false },
+                });
+                window.location.href = "/clan_profile?openPopup=facebook";
+              }}
+            >
+              Connect Now
+            </Button>
+          </Space>
+        }
+      />
+    );
+    setSubmitBtnDisabled(true);
   }, [shouldConnectFbAccount]);
 
   return (
     <>
       {mediaValidateAlert}
+      {connectAccountBanner}
       {!formSubmitted && (
         <Form
           form={form}

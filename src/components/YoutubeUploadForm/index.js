@@ -13,7 +13,7 @@ import {
   Col,
   Image,
   Alert,
-  Modal,
+  Space,
 } from "antd";
 import moment from "moment";
 import { UploadOutlined, EditOutlined } from "@ant-design/icons";
@@ -23,10 +23,8 @@ import { ACTIONS } from "redux/creators/socials/youtube/actions";
 import { countries, languages } from "common/dataManager";
 import { indiaCategories } from "./dataManagar";
 import { MediaService } from "services/creators";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
-const { confirm } = Modal;
 
 const YoutubeUploadForm = ({
   creative,
@@ -58,32 +56,7 @@ const YoutubeUploadForm = ({
   const [imageRequiredState, setImageRequiredState] = useState(true);
   const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
   const [mediaValidateAlert, setMediaValidateAlert] = useState(null);
-
-  useEffect(() => {
-    shouldConnectGoogleAccount &&
-      confirm({
-        title: "Attention",
-        icon: <ExclamationCircleOutlined />,
-        content:
-          "Your Youtube account is not connected. To schedule, you need to connect your account. Do you wish to connect now?",
-        okText: "Yes",
-        cancelText: "No",
-        onOk() {
-          dispatch({
-            type: ACTIONS.SET_STATE,
-            payload: { shouldConnectFbAccount: false },
-          });
-          window.location.href = "/clan_profile?openPopup=google";
-        },
-        onCancel() {
-          dispatch({
-            type: ACTIONS.SET_STATE,
-            payload: { shouldConnectFbAccount: false },
-          });
-          closeDrawer();
-        },
-      });
-  }, [shouldConnectGoogleAccount]);
+  const [connectAccountBanner, setConnectAccountBanner] = useState(null);
 
   useEffect(() => {
     const video = creative?.media.find(
@@ -230,10 +203,38 @@ const YoutubeUploadForm = ({
     <Alert description={msg} type="warning" showIcon />
   );
 
+  useEffect(() => {
+    setConnectAccountBanner(
+      <Alert
+        description="Your Youtube account is not connected. To schedule, you need to connect your account. Do you wish to connect now?"
+        type="warning"
+        showIcon
+        action={
+          <Space direction="vertical">
+            <Button
+              size="small"
+              type="ghost"
+              onClick={() => {
+                dispatch({
+                  type: ACTIONS.SET_STATE,
+                  payload: { shouldConnectFbAccount: false },
+                });
+                window.location.href = "/clan_profile?openPopup=google";
+              }}
+            >
+              Connect Now
+            </Button>
+          </Space>
+        }
+      />
+    );
+    setSubmitBtnDisabled(true);
+  }, [shouldConnectGoogleAccount]);
+
   return (
     <>
       {mediaValidateAlert}
-
+      {connectAccountBanner}
       {!formSubmitted && (
         <Form
           form={form}
