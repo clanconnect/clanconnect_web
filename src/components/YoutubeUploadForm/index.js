@@ -204,30 +204,31 @@ const YoutubeUploadForm = ({
   );
 
   useEffect(() => {
-    setConnectAccountBanner(
-      <Alert
-        description="Your Youtube account is not connected. To schedule, you need to connect your account. Do you wish to connect now?"
-        type="warning"
-        showIcon
-        action={
-          <Space direction="vertical">
-            <Button
-              size="small"
-              type="ghost"
-              onClick={() => {
-                dispatch({
-                  type: ACTIONS.SET_STATE,
-                  payload: { shouldConnectFbAccount: false },
-                });
-                window.location.href = "/clan_profile?openPopup=google";
-              }}
-            >
-              Connect Now
-            </Button>
-          </Space>
-        }
-      />
-    );
+    shouldConnectGoogleAccount &&
+      setConnectAccountBanner(
+        <Alert
+          description="Your Youtube account is not connected. To schedule, you need to connect your account. Do you wish to connect now?"
+          type="warning"
+          showIcon
+          action={
+            <Space direction="vertical">
+              <Button
+                size="small"
+                type="ghost"
+                onClick={() => {
+                  dispatch({
+                    type: ACTIONS.SET_STATE,
+                    payload: { shouldConnectFbAccount: false },
+                  });
+                  window.location.href = "/clan_profile?openPopup=google";
+                }}
+              >
+                Connect Now
+              </Button>
+            </Space>
+          }
+        />
+      );
     setSubmitBtnDisabled(true);
   }, [shouldConnectGoogleAccount]);
 

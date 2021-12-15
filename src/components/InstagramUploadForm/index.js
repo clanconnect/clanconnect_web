@@ -175,30 +175,31 @@ const InstagramUploadForm = ({
   }
 
   useEffect(() => {
-    setConnectAccountBanner(
-      <Alert
-        description="Your Instagram account is not connected. To schedule, you need to connect your account. Do you wish to connect now?"
-        type="warning"
-        showIcon
-        action={
-          <Space direction="vertical">
-            <Button
-              size="small"
-              type="ghost"
-              onClick={() => {
-                dispatch({
-                  type: ACTIONS.SET_STATE,
-                  payload: { shouldConnectFbAccount: false },
-                });
-                window.location.href = "/clan_profile?openPopup=facebook";
-              }}
-            >
-              Connect Now
-            </Button>
-          </Space>
-        }
-      />
-    );
+    shouldConnectFbAccount &&
+      setConnectAccountBanner(
+        <Alert
+          description="Your Instagram account is not connected. To schedule, you need to connect your account. Do you wish to connect now?"
+          type="warning"
+          showIcon
+          action={
+            <Space direction="vertical">
+              <Button
+                size="small"
+                type="ghost"
+                onClick={() => {
+                  dispatch({
+                    type: ACTIONS.SET_STATE,
+                    payload: { shouldConnectFbAccount: false },
+                  });
+                  window.location.href = "/clan_profile?openPopup=facebook";
+                }}
+              >
+                Connect Now
+              </Button>
+            </Space>
+          }
+        />
+      );
     setSubmitBtnDisabled(true);
   }, [shouldConnectFbAccount]);
 
