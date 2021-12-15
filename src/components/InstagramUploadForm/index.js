@@ -185,7 +185,8 @@ const InstagramUploadForm = ({
             <Space direction="vertical">
               <Button
                 size="small"
-                type="ghost"
+                type="primary"
+                ghost
                 onClick={() => {
                   dispatch({
                     type: ACTIONS.SET_STATE,
