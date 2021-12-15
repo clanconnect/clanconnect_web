@@ -60,10 +60,12 @@ const YoutubeUploadForm = ({
   const [connectAccountBanner, setConnectAccountBanner] = useState(null);
 
   useEffect(() => {
-    dispatch({
-      type: ACTIONS.SET_STATE,
-      payload: { shouldConnectGoogleAccount: true },
-    });
+    user &&
+      !user.yotube_auth &&
+      dispatch({
+        type: ACTIONS.SET_STATE,
+        payload: { shouldConnectGoogleAccount: true },
+      });
   }, [user]);
 
   useEffect(() => {
