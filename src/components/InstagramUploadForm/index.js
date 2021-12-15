@@ -200,7 +200,7 @@ const InstagramUploadForm = ({
           }
         />
       );
-    setSubmitBtnDisabled(true);
+    shouldConnectFbAccount && setSubmitBtnDisabled(true);
   }, [shouldConnectFbAccount]);
 
   return (

@@ -229,7 +229,7 @@ const YoutubeUploadForm = ({
           }
         />
       );
-    setSubmitBtnDisabled(true);
+    shouldConnectGoogleAccount && setSubmitBtnDisabled(true);
   }, [shouldConnectGoogleAccount]);
 
   return (
