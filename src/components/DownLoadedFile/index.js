@@ -14,7 +14,7 @@ import VideoPlayer from "react-player";
 import { downloadMedia } from "helpers";
 import moment from "moment";
 
-const DownLoadedFile = ({ creative = {}, project }) => {
+const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }) => {
   const media = creative.media ? creative.media[0] : {};
   const [imageUrl, setImageUrl] = useState(
     `${process.env.REACT_APP_IMAGE_BASE_URL}/${media?.slug || "default"}`
@@ -25,9 +25,14 @@ const DownLoadedFile = ({ creative = {}, project }) => {
   const youtubeSocial = creative?.socials?.youtube;
 
   return (
-    <div className="influncer-file-container ">
+    
+    <div className={`influncer-file-container ${projectCard.status?"project-one-card":""}`}>
+      <span className={`project-card-status creatives-${projectCard['creative-status']}`}>
+      {projectCard['creative-status']}
+      </span>
+      {console.log(projectCard," projectCard projectCard ")}
       <div className="influncer-file-subcontainer">
-        <div className="img-box-download">
+        <div className={`img-box-download main-creatives-${projectCard['creative-status']}`}>
           {media?.mimeType?.includes("image") ? (
             // eslint-disable-next-line jsx-a11y/img-redundant-alt
             <img
@@ -62,7 +67,8 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               onClick={() => setOpenModal(true)}
             />
           </div>
-          <div className="icons-row">
+          {
+          <div className="icons-row" style={{opacity:`${projectCard.status?0:1}`}}>
             <InfluencerCreativeModal
               src={fullScreen}
               project={project}
@@ -85,36 +91,53 @@ const DownLoadedFile = ({ creative = {}, project }) => {
               </div>
             )}
           </div>
+          }
         </div>
         <div className="creative-footer">
+          <div className="absolute-box">
           <div className="date-box">
-            <CalendarOutlined />
-            <span className="date-text">
-              {moment(creative?.media[0]?.createdAt).format("DD/MM/YYYY")}
-            </span>
+              <CalendarOutlined />
+              <span className="date-text">
+                {moment(creative?.media[0]?.createdAt).format("DD/MM/YYYY")}
+              </span>
           </div>
           <div className="versions">Versions: {creative.latestVersion}</div>
+          </div>
         </div>
         {(instagramSocial || youtubeSocial) && (
           <div className="approved-schedules">
             {instagramSocial && youtubeSocial && (
               <>
                 <p>
-                  <Tag color="red">
-                    <YoutubeOutlined
-                      style={{ color: "#FF0000", fontSize: "14px" }}
-                    />{" "}
-                    Scheduled At
-                  </Tag>
-                  {moment(youtubeSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
+                {projectCard.status?<span>
+                <YoutubeOutlined
+                    style={{ color: "#FF0000", fontSize: "14px" }}
+                  />{" "}Scheduled At
+                  </span>:<span>
+                <Tag color="red">
+                  <YoutubeOutlined
+                    style={{ color: "#FF0000", fontSize: "14px" }}
+                  />{" "}
+                  Scheduled At
+                </Tag>
+                </span>} {" "}
                 </p>
                 <p>
-                  <Tag color="purple">
-                    <InstagramOutlined
-                      style={{ color: "#833AB4", fontSize: "14px" }}
-                    />{" "}
-                    Scheduled at
-                  </Tag>
+
+                {projectCard.status?<span>
+                <InstagramOutlined
+                    style={{ color: "#833AB4", fontSize: "14px" }}
+                  />{" "}Scheduled At
+                  </span>:<span>
+                <Tag color="purple">
+                  <InstagramOutlined
+                    style={{ color: "#833AB4", fontSize: "14px" }}
+                  />{" "}
+                  Scheduled At
+                </Tag>
+                </span>} {" "}
+
+                 
                   {moment(instagramSocial.liveAt).format("DD/MM/YYYY, h:mma")}{" "}
                   IST
                 </p>
@@ -122,23 +145,36 @@ const DownLoadedFile = ({ creative = {}, project }) => {
             )}
             {instagramSocial && !youtubeSocial && (
               <p>
+               {projectCard.status?<span>
+                <InstagramOutlined
+                    style={{ color: "#833AB4", fontSize: "14px" }}
+                  />{" "}Scheduled At
+                  </span>:<span>
                 <Tag color="purple">
                   <InstagramOutlined
                     style={{ color: "#833AB4", fontSize: "14px" }}
                   />{" "}
-                  Scheduled at
+                  Scheduled At
                 </Tag>
+                </span>} {" "}
                 {moment(instagramSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
               </p>
             )}
             {!instagramSocial && youtubeSocial && (
               <p>
+               {projectCard.status?<span>
+                <YoutubeOutlined
+                    style={{ color: "#FF0000", fontSize: "14px" }}
+                  />{" "}Scheduled At
+                  </span>:<span>
                 <Tag color="red">
                   <YoutubeOutlined
                     style={{ color: "#FF0000", fontSize: "14px" }}
                   />{" "}
                   Scheduled At
                 </Tag>
+                </span>} {" "}
+                
                 {moment(youtubeSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
               </p>
             )}

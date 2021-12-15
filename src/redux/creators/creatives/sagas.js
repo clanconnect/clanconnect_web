@@ -17,6 +17,21 @@ export function* fetchIndex({ payload }) {
   }
 }
 
+export function* fetchById({ payload }) {
+  try {
+    const response = yield call(CreativeService.byProjectId, payload);
+
+    if (response.success) {
+      yield put({
+        type: ACTIONS.SET_STATE,
+        payload: { list: response.data },
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export function* add({
   payload: { body, path, query },
   onSuccess,
@@ -108,5 +123,6 @@ export default function* creatorCreativesSagas() {
     takeLatest(ACTIONS.UPDATE_ATTACHMENTS, updateAttachments),
     takeLatest(ACTIONS.GET_ALL, fetchAll),
     takeLatest(ACTIONS.BULK_DELETE, bulkDelete),
+    takeLatest(ACTIONS.GET_BY_ID, fetchById),
   ]);
 }

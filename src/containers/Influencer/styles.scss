@@ -1,0 +1,81 @@
+@import "styles/_colors";
+@import "styles/_mixins";
+@import "styles/_fonts";
+.main-wrapper-influncer {
+  font-family: 'Open Sans', sans-serif !important;
+  .content-wrapper {
+    padding: 0px 15px;
+    overflow-x: hidden;
+    width: 100%;
+    .view-link {
+      margin-top: 10px;
+      a {
+        color: $secondary;
+        text-decoration: none;
+        font-size: 14px;
+        cursor: pointer;
+        &:hover {
+          color: $tertiary;
+        }
+      }
+    }
+  }
+  .tabs-container {
+    margin-top: 15px;
+    background-color: #fff;
+    .tabs-btn {
+      background-color: #fff;
+      border: 1px solid $primary;
+      padding: 10px 20px;
+      display: inline-block;
+      color: $primary;
+      text-decoration: none;
+      margin-right: 30px;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+    }
+    .active-tab {
+      background-color: $primary;
+      color: white;
+      font-size: 20px;
+      font-weight: 300;
+      border-radius: 5px;
+      padding: 5px 15px;
+    }
+  }
+  .con-mb {
+    margin-bottom: 40px;
+    @include mobile {
+      display: flex;
+      overflow-x: auto;
+    }
+  }
+  .mobile-res {
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+
+  .project-influncer-file-container {
+      width: calc(100%/4);
+   }
+
+   .project-influncer-file-container .influncer-file-container{
+     width: auto;
+   }
+
+  .brand-list-card{
+    border: none;
+    box-shadow: none;
+    padding-left: 10px;
+    margin-bottom: 30px;
+  }
+  .file-influencer-row{
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+  }
+
+}
