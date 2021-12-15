@@ -42,6 +42,7 @@ const InfluencerPage = ({ creatives, projects, dispatch }) => {
         <SideNav />
         <div className="content-wrapper">
           <div className="tabs-container">
+            <div>
             <div className={`brand-list brand-list-card`}>
               <div className="brand-list-img">
                 <img src={projects.coverPictureUrl} alt="" />
@@ -70,6 +71,7 @@ const InfluencerPage = ({ creatives, projects, dispatch }) => {
                   <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                 )}
               </Row>
+            </div>
             </div>
           </div>
         </div>
