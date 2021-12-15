@@ -61,12 +61,12 @@ const YoutubeUploadForm = ({
 
   useEffect(() => {
     user &&
-      !user.yotube_auth &&
+      !user.youtube_auth &&
       dispatch({
         type: ACTIONS.SET_STATE,
         payload: { shouldConnectGoogleAccount: true },
       });
-  }, [user]);
+  }, [user.youtube_auth]);
 
   useEffect(() => {
     const video = creative?.media.find(
