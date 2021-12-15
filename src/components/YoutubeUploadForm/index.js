@@ -225,7 +225,6 @@ const YoutubeUploadForm = ({
               <Button
                 size="small"
                 type="primary"
-                ghost
                 onClick={() => {
                   dispatch({
                     type: ACTIONS.SET_STATE,
