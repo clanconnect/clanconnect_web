@@ -34,12 +34,13 @@ const YoutubeUploadForm = ({
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user.user);
   const countryCategories = useSelector(
     (store) => store.CreatorYoutube.countryCategoriesYoutubeResponse
   );
   const youtubeData = useSelector((store) => store.CreatorYoutube.data);
   const shouldConnectGoogleAccount = useSelector(
-    (store) => store.CreatorInstagram.shouldConnectGoogleAccount
+    (store) => store.CreatorYoutube.shouldConnectGoogleAccount
   );
 
   const [categories, setCategories] = useState([...indiaCategories]);
@@ -57,6 +58,13 @@ const YoutubeUploadForm = ({
   const [submitBtnDisabled, setSubmitBtnDisabled] = useState(false);
   const [mediaValidateAlert, setMediaValidateAlert] = useState(null);
   const [connectAccountBanner, setConnectAccountBanner] = useState(null);
+
+  useEffect(() => {
+    dispatch({
+      type: ACTIONS.SET_STATE,
+      payload: { shouldConnectGoogleAccount: true },
+    });
+  }, [user]);
 
   useEffect(() => {
     const video = creative?.media.find(
@@ -218,7 +226,7 @@ const YoutubeUploadForm = ({
                 onClick={() => {
                   dispatch({
                     type: ACTIONS.SET_STATE,
-                    payload: { shouldConnectFbAccount: false },
+                    payload: { shouldConnectGoogleAccount: false },
                   });
                   window.location.href = "/clan_profile?openPopup=google";
                 }}

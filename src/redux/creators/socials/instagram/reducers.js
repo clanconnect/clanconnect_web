@@ -5,7 +5,6 @@ const initialState = {
   fbPages: [],
   igId: "",
   shouldConnectFbAccount: false,
-  shouldConnectGoogleAccount: false,
 };
 
 export default function reducer(state = initialState, action) {

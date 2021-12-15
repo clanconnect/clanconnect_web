@@ -3,6 +3,7 @@ import { ACTIONS } from "./actions";
 const initialState = {
   data: {},
   countryCategoriesYoutubeResponse: [],
+  shouldConnectGoogleAccount: false,
 };
 
 export default function reducer(state = initialState, action) {
