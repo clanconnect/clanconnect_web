@@ -13,6 +13,8 @@ import chat from "assets/images/chat.svg";
 import VideoPlayer from "react-player";
 import { downloadMedia } from "helpers";
 import moment from "moment";
+//bootstrap icons
+import * as Icon from "react-bootstrap-icons";
 
 const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }) => {
   const media = creative.media ? creative.media[0] : {};
@@ -110,8 +112,7 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
               <>
                 <p>
                 {projectCard.status?<span>
-                <YoutubeOutlined
-                    style={{ color: "#FF0000", fontSize: "14px" }}
+                <Icon.Youtube color="red" size="16"
                   />{" "}Scheduled At
                   </span>:<span>
                 <Tag color="red">
@@ -125,8 +126,7 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
                 <p>
 
                 {projectCard.status?<span>
-                <InstagramOutlined
-                    style={{ color: "#833AB4", fontSize: "14px" }}
+                <Icon.Instagram color = "#d6249f"
                   />{" "}Scheduled At
                   </span>:<span>
                 <Tag color="purple">
@@ -146,8 +146,7 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
             {instagramSocial && !youtubeSocial && (
               <p>
                {projectCard.status?<span>
-                <InstagramOutlined
-                    style={{ color: "#833AB4", fontSize: "14px" }}
+                <Icon.Instagram color = "#d6249f"
                   />{" "}Scheduled At
                   </span>:<span>
                 <Tag color="purple">
@@ -163,8 +162,8 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
             {!instagramSocial && youtubeSocial && (
               <p>
                {projectCard.status?<span>
-                <YoutubeOutlined
-                    style={{ color: "#FF0000", fontSize: "14px" }}
+                <Icon.Youtube color="red" size="16"
+                    
                   />{" "}Scheduled At
                   </span>:<span>
                 <Tag color="red">
