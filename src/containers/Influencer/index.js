@@ -55,7 +55,6 @@ const InfluencerPage = ({ creatives, projects, dispatch }) => {
             </div>
             <div className="open-container">
               <Row className="file-influencer-row">
-                {console.log('creatives.length',creatives[0]?.creatives?.length)}
                 {creatives.length !== 0 ? (
                   creatives[0]?.creatives.map((creative) => (
                     <Col xs={24} md={8} sm={12} lg={6}  key={creative?.id} style={{position:'relative'}} className={`main-creatives-${creative?.status} project-influncer-file-container`}>

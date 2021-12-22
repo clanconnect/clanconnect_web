@@ -3,6 +3,7 @@ const routeConstant = {
   allCreativesListsBrand: "/v2/brands/all-creatives",
   influencerPage: "/v2/influencer",
   influencer: "/v2/influencer/:id",
+  creativePage: "/v2/creative/:id/:creativeId",
   allCreativesListsInfluencer: "/v2/influencer/all-creatives",
 };
 

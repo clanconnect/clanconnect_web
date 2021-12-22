@@ -1,0 +1,72 @@
+@import 'styles/_colors';
+@import 'styles/_mixins';
+
+.comment-box {
+  border-top: 2px solid #ceb8b830;
+  padding-top: 10px;
+  margin-top: 10px;
+
+  .comment-scroll {
+    // height: 400px;
+    // overflow: auto;
+    margin-bottom: 20px;
+  }
+
+  .chat-title {
+    color: #02040f;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .chat-icon-c {
+    margin-right: 12px;
+    margin-top: 10px;
+  }
+
+  .comment-btns {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+
+  .btn-submit {
+    background: $secondary;
+    padding: 6px 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .btn-cancel {
+    background: none;
+    border: none;
+    color: #5d5d5d;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .custom-input {
+    width: 100%;
+    border-radius: 4px;
+    height: 70px;
+    padding: 5px 10px;
+
+    &:focus {
+      outline-color: $secondary;
+    }
+  }
+}
+
+.error {
+  color: red;
+  font-size: 9px;
+}

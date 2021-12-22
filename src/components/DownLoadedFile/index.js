@@ -15,6 +15,7 @@ import { downloadMedia } from "helpers";
 import moment from "moment";
 //bootstrap icons
 import * as Icon from "react-bootstrap-icons";
+import { useHistory } from "react-router-dom";
 
 const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }) => {
   const media = creative.media ? creative.media[0] : {};
@@ -25,20 +26,23 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
 
   const instagramSocial = creative?.socials?.instagram;
   const youtubeSocial = creative?.socials?.youtube;
-
+  let history = useHistory();
+const onShowCreativeView = ()=>{
+  history.push(`/v2/creative/${project.id}/${creative.id}`);
+}
   return (
     
     <div className={`influncer-file-container ${projectCard.status?"project-one-card":""}`}>
       <span className={`project-card-status creatives-${projectCard['creative-status']}`}>
       {projectCard['creative-status']}
       </span>
-      {console.log(projectCard," projectCard projectCard ")}
       <div className="influncer-file-subcontainer">
-        <div className={`img-box-download main-creatives-${projectCard['creative-status']}`}>
+        <div className={`img-box-download main-creatives-${projectCard['creative-status']}`} onClick={onShowCreativeView}>
           {media?.mimeType?.includes("image") ? (
             // eslint-disable-next-line jsx-a11y/img-redundant-alt
+            // onClick={() => setOpenModal(true)}
             <img
-              onClick={() => setOpenModal(true)}
+              
               src={imageUrl}
               alt=""
               className="full-img"
@@ -52,7 +56,6 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
             />
           ) : (
             <VideoPlayer
-              onClick={() => setOpenModal(true)}
               url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media?.slug}`}
               className="full-video"
               controls={false}
@@ -66,7 +69,6 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
               alt=""
               src={chat}
               className={`cursor-pointer icons-custom`}
-              onClick={() => setOpenModal(true)}
             />
           </div>
           {
@@ -106,14 +108,15 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
           <div className="versions">Versions: {creative.latestVersion}</div>
           </div>
         </div>
-        {(instagramSocial || youtubeSocial) && (
+        {(instagramSocial || youtubeSocial) ? (
           <div className="approved-schedules">
             {instagramSocial && youtubeSocial && (
               <>
                 <p>
                 {projectCard.status?<span>
+                  <span style={{verticalAlign: 'middle',position:'relative', top:'2px'}}>
                 <Icon.Youtube color="red" size="16"
-                  />{" "}Scheduled At
+                  /></span>{" "}Scheduled At
                   </span>:<span>
                 <Tag color="red">
                   <YoutubeOutlined
@@ -162,9 +165,10 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
             {!instagramSocial && youtubeSocial && (
               <p>
                {projectCard.status?<span>
+                 <span style={{verticalAlign: 'middle',position:'relative', top:'2px'}}>
                 <Icon.Youtube color="red" size="16"
                     
-                  />{" "}Scheduled At
+                  /></span>{" "}Scheduled At
                   </span>:<span>
                 <Tag color="red">
                   <YoutubeOutlined
@@ -177,8 +181,9 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
                 {moment(youtubeSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
               </p>
             )}
+
           </div>
-        )}
+        ):   <button className="btn-submit" onClick={onShowCreativeView}>Schedule</button>}
       </div>
     </div>
   );
