@@ -31,15 +31,6 @@ import paperclip from "assets/images/paperclip.svg";
 import AttachmentFileCard from "components/AttachmentFileCard";
 import NewCommentBox from "components/NewCommentBox";
 
-// import { Modal, Menu, Dropdown, Carousel, Tag, Empty } from "antd";
-// import {
-//   ,
-//   UpOutlined,
-//   RightOutlined,
-//   LeftOutlined,
-//   ExclamationCircleOutlined,
-// } from "@ant-design/icons";
-
 const CreativePage = ({
   closeDrawer,
   setVisible,
@@ -228,6 +219,16 @@ if(creativeData){
         <SideNav />
         <div className="content-wrapper">
           <div className="tabs-container">
+          <div className={`brand-list brand-list-card`}>
+              <div className="brand-list-img">
+                <img src={creatives[0]?.project?.coverPictureUrl} alt="" />
+              </div>
+              <div className={`brand-content`}>
+                <div className="brand-list-content">
+                  <span className="list-title">{creatives[0]?.project?.title}</span>
+                </div>
+              </div>
+            </div>
             <div className="creative-container">
               <div className="p-2"> 
                 {creatives.length !== 0 ? (
