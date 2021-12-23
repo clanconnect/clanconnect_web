@@ -25,7 +25,7 @@ const InfluencerPage = (props) => {
     //callback("pending");
     console.log(id,"idd =======");
     if(id){
-      history.push(`/v2/influencer/campaigning/${id}`);
+      history.push(`/v2/influencer/campaigns/${id}`);
       }
   }, []);
   return (
