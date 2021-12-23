@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "components/DemoHeader";
 import SideNav from "components/DemoSideNav";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "./styles.scss";
 import { ACTIONS as PROJECT_ACTIONS } from "redux/creators/projects/actions";
 import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";

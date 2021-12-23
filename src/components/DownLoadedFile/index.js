@@ -28,7 +28,7 @@ const DownLoadedFile = ({ creative = {}, project, projectCard = {status:false} }
   const youtubeSocial = creative?.socials?.youtube;
   let history = useHistory();
 const onShowCreativeView = ()=>{
-  history.push(`/v2/creative/${project.id}/${creative.id}`);
+  history.push(`/v2/influencer/campaigning/${project.id}/${creative.id}`);
 }
   return (
     
