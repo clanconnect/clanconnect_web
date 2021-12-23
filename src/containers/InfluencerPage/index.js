@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "components/DemoHeader";
 import SideNav from "components/DemoSideNav";
 import LineHeading from "components/LineHeading";
@@ -7,14 +7,27 @@ import InfluncerCreativeApprovalTab from "components/InfluncerCreativeApprovalTa
 import { myTabs } from "./dataManager";
 
 import "./styles.scss";
+import { useHistory, useLocation } from "react-router-dom";
 
 const InfluencerPage = (props) => {
   const [activeTab, setActiveTab] = useState("Creatives");
-
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const id = urlParams.get('id');
+  
+  let history = useHistory();
+  
+  //const { id } = useParams();
   const handleActiveTab = (index) => {
     setActiveTab(index);
   };
-
+  useEffect(() => {
+    //callback("pending");
+    console.log(id,"idd =======");
+    if(id){
+      history.push(`/v2/influencer/campaigns/${id}`);
+      }
+  }, []);
   return (
     <div className="main-wrapper-influncer">
       <Header />
