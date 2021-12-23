@@ -32,6 +32,12 @@ const Influencer = loadable(() =>
   import(/* webpackChunkName: 'InfluencerPage' */ "containers/InfluencerPage")
 );
 
+const ProjectInfluencer = loadable(() =>
+  import(/* webpackChunkName: 'InfluencerPage' */ "containers/Influencer")
+);
+const CreativePage = loadable(() =>
+  import(/* webpackChunkName: 'CreativePage' */ "containers/CreativePage")
+);
 const AllCreativesListsInfluencer = loadable(() =>
   import(
     /* webpackChunkName: 'AllCreativesListsInfluencer' */ "containers/AllCreativesListsInfluencer"
@@ -65,6 +71,18 @@ const Routes = ({ location }) => {
         <ProtectedRoute
           path={routeConstant.influencerPage}
           component={Influencer}
+          exact
+          user_type="influencer"
+        />
+        <ProtectedRoute
+          path={routeConstant.creativePage}
+          component={CreativePage}
+          exact
+          user_type="creativePage"
+        />
+        <ProtectedRoute
+          path={routeConstant.influencer}
+          component={ProjectInfluencer}
           exact
           user_type="influencer"
         />

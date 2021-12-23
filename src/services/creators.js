@@ -11,10 +11,24 @@ export class ProjectService {
   }
 }
 
+export class ProjectServiceById {
+  static index({ query,id }) {
+    return api.get(
+      `/creators/projects/${id}?` + (query && qs.stringify(query)) || ""
+    );
+  }
+}
+
 export class CreativeService {
   static index({ query }) {
     return api.get(
       "/creators/creatives/by-projects?" + (query && qs.stringify(query)) || ""
+    );
+  }
+  
+  static byProjectId({ query, id}) {
+    return api.get(
+      `/creators/creatives/by-projects/${id}?` + (query && qs.stringify(query)) || ""
     );
   }
 

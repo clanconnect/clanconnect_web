@@ -5,7 +5,7 @@ import { getCommentsAction } from "redux/brands/comments/actions";
 import { Spin, Empty } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const Comment = (props) => {
+const NewComment = (props) => {
   const { creativeId } = props;
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -33,7 +33,6 @@ const Comment = (props) => {
       className="demo-class"
       style={{
         overflow: "auto",
-        display: "flex",
         flexDirection: "column-reverse",
       }}
     >
@@ -51,7 +50,7 @@ const Comment = (props) => {
         scrollableTarget="scrollableDiv"
       >
         {commentData &&
-          commentData.map((item, index) => {
+          commentData.sort(({ createdAt: previousID }, { createdAt: currentID }) => previousID >currentID? 1:-1).map((item, index) => {
             return <CommentProfile data={item} key={`comment-${item.id}`} />;
           })}
         {commentData.length === 0 && (
@@ -65,4 +64,4 @@ const Comment = (props) => {
   );
 };
 
-export default Comment;
+export default NewComment;

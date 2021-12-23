@@ -1,0 +1,122 @@
+@import "styles/_colors";
+@import "styles/_mixins";
+@import "styles/_fonts";
+.main-wrapper-influncer {
+  font-family: 'Open Sans', sans-serif !important;
+  .content-wrapper {
+    padding: 0px 15px;
+    overflow-x: hidden;
+    width: 100%;
+    background: #efefef;
+    .view-link {
+      margin-top: 10px;
+      a {
+        color: $secondary;
+        text-decoration: none;
+        font-size: 14px;
+        cursor: pointer;
+        &:hover {
+          color: $tertiary;
+        }
+      }
+    }
+  }
+  .tabs-container {
+    margin-top: 15px;
+    background-color: #fff;
+    .tabs-btn {
+      background-color: #fff;
+      border: 1px solid $primary;
+      padding: 10px 20px;
+      display: inline-block;
+      color: $primary;
+      text-decoration: none;
+      margin-right: 30px;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+    }
+    .active-tab {
+      background-color: $primary;
+      color: white;
+      font-size: 20px;
+      font-weight: 300;
+      border-radius: 5px;
+      padding: 5px 15px;
+    }
+  }
+  .con-mb {
+    margin-bottom: 40px;
+    @include mobile {
+      display: flex;
+      overflow-x: auto;
+    }
+  }
+  .mobile-res {
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+
+  .project-influncer-file-container {
+      width: calc(100%/4);
+      margin-bottom: 25px;
+   }
+
+   .project-influncer-file-container .influncer-file-container{
+     width: auto;
+   }
+
+  .brand-list-card{
+    border: none;
+    box-shadow: none;
+    padding-left: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    .brand-list-img {
+      width: 60px;
+      height: 60px;
+      padding: 0;
+      border-radius: 10px;
+      margin-right: auto;
+      @include mobile {
+        width: 50%;
+        height: 100%;
+        margin: 20px auto;
+      }
+      img {
+        border-radius: 10px;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .brand-list-content {
+      padding: 0 20px;
+      @include mobile {
+        margin: 20px 0px;
+      }
+    }
+    .brand-content {
+      flex: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @include mobile {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  }
+  .file-influencer-row{
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    // margin-right: 10px;
+    margin-bottom: 20px;
+  }
+
+}

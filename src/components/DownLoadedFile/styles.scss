@@ -126,11 +126,112 @@
 }
 
 .influncer-file-container {
-  width: 20%;
+  width: calc(100%/4);
   margin-right: 20px;
   margin-bottom: 10px;
 
   @include mobile {
     width: 42%;
+  }
+  /* new css*/
+  .project-card-status{
+    display: none;
+  }
+  .main-creatives-pending {
+    //border: 4px solid #f7be33;
+    outline-style: solid;
+    outline-color: #f7be33;
+  }
+  .main-creatives-accepted {
+    //border: 4px solid #61ba15;
+    outline-style: solid;
+    outline-color: #61ba15;
+  }  
+  .main-creatives-scheduled {
+    //border: 4px solid #feed32;
+    outline-style: solid;
+    outline-color: #61ba15;
+  }  
+  .main-creatives-rejected {
+    //border: 4px solid #e93f33;
+    outline-style: solid;
+    outline-color: #e93f33;
+  }
+  .main-creatives-live{
+    //border: 4px solid #5acffb;
+    outline-style: solid;
+    outline-color: #5acffb;
+  }
+  .creatives-pending {
+    background: #f7be33;
+    padding: 3px 25px;
+    border-radius: 0px 10px 10px 0px;
+    position:absolute;
+    z-index: 2;
+  }
+  .creatives-accepted {
+    background: #61ba15;
+    padding: 3px 25px;
+    border-radius: 0px 10px 10px 0px;
+    position:absolute;
+    z-index: 2;
+  }  
+  .creatives-scheduled {
+    background: #feed32;
+    padding: 3px 25px;
+    border-radius: 0px 10px 10px 0px;
+    position:absolute;
+    z-index: 2;
+  }  .creatives-rejected {
+    background: #e93f33;
+    padding: 3px 25px;
+    border-radius: 0px 10px 10px 0px;
+    position:absolute;
+    z-index: 2;
+  }
+  .creatives-live{
+    background:#5acffb;
+    padding: 3px 25px;
+    border-radius: 0px 10px 10px 0px;
+    position:absolute;
+    z-index: 2;
+  }
+  .file-influencer-row {
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  
+}
+.project-one-card{
+  .project-card-status{
+    display:block
+  }
+  .influncer-file-subcontainer{
+    position: relative;
+  }
+  .creative-footer {
+    position: relative;
+    .absolute-box{
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      bottom: 4px;
+      background-color: #00000096;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    color: #FFFFFF;
+    .date-text{
+      color: #FFFFFF;
+    }
+  }
+  .project-card-status{
+    text-transform: capitalize;
+  }
+  .img-box-download{
+    min-height: 200px;
+    height: 200px;
   }
 }
