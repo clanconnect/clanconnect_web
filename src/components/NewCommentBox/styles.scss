@@ -1,5 +1,5 @@
-@import 'styles/_colors';
-@import 'styles/_mixins';
+@import "styles/_colors";
+@import "styles/_mixins";
 
 .comment-box {
   border-top: 2px solid #ceb8b830;
@@ -63,6 +63,9 @@
     &:focus {
       outline-color: $secondary;
     }
+  }
+  .d-flex {
+    display: flex;
   }
 }
 

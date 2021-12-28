@@ -23,6 +23,7 @@ const InstagramUploadForm = ({
   creative,
   setIsIgFormDescriptionVisible,
   setIsIgScheduleExistForCreative,
+  creativepage=false
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -334,7 +335,7 @@ const InstagramUploadForm = ({
               htmlType="submit"
               disabled={submitBtnDisabled}
             >
-              Submit
+              {creativepage?"Submit & Schedule":"Submit"}
             </Button>
           </Form.Item>
         </Form>
