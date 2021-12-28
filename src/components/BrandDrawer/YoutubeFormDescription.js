@@ -26,6 +26,7 @@ const YoutubeFormDescription = ({
   closeDrawer,
   youtubeData,
   creative,
+  creativepage = false
 }) => {
   const dispatch = useDispatch();
 
@@ -292,7 +293,7 @@ const YoutubeFormDescription = ({
             onClick={handleShowCommentBlock}
             className="mt-30"
           >
-            Add Comments
+            {creativepage? "Submit & Schedule" :"Add Comments"}
           </Button>
         </Col>
       </Row>

@@ -2,7 +2,7 @@
 @import "styles/_mixins";
 @import "styles/_fonts";
 .main-wrapper-influncer {
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
   .content-wrapper {
     padding: 0px 15px;
     overflow-x: hidden;
@@ -60,17 +60,19 @@
   }
 
   .project-influncer-file-container {
-      width: calc(100%/4);
-      margin-bottom: 25px;
-   }
+    width: calc(100% / 4);
+    margin-bottom: 25px;
+  }
 
-   .project-influncer-file-container .influncer-file-container{
-     width: auto;
-   }
+  .project-influncer-file-container .influncer-file-container {
+    width: auto;
+  }
 
-  .brand-list-card{
-    border: none;
-    box-shadow: none;
+  .brand-list-card {
+    // border: none;
+    // box-shadow: none;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px #00000029;
     padding-left: 10px;
     margin-bottom: 30px;
     display: flex;
@@ -110,7 +112,7 @@
       }
     }
   }
-  .file-influencer-row{
+  .file-influencer-row {
     display: flex;
     align-items: start;
     flex-wrap: wrap;
@@ -118,5 +120,4 @@
     // margin-right: 10px;
     margin-bottom: 20px;
   }
-
 }

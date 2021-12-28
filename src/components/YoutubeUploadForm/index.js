@@ -31,6 +31,7 @@ const YoutubeUploadForm = ({
   closeDrawer,
   setIsYtFormDescriptionVisible,
   setIsYtScheduleExistForCreative,
+  creativepage=false
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -472,7 +473,7 @@ const YoutubeUploadForm = ({
               disabled={submitBtnDisabled}
             />
           </Form.Item>
-
+            <div className={`${creativepage?"show-row":""}`}>
           <Form.Item
             disabled={submitBtnDisabled}
             name="defaultLanguage"
@@ -516,7 +517,7 @@ const YoutubeUploadForm = ({
               <Option value="unlisted">Unlisted</Option>
             </Select>
           </Form.Item>
-
+            </div>
           <Form.Item
             disabled={submitBtnDisabled}
             name="publicStatsVisible"
@@ -551,7 +552,7 @@ const YoutubeUploadForm = ({
               htmlType="submit"
               disabled={submitBtnDisabled}
             >
-              Submit
+              {creativepage ? 'Submit & Schedule' : 'Submit'}
             </Button>
           </Form.Item>
         </Form>

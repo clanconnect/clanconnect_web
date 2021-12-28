@@ -42,7 +42,7 @@ const NewCommentBox = ({ creativeId, showFiles }) => {
       key={`creative-comments-${creativeId}`}
     >
 
-
+    <div className="d-flex">
       <textarea
         placeholder="Type something here…"
         className="custom-input"
@@ -54,8 +54,9 @@ const NewCommentBox = ({ creativeId, showFiles }) => {
       ) : null}
       <div className="comment-btns">
         <button className="btn-submit" onClick={handleSubmit}>
-          Submit
+          Send
         </button>
+      </div>
       </div>
       <div className="comment-scroll">
         <div className="flex justify-between">

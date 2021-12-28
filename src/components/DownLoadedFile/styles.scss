@@ -7,8 +7,8 @@
 
   .full-img {
     width: 100%;
-    min-height: 200px;
-    height: 200px;
+    min-height: 195px;
+    height: 195px;
     object-fit: cover;
     background: rgba(0, 0, 0, 0.1);
 
@@ -164,37 +164,46 @@
   }
   .creatives-pending {
     background: #f7be33;
-    padding: 3px 25px;
-    border-radius: 0px 10px 10px 0px;
-    position:absolute;
+    padding: 1px 17px 1px 10px;
+    border-radius: 0px 12px 12px 0px;
+    position: absolute;
     z-index: 2;
+    line-height: 1.6;
   }
   .creatives-accepted {
     background: #61ba15;
-    padding: 3px 25px;
-    border-radius: 0px 10px 10px 0px;
-    position:absolute;
+    padding: 1px 17px 1px 10px;
+    border-radius: 0px 12px 12px 0px;
+    position: absolute;
     z-index: 2;
+    line-height: 1.6;
+    color: #FFFFFF;
   }  
   .creatives-scheduled {
     background: #feed32;
-    padding: 3px 25px;
-    border-radius: 0px 10px 10px 0px;
-    position:absolute;
+    padding: 1px 17px 1px 10px;
+    border-radius: 0px 12px 12px 0px;
+    position: absolute;
     z-index: 2;
-  }  .creatives-rejected {
+    line-height: 1.6;
+  }  
+  .creatives-rejected {
     background: #e93f33;
-    padding: 3px 25px;
-    border-radius: 0px 10px 10px 0px;
-    position:absolute;
+    padding: 1px 17px 1px 10px;
+    border-radius: 0px 12px 12px 0px;
+    position: absolute;
     z-index: 2;
+    line-height: 1.6;
+    color:#FFFFFF
   }
   .creatives-live{
     background:#5acffb;
-    padding: 3px 25px;
-    border-radius: 0px 10px 10px 0px;
-    position:absolute;
+    padding: 1px 17px 1px 10px;
+    border-radius: 0px 12px 12px 0px;
+    position: absolute;
     z-index: 2;
+    line-height: 1.6;
+    color: #FFFFFF;
   }
   .file-influencer-row {
     display: flex;
@@ -231,7 +240,18 @@
     text-transform: capitalize;
   }
   .img-box-download{
-    min-height: 200px;
-    height: 200px;
+    min-height: 195px;
+    height: 195px;
+  }
+  .icons-custom{
+    background: none;
+    
+  }
+  .btn-outline{
+    background-color: #FFFFFF;
+    border: 1.5px solid #0078b3;
+    color: #0078b3;
+    padding: 2px 10px;
+    margin-left:0;
   }
 }

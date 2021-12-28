@@ -65,11 +65,13 @@ const onShowCreativeView = ()=>{
             {creative.stats.unreadComments ? (
               <span className="number"> {creative.stats.unreadComments}</span>
             ) : null}
+            {projectCard.status?<Icon.ChatLeftFill color="#5acffb" size="18"/>:
             <img
               alt=""
               src={chat}
               className={`cursor-pointer icons-custom`}
             />
+            }
           </div>
           {
           <div className="icons-row" style={{opacity:`${projectCard.status?0:1}`}}>
@@ -139,8 +141,6 @@ const onShowCreativeView = ()=>{
                   Scheduled At
                 </Tag>
                 </span>} {" "}
-
-                 
                   {moment(instagramSocial.liveAt).format("DD/MM/YYYY, h:mma")}{" "}
                   IST
                 </p>
@@ -183,7 +183,7 @@ const onShowCreativeView = ()=>{
             )}
 
           </div>
-        ):   <button className="btn-submit" onClick={onShowCreativeView}>Schedule</button>}
+        ):   <button className="btn-submit btn-outline" onClick={onShowCreativeView}>Schedule</button>}
       </div>
     </div>
   );

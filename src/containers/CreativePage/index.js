@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "components/DemoHeader";
 import SideNav from "components/DemoSideNav";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "./styles.scss";
 import { ACTIONS as PROJECT_ACTIONS } from "redux/creators/projects/actions";
 import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";
@@ -41,7 +41,7 @@ const CreativePage = ({
   compactView }) => {
   const [activeTab, setActiveTab] = useState("Creatives");
   const { id, creativeId } = useParams();
-
+  let history = useHistory();
 
   const [isYtTabDisabled, setIsYtTabDisabled] = useState(true);
   const [isIgTabDisabled, setIsIgTabDisabled] = useState(true);
@@ -91,7 +91,9 @@ const CreativePage = ({
     },
   };
   const slider = useRef(null);
-
+  const backToAll = () =>{
+    history.push(`/v2/influencer/campaigns/${id}`);
+  }
   const loadProjects = ({ proposalStatus }) => {
     dispatch(
       getCommentsAction({ page: 1, id: creativeId })
@@ -228,6 +230,9 @@ if(creativeData){
                   <span className="list-title">{creatives[0]?.project?.title}</span>
                 </div>
               </div>
+              <div className="back-to-campaigns" onClick={backToAll}>
+                View all Posts for all campaigns
+              </div>
             </div>
             <div className="creative-container">
               <div className="p-2"> 
@@ -286,7 +291,7 @@ if(creativeData){
                     creative.media.map((media) => {
                       return (
                         <div
-                          className="slider-box"
+                          className="slider-box media-inner-container"
                           key={`media-carousel-${media.id}`}
                         >
                           {/* <Tag color="cyan">{media.versionTag}</Tag> */}
@@ -410,6 +415,7 @@ if(creativeData){
                     }
                     instagramData={instagramData}
                     creative={creative}
+                    creativepage = {true}
                   />
                 )}
 
@@ -423,6 +429,7 @@ if(creativeData){
                       setIsIgScheduleExistForCreative
                     }
                     creative={creative}
+                    creativepage = {true}
                   />
                 )}
               </TabPane>
@@ -456,6 +463,7 @@ if(creativeData){
                     }
                     youtubeData={youtubeData}
                     creative={creative}
+                    creativepage = {true}
                   />
                 )}
                 {!isYtScheduleExistForCreative && (
@@ -468,6 +476,7 @@ if(creativeData){
                       setIsYtScheduleExistForCreative
                     }
                     creative={creative}
+                    creativepage = {true}
                   />
                 )}
               </TabPane>
