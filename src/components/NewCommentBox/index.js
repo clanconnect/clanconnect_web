@@ -41,22 +41,21 @@ const NewCommentBox = ({ creativeId, showFiles }) => {
       className="comment-box animate__animated animate__fadeIn"
       key={`creative-comments-${creativeId}`}
     >
-
-    <div className="d-flex">
-      <textarea
-        placeholder="Type something here…"
-        className="custom-input"
-        onChange={(e) => handleChange(e.target.value)}
-        value={text}
-      />
-      {errorState ? (
-        <span className="error">Please write a message</span>
-      ) : null}
-      <div className="comment-btns">
-        <button className="btn-submit" onClick={handleSubmit}>
-          Send
-        </button>
-      </div>
+      <div className="d-flex creative-page-chat-box">
+        <input
+          placeholder="Type something here…"
+          className="custom-input"
+          onChange={(e) => handleChange(e.target.value)}
+          value={text}
+        />
+        {errorState ? (
+          <span className="error">Please write a message</span>
+        ) : null}
+        <div className="comment-btns">
+          <button className="btn-submit " onClick={handleSubmit}>
+            Send
+          </button>
+        </div>
       </div>
       <div className="comment-scroll">
         <div className="flex justify-between">

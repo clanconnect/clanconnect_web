@@ -114,7 +114,7 @@
   }
   .back-to-campaigns {
     color: #0078b3;
-    padding: 15px 15px;
+    padding: 15px 15px 0px;
     cursor: pointer;
   }
   .file-influencer-row {
@@ -133,6 +133,8 @@
   }
   .creative-modal-body {
     padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   .icon-insta {
     color: #d6249f;
@@ -141,4 +143,39 @@
 .media-inner-container {
   width: 100% !important;
   height: 295px !important;
+  .video-contentStyle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  img {
+    width: auto;
+    height: inherit;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .img-full-screen-relative {
+    position: relative;
+    width: 40px;
+  }
+  .img-full-screen {
+    position: absolute;
+    top: 0;
+    background: hsla(0, 0%, 100%, 0.8);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    -webkit-filter: opacity(0.6);
+    filter: opacity(0.6);
+    border-radius: 2px;
+    padding: 4px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.creative-page-rs-title {
+  border-bottom: 1px solid #ceb8b830;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
 }
