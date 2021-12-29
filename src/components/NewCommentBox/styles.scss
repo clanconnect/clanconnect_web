@@ -26,7 +26,7 @@
   .comment-btns {
     display: flex;
     justify-content: flex-end;
-    margin-top: 4px;
+    margin-top: 0px;
   }
 
   .btn-submit {
@@ -56,9 +56,11 @@
 
   .custom-input {
     width: 100%;
-    border-radius: 4px;
-    height: 70px;
+    border-radius: unset;
+    border: 1px solid #000;
+    height: 34px;
     padding: 5px 10px;
+    margin-bottom: 5px;
 
     &:focus {
       outline-color: $secondary;
@@ -72,4 +74,13 @@
 .error {
   color: red;
   font-size: 9px;
+}
+.creative-page-chat-box {
+  .btn-submit {
+    height: 34px;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    line-height: 1;
+    margin-right: 6px;
+  }
 }
