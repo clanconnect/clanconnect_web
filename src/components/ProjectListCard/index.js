@@ -47,7 +47,7 @@ const ProjectListCard = ({
   disablePreviousVersionUpload,
   className,
   rightspace,
-  tabType
+  tabType,
 }) => {
   return (
     <div className={`brand-list ${className}`}>
@@ -61,17 +61,17 @@ const ProjectListCard = ({
 
         {!disableAction && StatusBasedActions[project.status]
           ? StatusBasedActions[project.status](
-            project,
-            creatives || [],
-            disablePreviousVersionUpload,
-            tabType
-          )
+              project,
+              creatives || [],
+              disablePreviousVersionUpload,
+              tabType
+            )
           : StatusBasedActions["default"](
-            project,
-            creatives || [],
-            disablePreviousVersionUpload,
-            tabType
-          )}
+              project,
+              creatives || [],
+              disablePreviousVersionUpload,
+              tabType
+            )}
       </div>
     </div>
   );
