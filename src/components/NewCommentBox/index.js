@@ -42,12 +42,12 @@ const NewCommentBox = ({ creativeId, showFiles }) => {
       key={`creative-comments-${creativeId}`}
     >
       <div className="d-flex creative-page-chat-box">
-        <input
+        <textarea
           placeholder="Type something here…"
           className="custom-input"
           onChange={(e) => handleChange(e.target.value)}
           value={text}
-        />
+        ></textarea>
         {errorState ? (
           <span className="error">Please write a message</span>
         ) : null}

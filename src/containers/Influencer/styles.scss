@@ -24,6 +24,9 @@
   .tabs-container {
     margin-top: 15px;
     background-color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
     .tabs-btn {
       background-color: #fff;
       border: 1px solid $primary;
@@ -119,6 +122,10 @@
     margin-left: 20px;
     // margin-right: 10px;
     margin-bottom: 20px;
+  }
+  .content-view-all-right {
+    padding-top: 10px;
+    text-align: right;
   }
 }
 .back-to-campaigns {

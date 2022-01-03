@@ -49,9 +49,10 @@ const DownLoadedFile = ({
       </span>
       <div className="influncer-file-subcontainer">
         <div
-          className={`img-box-download main-creatives-${projectCard["creative-status"]}`}
+          onClick={onShowCreativeView}
+          className={`img-box-download cursor-pointer main-creatives-${projectCard["creative-status"]}`}
         >
-          <div onClick={onShowCreativeView}>
+          <div>
             {media?.mimeType?.includes("image") ? (
               // eslint-disable-next-line jsx-a11y/img-redundant-alt
               // onClick={() => setOpenModal(true)}
@@ -147,7 +148,10 @@ const DownLoadedFile = ({
                       </span>{" "}
                       Scheduled At{" "}
                       {projectCard["creative-status"] != "live" && (
-                        <span>
+                        <span
+                          className="cursor-pointer pencil-right"
+                          onClick={onShowCreativeView}
+                        >
                           <Icon.Pencil color="#0078b3"></Icon.Pencil>
                         </span>
                       )}
@@ -181,7 +185,10 @@ const DownLoadedFile = ({
                   {moment(instagramSocial.liveAt).format("DD/MM/YYYY, h:mma")}{" "}
                   IST{" "}
                   {projectCard["creative-status"] != "live" && (
-                    <span>
+                    <span
+                      className="cursor-pointer pencil-right"
+                      onClick={onShowCreativeView}
+                    >
                       <Icon.Pencil color="#0078b3"></Icon.Pencil>
                     </span>
                   )}
@@ -206,7 +213,10 @@ const DownLoadedFile = ({
                 )}{" "}
                 {moment(instagramSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST{" "}
                 {projectCard["creative-status"] != "live" && (
-                  <span>
+                  <span
+                    className="cursor-pointer pencil-right"
+                    onClick={onShowCreativeView}
+                  >
                     <Icon.Pencil color="#0078b3"></Icon.Pencil>
                   </span>
                 )}
@@ -226,11 +236,6 @@ const DownLoadedFile = ({
                       <Icon.Youtube color="red" size="16" />
                     </span>{" "}
                     Scheduled At{" "}
-                    {projectCard["creative-status"] != "live" && (
-                      <span>
-                        <Icon.Pencil color="#0078b3"></Icon.Pencil>
-                      </span>
-                    )}
                   </span>
                 ) : (
                   <span>
@@ -243,6 +248,14 @@ const DownLoadedFile = ({
                   </span>
                 )}{" "}
                 {moment(youtubeSocial.liveAt).format("DD/MM/YYYY, h:mma")} IST
+                {projectCard["creative-status"] != "live" && (
+                  <span
+                    className="cursor-pointer pencil-right"
+                    onClick={onShowCreativeView}
+                  >
+                    <Icon.Pencil color="#0078b3"></Icon.Pencil>
+                  </span>
+                )}
               </p>
             )}
           </div>

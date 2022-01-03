@@ -164,6 +164,7 @@ const InfluencerUploadModal = ({
   creatives,
   disablePreviousVersionUpload,
   tabType,
+  creativeList = false,
 }) => {
   const [visible, setVisible] = useState(false);
   const [uploadNewFile, setUploadNewFile] = useState("");
@@ -268,7 +269,16 @@ const InfluencerUploadModal = ({
       const payload = {
         body: { mediaId: media.server.id, projectId: project.id },
       };
-      dispatch({ type: ACTIONS.ADD, payload, onSuccess, selectedStatus });
+      if (creativeList) {
+        dispatch({
+          type: ACTIONS.GET_BY_ID,
+          payload,
+          onSuccess,
+          selectedStatus,
+        });
+      } else {
+        dispatch({ type: ACTIONS.ADD, payload, onSuccess, selectedStatus });
+      }
     }
     return;
   };

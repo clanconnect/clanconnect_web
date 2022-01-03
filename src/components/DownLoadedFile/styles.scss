@@ -126,7 +126,7 @@
 }
 
 .influncer-file-container {
-  width: calc(100%/4);
+  width: calc(100% / 4);
   margin-right: 20px;
   margin-bottom: 10px;
 
@@ -134,7 +134,7 @@
     width: 42%;
   }
   /* new css*/
-  .project-card-status{
+  .project-card-status {
     display: none;
   }
   .main-creatives-pending {
@@ -146,18 +146,18 @@
     //border: 4px solid #61ba15;
     outline-style: solid;
     outline-color: #61ba15;
-  }  
+  }
   .main-creatives-scheduled {
     //border: 4px solid #feed32;
     outline-style: solid;
     outline-color: #61ba15;
-  }  
+  }
   .main-creatives-rejected {
     //border: 4px solid #e93f33;
     outline-style: solid;
     outline-color: #e93f33;
   }
-  .main-creatives-live{
+  .main-creatives-live {
     //border: 4px solid #5acffb;
     outline-style: solid;
     outline-color: #5acffb;
@@ -177,8 +177,8 @@
     position: absolute;
     z-index: 2;
     line-height: 1.6;
-    color: #FFFFFF;
-  }  
+    color: #ffffff;
+  }
   .creatives-scheduled {
     background: #feed32;
     padding: 1px 17px 1px 10px;
@@ -186,7 +186,7 @@
     position: absolute;
     z-index: 2;
     line-height: 1.6;
-  }  
+  }
   .creatives-rejected {
     background: #e93f33;
     padding: 1px 17px 1px 10px;
@@ -194,34 +194,33 @@
     position: absolute;
     z-index: 2;
     line-height: 1.6;
-    color:#FFFFFF
+    color: #ffffff;
   }
-  .creatives-live{
-    background:#5acffb;
+  .creatives-live {
+    background: #5acffb;
     padding: 1px 17px 1px 10px;
     border-radius: 0px 12px 12px 0px;
     position: absolute;
     z-index: 2;
     line-height: 1.6;
-    color: #FFFFFF;
+    color: #ffffff;
   }
   .file-influencer-row {
     display: flex;
     align-items: start;
     flex-wrap: wrap;
   }
-  
 }
-.project-one-card{
-  .project-card-status{
-    display:block
+.project-one-card {
+  .project-card-status {
+    display: block;
   }
-  .influncer-file-subcontainer{
+  .influncer-file-subcontainer {
     position: relative;
   }
   .creative-footer {
     position: relative;
-    .absolute-box{
+    .absolute-box {
       position: absolute;
       width: 100%;
       display: flex;
@@ -231,27 +230,29 @@
       padding-left: 8px;
       padding-right: 8px;
     }
-    color: #FFFFFF;
-    .date-text{
-      color: #FFFFFF;
+    color: #ffffff;
+    .date-text {
+      color: #ffffff;
     }
   }
-  .project-card-status{
+  .project-card-status {
     text-transform: capitalize;
   }
-  .img-box-download{
+  .img-box-download {
     min-height: 195px;
     height: 195px;
   }
-  .icons-custom{
+  .icons-custom {
     background: none;
-    
   }
-  .btn-outline{
-    background-color: #FFFFFF;
+  .btn-outline {
+    background-color: #ffffff;
     border: 1.5px solid #0078b3;
     color: #0078b3;
     padding: 2px 10px;
-    margin-left:0;
+    margin-left: 0;
+  }
+  .pencil-right {
+    float: right;
   }
 }

@@ -48,34 +48,43 @@ const InfluencerPage = ({ creatives, projects, dispatch }) => {
         <SideNav />
 
         <div className="content-wrapper">
-          <Link to={routeConstant.allCreativesListsBrand}>
-            <p className="cursor-pointer back-to-campaigns">
-              View all creatives for all campaigns
-            </p>
-          </Link>
+          <div className="content-view-all-right">
+            <Link to={routeConstant.allCreativesListsInfluencer}>
+              <span className="cursor-pointer back-to-campaigns">
+                View all creatives for all campaigns
+              </span>
+            </Link>
+          </div>
           <div className="tabs-container">
             <div>
               <div className={`brand-list brand-list-card`}>
-                <div className="brand-list-img">
-                  <img src={projects.coverPictureUrl} alt="" />
-                </div>
-                <div className={`brand-content`}>
-                  <div className="brand-list-content">
-                    <span className="list-title">{projects.title}</span>
+                {projects.coverPictureUrl && (
+                  <div className="brand-list-img">
+                    <img src={projects.coverPictureUrl} alt="" />
                   </div>
+                )}
+
+                <div className={`brand-content`}>
+                  {projects.title && (
+                    <div className="brand-list-content">
+                      <span className="list-title">{projects.title}</span>
+                    </div>
+                  )}
                 </div>
+
                 {
                   <div className="page-header-right-items">
                     <div>
                       {creatives.length !== 0 && (
                         <InfluencerUploadModal
                           btnText={"Upload"}
-                          style={`btn btn-outline-primary`}
+                          style={`btn btn-outline-primary cursor-pointer`}
                           creativeUploads
                           project={projects}
                           creatives={creatives[0]?.creatives}
                           disablePreviousVersionUpload={false}
                           tabType={"campaign"}
+                          creativeList={true}
                         />
                       )}
                       {/* <button className="btn-submit btn-outline">Upload</button> */}
