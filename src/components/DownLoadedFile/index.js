@@ -63,14 +63,16 @@ const DownLoadedFile = ({
                 onError={() => {
                   setImageUrl(
                     `${process.env.REACT_APP_MEDIA_ORIGINAL_URL}/${
-                      media?.slug || "default"
+                      media[creative.latestVersion - 1]?.slug || "default"
                     }`
                   );
                 }}
               />
             ) : (
               <VideoPlayer
-                url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${media?.slug}`}
+                url={`${process.env.REACT_APP_VIDEO_BASE_URL}/${
+                  media[creative.latestVersion - 1]?.slug
+                }`}
                 className="full-video"
                 controls={false}
               />
