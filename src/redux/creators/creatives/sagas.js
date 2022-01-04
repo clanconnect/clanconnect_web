@@ -31,36 +31,6 @@ export function* fetchById({ payload }) {
     console.log(err);
   }
 }
-//fetchById
-export function* addAndFetchById({
-  payload: { body, path, query },
-  onSuccess,
-  selectedStatus,
-}) {
-  yield call(CreativeService.addNew, { body, path, query });
-  if (onSuccess) yield onSuccess();
-
-  // if (selectedStatus) {
-  //   yield put({
-  //     type: ACTIONS.GET_BY_ID,
-  //     payload: { query: { status: selectedStatus } },
-  //   });
-  // }
-
-  let byIdPayload = {
-    query: { status: null, include: "project" },
-    id: body.projectId,
-  };
-  console.log(byIdPayload, " byIdPayload");
-  const response = yield call(CreativeService.byProjectId, byIdPayload);
-
-  if (response.success) {
-    yield put({
-      type: ACTIONS.SET_STATE,
-      payload: { list: response.data },
-    });
-  }
-}
 
 export function* add({
   payload: { body, path, query },
@@ -76,39 +46,8 @@ export function* add({
     });
   }
 }
-export function* updateAndGetById({
-  payload: { body, path, query, projectId },
-  onSuccess,
-}) {
-  const currentStatus = yield select((state) => {
-    return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
-  });
 
-  yield call(CreativeService.update, { body, path, query });
-  if (onSuccess) yield onSuccess();
-
-  let byIdPayload = {
-    query: { status: null, include: "project" },
-    id: projectId,
-  };
-  const response = yield call(CreativeService.byProjectId, byIdPayload);
-
-  if (response.success) {
-    yield put({
-      type: ACTIONS.SET_STATE,
-      payload: { list: response.data },
-    });
-  }
-  // yield put({
-  //   type: ACTIONS.GET_INDEX,
-  //   payload: { query: { status: currentStatus } },
-  // });
-}
-
-export function* update({
-  payload: { body, path, query, projectId },
-  onSuccess,
-}) {
+export function* update({ payload: { body, path, query }, onSuccess }) {
   const currentStatus = yield select((state) => {
     return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
   });
@@ -185,7 +124,5 @@ export default function* creatorCreativesSagas() {
     takeLatest(ACTIONS.GET_ALL, fetchAll),
     takeLatest(ACTIONS.BULK_DELETE, bulkDelete),
     takeLatest(ACTIONS.GET_BY_ID, fetchById),
-    takeLatest(ACTIONS.ADD_GET_BY_ID, addAndFetchById),
-    takeLatest(ACTIONS.UPDATE_GET_BY_ID, updateAndGetById),
   ]);
 }

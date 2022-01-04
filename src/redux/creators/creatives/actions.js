@@ -7,6 +7,4 @@ export const ACTIONS = {
   GET_ALL: "influencers/creators/GET_ALL",
   BULK_DELETE: "influencers/creators/BULK_DELETE",
   GET_BY_ID: "influencers/creators/GET_BY_ID",
-  ADD_GET_BY_ID: "influencers/creators/ADD",
-  UPDATE_GET_BY_ID: "influencers/creators/UPDATE",
 };
