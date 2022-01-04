@@ -178,23 +178,6 @@
     align-items: center;
     justify-content: center;
   }
-  .slider-left-icon {
-    position: absolute;
-    z-index: 1;
-    top: 20%;
-    left: 30px;
-    font-size: 25px;
-    filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7));
-  }
-
-  .slider-right-icon {
-    position: absolute;
-    z-index: 1;
-    top: 20%;
-    right: 30px;
-    font-size: 25px;
-    filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7));
-  }
 }
 .creative-page-rs-title {
   border-bottom: 1px solid #ceb8b830;
