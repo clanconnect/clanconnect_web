@@ -134,8 +134,9 @@ const UploadDocumentModal = ({ src, creative, project = {} }) => {
         {showFile ? (
           <div className="conatiner-file">
             {files &&
-              files.map((file) => (
+              files.map((file, index) => (
                 <UploadAttchmentFile
+                  key={index}
                   percenter={uploadProgress[file.uid]}
                   fileName={file.originFileObj.name}
                   icon={pngImg}
