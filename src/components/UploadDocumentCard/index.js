@@ -45,7 +45,7 @@ const UploadDocumentCard = ({
   }
 
   return (
-    <Dragger {...props}>
+    <Dragger key={props.name} {...props}>
       <p className="ant-upload-drag-icon">
         {/* <InboxOutlined /> */}
         <CloudArrowUp size="24" style={{ verticalAlign: "middle" }} />
