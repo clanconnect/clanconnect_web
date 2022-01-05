@@ -71,14 +71,18 @@ const UploadAttchmentFile = ({
 }) => {
   return (
     <>
-      <div className="file-card cursor-pointer" onClick={handleClick}>
+      <div
+        key={fileName}
+        className="file-card cursor-pointer"
+        onClick={handleClick}
+      >
         <div className="flex">
           {mimeType.includes("image") ? (
-            <img src={icon} alt="" width="25" className="mr-15" />
+            <img key={icon} src={icon} alt="" width="25" className="mr-15" />
           ) : (
             MediaIcon(mimeType)
           )}
-          <p className="file-title">{fileName}</p>
+          <p className="file-title">{icon}</p>
         </div>
         {/* {uploadedFile ? null : (
           <div style={{ width: "35%" }} className="progress-custom">

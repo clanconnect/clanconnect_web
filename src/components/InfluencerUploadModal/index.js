@@ -139,16 +139,18 @@ const UploadNewCreatives = ({
       {files.length > 0 && (
         <div className="comment-btns flex justify-between ">
           <div className="">
-            <button
-              className="btn-submit"
-              onClick={handleUpload}
-              disabled={uploadingFile}
-            >
-              {fileUploadStage === 0 &&
-                (uploadingFile ? "Uploading..." : "Upload")}
-              {fileUploadStage === 1 &&
-                (uploadingFile ? "Sending...." : "Send")}
-            </button>
+            {fileUploadStage !== 2 && (
+              <button
+                className="btn-submit"
+                onClick={handleUpload}
+                disabled={uploadingFile}
+              >
+                {fileUploadStage === 0 &&
+                  (uploadingFile ? "Uploading..." : "Upload")}
+                {fileUploadStage === 1 &&
+                  (uploadingFile ? "Sending...." : "Send")}
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -391,12 +393,17 @@ const InfluencerUploadModal = ({
               subTitle="Would you like to upload more creatives?"
               extra={[
                 <button
+                  key={1}
                   className="btn-submit"
                   onClick={() => handleUploadNewFile("")}
                 >
                   Yes, Upload More{" "}
                 </button>,
-                <button className="btn-cancel" onClick={() => onCancel()}>
+                <button
+                  key={2}
+                  className="btn-cancel"
+                  onClick={() => onCancel()}
+                >
                   No, Thanks!
                 </button>,
               ]}

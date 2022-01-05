@@ -33,7 +33,7 @@ export function* fetchById({ payload }) {
 }
 //fetchById
 export function* addAndFetchById({
-  payload: { body, path, query },
+  payload: { body, path, query = {} },
   onSuccess,
   selectedStatus,
 }) {
@@ -69,12 +69,12 @@ export function* add({
 }) {
   yield call(CreativeService.addNew, { body, path, query });
   if (onSuccess) yield onSuccess();
-  if (selectedStatus) {
-    yield put({
-      type: ACTIONS.GET_INDEX,
-      payload: { query: { status: selectedStatus } },
-    });
-  }
+  // if (selectedStatus) {
+  //   yield put({
+  //     type: ACTIONS.GET_INDEX,
+  //     payload: { query: { status: selectedStatus } },
+  //   });
+  // }
 }
 export function* updateAndGetById({
   payload: { body, path, query, projectId },
@@ -85,6 +85,7 @@ export function* updateAndGetById({
   });
 
   yield call(CreativeService.update, { body, path, query });
+
   if (onSuccess) yield onSuccess();
 
   let byIdPayload = {
