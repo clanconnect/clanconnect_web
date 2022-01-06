@@ -6,7 +6,7 @@ import "./styles.scss";
 import { ACTIONS as PROJECT_ACTIONS } from "redux/creators/projects/actions";
 import { ACTIONS as CREATIVE_ACTIONS } from "redux/creators/creatives/actions";
 import { connect, useDispatch } from "react-redux";
-import { Tabs, Empty, Collapse, Row, Col, Drawer } from "antd";
+import { Tabs, Empty, Collapse, Row, Col, Drawer, Alert } from "antd";
 import InfluencerDrawer from "components/InfluencerDrawer";
 import InfluencerCreativeModal from "components/InfluencerCreativeModal";
 
@@ -286,7 +286,9 @@ const CreativePage = ({
                                       <div>
                                         <span>Status: </span>
                                         <button className="bg-green-outline">
-                                          Approved
+                                          {creative?.status === "accepted"
+                                            ? "Approved"
+                                            : creative?.status}
                                         </button>
                                       </div>
                                     ) : (
@@ -475,6 +477,17 @@ const CreativePage = ({
                             )}
                           </Col>
                           <Col className="p-2" xs={24} md={12}>
+                            {creative.media[0].status === "pending" && (
+                              <div className="p-2">
+                                <Alert
+                                  description={
+                                    "Only approved creatives can be scheduled."
+                                  }
+                                  type="warning"
+                                  showIcon
+                                />
+                              </div>
+                            )}
                             <div className="creative-page-rs-title">
                               Schedule your post
                             </div>

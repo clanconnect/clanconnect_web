@@ -23,7 +23,7 @@ const InstagramUploadForm = ({
   creative,
   setIsIgFormDescriptionVisible,
   setIsIgScheduleExistForCreative,
-  creativepage=false
+  creativepage = false,
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -85,6 +85,10 @@ const InstagramUploadForm = ({
   );
 
   useEffect(() => {
+    console.log("aaaa====####=====***", creative?.media);
+    if (creative?.media[0].status !== "accepted") {
+      setSubmitBtnDisabled(true);
+    }
     const image = creative?.media.find(
       (o) => o.mimeType.includes("image") && o.status === "accepted"
     );
@@ -335,7 +339,7 @@ const InstagramUploadForm = ({
               htmlType="submit"
               disabled={submitBtnDisabled}
             >
-              {creativepage?"Submit & Schedule":"Submit"}
+              {creativepage ? "Submit & Schedule" : "Submit"}
             </Button>
           </Form.Item>
         </Form>

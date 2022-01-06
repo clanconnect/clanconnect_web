@@ -31,7 +31,7 @@ const YoutubeUploadForm = ({
   closeDrawer,
   setIsYtFormDescriptionVisible,
   setIsYtScheduleExistForCreative,
-  creativepage=false
+  creativepage = false,
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -70,6 +70,7 @@ const YoutubeUploadForm = ({
   }, [user.youtube_auth]);
 
   useEffect(() => {
+    console.log("creative", creative);
     const video = creative?.media.find(
       (o) => o.mimeType.includes("video") && o.status === "accepted"
     );
@@ -473,51 +474,53 @@ const YoutubeUploadForm = ({
               disabled={submitBtnDisabled}
             />
           </Form.Item>
-            <div className={`${creativepage?"show-row":""}`}>
-          <Form.Item
-            disabled={submitBtnDisabled}
-            name="defaultLanguage"
-            label="Default Language"
-            rules={[
-              { required: true, message: "Please enter default lanuage" },
-            ]}
-          >
-            <Select disabled={submitBtnDisabled}>
-              {languages.map((o, idx) => (
-                <Option key={idx} value={o.value}>
-                  {o.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+          <div className={`${creativepage ? "show-row" : ""}`}>
+            <Form.Item
+              disabled={submitBtnDisabled}
+              name="defaultLanguage"
+              label="Default Language"
+              rules={[
+                { required: true, message: "Please enter default lanuage" },
+              ]}
+            >
+              <Select disabled={submitBtnDisabled}>
+                {languages.map((o, idx) => (
+                  <Option key={idx} value={o.value}>
+                    {o.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-          <Form.Item
-            disabled={submitBtnDisabled}
-            name="license"
-            label="License Information"
-            rules={[
-              { required: true, message: "Please enter license information" },
-            ]}
-          >
-            <Select disabled={submitBtnDisabled}>
-              <Option value="youtube">YouTube</Option>
-              <Option value="creativeCommons">Creative Commons</Option>
-            </Select>
-          </Form.Item>
+            <Form.Item
+              disabled={submitBtnDisabled}
+              name="license"
+              label="License Information"
+              rules={[
+                { required: true, message: "Please enter license information" },
+              ]}
+            >
+              <Select disabled={submitBtnDisabled}>
+                <Option value="youtube">YouTube</Option>
+                <Option value="creativeCommons">Creative Commons</Option>
+              </Select>
+            </Form.Item>
 
-          <Form.Item
-            disabled={submitBtnDisabled}
-            name="privacyStatus"
-            label="Privacy Status"
-            rules={[{ required: true, message: "Please enter Privacy Status" }]}
-          >
-            <Select disabled={submitBtnDisabled}>
-              <Option value="public">Public</Option>
-              <Option value="private">Private</Option>
-              <Option value="unlisted">Unlisted</Option>
-            </Select>
-          </Form.Item>
-            </div>
+            <Form.Item
+              disabled={submitBtnDisabled}
+              name="privacyStatus"
+              label="Privacy Status"
+              rules={[
+                { required: true, message: "Please enter Privacy Status" },
+              ]}
+            >
+              <Select disabled={submitBtnDisabled}>
+                <Option value="public">Public</Option>
+                <Option value="private">Private</Option>
+                <Option value="unlisted">Unlisted</Option>
+              </Select>
+            </Form.Item>
+          </div>
           <Form.Item
             disabled={submitBtnDisabled}
             name="publicStatsVisible"
@@ -552,7 +555,7 @@ const YoutubeUploadForm = ({
               htmlType="submit"
               disabled={submitBtnDisabled}
             >
-              {creativepage ? 'Submit & Schedule' : 'Submit'}
+              {creativepage ? "Submit & Schedule" : "Submit"}
             </Button>
           </Form.Item>
         </Form>
