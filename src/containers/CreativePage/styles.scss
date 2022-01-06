@@ -148,7 +148,7 @@
     margin-right: auto;
     video {
       width: inherit !important;
-      height: initial !important;
+      max-height: 295px !important;
     }
   }
   img {

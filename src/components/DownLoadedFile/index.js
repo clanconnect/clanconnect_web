@@ -45,7 +45,9 @@ const DownLoadedFile = ({
       <span
         className={`project-card-status creatives-${projectCard["creative-status"]}`}
       >
-        {projectCard["creative-status"]}
+        {projectCard["creative-status"] === "accepted"
+          ? "Approved"
+          : projectCard["creative-status"]}
       </span>
       <div className="influncer-file-subcontainer">
         <div
@@ -260,12 +262,14 @@ const DownLoadedFile = ({
             )}
           </div>
         ) : (
-          <button
-            className="btn-submit btn-outline"
-            onClick={onShowCreativeView}
-          >
-            Schedule
-          </button>
+          projectCard["creative-status"] === "accepted" && (
+            <button
+              className="btn-submit btn-outline"
+              onClick={onShowCreativeView}
+            >
+              Schedule
+            </button>
+          )
         )}
       </div>
     </div>

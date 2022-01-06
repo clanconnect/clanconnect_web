@@ -24,7 +24,7 @@ const InstagramFormDescription = ({
   closeDrawer,
   instagramData,
   creative,
-  creativepage = false
+  creativepage = false,
 }) => {
   const dispatch = useDispatch();
 
@@ -253,7 +253,7 @@ const InstagramFormDescription = ({
             onClick={handleShowCommentBlock}
             className="mt-30 mr-3"
           >
-            {creativepage?"Submit & Schedule":"Add Comments"}
+            {creativepage ? "Submit & Schedule" : "Add Comments"}
           </Button>
         </Col>
       </Row>
