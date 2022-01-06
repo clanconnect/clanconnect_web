@@ -100,7 +100,11 @@ export function* updateAndGetById({
     });
   }
 }
-export function* update({ payload: { body, path, query }, onSuccess }) {
+
+export function* update({
+  payload: { body, path, query, projectId },
+  onSuccess,
+}) {
   const currentStatus = yield select((state) => {
     return state.CreatorCreatives.list[0]?.creatives[0]?.status || "pending";
   });
@@ -177,5 +181,7 @@ export default function* creatorCreativesSagas() {
     takeLatest(ACTIONS.GET_ALL, fetchAll),
     takeLatest(ACTIONS.BULK_DELETE, bulkDelete),
     takeLatest(ACTIONS.GET_BY_ID, fetchById),
+    takeLatest(ACTIONS.ADD_GET_BY_ID, addAndFetchById),
+    takeLatest(ACTIONS.UPDATE_GET_BY_ID, updateAndGetById),
   ]);
 }

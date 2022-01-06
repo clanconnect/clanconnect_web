@@ -264,8 +264,23 @@ const InfluencerUploadModal = ({
         const payload = {
           body: { mediaId: media.server.id },
           path: { id: selectedCreative.id },
+          projectId: project.id,
         };
-        dispatch({ type: ACTIONS.UPDATE, payload, onSuccess, selectedStatus });
+        if (creativeList) {
+          dispatch({
+            type: ACTIONS.UPDATE_GET_BY_ID,
+            payload,
+            onSuccess,
+            selectedStatus,
+          });
+        } else {
+          dispatch({
+            type: ACTIONS.UPDATE,
+            payload,
+            onSuccess,
+            selectedStatus,
+          });
+        }
         return;
       }
       const payload = {
@@ -273,7 +288,7 @@ const InfluencerUploadModal = ({
       };
       if (creativeList) {
         dispatch({
-          type: ACTIONS.GET_BY_ID,
+          type: ACTIONS.ADD_GET_BY_ID,
           payload,
           onSuccess,
           selectedStatus,
