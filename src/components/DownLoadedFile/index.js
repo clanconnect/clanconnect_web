@@ -22,7 +22,7 @@ const DownLoadedFile = ({
   project,
   projectCard = { status: false },
 }) => {
-  const media = creative.media ? creative.media[0] : {};
+  const media = creative.media ? creative.media[creative.media.length - 1] : {};
   const [imageUrl, setImageUrl] = useState(
     `${process.env.REACT_APP_IMAGE_BASE_URL}/${media?.slug || "default"}`
   );

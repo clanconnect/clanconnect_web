@@ -49,7 +49,6 @@ const CreativePage = ({
   const [activeTab, setActiveTab] = useState("Creatives");
   const { id, creativeId } = useParams();
   let history = useHistory();
-
   const [isYtTabDisabled, setIsYtTabDisabled] = useState(true);
   const [isIgTabDisabled, setIsIgTabDisabled] = useState(true);
   const { TabPane } = Tabs;
@@ -246,6 +245,7 @@ const CreativePage = ({
   };
   return (
     <div className="main-wrapper-influncer">
+      {console.log(user, " checking user")}
       <Header />
       <div className="flex top-space-commom">
         <SideNav />
@@ -282,7 +282,7 @@ const CreativePage = ({
                                 <div className="creative-modal-header flex justify-between">
                                   <div className="">
                                     {/* {influencerStatus ? ( */}
-                                    {creative?.status === "accepted" ? (
+                                    {user?.user_type === "influencer" ? (
                                       <div>
                                         <span>Status: </span>
                                         <button className="bg-green-outline">
