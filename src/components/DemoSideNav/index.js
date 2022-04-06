@@ -4,6 +4,7 @@ import { ACTIONS } from "../../redux/users/actions";
 import { Menu, Dropdown } from "antd";
 import { menu } from "../../common/dataManager";
 
+
 import "./styles.scss";
 
 //bootstrap icons
@@ -68,7 +69,7 @@ const DemoSideNav = ({ user }) => {
                 href={`/agency/projects?brand_account_id=${user?.current_selected_brand}`}
                 className="link-item"
               >
-                <Icon.Grid3x3Gap size={20} />
+                <Icon.Folder2Open size={20} />
                 Campaigns
               </a>
             </li>
@@ -99,8 +100,14 @@ const DemoSideNav = ({ user }) => {
         <div className="right-menu">
           <ul>
             <li className="link-li">
+              <a href="/home-brand" className="link-item">
+                <Icon.Search size={20} />
+                Search Influencer
+              </a>
+            </li>
+            <li className="link-li">
               <a href="/projects" className="link-item">
-                <Icon.Grid3x3Gap size={20} />
+                <Icon.Folder2Open size={20} />
                 Campaigns
               </a>
             </li>
