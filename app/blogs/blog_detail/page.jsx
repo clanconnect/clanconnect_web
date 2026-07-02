@@ -1,50 +1,27 @@
-import { redirect } from 'next/navigation';
-import BlogsDetailContainer from '@/components/pages/BlogsDetail/Container';
-import { blogsData } from '@/data/data';
+'use client';
+import { Suspense, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-const findBlogData = (blogId) => blogsData?.find((b) => Number(blogId) === b.id);
+// Compatibility stub: the blog detail page moved from the query-string URL
+// (/blogs/blog_detail?blogId=1) to a static path (/blogs/blog_detail/1). Static
+// export cannot do server redirects, so this client stub forwards old/indexed
+// links to the new path.
+function BlogDetailRedirect() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-export async function generateMetadata({ searchParams }) {
-  const params = await searchParams;
-  const blogData = findBlogData(params.blogId);
-  if (!blogData) {
-    return { title: 'ClanConnect - Blogs' };
-  }
+  useEffect(() => {
+    const blogId = searchParams.get('blogId');
+    router.replace(blogId ? `/blogs/blog_detail/${blogId}` : '/blogs');
+  }, [router, searchParams]);
 
-  const canonicalUrl = `https://www.clanconnect.ai/blogs/blog_detail?blogId=${blogData.id}`;
-  const title = `ClanConnect - ${blogData.newsTitle}`;
-  const description =
-    blogData.newsDescription ||
-    'Clan Connect - The Most Democratic Influencer Marketing Platform of the World. Collaborate with social media influencers.';
-
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: blogData.newsTitle || 'ClanConnect - Blogs',
-      description,
-      url: canonicalUrl,
-      type: 'website',
-      images: [
-        {
-          url:
-            blogData.newsImage ||
-            'https://clanconnect.s3.ap-south-1.amazonaws.com/static_images/web-clanconnect/blog.jpg',
-          width: 1200,
-          height: 627,
-        },
-      ],
-    },
-  };
+  return null;
 }
 
-export default async function BlogDetailPage({ searchParams }) {
-  const params = await searchParams;
-  const blogData = findBlogData(params.blogId);
-  if (!blogData) redirect('/blogs');
-
-  return <BlogsDetailContainer blogData={blogData} />;
+export default function BlogDetailRedirectPage() {
+  return (
+    <Suspense fallback={null}>
+      <BlogDetailRedirect />
+    </Suspense>
+  );
 }

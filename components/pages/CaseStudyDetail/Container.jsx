@@ -1,5 +1,5 @@
 'use client';
-import {Link, useParams, useLocation, useSearchParams} from '@/lib/router';
+import {Link} from '@/lib/router';
 const emcure = '/assets/images/case-studies/2024/logo/emcure.png';
 
 const caseStudyDetailemcure1 = '/assets/images/case-studies/2024/case-study-detail/emcure/image1.png';
@@ -23,15 +23,15 @@ const baseURL = BASE_URL_WEB;
 const CaseStudiesDetailContainer = (props) => {
   const [prevPosts, setPrevPosts] = useState('')
   const [nextPosts, setNextPosts] = useState('')
-  const location = useLocation()
   const [loading, setLoading] = useState(false);
-  const params = new URLSearchParams(location.search);
-  const value = params.get('case_study_detail_id');
+  // The current case study id now comes from the route (passed in as a prop by
+  // the [case_study_detail_id] page) instead of a query string.
+  const value = props.detailData?.id;
   const previousPostId = Number(value) - 1;
   const nextPostId = Number(value) + 1;
   const [copySuccess, setCopySuccess] = useState('');
 
-  const shareUrl = `${baseURL}/case_studies/case_study_detail?case_study_detail_id=${value}`
+  const shareUrl = `${baseURL}/case_studies/case_study_detail/${value}`
   // const prev = () => {
   //   // Find the previous post
   //   const previousPost = caseStudyDetailData.find(post => post.id === previousPostId.toString());
@@ -348,9 +348,10 @@ useEffect(() => {
             </div>
             <div className="page-case-study-desc-right">
               {props.detailData.brandbox
-                ?.map((x, index) => (
+                ?.filter(Boolean)
+                .map((x, index) => (
                   <Fragment key={index}>
-                    {x.brandBoxCount && x.brandBoxCount ? (
+                    {x.brandBoxCount ? (
                       <div className="case-study-stats">
                         <strong>{x.brandBoxName}</strong>
                         <span className="count">
@@ -453,7 +454,7 @@ useEffect(() => {
       <div className="sec-case-study-prev-next">
         {prevPosts && (
           <Link
-            to={`${baseURL}/case_studies/case_study_detail?case_study_detail_id=${prevPosts.id}`}
+            to={`${baseURL}/case_studies/case_study_detail/${prevPosts.id}`}
             className={`case-study-prev-next-btn ${
               loading ? "text-underline-none" : ""
             }`}
@@ -480,7 +481,7 @@ useEffect(() => {
         )}
         {nextPosts && (
           <Link
-            to={`${baseURL}/case_studies/case_study_detail?case_study_detail_id=${nextPosts.id}`}
+            to={`${baseURL}/case_studies/case_study_detail/${nextPosts.id}`}
             className={`case-study-prev-next-btn ${
               loading ? "text-underline-none" : ""
             }`}

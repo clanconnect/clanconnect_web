@@ -1,51 +1,27 @@
-import { redirect } from 'next/navigation';
-import CaseStudiesDetailContainer from '@/components/pages/CaseStudyDetail/Container';
-import { caseStudyDetailData } from '@/data/data';
+'use client';
+import { Suspense, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-const findDetailData = (caseStudyDetailId) =>
-  caseStudyDetailData?.find((b) => caseStudyDetailId === b.id);
+// Compatibility stub: the case study detail page moved from the query-string URL
+// (/case_studies/case_study_detail?case_study_detail_id=49) to a static path
+// (/case_studies/case_study_detail/49). Static export cannot do server
+// redirects, so this client stub forwards old/indexed links to the new path.
+function CaseStudyDetailRedirect() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-export async function generateMetadata({ searchParams }) {
-  const params = await searchParams;
-  const detailData = findDetailData(params.case_study_detail_id);
-  if (!detailData) {
-    return { title: 'Influencer Marketing Platform for company & agency | ClanConnect - Case Studies' };
-  }
+  useEffect(() => {
+    const id = searchParams.get('case_study_detail_id');
+    router.replace(id ? `/case_studies/case_study_detail/${id}` : '/case_studies');
+  }, [router, searchParams]);
 
-  const canonicalUrl = `https://www.clanconnect.ai/case_studies/case_study_detail?case_study_detail_id=${detailData?.caseStudyId}`;
-  const title = `Influencer Marketing Platform for company & agency | ClanConnect - ${detailData.brandName}`;
-  const description =
-    detailData.differentDescription || `Check out our case study on ${detailData.brandName}`;
-
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title,
-      description,
-      url: canonicalUrl,
-      type: 'website',
-      images: detailData.brandPost?.[0]?.brandPostImg
-        ? [
-            {
-              url: detailData.brandPost[0].brandPostImg,
-              width: 1200,
-              height: 627,
-              alt: detailData.brandName,
-            },
-          ]
-        : undefined,
-    },
-  };
+  return null;
 }
 
-export default async function CaseStudyDetailPage({ searchParams }) {
-  const params = await searchParams;
-  const detailData = findDetailData(params.case_study_detail_id);
-  if (!detailData) redirect('/case_studies');
-
-  return <CaseStudiesDetailContainer detailData={detailData} />;
+export default function CaseStudyDetailRedirectPage() {
+  return (
+    <Suspense fallback={null}>
+      <CaseStudyDetailRedirect />
+    </Suspense>
+  );
 }

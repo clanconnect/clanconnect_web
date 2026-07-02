@@ -3,6 +3,9 @@ import { blogsData, caseStudyDetailData } from "@/data/data";
 
 const BASE_URL = "https://www.clanconnect.ai";
 
+// Emit sitemap.xml as a static file at build time (required by output: export).
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
@@ -37,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const blogRoutes: MetadataRoute.Sitemap = (blogsData || []).map((blog: any) => ({
-    url: `${BASE_URL}/blogs/blog_detail?blogId=${blog.id}`,
+    url: `${BASE_URL}/blogs/blog_detail/${blog.id}`,
     lastModified,
     changeFrequency: "monthly",
     priority: 0.6,
@@ -45,7 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const caseStudyRoutes: MetadataRoute.Sitemap = (caseStudyDetailData || []).map(
     (caseStudy: any) => ({
-      url: `${BASE_URL}/case_studies/case_study_detail?case_study_detail_id=${caseStudy.id}`,
+      url: `${BASE_URL}/case_studies/case_study_detail/${caseStudy.id}`,
       lastModified,
       changeFrequency: "monthly",
       priority: 0.6,

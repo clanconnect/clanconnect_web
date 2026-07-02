@@ -1295,7 +1295,7 @@ const OurBusinessModalBrands = () => {
                                 <li>
                                   <Link
                                     target="_blank"
-                                    to={`/case_studies/case_study_detail?case_study_detail_id=${caseStudy.id}`}
+                                    to={`/case_studies/case_study_detail/${caseStudy.id}`}
                                   >
                                     <div className="case-study-logo-container">
                                       {/* <img className='case-study-logo' src={caseStudy.logoImg} alt={caseStudy.title} /> */}

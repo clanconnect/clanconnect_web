@@ -12,7 +12,7 @@ const BlogsSection = () => {
             return (
               <div key={bl.id} className='col-sm-6 col-md-4'>
                 <Link
-                  to={`/blogs/blog_detail?blogId=${bl.id}`}
+                  to={`/blogs/blog_detail/${bl.id}`}
                   className='card'
                 >
                   <span className='card-img'>

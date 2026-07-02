@@ -6061,7 +6061,6 @@ export const caseStudyDetailData = [
         brandBoxName: "Views",
         brandBoxCount: "250 K+",
       },
-      ,
       {
         brandbox_id: "4",
         brandBoxImpression: "bi-thumb",
