@@ -1,0 +1,83 @@
+
+
+$font-size-body:1rem !default;
+$font-family-body:'Open Sans', sans-serif !default;
+$font-family-heading: 'Poppins', sans-serif !default;
+$font-size-h1:3rem !default;
+$font-size-h2:2rem !default;
+$border-radius__10:10px !default;
+// Width
+$width-full: 100% !default;
+// Container
+$container: 1280px !default;
+
+// Font Weight
+$font-weight-semibold:600 !default;
+
+// Font size
+$font-size-body: 1rem !default;
+$font-size-sml:($font-size-body - .125rem) !default;
+$font-size-xsml:($font-size-sml - .125rem) !default;
+$font-size-sidebar-icon: 1.5rem !default;
+// Font size Heading
+$font-size-h1:2rem !default;
+$font-size-h3:1.5rem !default;
+$font-size-h4:1.35rem !default;
+$font-size-h4-mob:1.125rem !default;
+$font-size-h6:1.125rem !default;
+// Font family
+$font-family-body: 'Open Sans',
+sans-serif !default;
+$font-family-logo: 'Shadows Into Light',
+cursive!default;
+$font-family-heading: 'Billy Ohio' !default;
+// Colors
+$color-body:#242424 !default;
+$color-primary:#00aae5 !default;
+$color-offwhite:#f2f2f2 !default;
+$color-white:#ffffff !default;
+$color-black-lt:#2d2d2d !default;
+$color-black-lt1:#eee !default;
+$color-black-lt2:#787878!default;
+$color-hamburger:#5d5d5d !default;
+$color-black-2e:#2e2e2e!default;
+$color-black-4e:#4e4e4e !default;
+$color-black:#000 !default;
+
+$color-secondary:#eb008b!default;
+$color-red:#f00 !default;
+$color-gray-dk:#a7a7a7!default;
+$color-gray:#d8d8d8!default;
+$color-gray-lt:#979797!default;
+$color-divider:#979797!default;
+$color-form-border:#c8c8c8!default;
+$color-orange: #f56500!default;
+$color-green-lt:#f4fcf8!default;
+$color-green:#42CB86!default;
+$color-green-dk:rgb(61, 193, 127) !default;
+$color-sidebar-hover:#424242!default;
+$color-sidebar-active:#1CFF8E !default;
+// Spacing
+$spacing-base:15px !default;
+$spacing-double:$spacing-base * 2 !default;
+// Box Shadow
+$box-shadow-default:0px 2px 15px rgba(0, 0, 0, 0.1);
+// Border Radius
+$border-radius-default:24px !default;
+// Font Weight
+$font-weight-bold:700 !default;
+$font-weight-semibold:600 !default;
+$font-weight-light:300 !default;
+// Z-Index
+$zindex-sticky:1020 !default;
+// Breakpoints
+$breakpoints: ( xs: 576px, sm: 768px, md: 992px, lg: 1200px);
+
+$color-body: $color-primary !default;
+$color-hover: #0F0F6c;
+$color-cancel: #f00 !default;
+$color-error: #d32f2f !default;
+$color-black-light: #5d5d5d !default;
+
+$color-border-default: $color-black-light !default;
+$color-border-light: #dee2e6 !default;

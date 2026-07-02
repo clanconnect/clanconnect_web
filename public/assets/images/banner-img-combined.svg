@@ -1,0 +1,50 @@
+<svg width="256" height="275" viewBox="0 0 256 275" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox" id="uj7ek5d0ka">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox" id="ginwqv9gab">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox" id="d2aam9gb1c">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox" id="2hz2d0o6gd">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox" id="vrmczy0tse">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.5%" y="-.4%" width="100.8%" height="100.8%" filterUnits="objectBoundingBox" id="8vfd2rvdff">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.3%" y="-.4%" width="100.8%" height="100.8%" filterUnits="objectBoundingBox" id="dduq1g5yqg">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.3%" y="-.4%" width="100.8%" height="100.8%" filterUnits="objectBoundingBox" id="0jv9x5ahwh">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.6%" y="-.4%" width="100.8%" height="100.8%" filterUnits="objectBoundingBox" id="rdxsp4v5wi">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.3%" y="-.4%" width="100.8%" height="100.8%" filterUnits="objectBoundingBox" id="3x96g3r2jj">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g fill="#E75A94">
+            <path filter="url(#uj7ek5d0ka)" d="m6.092 62.273 116 62.494v-125z" transform="translate(3.908 5.233)"/>
+            <path filter="url(#ginwqv9gab)" d="m.092 198.767 113-62.49-113-62.51z" transform="translate(3.908 5.233)"/>
+            <path filter="url(#d2aam9gb1c)" d="m138.092 122.767 113-61.495-113-61.505z" transform="translate(3.908 5.233)"/>
+            <path filter="url(#2hz2d0o6gd)" d="m10.092 208.272 113 61.495v-123z" transform="translate(3.908 5.233)"/>
+            <path filter="url(#vrmczy0tse)" d="m138.092 269.767 111-61.5-111-61.5z" transform="translate(3.908 5.233)"/>
+        </g>
+        <g stroke="#2264E8" stroke-width=".6">
+            <path filter="url(#8vfd2rvdff)" d="m6.013 62.506 116 62.494V0z" transform="translate(.987 1)"/>
+            <path filter="url(#dduq1g5yqg)" d="m.013 196 113-62.49L.013 71z" transform="translate(.987 1)"/>
+            <path filter="url(#0jv9x5ahwh)" d="m139.013 123 113-61.495L139.013 0z" transform="translate(.987 1)"/>
+            <path filter="url(#rdxsp4v5wi)" d="m9.013 208.505 113 61.495V147z" transform="translate(.987 1)"/>
+            <path filter="url(#3x96g3r2jj)" d="m137.013 270 111-61.5-111-61.5z" transform="translate(.987 1)"/>
+        </g>
+    </g>
+</svg>

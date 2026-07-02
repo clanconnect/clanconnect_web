@@ -1,0 +1,28 @@
+.slick-arrow {
+  width: 30px;
+  height: 30px;
+  font-size: 0;
+  background-color: transparent;
+  border: 2px solid $color-primary;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  color: $color-primary;
+  opacity: 0.6;
+  &:before{
+    content: "\f12c";
+    font-family: "bootstrap-icons";
+    line-height: 1;
+    
+    font-size: 20px;
+    display: block;
+    text-align: center;
+  }
+  &.slick-next:before{
+    content: "\f135";
+  }
+  &:hover {
+    opacity: 1;
+   
+  }
+}

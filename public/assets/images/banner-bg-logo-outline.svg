@@ -1,0 +1,26 @@
+<svg width="1200" height="1288" viewBox="0 0 1200 1288" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter x="-.4%" y="-.3%" width="100.6%" height="100.6%" filterUnits="objectBoundingBox" id="jw6iiuy56a">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.2%" y="-.3%" width="100.6%" height="100.6%" filterUnits="objectBoundingBox" id="m12au1z2wb">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.2%" y="-.3%" width="100.6%" height="100.6%" filterUnits="objectBoundingBox" id="186u0hc84c">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.4%" y="-.3%" width="100.6%" height="100.6%" filterUnits="objectBoundingBox" id="jua9pkyymd">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter x="-.2%" y="-.3%" width="100.6%" height="100.6%" filterUnits="objectBoundingBox" id="wp22f8xb4e">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g stroke="#2264e8" stroke-width="2" fill="none" fill-rule="evenodd">
+        <path filter="url(#jw6iiuy56a)" d="M27 297.53 582 595V0z" transform="matrix(-1 0 0 1 1199 2)"/>
+        <path filter="url(#m12au1z2wb)" d="m0 939 541-297.448L0 344z" transform="matrix(-1 0 0 1 1199 2)"/>
+        <path filter="url(#186u0hc84c)" d="m655 582 541-290.978L655 0z" transform="matrix(-1 0 0 1 1199 2)"/>
+        <path filter="url(#jua9pkyymd)" d="M43 993.022 584 1284V702z" transform="matrix(-1 0 0 1 1199 2)"/>
+        <path filter="url(#wp22f8xb4e)" d="m655 1284 525-291-525-291z" transform="matrix(-1 0 0 1 1199 2)"/>
+    </g>
+</svg>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="43px" height="43px" viewBox="0 0 43 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>A2B58072-8535-4812-AAEE-5656EDC49480</title>
+    <defs>
+        <linearGradient x1="76.6339466%" y1="8.93517761%" x2="19.0323979%" y2="105.23581%" id="linearGradient-1">
+            <stop stop-color="#BC029E" offset="0%"></stop>
+            <stop stop-color="#FF9A00" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="77.5738972%" y1="13.5801734%" x2="20.0269746%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#CC00B3" offset="0%"></stop>
+            <stop stop-color="#FCA502" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="homepage" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Homepage-1" transform="translate(-475.000000, -609.000000)">
+            <g id="Group-2" transform="translate(475.000000, 609.000000)">
+                <path d="M21.5,0 C33.3741221,0 43,9.62587788 43,21.5 C43,24.7737303 42.2661833,27.9471737 40.8734312,30.8333053 C40.7522545,31.1269975 40.6308042,31.3440818 40.5090805,31.4845583 C40.0045295,30.598029 39.6324902,30.226631 38.8337014,29.6206944 C38.0349127,29.0147578 37.6073194,28.9774656 36.9223013,28.7245103 C37.9732746,26.4855612 38.5260116,24.0343484 38.5260116,21.5 C38.5260116,12.0967935 30.9032065,4.47398844 21.5,4.47398844 C12.0967935,4.47398844 4.47398844,12.0967935 4.47398844,21.5 C4.47398844,30.9032065 12.0967935,38.5260116 21.5,38.5260116 C23.8818671,38.5260116 26.1908935,38.0379145 28.3211857,37.1052026 L28.5086861,37.0217518 C29.0262569,38.7528873 29.8447023,40.0037498 30.9640224,40.7743392 C30.7634173,40.8864201 30.5596086,40.9943385 30.3525962,41.0980943 C27.5940025,42.3459282 24.5909987,43 21.5,43 C9.62587788,43 0,33.3741221 0,21.5 C0,9.62587788 9.62587788,0 21.5,0 Z" id="Path" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+                <circle id="Oval" fill="url(#linearGradient-2)" cx="35.1705202" cy="35.4190751" r="5.09537572"></circle>
+                <line x1="35.1705202" y1="32.933526" x2="35.1705202" y2="38.1531792" id="Line" stroke="#FFFFFF" stroke-width="1.4784" stroke-linecap="round"></line>
+                <line x1="35.1705202" y1="32.933526" x2="35.1705202" y2="38.1531792" id="Line-Copy" stroke="#FFFFFF" stroke-width="1.4784" stroke-linecap="round" transform="translate(35.170520, 35.543353) rotate(-90.000000) translate(-35.170520, -35.543353) "></line>
+            </g>
+        </g>
+    </g>
+</svg>

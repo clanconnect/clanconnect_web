@@ -1,0 +1,21 @@
+.subs-plan-sec.main-tab {
+  width: 100%;
+  justify-content:center;
+  /* border-bottom:1px solid #dee2e6 */
+}
+
+#pricingTabContent .subs-sec .container {
+  max-width: 1280px;
+}
+
+#pricingTabContent .subs-title-sec ul li.subs-blank-col {
+  min-height: 190px;
+}
+
+#brand-premium li.plan-title .btn {
+  height: 42px;
+  padding-top: 8px !important;
+}
+#brand-premium li.plan-title .btn {
+  margin-bottom: 15px
+}

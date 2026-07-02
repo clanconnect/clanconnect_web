@@ -1,0 +1,136 @@
+div[data-react-class="ReactFaqPage"] {
+    .title-w-bdr {
+        span {
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+.sec-accordion {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 100px;
+
+    .banner-innerpage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 350px;
+        padding-top: 150px;
+    }
+
+    .banner-content {
+        height: auto;
+    }
+
+    .accordion-body {
+        white-space: pre-line;
+        padding: 1rem 1.25rem 0;
+
+        p {
+            font-size: 16px;
+        }
+
+        ul {
+            padding-left: 15px;
+        }
+    }
+
+
+    .accordion-button {
+        border-radius: 6px;
+        padding: 1rem 1.25rem;
+        width: 100%;
+        text-align: left;
+        position: relative;
+        box-shadow: none;
+        outline: none;
+
+        &:after {
+            background: none;
+            color: #2b2b2b;
+            content: "\F282";
+            font-family: "bootstrap-icons";
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            transform: none;
+        }
+
+        &[aria-expanded="true"] {
+            background-color: #252525;
+            color: #fff;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+
+            &:after {
+                color: #fff;
+                content: "\f286";
+            }
+
+
+        }
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .accordion-item {
+        margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+
+        .accordion-header {
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+
+    }
+
+    &-content {
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+
+            .nav-link {
+                color: #2b2b2b;
+
+                &.active {
+                    color: #fff !important;
+                    background-color: #252525 !important;
+                }
+            }
+        }
+    }
+
+}
+
+
+.sec-accordion .banner-content {
+    color: #2b2b2b;
+
+    h1 {
+        font-weight: 100;
+        font-size: 50px;
+    }
+}
+
+@media only screen and (max-width:767px) {
+
+    .sec-accordion .banner-innerpage {
+        height: auto;
+        padding-top: 140px;
+        padding-bottom: 30px;
+
+
+    }
+
+    .sec-accordion .accordion-button {
+        padding-right: 35px;
+    }
+}

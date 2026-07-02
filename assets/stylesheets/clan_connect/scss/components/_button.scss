@@ -1,0 +1,122 @@
+.btn {
+  padding: 10px 40px;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 80px;
+  transition: all 0.3s ease;
+
+  &.btn-outline-primary {
+    color: $color-primary;
+    border: 1px solid $color-primary;
+    border-radius: $border-radius-default;
+  }
+
+  &.btn-outline-secondary {
+    border-color: #ff009d;
+    color: #5e5e5e;
+    background-color: transparent;
+
+    &:hover,
+    &:focus:not(.disabled):not([disabled]),
+    &.focus:not(.disabled):not([disabled]),
+    &:active:not(.disabled):not([disabled]),
+    &.active:not(.disabled):not([disabled]) {
+      background-color: #ff009d;
+      box-shadow: none;
+      border-color: rgba(130, 136, 151, 0.5);
+      color: #dfe0e3;
+    }
+  }
+
+  &.btn-wide {
+    padding: 7px 90px;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &.btn-black {
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+  
+    &.w-blk-bg {
+      background-color: #252525;
+      border: 1px solid #252525;
+      color: #fff;
+      &:hover{
+        background-color: #fff;
+        color: #252525;border: 1px solid #252525;
+      }
+    }
+    &:hover
+   
+    // &:focus:not(.disabled):not([disabled]),
+    // &.focus:not(.disabled):not([disabled]),
+    // &:active:not(.disabled):not([disabled]),
+    // &.active:not(.disabled):not([disabled])
+    
+    {
+      background-color: #fff;
+      color: #252525;
+    }
+   
+  }
+  &.btn-outline-black {
+    color: #242424;
+    background-color: #fff;
+    border: 1px solid #242424;
+    &:hover
+    // &:focus:not(.disabled):not([disabled]),
+    // &.focus:not(.disabled):not([disabled]),
+    // &:active:not(.disabled):not([disabled]),
+    // &.active:not(.disabled):not([disabled]) 
+    
+    {
+      background-color: #252525;
+      color: #ffffff;
+    }
+  }
+  &.btn-text-link {
+    text-decoration: none;
+    color: #000;
+    justify-self: start;
+    text-align: left;
+    padding: 0;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+
+    &:hover {
+      color: #838383;
+      border-bottom-color: #838383;
+    }
+
+  }
+  &.btn-rounded{
+    border-radius: 40px;
+    border: 1px solid #989898;
+    &.active {
+      border-color: #000;
+    }
+  }
+  &.btn-ticker {
+    background-color: transparent;
+    border: 1px solid #9E41EC;
+    background: -webkit-linear-gradient(90deg, #9E41EC, #773EA6);
+    background:linear-gradient(90deg, #9E41EC, #773EA6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+      border-radius: 8px;
+      padding: 5px 16px;
+      font-weight: 600;
+    &:hover {
+      background: linear-gradient(90deg, #9E41EC, #773EA6);
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: unset;
+      color: #fff;
+    }
+  }
+
+}

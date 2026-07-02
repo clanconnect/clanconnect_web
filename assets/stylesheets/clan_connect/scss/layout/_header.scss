@@ -1,0 +1,242 @@
+.header-ticker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #D0F3FF, #FFD0EB);
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  padding: 0.75rem;
+  gap: 2rem;
+  overflow: hidden;
+  @media (width < 576px) {
+    padding: 0.25rem;
+        gap: 0.25rem;
+        flex-direction: column;
+  }
+  .ticker-text {
+    background: -webkit-linear-gradient(90deg, #9E41EC, #773EA6);
+    background:linear-gradient(90deg, #9E41EC, #773EA6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
+  &.hidden {
+    height: 0;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+}
+
+.site-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9;
+  transition: all 0.35s;
+  padding: 12px 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  transform: translateY(0);
+
+  &.site-header-hidden {
+    transform: translateY(-100px);
+  }
+
+  img {
+    max-width: 120px;
+
+    @media only screen and (max-width:767px) {
+      max-width: 100px;
+    }
+  }
+
+  .nav-menu {
+    margin-left: 30px;
+
+    @media only screen and (max-width:991px) {
+      margin-left: 15px;
+
+      ul {
+        li {
+          padding-left: 5px;
+        }
+      }
+    }
+
+    @media only screen and (max-width:767px) {
+      margin-left: 0;
+    }
+
+    a {
+      font-size: 14px;
+      padding-bottom: 6px;
+      color: #2b2b2b;
+      text-transform: uppercase;
+
+      &:before {
+        height: 1px;
+        background-color: #00baff;
+      }
+    }
+
+    &.active {
+      @media only screen and (max-width:767px) {
+        top: 0;
+      }
+    }
+  }
+
+  // &.is-sticky {
+  //   background-color: rgba(0,0,0,0.8);
+  //   backdrop-filter: blur(5px);
+  // }
+  .container {
+    align-items: center;
+    display: flex;
+  }
+
+  .site-logo {
+    width: 140px;
+
+    img {
+      width: 100%;
+      max-width: 140px;
+    }
+  }
+
+  &-right {
+    margin-left: auto;
+    align-items: center;
+    @include flexbox;
+    list-style: none;
+    margin-bottom: 0;
+
+    @media only screen and (max-width:768px) {
+      margin-right: 40px;
+    }
+
+    li {
+      padding: 0 14px;
+      .btn {
+          padding: 7px 10px;
+        }
+      
+      @media only screen and (max-width:991px) {
+        padding: 0 5px;
+
+        .btn {
+          padding: 7px 15px;
+        }
+      }
+      @media only screen and (max-width:800px) {
+       
+        .btn {
+          padding: 7px 5px;
+        }
+      }
+      
+    }
+
+    a {
+      text-decoration: none;
+      color: #2b2b2b;
+      font-size: 14px;
+
+      &:hover:not(.btn) {
+        color: #666;
+
+      }
+
+      &.btn {
+        color: $color-body;
+        background-color: transparent;
+        border: 1px solid $color-body;
+
+        &:hover {
+          background-color: #252525;
+
+          color: $color-white;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width:767px) {
+    &.header-home {
+      background-color: transparent;
+      padding: 20px 0;
+      backdrop-filter: blur(0);
+      transition: none;
+
+      .hidden-mobile {
+        display: none;
+      }
+
+      &.sticky {
+        padding: 9px 0;
+        backdrop-filter: blur(5px);
+
+        .hidden-mobile {
+          display: block;
+        }
+      }
+    }
+  }
+
+}
+
+.menuActive {
+  .nav-menu {
+    ul {
+      display: flex;
+      flex-direction: column;
+
+      &.login-btns {
+        margin-top: 40px !important;
+
+        li {
+          a {
+            border: none;
+          }
+        }
+      }
+    }
+
+    &.active {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+
+      .logo {
+        padding-left: 15px;
+        padding-bottom: 16px;
+      }
+    }
+  }
+}
+
+#confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999; /* Always above header & ticker */
+}
+.confetti-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.emitter {
+  position: relative;
+  &.right {
+   transform: rotate(-75deg);
+  }
+}
