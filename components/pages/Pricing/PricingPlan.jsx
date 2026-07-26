@@ -9,6 +9,12 @@ const PricingPlanBrand = ({ subscription_plan }) => {
 
   const [showPlanMobile, setShowPlanMobile] = useState(subscription_plan);
 
+  // Currency: backend adds currency_symbol + display_<field> (USD outside India,
+  // INR passthrough otherwise). Fall back to raw INR fields when absent.
+  const sym = subscription_plan.currency_symbol || "₹";
+  const price = (field) =>
+    subscription_plan[`display_${field}`] ?? subscription_plan[field];
+
   useEffect(() => {
     if (urlParams.get("plan_type") === 'half-yearly'){
       setShowPlanMobile(false);
@@ -98,11 +104,11 @@ const PricingPlanBrand = ({ subscription_plan }) => {
                 <span className="brand-pricing-plan-type">
                   <span className="pricing-span">
                     {" "}
-                    ₹{subscription_plan.amount}
+                    {sym}{price("amount")}
                   </span>
                 </span>
                 <span className="pricing-plan-type" style={{ opacity: "0" }}>
-                  ₹{subscription_plan.amount}/{subscription_plan.plan_type}
+                  {sym}{price("amount")}/{subscription_plan.plan_type}
                   <span className="discount">
                     {" "}
                     SAVE {subscription_plan.discount}%
@@ -117,9 +123,9 @@ const PricingPlanBrand = ({ subscription_plan }) => {
                   <span className="brand-pricing-plan-type">
                     <span className="pricing-span">
                       <span style={{ textDecoration: "line-through" }}>
-                        ₹ {subscription_plan.subscription_amount}
+                        {sym} {price("subscription_amount")}
                       </span>
-                      &nbsp; ₹{subscription_plan.net_amount}
+                      &nbsp; {sym}{price("amount")}
                       &nbsp;
                       <span className="discount">
                         SAVE {subscription_plan.discount}%
@@ -131,9 +137,9 @@ const PricingPlanBrand = ({ subscription_plan }) => {
                       className="d-none"
                       style={{ textDecoration: "line-through" }}
                     >
-                      ₹{subscription_plan.monthly_subscription_net_amount}
+                      {sym}{price("monthly_subscription_net_amount")}
                     </span>
-                    &nbsp; ₹{subscription_plan.monthly_net_amount}/month
+                    &nbsp; {sym}{price("monthly_amount")}/month
                   </span>
                 </span>
               </>

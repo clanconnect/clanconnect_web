@@ -1,39 +1,106 @@
 'use client';
 import React, { useState, useEffect } from "react";
-import { Tab, Tabs, Nav } from "react-bootstrap";
+import { Tab, Nav } from "react-bootstrap";
 import { Link } from "@/lib/router";
-import { SubscriptionPlanData, SubscriptionPlanFeaturesData, ZAPFeaturesData } from "../../../data/data";
+import {
+  SubscriptionPlanData,
+  SubscriptionPlanFeaturesData,
+  ZAPFeaturesData,
+} from "../../../data/data";
 import { Helmet } from "@/lib/helmet";
+import { SubscriptionService } from "@/core/services";
 import PricingPlanBrand from "./PricingPlan";
 import PricingPlanInfluencer from "./PricingPlanInfluencer";
 
+const subscriptionService = new SubscriptionService();
+
+// Display order for premium plans (lower = shown first).
+const PLAN_ORDER = {
+  Monthly: 1,
+  Quarterly: 2,
+  "Half-Yearly": 3,
+  Annually: 4,
+  Starter: 1,
+  Savings: 2,
+};
+
+const isFreePlan = (p) =>
+  !p ||
+  p.plan_name === "FOC" ||
+  p.plan_name === "BASIC" ||
+  p.plan_type === "free" ||
+  p.user_status === "Free" ||
+  Number(p.amount) === 0;
+
+const sortPremium = (rows) =>
+  (rows || [])
+    .filter((p) => !isFreePlan(p))
+    .sort(
+      (a, b) => (PLAN_ORDER[a.plan_name] || 99) - (PLAN_ORDER[b.plan_name] || 99)
+    );
+
+// Hardcoded fallback (also the first paint before the API responds, since this
+// page is statically exported and fetches on the client).
+const FALLBACK_BRAND = sortPremium(Object.values(SubscriptionPlanData.brand));
+const FALLBACK_INFLUENCER = sortPremium(
+  Object.values(SubscriptionPlanData.influencer)
+);
+
 const Pricing = () => {
-  const queryString = typeof window !== 'undefined' ? window.location.search : '';
-  const urlParams = new URLSearchParams(queryString);
-  
-  const [influencerPlanType, setInfluencerPlanType] = useState("Half-Yearly");
-  const [brandPlanType, setBrandPlanType] = useState("Monthly");
-
-  const handleInfluencerPlanType = (tab) => {
-    setInfluencerPlanType(tab);
-  };
-
-  const handleBrandPlanType = (tab) => {
-    setBrandPlanType(tab);
-  };
+  const [brandPremium, setBrandPremium] = useState(FALLBACK_BRAND);
+  const [influencerPremium, setInfluencerPremium] = useState(
+    FALLBACK_INFLUENCER
+  );
 
   useEffect(() => {
-    if (urlParams.get("user_type") === 'influencer'){
-      let button = document.getElementById('left-tabs-example-tab-second');
-      if (button != null){
-        button.click();
+    let mounted = true;
+
+    async function fetchPlans() {
+      try {
+        const request = (user_type) =>
+          subscriptionService.getPlanDetails({
+            user_type,
+            account_id: 0,
+            platform: "web",
+            geo_pricing: true,
+          });
+
+        const [brandRes, inflRes] = await Promise.all([
+          request("Brand"),
+          request("Influencer"),
+        ]);
+
+        if (!mounted) return;
+
+        const brandRows = sortPremium(brandRes?.data?.rows);
+        const inflRows = sortPremium(inflRes?.data?.rows);
+
+        if (brandRows.length) setBrandPremium(brandRows);
+        if (inflRows.length) setInfluencerPremium(inflRows);
+      } catch (error) {
+        // Keep the fallback plans already in state.
+        console.error("Pricing: failed to load plans, using fallback", error);
       }
+    }
+
+    fetchPlans();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("user_type") === "influencer") {
+      const button = document.getElementById("left-tabs-example-tab-second");
+      if (button != null) button.click();
     }
   }, []);
 
-
-  console.log("influencerPlanType", influencerPlanType);
-  console.log("SubscriptionPlanData", SubscriptionPlanData);
+  const influencerCards = [
+    SubscriptionPlanData.influencer.basic_plan,
+    ...influencerPremium,
+  ];
 
   return (
     <>
@@ -82,25 +149,7 @@ const Pricing = () => {
                   <main className="full-width pb-3 page-pricing">
                     <div className="pricing-tab p-0">
                       <span className="plan-switch-btns">
-                        <div className=" sidebar-nav mb-0">
-                          {/* {Object.values(SubscriptionPlanData.brand).map(
-                              (planData) =>
-                                planData.plan_type !== "free" && (
-                                  <span
-                                    className={` sidebar-nav-link sml ${
-                                      brandPlanType === planData.plan_type
-                                        ? "active"
-                                        : ""
-                                    }`}
-                                    onClick={() =>
-                                      handleBrandPlanType(planData.plan_type)
-                                    }
-                                  >
-                                    {planData.plan_type}
-                                  </span>
-                                )
-                            )} */}
-                        </div>
+                        <div className=" sidebar-nav mb-0"></div>
                       </span>
                       <div className="tab-content" id="">
                         <div className="pricing-sec-infl">
@@ -152,9 +201,13 @@ const Pricing = () => {
                                       .user_type === "Brand" && (
                                       <>
                                         {SubscriptionPlanFeaturesData.brand.basic_plan_feature_text.map(
-                                          (featureText) => {
-                                            return <li>{featureText.text}</li>;
-                                          },
+                                          (featureText, index) => {
+                                            return (
+                                              <li key={index}>
+                                                {featureText.text}
+                                              </li>
+                                            );
+                                          }
                                         )}
                                       </>
                                     )}
@@ -166,21 +219,12 @@ const Pricing = () => {
                                   SubscriptionPlanData.brand.basic_plan
                                 }
                               />
-                              <PricingPlanBrand
-                                subscription_plan={
-                                  SubscriptionPlanData.brand.Monthly
-                                }
-                              />
-                              <PricingPlanBrand
-                                subscription_plan={
-                                  SubscriptionPlanData.brand.Quarterly
-                                }
-                              />
-                              <PricingPlanBrand
-                                subscription_plan={
-                                  SubscriptionPlanData.brand.Annually
-                                }
-                              />
+                              {brandPremium.map((plan) => (
+                                <PricingPlanBrand
+                                  key={plan.plan_id || plan.id || plan.plan_name}
+                                  subscription_plan={plan}
+                                />
+                              ))}
                             </div>
                           </div>
                         </div>
@@ -189,9 +233,6 @@ const Pricing = () => {
                   </main>
                 </Tab.Pane>
                 <Tab.Pane eventKey="second" className="pt-2 plan-tab-influencer">
-                  {/* <span>
-                    📢 Important Update: Our <strong>half-yearly</strong> subscription plan will be discontinued from <strong>1st November, 2024</strong>. Grab it before it's gone!
-                  </span> */}
                   <main className="full-width pb-3 page-pricing">
                     <div className="pricing-tab p-0">
                       <div className="tab-content" id="">
@@ -199,95 +240,16 @@ const Pricing = () => {
                           <div className="pricing-sec-right">
                             <div className="pricing-plan-sec">
                               <div className="pricing-plan-inner">
-                                {/* <div className="pricing-plan pricing-plan-info ">
-                                <span
-                                  className="pricing-title"
-                                  style={{
-                                    minHeight: "50px",
-                                    backgroundColor: "transparent",
-                                  }}
-                                ></span>
-                                <div className="pricing-plan-div">
-                                  <div className="d-flex flex-column  pb-3 text-center">
-                                    <span className="d-flex flex-column">
-                                      <span className="brand-pricing-plan-type">
-                                        <span
-                                          className="pricing-span"
-                                          style={{ opacity: "0" }}
-                                        >
-                                          {" "}
-                                          ₹ 0/month
-                                        </span>
-                                      </span>
-                                      <span
-                                        className="pricing-plan-type pricing-span"
-                                        style={{ opacity: "0" }}
-                                      >
-                                        Free
-                                      </span>
-                                      <span
-                                        className="pricing-description"
-                                        style={{ opacity: "0" }}
-                                      >
-                                        By default, this plan is activated until
-                                        you purchase a premium plan
-                                      </span>
-                                    </span>
-                                  </div>
-                                  <Link
-                                    style={{ minHeight: "50px" }}
-                                    className="btn buy-btn plan-btn"
-                                  ></Link>
-                                </div>
-                                {/* <div className="pricing-plan-detail-sec">
-                                  <ul>
-                                    {SubscriptionPlanData.influencer.basic_plan
-                                      .user_type === "Influencer" && (
-                                      <>
-                                        {SubscriptionPlanFeaturesData.influencer.basic_plan_feature_text.map(
-                                          (featureText) => {
-                                            return <li>{featureText.text}</li>;
-                                          },
-                                        )}
-                                      </>
-                                    )}
-                                  </ul>
-                                </div> 
-                              </div> */}
-                                {Object.values(
-                                  SubscriptionPlanData.influencer,
-                                ).map((plan) => (
+                                {influencerCards.map((plan) => (
                                   <PricingPlanInfluencer
-                                    key={plan.id}
+                                    key={
+                                      plan.plan_id || plan.id || plan.plan_name
+                                    }
                                     subscription_plan={plan}
                                     zapFeatures={ZAPFeaturesData}
                                   />
                                 ))}
                               </div>
-                              {/* <PricingPlan
-                                subscription_plan={
-                                  SubscriptionPlanData.influencer.basic_plan
-                                }
-                              /> */}
-                              {/*  {Object.values(
-                                  SubscriptionPlanData.influencer
-                                ).map(
-                                  (planData) =>
-                                    planData.plan_type === influencerPlanType && (
-                                      
-                                    )
-                                )}
-                                */}
-                              {/* <PricingPlan
-                                subscription_plan={
-                                  SubscriptionPlanData.influencer.Half_Yearly
-                                }
-                              />
-                              <PricingPlan
-                                subscription_plan={
-                                  SubscriptionPlanData.influencer.Annually
-                                }
-                              /> */}
                             </div>
                           </div>
                         </div>
