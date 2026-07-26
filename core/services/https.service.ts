@@ -200,11 +200,14 @@ export class HttpService {
           .catch((errors) => {
             //handle errors
             console.log(`Request Error HTTPS :: URL(${url}) :: Options(${JSON.stringify(options)}) ERROR :: `, errors)
-            // if user is unauthorized the navigate login router again
-            if (errors.response.status === 401) {
+            // errors.response is undefined for network-level failures (no HTTP
+            // response at all — e.g. the API is unreachable / CORS-blocked / the
+            // ngrok tunnel is down). Guard before reading .status so it doesn't
+            // throw its own TypeError and mask the real "request failed" reason.
+            if (errors?.response?.status === 401) {
               window.location.href = '/login';
             }
-            reject(errors.response)
+            reject(errors?.response ?? errors)
           });
       });
 

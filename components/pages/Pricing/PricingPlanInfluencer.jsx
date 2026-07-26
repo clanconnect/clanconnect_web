@@ -24,6 +24,12 @@ const PricingPlanInfluencer = ({
   const price = (field) =>
     subscription_plan[`display_${field}`] ?? subscription_plan[field];
 
+  // Foreign (non-India) visitors: the backend returns a non-₹ currency_symbol
+  // (for both dedicated-USD plans and INR plans converted to USD display).
+  // For them, hide every non-Zap section (India-specific campaign, analytics
+  // and GST-invoicing features) and show only the ZAP section.
+  const isForeign = sym !== "₹";
+
   const planTypeMap = {
     Monthly: "Monthly",
     Annually: "Annually",
@@ -244,26 +250,27 @@ const PricingPlanInfluencer = ({
               </ul>
             </section>
 
-            <ul>
-              {features.map((feature, index) => {
-                console.log(feature, "feature");
-                const isBasic = subscription_plan.plan_name === "BASIC";
+            {!isForeign && (
+              <ul>
+                {features.map((feature, index) => {
+                  const isBasic = subscription_plan.plan_name === "BASIC";
 
-                let iconClass = feature.iconClassName;
+                  let iconClass = feature.iconClassName;
 
-                if (isBasic) {
-                  if (index === 0) iconClass = "bi bi-check";
-                  else iconClass = "bi bi-x";
-                }
+                  if (isBasic) {
+                    if (index === 0) iconClass = "bi bi-check";
+                    else iconClass = "bi bi-x";
+                  }
 
-                return (
-                  <li key={index}>
-                    {iconClass && <i className={iconClass}></i>}
-                    <span>{feature.text}</span>
-                  </li>
-                );
-              })}
-            </ul>
+                  return (
+                    <li key={index}>
+                      {iconClass && <i className={iconClass}></i>}
+                      <span>{feature.text}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </>
         )}
       </div>

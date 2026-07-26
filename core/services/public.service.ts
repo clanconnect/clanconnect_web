@@ -256,8 +256,10 @@ export class PublicService {
       const response = await http.postRequest(path, data, null);
       return response;
     } catch (error) {
-      throw new Error("recordFbConversionLead Error :: " + error);
-    }  
+      // Analytics must never break the page — fail soft (e.g. API unreachable).
+      console.warn("recordFbConversionLead skipped:", (error as any)?.message ?? error);
+      return null;
+    }
   }
 
   async recordFbConversionPageView(data:any): Promise <any>{
@@ -266,8 +268,10 @@ export class PublicService {
       const response = await http.postRequest(path, data, null);
       return response;
     } catch (error) {
-      throw new Error("recordFbConversionPageView Error :: " + error);
-    }  
+      // Analytics must never break the page — fail soft (e.g. API unreachable).
+      console.warn("recordFbConversionPageView skipped:", (error as any)?.message ?? error);
+      return null;
+    }
   }
 
   // To get community links Telegram and whatsapp both
