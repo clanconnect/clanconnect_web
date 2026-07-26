@@ -18,6 +18,12 @@ const PricingPlanInfluencer = ({
 
   const [showPlanMobile, setShowPlanMobile] = useState(false);
 
+  // Currency: backend adds currency_symbol + display_<field> (USD outside India,
+  // INR passthrough otherwise). Fall back to raw INR fields when absent.
+  const sym = subscription_plan.currency_symbol || "₹";
+  const price = (field) =>
+    subscription_plan[`display_${field}`] ?? subscription_plan[field];
+
   const planTypeMap = {
     Monthly: "Monthly",
     Annually: "Annually",
@@ -157,7 +163,7 @@ const PricingPlanInfluencer = ({
               <>
                 <span className="brand-pricing-plan-type">
                   <span className="pricing-span">
-                    ₹{subscription_plan.net_amount}
+                    {sym}{price("amount")}
                   </span>
                 </span>
               </>
@@ -175,16 +181,16 @@ const PricingPlanInfluencer = ({
                         fontSize: "18px",
                       }}
                     >
-                      ₹{subscription_plan.subscription_amount}
+                      {sym}{price("subscription_amount")}
                     </span>
                     <span style={{ fontSize: "26px", fontWeight: 600 }}>
-                      &nbsp; ₹{subscription_plan.amount}
+                      &nbsp; {sym}{price("amount")}
                     </span>
                     <span className="discount">
                       &nbsp; SAVE {subscription_plan.discount}%
                     </span>
                     <span className="amount-per-month ms-auto">
-                      ₹{subscription_plan.monthly_amount}/month
+                      {sym}{price("monthly_amount")}/month
                     </span>
                   </span>
                 </span>
