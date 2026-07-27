@@ -46,11 +46,25 @@ const FALLBACK_INFLUENCER = sortPremium(
   Object.values(SubscriptionPlanData.influencer)
 );
 
+// A foreign (non-India) visitor is served either dedicated local-currency plans
+// (backend stamps zap_only on every row, including the shared free/FOC one) or
+// the India plans converted to USD for display (non-₹ currency_symbol). Either
+// marker means "hide the India-only marketplace features".
+const isForeignResponse = (rows) =>
+  (rows || []).some(
+    (r) =>
+      Number(r.zap_only) === 1 ||
+      (r.currency_symbol && r.currency_symbol !== "₹")
+  );
+
 const Pricing = () => {
   const [brandPremium, setBrandPremium] = useState(FALLBACK_BRAND);
   const [influencerPremium, setInfluencerPremium] = useState(
     FALLBACK_INFLUENCER
   );
+  // The BASIC card is rendered from hardcoded data rather than the API response,
+  // so it can't read the flag off its own row — it has to come from the page.
+  const [influencerForeign, setInfluencerForeign] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -77,6 +91,9 @@ const Pricing = () => {
 
         if (brandRows.length) setBrandPremium(brandRows);
         if (inflRows.length) setInfluencerPremium(inflRows);
+        // Read off the full response, not sortPremium's output: the free/FOC row
+        // it filters out carries the flag too.
+        setInfluencerForeign(isForeignResponse(inflRes?.data?.rows));
       } catch (error) {
         // Keep the fallback plans already in state.
         console.error("Pricing: failed to load plans, using fallback", error);
@@ -247,6 +264,7 @@ const Pricing = () => {
                                     }
                                     subscription_plan={plan}
                                     zapFeatures={ZAPFeaturesData}
+                                    isForeign={influencerForeign}
                                   />
                                 ))}
                               </div>

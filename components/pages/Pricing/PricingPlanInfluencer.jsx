@@ -13,7 +13,8 @@ const PricingPlanInfluencer = ({
   loading,
   account_type,
   activePlan,
-  zapFeatures
+  zapFeatures,
+  isForeign: isForeignPage,
 }) => {
 
   const [showPlanMobile, setShowPlanMobile] = useState(false);
@@ -24,11 +25,12 @@ const PricingPlanInfluencer = ({
   const price = (field) =>
     subscription_plan[`display_${field}`] ?? subscription_plan[field];
 
-  // Foreign (non-India) visitors: the backend returns a non-₹ currency_symbol
-  // (for both dedicated-USD plans and INR plans converted to USD display).
-  // For them, hide every non-Zap section (India-specific campaign, analytics
-  // and GST-invoicing features) and show only the ZAP section.
-  const isForeign = sym !== "₹";
+  // Foreign (non-India) visitors: hide every non-Zap section (India-specific
+  // campaign, analytics and GST-invoicing features) and show only the ZAP one.
+  // The page-level flag is the authority — the BASIC card comes from hardcoded
+  // data with no currency_symbol, so its own row can never reveal this. The
+  // symbol check stays as a per-row fallback for a plan priced in USD.
+  const isForeign = isForeignPage || sym !== "₹";
 
   const planTypeMap = {
     Monthly: "Monthly",
