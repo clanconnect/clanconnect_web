@@ -8,8 +8,8 @@ import {
   BsTwitterX,
   BsWhatsapp,
 } from 'react-icons/bs';
+import Img from '@/components/ui/Img';
 const clanLogo = '/assets/images/clan-logo.png';
-const clanLogoWebp = '/assets/images/clan-logo.webp';
 
 const fsLogo = '/assets/images/f&Slogo.svg';
 const fsGradient = '/assets/images/f&S_gradient.svg';
@@ -49,18 +49,16 @@ const Footer = () => {
         <div className="container">
           <div className="footer-sec-top">
             <Link to="/" className="site-logo">
-              <picture>
-                <source srcSet={clanLogoWebp} type="image/webp" />
-                <source srcSet={clanLogo} type="image/png" />
-                <img alt="ClanConnect" src={clanLogo} />
-              </picture>
+              {/* The hand-rolled <picture> webp/png fallback is redundant now:
+                  the optimizer content-negotiates AVIF/WebP per request. */}
+              <Img alt="ClanConnect" src={clanLogo} />
             </Link>
           </div>
           <div className="footer-sec">
             <div className="col-lg-4 col-md-6 col-sm-6 col-12 footer-logo-sec">
               <div className="footer-info">
                 <div className="award-info">
-                  <img src={fsLogo} alt="Frost & Sullivan" />
+                  <Img src={fsLogo} alt="Frost &amp; Sullivan" />
                   <h3>
                     COMPETITIVE STRATEGY
                     <br /> LEADERSHIP AWARD 2023
@@ -72,7 +70,7 @@ const Footer = () => {
                 </div>
                 <div className="verified-info">
                   <span className="verified_meta">
-                    <img src={verifiedIcon} alt="Google verified & secured" />
+                    <Img src={verifiedIcon} alt="Google verified &amp; secured" />
                     <span>Secure &amp; Verified by Google &amp; Meta</span>
                   </span>
                   <div>

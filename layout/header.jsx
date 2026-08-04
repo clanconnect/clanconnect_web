@@ -1,6 +1,7 @@
 'use client';
 import React, {useEffect, useState,useRef} from 'react';
 import {Link, NavLink} from '@/lib/router';
+import Img from '@/components/ui/Img';
 const clanLogo = '/assets/images/clan-logo.png';
 import { gsap } from "gsap";
 import { Physics2DPlugin } from "gsap/Physics2DPlugin";
@@ -33,7 +34,8 @@ const rightEmitterRef = useRef(null);
       >
       <div className='container d-flex align-items-center'>
         <Link className='logo' to='/'>
-          <img className='img-fluid' src={clanLogo} />
+          {/* Sitewide masthead: always above the fold, so it is preloaded. */}
+          <Img className='img-fluid' src={clanLogo} alt='ClanConnect' priority />
         </Link>
 
         <span
@@ -50,7 +52,7 @@ const rightEmitterRef = useRef(null);
           }
         >
           <Link onClick={handleNavLinkClick} className='d-md-none logo' to='/'>
-            <img className='img-fluid' src={clanLogo} />
+            <Img className='img-fluid' src={clanLogo} alt='ClanConnect' />
           </Link>
           <ul>
             <li>

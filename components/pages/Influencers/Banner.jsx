@@ -1,7 +1,8 @@
 'use client';
 import React from 'react'
-const heroAvif = '/assets/images/influencers-page/hero.avif';
-const herowebp = '/assets/images/influencers-page/hero.webp';
+import Img from '@/components/ui/Img';
+// Single source of truth: the optimizer derives AVIF/WebP per request, so the
+// hand-maintained hero.avif/.webp variants are no longer referenced.
 const heropng = '/assets/images/influencers-page/hero.png';
 const appStore = '/assets/images/influencers-page/app-store.png';
 const playStore = '/assets/images/influencers-page/play-store.png';
@@ -16,19 +17,22 @@ const Banner = () => {
             <p>Be part of a growing community of<br/> 90,000+ influencers across India</p>
             <div className='infl-banner-buttons'>
                 <Link to="">
-                    <img src={appStore} alt="App Store" />
+                    <Img src={appStore} alt="App Store" />
                 </Link>
                 <Link to="">
-                    <img src={playStore} alt="Play Store" />
+                    <Img src={playStore} alt="Play Store" />
                 </Link>
             </div>
         </div>
     </div>
+        {/* .infl-banner picture { max-width: 884px; max-height: 587px } sizes
+            this image, so the wrapper stays; only the <source> children go. */}
         <picture>
-            <source srcset={heroAvif} type="image/avif" />
-            <source srcset={herowebp} type="image/webp" />
-            <source srcset={heropng} type="image/png" />
-            <img src={heropng} alt="Smiling woman using phone at a cafe" />
+            <Img
+                src={heropng}
+                alt="Smiling woman using phone at a cafe"
+                priority
+            />
         </picture>
         
     </div>

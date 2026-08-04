@@ -12,6 +12,7 @@ import { createPortal } from 'react-dom';
 import { Modal } from 'react-bootstrap';
 const DummyTestimonialImage = '/assets/images/testimonial-img/dummy-testimonial1.png';
 import RetinaImage from '@/lib/RetinaImage';
+import Img from '@/components/ui/Img';
 
 
 const Testimonials = () => {
@@ -111,7 +112,10 @@ const Testimonials = () => {
                 {brandData.map((c, index) => {
                   return (
                     <React.Fragment key={index}>
-                      <picture className='homepage-brands-logo' key={index}>
+                      {/* .homepage-brands-logo styles the flex container here
+                          (display:flex; height:100px); the original markup
+                          carried it on both the wrapper and the image. */}
+                      <picture className='homepage-brands-logo'>
                         <RetinaImage className="homepage-brands-logo"
                           src={[c.brandLogo, c.brandLogo2x, c.brandLogo3x]} alt={c.title} />
                       </picture>
@@ -122,7 +126,7 @@ const Testimonials = () => {
                 {brandData.map((c, index) => {
                   return (
                     <React.Fragment key={index}>
-                      <picture className='homepage-brands-logo' key={index}>                       
+                      <picture className='homepage-brands-logo'>
                         <RetinaImage className="homepage-brands-logo"
                           src={[c.brandLogo, c.brandLogo2x, c.brandLogo3x]} alt={c.title} />
                       </picture>
@@ -170,11 +174,11 @@ const Testimonials = () => {
                           <div className='testimonial-container-inner'>
                             <div className='testimonial-img-sec'>
                               <div className='testimonial-img-brand'>
-                                <img className='testimonial-thumbnail' src={testimonial?.logoImg} />
+                                <Img className='testimonial-thumbnail' src={testimonial?.logoImg} />
                               </div>
                               {testimonial?.personImg &&
                               <div className='testimonial-img-person'>
-                                <img className='testimonial-thumbnail' src={testimonial?.personImg} />
+                                <Img className='testimonial-thumbnail' src={testimonial?.personImg} />
                               </div>
                               }
                             </div>
@@ -216,7 +220,7 @@ const Testimonials = () => {
                           <div className='testimonial-container-inner'>
                             <div className='testimonial-img-sec'>
                               <div className='testimonial-img-person'>
-                                <img className='testimonial-thumbnail' src={testimonial?.logoImg} />
+                                <Img className='testimonial-thumbnail' src={testimonial?.logoImg} />
                               </div>
 
                             </div>
@@ -269,11 +273,11 @@ const Testimonials = () => {
             <Modal.Body><div className='testimonial-container-inner'>
               <div className='testimonial-img-sec'>
                 <div className='testimonial-img-brand'>
-                  <img className='testimonial-thumbnail' src={testimonialModalData[0]?.logoImg} />
+                  <Img className='testimonial-thumbnail' src={testimonialModalData[0]?.logoImg} />
                 </div>
 
                 <div className='testimonial-img-person'>
-                  <img className='testimonial-thumbnail' src={testimonialModalData[0]?.personImg} />
+                  <Img className='testimonial-thumbnail' src={testimonialModalData[0]?.personImg} />
                 </div>
               </div>
               <div className='testimonial-description'>
@@ -316,7 +320,7 @@ const Testimonials = () => {
             <Modal.Body><div className='testimonial-container-inner'>
               <div className='testimonial-img-sec'>
                 <div className='testimonial-img-person'>
-                  <img className='testimonial-thumbnail' src={testimonialInfluencerModalData[0]?.logoImg} />
+                  <Img className='testimonial-thumbnail' src={testimonialInfluencerModalData[0]?.logoImg} />
                 </div>
               </div>
               <div className='testimonial-description'>

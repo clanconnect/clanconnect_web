@@ -4,6 +4,7 @@ import {Accordion, Tab, Tabs} from 'react-bootstrap';
 import {Link, useParams} from '@/lib/router';
 import {faqData} from '../../../data/data';
 import { Helmet } from '@/lib/helmet';
+import Img from '@/components/ui/Img';
 
 const FaqContainer = (props) => {
   const [faqList, setfaqList] = useState(faqData);
@@ -169,7 +170,7 @@ const FaqContainer = (props) => {
                                 {branData.faqDescriptionWithInlineImageDesc ? (
                                   <p>
                                     {branData.faqDescriptionWithInlineImageDesc}
-                                    <img
+                                    <Img
                                       src={
                                         branData.faqDescriptionWithInlineImageImg
                                       }
@@ -262,7 +263,7 @@ const FaqContainer = (props) => {
                                   <p>{branData?.faqInnerDescription?.desc}</p>
                                 </>
                                 {branData?.img && (
-                                  <img
+                                  <Img
                                     src={branData.img}
                                     style={{
                                       width: '240px',

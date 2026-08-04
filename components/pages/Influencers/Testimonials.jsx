@@ -7,6 +7,7 @@ import {
     BsChevronRight
 } from 'react-icons/bs';
 import { Rating, ThinStar } from '@smastrom/react-rating';
+import Img from '@/components/ui/Img';
 const Testimonials = () => {
     const myStyles = {
         itemShapes: ThinStar,
@@ -55,7 +56,7 @@ const Testimonials = () => {
                             <div className='testimonial-card-container'>
                                 <div className='testimonial-card'>
                                     <div className='testimonial-card-left'>
-                                        <img src={testimonialImage} alt='testimonial-image' />
+                                        <Img src={testimonialImage} alt='testimonial-image' />
                                     </div>
                                     <div className='testimonial-card-right'>
                                         <div className='rating-sec'>
@@ -74,7 +75,7 @@ const Testimonials = () => {
                             <div className='testimonial-card-container'>
                                 <div className='testimonial-card'>
                                     <div className='testimonial-card-left'>
-                                        <img src={testimonialImage} alt='testimonial-image' />
+                                        <Img src={testimonialImage} alt='testimonial-image' />
                                     </div>
                                     <div className='testimonial-card-right'>
                                         <div className='rating-sec'>
@@ -93,7 +94,7 @@ const Testimonials = () => {
                             <div className='testimonial-card-container'>
                                 <div className='testimonial-card'>
                                     <div className='testimonial-card-left'>
-                                        <img src={testimonialImage} alt='testimonial-image' />
+                                        <Img src={testimonialImage} alt='testimonial-image' />
                                     </div>
                                     <div className='testimonial-card-right'>
                                         <div className='rating-sec'>

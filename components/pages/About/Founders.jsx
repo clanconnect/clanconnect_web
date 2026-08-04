@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import FoundersData from './FoundersData';
+import Img from '@/components/ui/Img';
 
 const Founders = () => {
   return (
@@ -21,7 +22,7 @@ const Founders = () => {
             <React.Fragment key={index}>
               <div className='founder-info'>
                 <div className='founder-img'>
-                  <img src={data?.founderImg} alt={data?.founderName} />
+                  <Img src={data?.founderImg} alt={data?.founderName} />
                 </div>
                 <div className='founder-detail'>
                   <h2>{data?.founderName}</h2>

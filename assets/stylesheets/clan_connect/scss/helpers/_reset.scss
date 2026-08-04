@@ -121,6 +121,42 @@
  }
 
 
+ /*
+  * next/image always renders `width`/`height` HTML attributes. Those are
+  * presentational hints, and they break layouts in BOTH directions:
+  *   - a stylesheet that sets only a width (`.card-img img { width: 100% }`)
+  *     still gets the height attribute, pinning the intrinsic pixel height and
+  *     squashing the image;
+  *   - a stylesheet that sets only a height or max-height
+  *     (`.case-study-logo { max-height: 40px }`) still gets the width attribute,
+  *     stretching the image wide.
+  *
+  * Resetting both to `auto` restores exactly how a plain <img> behaved here:
+  * whichever dimension the CSS specifies wins, and the other is derived from the
+  * aspect ratio. The width/height attributes are still emitted, so the UA's
+  * `aspect-ratio: attr(width) / attr(height)` continues to reserve layout space
+  * and prevent the shift these attributes exist to fix.
+  *
+  * (css/style.css already ships a global `picture img, img { max-width: 100%;
+  * height: auto }`, which covers the height half for plain <img>. The `width`
+  * half is what next/image newly needs, but both are declared here so the rule
+  * stands on its own.)
+  *
+  * `:where()` adds no specificity, so this rule scores (0,0,1) -- enough to beat
+  * the presentational hints, low enough that every existing rule (for example
+  * `.news-card img { height: 165px }`) continues to win. It also sits in the
+  * reset, ahead of every component/page stylesheet, so equal-specificity rules
+  * win on source order too.
+  *
+  * Fill images are excluded: they carry inline width/height, which outrank this
+  * regardless.
+  */
+ img:where([data-nimg="1"]) {
+   width: auto;
+   height: auto;
+ }
+
+
 
  svg:not([fill]) {
    fill: currentColor;

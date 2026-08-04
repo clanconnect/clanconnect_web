@@ -218,6 +218,17 @@
 
 .news-card-image {
     height: 165px;
+    // .news-card is a column flex container and .news-card-info asks for
+    // height:100%, so this box would otherwise be shrunk to ~118px. It used to
+    // not matter -- the in-flow <img> kept its own height:165px and simply
+    // overflowed -- but the image now fills this box, so the box has to be the
+    // real 165px the design asks for.
+    flex-shrink: 0;
+    // Containing block for the `fill` next/image inside it, which positions
+    // itself absolutely against the nearest positioned ancestor.
+    position: relative;
+    overflow: hidden;
+    border-radius: 7px 7px 0 0;
 }
 
 .news-card img {

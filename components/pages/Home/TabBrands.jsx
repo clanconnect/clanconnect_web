@@ -13,6 +13,7 @@ import RequestaDemo from '../../RequestaDemo';
 import {TabData, brandData} from '../../../data/data';
 import lozad from 'lozad';
 import {Link} from '@/lib/router';
+import Img from '@/components/ui/Img';
 
 const TabBrands = () => {
   const [key, setKey] = useState('Brands');
@@ -118,50 +119,21 @@ const TabBrands = () => {
                   return tabData?.brands?.map((brandData, index) => {
                     return (
                       <div className={`sec-common-tab-right-img sec-common-tab-right-img-${index}`} key={brandData.id}>
+                        {/* The -large/-small classes size a *container* (they
+                            carry nested `img { max-width: ... }` rules), so the
+                            wrapper element has to stay. */}
                         <picture className='sec-common-tab-right-img-large'>
-                          <source
-                            type='image/webp'
-                            srcSet={brandData.webpImg}
-                            loading='lazy'
-                            className='lozad'
-                            data-use-lozad
-                          />
-                          <source
-                            type='image/jpeg'
-                            srcSet={brandData.img}
-                            loading='lazy'
-                            className='lozad'
-                            data-use-lozad
-                          />
-                          <img
+                          <Img
                             src={brandData.img}
-                            alt=''
-                            loading='lazy'
+                            alt={brandData.title || ''}
                             className='lozad'
-                            data-use-lozad
                           />
                         </picture>
                         <picture className='sec-common-tab-right-img-small'>
-                          <source
-                            type='image/webp'
-                            srcSet={brandData.webpImg1}
-                            loading='lazy'
-                            className='lozad'
-                            data-use-lozad
-                          />
-                          <source
-                            type='image/jpeg'
-                            srcSet={brandData.img1}
-                            loading='lazy'
-                            className='lozad'
-                            data-use-lozad
-                          />
-                          <img
+                          <Img
                             src={brandData.img1}
                             alt=''
-                            loading='lazy'
                             className='lozad'
-                            data-use-lozad
                           />
                         </picture>
                       </div>
@@ -193,7 +165,7 @@ const TabBrands = () => {
                         className='lozad'
                         data-use-lozad
                       />
-                      <img
+                      <Img
                         src={brandData.img}
                         alt=''
                         loading='lazy'
@@ -203,49 +175,17 @@ const TabBrands = () => {
                     </picture> */}
                     <div className={`sec-common-tab-right-img sec-common-tab-right-img-${index}`}>
                       <picture className='sec-common-tab-right-img-large'>
-                        <source
-                          type='image/webp'
-                          srcSet={brandData.webpImg}
-                          loading='lazy'
-                          className='lozad'
-                          data-use-lozad
-                        />
-                        <source
-                          type='image/jpeg'
-                          srcSet={brandData.img}
-                          loading='lazy'
-                          className='lozad'
-                          data-use-lozad
-                        />
-                        <img
+                        <Img
                           src={brandData.img}
-                          alt=''
-                          loading='lazy'
+                          alt={brandData.title || ''}
                           className='lozad'
-                          data-use-lozad
                         />
                       </picture>
                       <picture className='sec-common-tab-right-img-small'>
-                        <source
-                          type='image/webp'
-                          srcSet={brandData.webpImg1}
-                          loading='lazy'
-                          className='lozad'
-                          data-use-lozad
-                        />
-                        <source
-                          type='image/jpeg'
-                          srcSet={brandData.img1}
-                          loading='lazy'
-                          className='lozad'
-                          data-use-lozad
-                        />
-                        <img
+                        <Img
                           src={brandData.img1}
                           alt=''
-                          loading='lazy'
                           className='lozad'
-                          data-use-lozad
                         />
                       </picture>
                     </div>

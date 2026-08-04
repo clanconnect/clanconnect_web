@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useParams} from '@/lib/router';
 import {blogsData} from '../../../data/data';
+import Img from '@/components/ui/Img';
 
 const BlogsDetailContainer = (props) => {
   useEffect(() => {
@@ -17,7 +18,7 @@ const BlogsDetailContainer = (props) => {
     <section className='blog-sec brandBackground'>
       <div className='container container-blogs '>
         <div className='banner-innerpage'>
-          <img
+          <Img
             src={props.blogData.newsImage}
             alt={props.blogData.newsTitle}
             style={{objectFit: 'contain'}}

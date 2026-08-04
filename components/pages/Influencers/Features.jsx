@@ -1,5 +1,6 @@
 'use client';
 import React from 'react'
+import Img from '@/components/ui/Img';
 const getDiscovered = '/assets/images/influencers-page/get-discovered.png';
 const getDiscovered1 = '/assets/images/influencers-page/get-discovered1.png';
 const findBrandCollaboration = '/assets/images/influencers-page/find-brand-collaboration.png';
@@ -23,8 +24,8 @@ const Features = () => {
                     </ul>
                 </div>
                 <div className='features-box-img'>
-                    <img src={getDiscovered} alt="Get Discovered" width={221} />
-                    <img src={getDiscovered1} alt="Get Discovered1" width={221} height={422} />
+                    <Img src={getDiscovered} alt="Get Discovered" width={221} />
+                    <Img src={getDiscovered1} alt="Get Discovered1" width={221} height={422} />
                 </div>
             </div>
             <div className='features-box features-box-pink'>
@@ -37,7 +38,7 @@ const Features = () => {
                     </ul>
                 </div>
                 <div className='features-box-img'>
-                    <img src={findBrandCollaboration} alt="Get Discovered" width={221} />
+                    <Img src={findBrandCollaboration} alt="Get Discovered" width={221} />
                     
                 </div>
             </div>
@@ -51,7 +52,7 @@ const Features = () => {
                     </ul>
                 </div>
                 <div className='features-box-img'>
-                    <img src={performanceInsights} alt="Get Discovered" width={221} />
+                    <Img src={performanceInsights} alt="Get Discovered" width={221} />
                     
                 </div>
             </div>
@@ -65,8 +66,8 @@ const Features = () => {
                     </ul>
                 </div>
                 <div className='features-box-img'>
-                    <img src={invoice} alt="Get Discovered" width={221} />
-                    <img src={paymentDetails} alt="Get Discovered1" width={221} height={422} />
+                    <Img src={invoice} alt="Get Discovered" width={221} />
+                    <Img src={paymentDetails} alt="Get Discovered1" width={221} height={422} />
                 </div>
             </div>
         </div>
