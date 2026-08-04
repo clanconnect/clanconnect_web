@@ -5,6 +5,7 @@ import './Brand.css';
 import SectionTitle from '../../section_title';
 import {brandData} from '../../../data/data';
 import lozad from 'lozad';
+import Img from '@/components/ui/Img';
 
 const Brands = () => {
   const {observe} = typeof document === 'undefined' ? { observe: () => {} } : lozad('[data-use-lozad]', {
@@ -35,19 +36,9 @@ const Brands = () => {
             return (
               <Fragment key={index}>
                 <picture className='homepage-brands-logo'>
-                  <source
-                    type='image/webp'
-                    srcSet={c.brandLogoWebp}
-                    className='img-fluid'        
-                  />
-                  <source
-                    type='image/jpeg'
-                    srcSet={c.brandLogo}
-                    className='img-fluid'
-                  />
-                  <img
+                  <Img
                     src={c.brandLogo}
-                    alt=''
+                    alt={c.title || ''}
                     className='lozad img-fluid'
                   />
                 </picture>

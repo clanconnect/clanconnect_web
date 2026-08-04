@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Img from '@/components/ui/Img';
 const clanLogo = '/assets/images/clan_connect/clan-logo.png';
 import './order-confirmed.scss'
 
@@ -48,7 +49,7 @@ const OrderConfirmedTemplate: React.FC<Props> = ({
           </div>
         )}
         <div className="d-flex justify-content-center align-items-center mt-3 mb-4">
-          <img
+          <Img
             alt="Clan Connect"
             height="93"
             src={clanLogo}

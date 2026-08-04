@@ -4,6 +4,7 @@ import {Link, useParams} from '@/lib/router';
 import { caseStudyData } from '../../../data/data';
 import RetinaImage from '@/lib/RetinaImage';
 import Skeleton from 'react-loading-skeleton';
+import Img from '@/components/ui/Img';
 
 const CaseStudyContainer = (props) => {
   const [caseStudyCategory, setcaseStudyCategory] = useState('All');
@@ -137,7 +138,7 @@ const CaseStudyContainer = (props) => {
                   to={`/case_studies/case_study_detail/${caseStudy.id}`}
                 >
                   <div className='case-study-logo-container'>
-                    {/* <img className='case-study-logo' src={caseStudy.logoImg} alt={caseStudy.title} /> */}
+                    {/* <Img className='case-study-logo' src={caseStudy.logoImg} alt={caseStudy.title} /> */}
                     <RetinaImage className="case-study-logo"
                       src={[caseStudy.logoImg, caseStudy.logoImg2x, caseStudy.logoImg3x]} alt={caseStudy.title} />
                   </div>
@@ -183,15 +184,15 @@ const CaseStudyContainer = (props) => {
                   </div>
                     <div className='case-study-infl'>
                       {/* {caseStudy?.inflImg && <div className='case-study-infl-img-cont'>
-                      <img src={caseStudy.inflImg} alt={caseStudy.title} /> 
+                      <Img src={caseStudy.inflImg} alt={caseStudy.title} /> 
                       </div>}
                       {caseStudy?.inflImg1 && <div className='case-study-infl-img-cont'>
-                      <img src={caseStudy?.inflImg1} alt={caseStudy.title} />
+                      <Img src={caseStudy?.inflImg1} alt={caseStudy.title} />
                       </div>} */}
                       <div className='page-case-study-banner-right'>
                         {caseStudy?.images?.slice(0,4).map((ima, index) => {
                           return <div key={ima.id} className={`case-study-banner-img case-study-banner-img${index + 1}`}>
-                            {!loading && <img src={ima.img} alt={caseStudy.title} />}
+                            {!loading && <Img src={ima.img} alt={caseStudy.title} />}
                             {loading && <Skeleton style={{ borderRadius: '10px' }} height={300} />}
                           </div>
                         })}

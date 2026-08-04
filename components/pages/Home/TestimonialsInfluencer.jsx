@@ -8,6 +8,7 @@ const imgInvoicing = '/assets/images/img-invoicing-3d.png';
 import { TestimonialData } from '../../../data/data';
 import lozad from 'lozad';
 import { Link } from '@/lib/router';
+import Img from '@/components/ui/Img';
 
 const TestimonialsInfluencers = () => {
   const { observe } = typeof document === 'undefined' ? { observe: () => {} } : lozad('[data-use-lozad]', {
@@ -82,7 +83,7 @@ const TestimonialsInfluencers = () => {
                     <div className='testimonial-container-inner'>
                       <div className='testimonial-img-sec'>
                         <div className='testimonial-img-person'>
-                          <img className='testimonial-thumbnail' src={testimonial?.logoImg} />
+                          <Img className='testimonial-thumbnail' src={testimonial?.logoImg} />
                         </div>
 
                       </div>

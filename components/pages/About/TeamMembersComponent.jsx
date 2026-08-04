@@ -3,6 +3,7 @@ import {useState, useRef} from 'react';
 
 import TeamMembersData from './TeamMembersData';
 import Row from 'react-bootstrap/Row';
+import Img from '@/components/ui/Img';
 
 function TeamMembersComponent() {
   let [memberDetail, setMemberDetail] = useState(false);
@@ -33,7 +34,7 @@ function TeamMembersComponent() {
             key={data.id}
           >
             <div className='TeamMember-info-img-indl'>
-              <img
+              <Img
                 src={data.teamMemberImg}
                 className='TeamMember-Img'
                 alt={data.teamMemberName}
@@ -60,7 +61,7 @@ function TeamMembersComponent() {
             key={data.id}
           >
             <div className='TeamMember-info-img-indl'>
-              <img
+              <Img
                 src={data.teamMemberImg}
                 className='TeamMember-Img'
                 alt={data.teamMemberName}

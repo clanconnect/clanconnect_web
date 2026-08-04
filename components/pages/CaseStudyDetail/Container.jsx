@@ -17,6 +17,7 @@ import RetinaImage from '@/lib/RetinaImage';
 import { ShareSocial } from 'react-share-social';
 import { caseStudyDetailData } from '../../../data/data';
 import { BASE_URL_WEB } from '../../../config/config';
+import Img from '@/components/ui/Img';
 const baseURL = BASE_URL_WEB;
 
 
@@ -270,7 +271,7 @@ useEffect(() => {
                     alt={props.detailData.brandName}
                   />
                 )
-                // <img style={{ maxHeight: '50px' }}
+                // <Img style={{ maxHeight: '50px' }}
                 //   src={props.detailData.logoImg}
                 //   alt={props.detailData.brandName}
                 // />
@@ -295,7 +296,7 @@ useEffect(() => {
                   } ${specialClass}`}
                 >
                   {!loading && (
-                    <img src={ima.img} alt={props.detailData.brandName} />
+                    <Img src={ima.img} alt={props.detailData.brandName} />
                   )}
                   {loading && (
                     <Skeleton
@@ -417,7 +418,7 @@ useEffect(() => {
                         <div className="case-study-feed-video">
                           {!loading && (
                             <Link to={feed.url} target="_blank">
-                              <img src={feed.img} alt="" />
+                              <Img src={feed.img} alt="" />
                             </Link>
                           )}
                           {loading && <Skeleton width={`100%`} height={500} />}
@@ -435,7 +436,7 @@ useEffect(() => {
                         <div className="case-study-feed-video">
                           {!loading && (
                             <Link to={feed.url} target="_blank">
-                              <img src={feed.img} alt="" />
+                              <Img src={feed.img} alt="" />
                             </Link>
                           )}
                           {loading && <Skeleton width={`100%`} height={500} />}
@@ -471,7 +472,7 @@ useEffect(() => {
               />
             )}
             {loading && <Skeleton width={`100%`} height={50} />}
-            {/* <img src={prevPosts.logoImg} alt={prevPosts?.brandName} style={{maxHeight:'15px'}} /> */}
+            {/* <Img src={prevPosts.logoImg} alt={prevPosts?.brandName} style={{maxHeight:'15px'}} /> */}
           </Link>
         )}
         {!prevPosts && (
@@ -498,7 +499,7 @@ useEffect(() => {
               />
             )}
             {loading && <Skeleton width={`100%`} height={50} />}
-            {/* <img src={nextPosts?.logoImg} alt={nextPosts?.brandName} style={{ maxHeight: '50px' }} /> */}
+            {/* <Img src={nextPosts?.logoImg} alt={nextPosts?.brandName} style={{ maxHeight: '50px' }} /> */}
           </Link>
         )}
         {!nextPosts && (

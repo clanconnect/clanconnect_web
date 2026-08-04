@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "images:manifest": "node scripts/generate-image-manifest.mjs",
+    "predev": "npm run images:manifest",
     "dev": "next dev",
+    "prebuild": "npm run images:manifest",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -46,6 +49,7 @@
     "eslint": "^9",
     "eslint-config-next": "^16.1.0",
     "sass": "^1.69.5",
+    "sharp": "^0.34.5",
     "typescript": "^5"
   }
 }

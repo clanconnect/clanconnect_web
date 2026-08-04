@@ -34,6 +34,7 @@ import { Button, Checkbox, FormControlLabel, IconButton, InputAdornment, Textare
 import OtpField from "../../otp/otp.jsx";
 const verifiedImage = '/assets/images/verified.svg';
 import { caseStudyData } from "../../../data/data";
+import Img from '@/components/ui/Img';
 
 const packageService = new PackageService();
 const methods = new Methods();
@@ -1057,7 +1058,7 @@ const OurBusinessModalBrands = () => {
                                                           {packagePlan.best_value ===
                                                             "true" && (
                                                             <span className="ribbon-image-container best-value">
-                                                              <img
+                                                              <Img
                                                                 src={
                                                                   bestValueImage
                                                                 }
@@ -1068,7 +1069,7 @@ const OurBusinessModalBrands = () => {
                                                           {packagePlan.best_seller ===
                                                             "true" && (
                                                             <span className="ribbon-image-container best-seller">
-                                                              <img
+                                                              <Img
                                                                 src={
                                                                   bestSellerImage
                                                                 }
@@ -1079,7 +1080,7 @@ const OurBusinessModalBrands = () => {
                                                           {packagePlan.most_popular ===
                                                             "true" && (
                                                             <span className="ribbon-image-container most-popular">
-                                                              <img
+                                                              <Img
                                                                 src={
                                                                   mostPopularImage
                                                                 }
@@ -1245,7 +1246,7 @@ const OurBusinessModalBrands = () => {
                                           </div>
                                           
                                             <div className="tab-content-package-img-sec ">
-                                              <img
+                                              <Img
                                                 src={package_image}
                                                 alt="nano"
                                               />
@@ -1298,7 +1299,7 @@ const OurBusinessModalBrands = () => {
                                     to={`/case_studies/case_study_detail/${caseStudy.id}`}
                                   >
                                     <div className="case-study-logo-container">
-                                      {/* <img className='case-study-logo' src={caseStudy.logoImg} alt={caseStudy.title} /> */}
+                                      {/* <Img className='case-study-logo' src={caseStudy.logoImg} alt={caseStudy.title} /> */}
                                       <RetinaImage
                                         className="case-study-logo"
                                         src={[
@@ -1372,10 +1373,10 @@ const OurBusinessModalBrands = () => {
                                         <div className="case-study-award"></div>
                                         <div className="case-study-infl">
                                           {/* {caseStudy?.inflImg && <div className='case-study-infl-img-cont'>
-                                      <img src={caseStudy.inflImg} alt={caseStudy.title} /> 
+                                      <Img src={caseStudy.inflImg} alt={caseStudy.title} /> 
                                       </div>}
                                       {caseStudy?.inflImg1 && <div className='case-study-infl-img-cont'>
-                                      <img src={caseStudy?.inflImg1} alt={caseStudy.title} />
+                                      <Img src={caseStudy?.inflImg1} alt={caseStudy.title} />
                                       </div>} */}
                                           <div className="page-case-study-banner-right">
                                             {caseStudy?.images
@@ -1389,7 +1390,7 @@ const OurBusinessModalBrands = () => {
                                                     }`}
                                                   >
                                                     {!loading && (
-                                                      <img
+                                                      <Img
                                                         src={ima.img}
                                                         alt={caseStudy.title}
                                                       />
@@ -2057,7 +2058,7 @@ const OurBusinessModalBrands = () => {
                               arrow
                             >
                               <IconButton size="small" className="p-0">
-                                <img src={verifiedImage} alt="verified" />
+                                <Img src={verifiedImage} alt="verified" />
                               </IconButton>
                             </Tooltip>
                           )}

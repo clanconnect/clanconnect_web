@@ -1,5 +1,6 @@
 'use client';
 import React from 'react'
+import Img from '@/components/ui/Img';
 const discoverInfluencer = '/assets/images/brands-page/discover-influencers.png';
 const brandSecurityCompliance = '/assets/images/brands-page/brand-security-compliance.png';
 const campaignManagement = '/assets/images/brands-page/campaign-management.png';
@@ -21,7 +22,7 @@ const Features = () => {
                     </ul>
                 </div>
                 <div className='features-box-img'>
-                    <img src={discoverInfluencer} alt="Discover Influencers" width={301} height={236} />
+                    <Img src={discoverInfluencer} alt="Discover Influencers" width={301} height={236} />
                 </div>
             </div>
             <div className='features-box features-box-pink  features-box-2x '>
@@ -35,7 +36,7 @@ const Features = () => {
                     </ul>
                 </div>
                 <div className='features-box-img'>
-                    <img src={brandSecurityCompliance} alt="brandSecurityCompliance" width={729} />
+                    <Img src={brandSecurityCompliance} alt="brandSecurityCompliance" width={729} />
                     
                 </div>
             </div>
@@ -49,7 +50,7 @@ const Features = () => {
                     </ul>
                 </div>
                 <div className='features-box-img'>
-                    <img src={campaignManagement} alt="Campaign Management" />
+                    <Img src={campaignManagement} alt="Campaign Management" />
                     
                 </div>
             </div>
@@ -62,7 +63,7 @@ const Features = () => {
                     </ul>
                 </div>
                 <div className='features-box-img'>
-                    <img src={realTime} alt="Get Discovered" width={367} />
+                    <Img src={realTime} alt="Get Discovered" width={367} />
                 </div>
             </div>
         </div>

@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import { Checkbox, FormControlLabel, InputAdornment } from '@mui/material';
 import { BASE_URL_WEB } from '../../../config/config';
 import Skeleton from 'react-loading-skeleton';
+import Img from '@/components/ui/Img';
 const appStore = '/assets/images/influencers-page/app-store.png';
 const playStore = '/assets/images/influencers-page/play-store.png';
 const appStoreBgImage = '/assets/images/app-info-banner.png';
@@ -423,15 +424,15 @@ const NewBannerMob = () => {
                     });
                   })}
                   <div className="app-banner-bottom-img d-md-none">
-                    <img src={appStoreBgImage} alt="App Banner" />
+                    <Img src={appStoreBgImage} alt="App Banner" />
                   </div>
                   <div className="banner-bottom-btn d-flex mt-4 mt-md-5 mb-3">  
                    <div className='infl-banner-buttons'>
                       <Link to="https://apps.apple.com/us/app/clanconnect-for-creators/id6742653562" target='_blank'>
-                          <img src={appStore} alt="App Store" />
+                          <Img src={appStore} alt="App Store" />
                       </Link>
                       <Link to="https://play.google.com/store/apps/details?id=ai.clanconnect.app&hl=en_IN" target='_blank'>
-                          <img src={playStore} alt="Play Store" />
+                          <Img src={playStore} alt="Play Store" />
                       </Link>
                     </div>
                   </div>

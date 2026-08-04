@@ -1,8 +1,10 @@
 'use client';
 import React from 'react';
-const ConfigImgWebp = '/assets/images/clan_connect/configurator-img.webp';
+// The optimizer derives WebP/AVIF per request, so the hand-exported .webp
+// variant is no longer referenced.
 const ConfigImg = '/assets/images/clan_connect/configurator-img.png';
 import {Link} from '@/lib/router';
+import Img from '@/components/ui/Img';
 
 const TabConfigurator = () => {
   return (
@@ -24,26 +26,11 @@ const TabConfigurator = () => {
           </div>
           <div className='col-12 sec-config-img'>
             <picture>
-              <source
-                type='image/webp'
-                srcSet={ConfigImgWebp}
-                loading='lazy'
-                className='lozad'
-                data-use-lozad
-              />
-              <source
-                type='image/png'
-                srcSet={ConfigImg}
-                loading='lazy'
-                className='lozad'
-                data-use-lozad
-              />
-              <img
+              <Img
                 src={ConfigImg}
-                alt=''
-                loading='lazy'
+                alt='How ClanConnect configures a campaign'
                 className='lozad'
-                data-use-lozad
+                sizes='(max-width: 991px) 100vw, 1140px'
               />
             </picture>
           </div>

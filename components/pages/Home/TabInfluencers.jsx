@@ -11,6 +11,7 @@ const imgApply = '/assets/images/img-apply-3d.png';
 const imgInvoicing = '/assets/images/img-invoicing-3d.png';
 import {TabData} from '../../../data/data';
 import lozad from 'lozad';
+import Img from '@/components/ui/Img';
 
 const TabInfluencers = () => {
   const [key, setKey] = useState('Influencers');
@@ -97,27 +98,15 @@ const TabInfluencers = () => {
                   return tabData?.influencers?.map((brandData) => {
                     return (
                       <div key={brandData.id}>
+                        {/* <picture> kept as a plain wrapper (its <source>
+                            children are gone -- the optimizer content-negotiates
+                            AVIF/WebP itself). Keeping the element preserves the
+                            containing block the surrounding CSS sizes against. */}
                         <picture>
-                          <source
-                            type='image/webp'
-                            srcSet={brandData.webpImg}
-                            loading='lazy'
-                            className='lozad'
-                            data-use-lozad
-                          />
-                          <source
-                            type='image/jpeg'
-                            srcSet={brandData.img}
-                            loading='lazy'
-                            className='lozad'
-                            data-use-lozad
-                          />
-                          <img
+                          <Img
                             src={brandData.img}
-                            alt=''
-                            loading='lazy'
+                            alt={brandData.title || ''}
                             className='lozad'
-                            data-use-lozad
                           />
                         </picture>
                       </div>
@@ -146,26 +135,10 @@ const TabInfluencers = () => {
                      ))}</ul>
                     }
                     <picture>
-                      <source
-                        type='image/webp'
-                        srcSet={brandData.webpImg}
-                        loading='lazy'
-                        className='lozad'
-                        data-use-lozad
-                      />
-                      <source
-                        type='image/jpeg'
-                        srcSet={brandData.img}
-                        loading='lazy'
-                        className='lozad'
-                        data-use-lozad
-                      />
-                      <img
+                      <Img
                         src={brandData.img}
-                        alt=''
-                        loading='lazy'
+                        alt={brandData.title || ''}
                         className='lozad'
-                        data-use-lozad
                       />
                     </picture>
                   </div>
