@@ -428,10 +428,10 @@ const NewBannerMob = () => {
                   </div>
                   <div className="banner-bottom-btn d-flex mt-4 mt-md-5 mb-3">  
                    <div className='infl-banner-buttons'>
-                      <Link to="https://apps.apple.com/us/app/clanconnect-for-creators/id6742653562" target='_blank'>
+                      <Link to="https://apps.apple.com/app/id6742653562" target='_blank'>
                           <Img src={appStore} alt="App Store" />
                       </Link>
-                      <Link to="https://play.google.com/store/apps/details?id=ai.clanconnect.app&hl=en_IN" target='_blank'>
+                      <Link to="https://play.google.com/store/apps/details?id=ai.clanconnect.app" target='_blank'>
                           <Img src={playStore} alt="Play Store" />
                       </Link>
                     </div>
