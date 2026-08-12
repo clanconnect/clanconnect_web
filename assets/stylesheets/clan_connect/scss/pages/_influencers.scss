@@ -54,13 +54,26 @@
         margin-top: 0rem;
         margin-bottom: 2rem;
         justify-content: center;
+        // The App Store / Play Store badges need their width pinned rather than
+        // capped. Nothing else sizes them, and the reset's
+        // `img:where([data-nimg="1"]) { width: auto; height: auto }` drops
+        // next/image's width/height attributes, so the browser falls back to the
+        // density-corrected intrinsic size of whichever srcset candidate it
+        // picks. These are 186px source files and the optimizer never upscales,
+        // so the candidate advertised as `2x` is that same 186px file -- on a 2x
+        // screen the badges laid out at 186/2 = 93px, half the intended size,
+        // and `max-width` alone can't pull them back up.
         a {
-            max-width: 150px;
+            width: 150px;
            @media (min-width: 768px) {
-                 max-width: 186px;
-            } 
+                 width: 186px;
+            }
         }
 
+        img {
+            width: 100%;
+            height: auto;
+        }
 
     }
 }
