@@ -14,6 +14,12 @@ import PricingPlanInfluencer from "./PricingPlanInfluencer";
 
 const subscriptionService = new SubscriptionService();
 
+// The two tabs, mapped both ways between the react-bootstrap eventKey and the
+// ?user_type= value that appears in the URL.
+const TAB_KEY_BY_USER_TYPE = { brand: "first", influencer: "second" };
+const USER_TYPE_BY_TAB_KEY = { first: "brand", second: "influencer" };
+const DEFAULT_TAB_KEY = "first";
+
 // Display order for premium plans (lower = shown first).
 const PLAN_ORDER = {
   Monthly: 1,
@@ -106,13 +112,48 @@ const Pricing = () => {
     };
   }, []);
 
+  // The visible tab is mirrored in ?user_type= so the URL is shareable. The
+  // param is read (not rendered) on mount to keep the server/client markup
+  // identical, and written with replaceState so switching tabs neither
+  // re-fetches the plans nor piles up history entries.
+  const [activeTab, setActiveTab] = useState(DEFAULT_TAB_KEY);
+
+  const writeUserType = (tabKey) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("user_type", USER_TYPE_BY_TAB_KEY[tabKey]);
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}?${params}${window.location.hash}`
+    );
+  };
+
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("user_type") === "influencer") {
-      const button = document.getElementById("left-tabs-example-tab-second");
-      if (button != null) button.click();
-    }
+    const syncFromUrl = () => {
+      const userType = new URLSearchParams(window.location.search)
+        .get("user_type")
+        ?.toLowerCase();
+      const tabKey =
+        userType && Object.hasOwn(TAB_KEY_BY_USER_TYPE, userType)
+          ? TAB_KEY_BY_USER_TYPE[userType]
+          : undefined;
+
+      setActiveTab(tabKey || DEFAULT_TAB_KEY);
+      // Nothing usable in the URL (first visit, or a stale/unknown value):
+      // stamp the tab that is actually showing.
+      if (!tabKey) writeUserType(DEFAULT_TAB_KEY);
+    };
+
+    syncFromUrl();
+    window.addEventListener("popstate", syncFromUrl);
+    return () => window.removeEventListener("popstate", syncFromUrl);
   }, []);
+
+  const handleTabSelect = (tabKey) => {
+    if (!tabKey || !Object.hasOwn(USER_TYPE_BY_TAB_KEY, tabKey)) return;
+    setActiveTab(tabKey);
+    writeUserType(tabKey);
+  };
 
   const influencerCards = [
     SubscriptionPlanData.influencer.basic_plan,
@@ -149,7 +190,11 @@ const Pricing = () => {
                 </div>
               </div>
             </div>
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Tab.Container
+              id="left-tabs-example"
+              activeKey={activeTab}
+              onSelect={handleTabSelect}
+            >
               <div className="subs-plan-sec main-tab">
                 <Nav className="nav-tabs plan-info plan-info-main-tab">
                   <Nav.Item>
