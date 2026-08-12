@@ -8624,6 +8624,20 @@ export const ZAPFeaturesData = {
         iconClassName: "bi bi-check",
         value: "",
       },
+
+      {
+        text: "Zap Storefront",
+        liClassName: "",
+        iconClassName: "bi bi-check",
+        value: "",
+      },
+
+      {
+        text: "Zap Link in Bio",
+        liClassName: "",
+        iconClassName: "bi bi-check",
+        value: "",
+      },
     ],
     savings_plan_feature_text: [
       {
@@ -8667,6 +8681,20 @@ export const ZAPFeaturesData = {
 
       {
         text: "No ClanConnect Branding",
+        liClassName: "",
+        iconClassName: "bi bi-check",
+        value: "",
+      },
+
+      {
+        text: "Zap Storefront",
+        liClassName: "",
+        iconClassName: "bi bi-check",
+        value: "",
+      },
+
+      {
+        text: "Zap Link in Bio",
         liClassName: "",
         iconClassName: "bi bi-check",
         value: "",
