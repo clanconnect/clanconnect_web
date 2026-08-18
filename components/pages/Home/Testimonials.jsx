@@ -14,7 +14,6 @@ const DummyTestimonialImage = '/assets/images/testimonial-img/dummy-testimonial1
 import RetinaImage from '@/lib/RetinaImage';
 import Img from '@/components/ui/Img';
 
-
 const Testimonials = () => {
   const { observe } = typeof document === 'undefined' ? { observe: () => {} } : lozad('[data-use-lozad]', {
     loaded: (el) => {
@@ -174,7 +173,7 @@ const Testimonials = () => {
                           <div className='testimonial-container-inner'>
                             <div className='testimonial-img-sec'>
                               <div className='testimonial-img-brand'>
-                                <Img className='testimonial-thumbnail' src={testimonial?.logoImg} />
+                                <Img className='testimonial-thumbnail' src={testimonial?.logoImg} raw />
                               </div>
                               {testimonial?.personImg &&
                               <div className='testimonial-img-person'>
@@ -273,7 +272,7 @@ const Testimonials = () => {
             <Modal.Body><div className='testimonial-container-inner'>
               <div className='testimonial-img-sec'>
                 <div className='testimonial-img-brand'>
-                  <Img className='testimonial-thumbnail' src={testimonialModalData[0]?.logoImg} />
+                  <Img className='testimonial-thumbnail' src={testimonialModalData[0]?.logoImg} raw />
                 </div>
 
                 <div className='testimonial-img-person'>

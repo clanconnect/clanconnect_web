@@ -107,6 +107,7 @@ const TabInfluencers = () => {
                             src={brandData.img}
                             alt={brandData.title || ''}
                             className='lozad'
+                            raw
                           />
                         </picture>
                       </div>
@@ -139,6 +140,7 @@ const TabInfluencers = () => {
                         src={brandData.img}
                         alt={brandData.title || ''}
                         className='lozad'
+                        raw
                       />
                     </picture>
                   </div>

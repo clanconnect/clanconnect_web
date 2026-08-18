@@ -35,7 +35,7 @@ const rightEmitterRef = useRef(null);
       <div className='container d-flex align-items-center'>
         <Link className='logo' to='/'>
           {/* Sitewide masthead: always above the fold, so it is preloaded. */}
-          <Img className='img-fluid' src={clanLogo} alt='ClanConnect' priority />
+          <Img className='img-fluid' src={clanLogo} alt='ClanConnect' priority raw />
         </Link>
 
         <span
@@ -52,7 +52,7 @@ const rightEmitterRef = useRef(null);
           }
         >
           <Link onClick={handleNavLinkClick} className='d-md-none logo' to='/'>
-            <Img className='img-fluid' src={clanLogo} alt='ClanConnect' />
+            <Img className='img-fluid' src={clanLogo} alt='ClanConnect' raw />
           </Link>
           <ul>
             <li>

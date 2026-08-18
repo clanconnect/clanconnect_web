@@ -51,7 +51,7 @@ const Footer = () => {
             <Link to="/" className="site-logo">
               {/* The hand-rolled <picture> webp/png fallback is redundant now:
                   the optimizer content-negotiates AVIF/WebP per request. */}
-              <Img alt="ClanConnect" src={clanLogo} />
+              <Img alt="ClanConnect" src={clanLogo} raw />
             </Link>
           </div>
           <div className="footer-sec">
