@@ -267,7 +267,7 @@ useEffect(() => {
                 !loading && (
                   <RetinaImage
                     src={[props.detailData.logoImg, props.detailData.logoImg2x]}
-                    style={{ maxHeight: "50px" }}
+                    style={{ maxHeight: "50px", width: "revert-layer" }}
                     alt={props.detailData.brandName}
                   />
                 )
@@ -494,7 +494,7 @@ useEffect(() => {
             {!loading && (
               <RetinaImage
                 src={[nextPosts.logoImg, nextPosts.logoImg2x]}
-                style={{ maxHeight: "50px" }}
+                style={{ maxHeight: "50px", width: "revert-layer" }}
                 alt={nextPosts?.brandName}
               />
             )}

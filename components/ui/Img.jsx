@@ -33,6 +33,20 @@ export function getIntrinsicSize(src) {
   return dims ? { width: dims[0], height: dims[1] } : null;
 }
 
+const RawImg = ({ src, alt, priority, className, style, ...rest }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img
+    src={src}
+    alt={alt}
+    loading={priority ? "eager" : "lazy"}
+    decoding="async"
+    fetchPriority={priority ? "high" : undefined}
+    className={className}
+    style={style}
+    {...rest}
+  />
+);
+
 const Img = ({
   src,
   alt = "",
@@ -41,11 +55,27 @@ const Img = ({
   sizes,
   fill = false,
   priority = false,
+  // Logos/icons sized purely via CSS max-width/max-height (no literal width
+  // or height anywhere in the stylesheet, and possibly switching which axis
+  // governs across breakpoints) hit a next/image + HiDPI quirk: with both
+  // axes left at the reset's `width:auto;height:auto`, the browser asks for
+  // an `x2` srcset candidate the source can't satisfy, the optimizer just
+  // re-serves the original file for that slot, and the browser -- reading it
+  // as "2x" -- halves the reported natural size. A plain <img> has no
+  // density-descriptor srcset to misread, so it doesn't hit this at all --
+  // exactly how these elements rendered before the next/image migration.
+  // `raw` opts a call site into that path deliberately, same as the
+  // (unrelated) automatic fallback below for sources with no manifest entry.
+  raw = false,
   className,
   style,
   ...rest
 }) => {
   if (!src) return null;
+
+  if (raw) {
+    return <RawImg src={src} alt={alt} priority={priority} className={className} style={style} {...rest} />;
+  }
 
   // `fill` is for images in a fixed-size, positioned box (object-fit: cover
   // cards). Dimensions are irrelevant there, so hand off directly.
@@ -83,19 +113,7 @@ const Img = ({
   // and distorting it -- still lazy, just not resized. Use `fill` at the call
   // site when the container has a fixed box and you want these optimized too.
   if (!resolvedWidth || !resolvedHeight) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={src}
-        alt={alt}
-        loading={priority ? "eager" : "lazy"}
-        decoding="async"
-        fetchPriority={priority ? "high" : undefined}
-        className={className}
-        style={style}
-        {...rest}
-      />
-    );
+    return <RawImg src={src} alt={alt} priority={priority} className={className} style={style} {...rest} />;
   }
 
   return (

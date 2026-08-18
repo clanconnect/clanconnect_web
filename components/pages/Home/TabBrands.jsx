@@ -127,6 +127,7 @@ const TabBrands = () => {
                             src={brandData.img}
                             alt={brandData.title || ''}
                             className='lozad'
+                            raw
                           />
                         </picture>
                         <picture className='sec-common-tab-right-img-small'>
@@ -134,6 +135,7 @@ const TabBrands = () => {
                             src={brandData.img1}
                             alt=''
                             className='lozad'
+                            raw
                           />
                         </picture>
                       </div>
@@ -179,6 +181,7 @@ const TabBrands = () => {
                           src={brandData.img}
                           alt={brandData.title || ''}
                           className='lozad'
+                          raw
                         />
                       </picture>
                       <picture className='sec-common-tab-right-img-small'>
@@ -186,6 +189,7 @@ const TabBrands = () => {
                           src={brandData.img1}
                           alt=''
                           className='lozad'
+                          raw
                         />
                       </picture>
                     </div>
