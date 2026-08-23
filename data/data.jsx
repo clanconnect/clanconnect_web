@@ -8543,165 +8543,6 @@ export const NewsData = [
 
 
 
-export const ZAPFeaturesData = {
-  influencer: {
-    basic_plan_feature_text: [
-       {
-        text: <strong>ZAP Basic</strong>,
-        liClassName: "border-bottom-0",
-        iconClassName: "",
-        value: "",
-      },
-      {
-        text: "50 comment replies/DMs (resets daily)",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-      {
-        text: "1 active automation (posts)",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-      {
-        text: "1 rule per automation",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "3 trigger keyword per rule",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-    ],
-    starter_plan_feature_text: [
-      {
-        text: <strong>ZAP PRO</strong>,
-        liClassName: "border-bottom-0",
-        iconClassName: "",
-        value: "",
-      },
-      {
-        text: "1000 comment replies/DMs (resets daily)",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-      {
-        text: "5 active automation (posts)",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-      {
-        text: "5 rule per automation",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "5 trigger keyword per rule",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "5 zap links per rule",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "No ClanConnect Branding",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "Zap Storefront",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "Zap Link in Bio",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-    ],
-    savings_plan_feature_text: [
-      {
-        text: <strong>ZAP PRO</strong>,
-        liClassName: "border-bottom-0",
-        iconClassName: "",
-        value: "",
-      },
-      {
-        text: "3000 comment replies/DMs (resets daily)",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-      {
-        text: "10 active automation (posts)",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-      {
-        text: "10 rule per automation",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "10 trigger keyword per rule",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "10 zap links per rule",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "No ClanConnect Branding",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "Zap Storefront",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-
-      {
-        text: "Zap Link in Bio",
-        liClassName: "",
-        iconClassName: "bi bi-check",
-        value: "",
-      },
-    ],
-  },
-};
 // Pricing data
 export const SubscriptionPlanFeaturesData = {
   influencer: {
@@ -9151,6 +8992,18 @@ export const SubscriptionPlanData = {
       monthly_subscription_net_amount: 0,
       monthly_net_amount: 0,
       description: "",
+      // Mirrors the plan_entitlements rows the API returns for the FOC plan, so
+      // the ZAP list renders the same way whether it came from the API or from
+      // here. -1 means "Unlimited" (see core/utility/entitlements).
+      entitlements: {
+        daily_interaction_limit: 50,
+        max_active_automation_posts: 1,
+        max_dm_rules: 1,
+        max_comment_rules: 1,
+        max_keywords_per_rule: 3,
+        storefront_enabled: false,
+        link_in_bio_enabled: false,
+      },
     },
     Monthly: {
       id: 2,
@@ -9168,6 +9021,16 @@ export const SubscriptionPlanData = {
       monthly_subscription_amount: 295,
       monthly_net_amount: 200,
       monthly_amount: 236,
+      entitlements: {
+        daily_interaction_limit: -1,
+        max_active_automation_posts: -1,
+        max_dm_rules: -1,
+        max_comment_rules: -1,
+        max_keywords_per_rule: 10,
+        zap_link_limit: -1,
+        storefront_enabled: true,
+        link_in_bio_enabled: true,
+      },
       description: "",
     },
     Annually: {
@@ -9186,6 +9049,16 @@ export const SubscriptionPlanData = {
       monthly_subscription_amount: 295,
       monthly_net_amount: 100,
       monthly_amount: 118,
+      entitlements: {
+        daily_interaction_limit: -1,
+        max_active_automation_posts: -1,
+        max_dm_rules: -1,
+        max_comment_rules: -1,
+        max_keywords_per_rule: 10,
+        zap_link_limit: -1,
+        storefront_enabled: true,
+        link_in_bio_enabled: true,
+      },
       description: "",
     },
   },

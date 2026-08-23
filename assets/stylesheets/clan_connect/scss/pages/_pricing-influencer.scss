@@ -1317,7 +1317,53 @@ section.infl-mob.only-premium {
     white-space: nowrap;
     width: 100%;
   }
-// }
+
+  // Desktop: the row now holds four cards (BASIC, Free Trial and the two paid
+  // tiers). `white-space: nowrap` above sizes every card to its longest feature
+  // label, which pushed the fourth card past the edge of the row, so from lg up
+  // the labels wrap and the cards share the width evenly instead. Narrower
+  // screens keep the nowrap + horizontal-scroll behaviour.
+  @media only screen and (min-width: 992px) {
+    .pricing-plan-inner {
+      white-space: normal;
+      overflow: visible;
+
+      .pricing-plan {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      // A ZAP limit that now wraps onto a second line reads better ranged left
+      // under its tick than centred under it. Scoped to the ZAP list: the
+      // marketplace list below it holds section headings whose icon would be
+      // knocked onto its own line by flex-start.
+      .zap-section li {
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      // …but never break a price, a discount or the plan title mid-token
+      // ("₹29 / 5", "₹236/mont / h"). The price row itself may still wrap
+      // between them.
+      .pricing-title,
+      .pricing-plan-gst,
+      .brand-pricing-plan-type span:not(.pricing-span) {
+        white-space: nowrap;
+      }
+
+      // The price row hard-codes &nbsp; between its parts, so as plain inline
+      // text it has no break opportunity and overflows the narrower card.
+      // Laying it out as a wrapping flex row gives it one (and keeps the
+      // ms-auto "/month" figure pinned to the right).
+      .brand-pricing-plan-type > .pricing-span {
+        white-space: normal;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+      }
+    }
+  }
+
 @media only screen and (max-width: 768px) {
 }
 

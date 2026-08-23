@@ -4,6 +4,13 @@ import { LoadingButton } from "@mui/lab";
 
 import { SubscriptionPlanFeaturesData  } from '../../../data/data';
 import { Link } from "@/lib/router";
+// Imported from the module directly, not the core/utility barrel: that barrel
+// also re-exports numbers.ts, whose 'number-to-words' dependency is not
+// installed and would fail the build.
+import {
+  formatEntitlementLimit,
+  isUnlimitedEntitlement,
+} from "@/core/utility/entitlements";
 
 
 const PricingPlanInfluencer = ({
@@ -13,7 +20,6 @@ const PricingPlanInfluencer = ({
   loading,
   account_type,
   activePlan,
-  zapFeatures,
   isForeign: isForeignPage,
 }) => {
 
@@ -40,6 +46,15 @@ const PricingPlanInfluencer = ({
     Quarterly: "Quarterly"
   };
 
+  // The free card is 'BASIC' in the hardcoded fallback data and 'FOC' in the
+  // API rows — same card, so every check below goes through this flag.
+  const planName = subscription_plan.plan_name || "";
+  const isBasicPlan = ["basic", "foc"].includes(planName.toLowerCase());
+  // The 7-day trial is an ordinary plan row (amount 0, days 7). It is priced as
+  // "Free for N days" rather than through the generic ₹0 price block.
+  const isTrialPlan = planName.toLowerCase() === "trial";
+  const trialDays = Number(subscription_plan.days) || 7;
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
@@ -60,54 +75,81 @@ const PricingPlanInfluencer = ({
     }
   };
 
-  let cta;
-  
-  let features;
-  if (subscription_plan.plan_name === "BASIC") {
-    cta = {
-      btn_name: "Start Free",
-      href_url: "https://www.app.clanconnect.ai/login",
-    };
-    features =
-      subscription_plan.user_type === "Influencer"
-        ? SubscriptionPlanFeaturesData.influencer.basic_plan_features
-        : SubscriptionPlanFeaturesData.brand.basic_plan_features;
-  } else {
-    cta = {
-      btn_name: "Subscribe",
-      href_url: "https://www.app.clanconnect.ai/login",
-    };
-    features =
-      subscription_plan.user_type === "Influencer"
-        ? SubscriptionPlanFeaturesData.influencer.premium_plan_features
-        : SubscriptionPlanFeaturesData.brand.premium_plan_features;
-  }
+  // CTA. The trial is claimed inside the app (it needs a logged-in influencer to
+  // check eligibility), so every card here just routes to login.
+  const cta = isBasicPlan
+    ? { btn_name: "Start Free", href_url: "https://www.app.clanconnect.ai/login" }
+    : isTrialPlan
+      ? { btn_name: "Start Free Trial", href_url: "https://www.app.clanconnect.ai/login" }
+      : { btn_name: "Subscribe", href_url: "https://www.app.clanconnect.ai/login" };
 
-  if (subscription_plan.plan_name?.toLowerCase() === "basic") {
-    features = ["Influencer", "Talent Partner"].includes(subscription_plan.user_type)
-      ? SubscriptionPlanFeaturesData.influencer.basic_plan_features
-      : SubscriptionPlanFeaturesData.brand.basic_plan_features;
-  } else {
-    features = ["Influencer", "Talent Partner"].includes(subscription_plan.user_type)
-      ? SubscriptionPlanFeaturesData.influencer.premium_plan_features
-      : SubscriptionPlanFeaturesData.brand.premium_plan_features;
-  }
+  // Non-Zap (marketplace) features. The trial unlocks everything, so it reads
+  // the premium list like the paid plans do.
+  const isInfluencerCard = ["Influencer", "Talent Partner"].includes(
+    subscription_plan.user_type
+  );
+  const featureSet = isInfluencerCard
+    ? SubscriptionPlanFeaturesData.influencer
+    : SubscriptionPlanFeaturesData.brand;
+  const features = isBasicPlan
+    ? featureSet.basic_plan_features
+    : featureSet.premium_plan_features;
 
-  let zapFeaturesPlan = [];
+  // ---- ZAP feature list ----
+  // Built from the plan's own `entitlements` (plan_entitlements rows, served
+  // with the plan) rather than from a hardcoded list, so these numbers always
+  // match what the in-app Settings > Subscription tab shows and a limit change
+  // in the DB needs no web release. A row without entitlements renders no ZAP
+  // section at all — better silence than stale numbers.
+  const entitlements = subscription_plan.entitlements;
+  const limit = (key) => formatEntitlementLimit(entitlements?.[key]);
 
-  if (subscription_plan.plan_name?.toLowerCase() === "basic") {
-    zapFeaturesPlan = zapFeatures?.influencer?.basic_plan_feature_text || [];
-  } 
-  else if (subscription_plan.plan_name?.toLowerCase() === "starter") {
-    zapFeaturesPlan = zapFeatures?.influencer?.starter_plan_feature_text || [];
-  } 
-  else {
-    zapFeaturesPlan = zapFeatures?.influencer?.savings_plan_feature_text || [];
-  }
-
-  
-
-  console.log(zapFeatures, "zapFeatures.");
+  const zapFeaturesPlan = !entitlements
+    ? []
+    : [
+      {
+        text: <strong>{isBasicPlan ? "ZAP Basic" : "ZAP PRO"}</strong>,
+        liClassName: "border-bottom-0",
+        iconClassName: "",
+      },
+      {
+        // "Unlimited" replies never reset, so the daily-reset note is dropped.
+        text: `${limit("daily_interaction_limit")} comment replies/DMs${
+          isUnlimitedEntitlement(entitlements.daily_interaction_limit)
+            ? ""
+            : " (resets daily)"
+        }`,
+        iconClassName: "bi bi-check",
+      },
+      {
+        text: `${limit("max_active_automation_posts")} active automation (posts)`,
+        iconClassName: "bi bi-check",
+      },
+      {
+        text: `${limit("max_dm_rules")} rule per automation`,
+        iconClassName: "bi bi-check",
+      },
+      {
+        text: `${limit("max_keywords_per_rule")} trigger keyword per rule`,
+        iconClassName: "bi bi-check",
+      },
+      ...(isBasicPlan
+        ? []
+        : [
+            {
+              text: `${limit("zap_link_limit")} zap links per rule`,
+              iconClassName: "bi bi-check",
+            },
+            { text: "No ClanConnect Branding", iconClassName: "bi bi-check" },
+          ]),
+      ...(entitlements.storefront_enabled
+        ? [{ text: "Zap Storefront", iconClassName: "bi bi-check" }]
+        : []),
+      ...(entitlements.link_in_bio_enabled
+        ? [{ text: "Zap Link in Bio", iconClassName: "bi bi-check" }]
+        : []),
+      ]
+        .map((feature) => ({ liClassName: "", ...feature }));
 
   return (
     <div
@@ -133,28 +175,36 @@ const PricingPlanInfluencer = ({
             }
           >
             <span className="pricing-title">
-              {subscription_plan.plan_name === "BASIC"
+              {isBasicPlan
                 ? "BASIC"
-                : subscription_plan.plan_name === "Monthly"
-                  ? "MONTHLY"
-                  : subscription_plan.plan_name === "Quarterly"
-                    ? "QUARTERLY"
-                    : subscription_plan.plan_name === "Annually"
-                      ? "ANNUALLY"
-                      : subscription_plan.plan_name === "Starter"
-                        ? "Starter"
-                        : subscription_plan.plan_name === "Savings"
-                          ? "Savings"
-                          : "PREMIUM"}
+                : isTrialPlan
+                  ? "Free Trial"
+                  : subscription_plan.plan_name === "Monthly"
+                    ? "MONTHLY"
+                    : subscription_plan.plan_name === "Quarterly"
+                      ? "QUARTERLY"
+                      : subscription_plan.plan_name === "Annually"
+                        ? "ANNUALLY"
+                        : subscription_plan.plan_name === "Starter"
+                          ? "Starter"
+                          : subscription_plan.plan_name === "Savings"
+                            ? "Savings"
+                            : "PREMIUM"}
 
               {(subscription_plan.user_type === "Brand" ||
                 subscription_plan.user_type === "Agency") && (
                 <i className="bi bi-chevron-down d-lg-none"></i>
               )}
             </span>
-            <span className="ps-2 fs-12 ms-auto">(Billed Monthly)</span>
+            <span className="ps-2 fs-12 ms-auto">
+              {isTrialPlan
+                ? "(No payment required)"
+                : isBasicPlan
+                  ? "(Billed Monthly)"
+                  : `(Billed ${planTypeMap[subscription_plan.plan_type] || "Monthly"})`}
+            </span>
           </span>
-          {subscription_plan.plan_name === "BASIC" && (
+          {isBasicPlan && (
             <span className="d-flex flex-column">
               <span className="brand-pricing-plan-type">
                 <span className="pricing-span">Free</span>
@@ -166,7 +216,27 @@ const PricingPlanInfluencer = ({
             </span>
           )}
 
-          {subscription_plan.plan_name !== "BASIC" &&
+          {/* Trial: priced as "Free for N days", never as the generic ₹0 the
+              amount-driven blocks below would print. */}
+          {isTrialPlan && (
+            <span className="d-flex flex-column">
+              <span className="brand-pricing-plan-type">
+                {/* Both parts sit inside .pricing-span so they stay on one line
+                    (on desktop that span lays its contents out as a flex row). */}
+                <span className="pricing-span">
+                  Free
+                  <span className="ps-2 fs-14">for {trialDays} days</span>
+                </span>
+              </span>
+              <span className="pricing-description">
+                Full access to every premium feature. No card needed — it simply
+                <br /> ends after {trialDays} days.
+              </span>
+            </span>
+          )}
+
+          {!isBasicPlan &&
+            !isTrialPlan &&
             subscription_plan.discount === 0 && (
               <>
                 <span className="brand-pricing-plan-type">
@@ -177,7 +247,8 @@ const PricingPlanInfluencer = ({
               </>
             )}
 
-          {subscription_plan.plan_name !== "BASIC" &&
+          {!isBasicPlan &&
+            !isTrialPlan &&
             subscription_plan.discount !== 0 && (
               <>
                 <span className="brand-pricing-plan-type">
@@ -205,7 +276,7 @@ const PricingPlanInfluencer = ({
               </>
             )}
 
-          {subscription_plan.description && (
+          {subscription_plan.description && !isTrialPlan && (
             <span className="pricing-description">
               {subscription_plan.description}
             </span>
@@ -239,27 +310,27 @@ const PricingPlanInfluencer = ({
         {(subscription_plan.user_type === "Influencer" ||
           subscription_plan.user_type === "Talent Partner") && (
           <>
-            <section className="zap-section">
-              <ul>
-                {zapFeaturesPlan?.map((feature, index) => (
-                  <li key={index} className={feature.liClassName}>
-                    {feature?.iconClassName && (
-                      <i className={feature.iconClassName}></i>
-                    )}
-                    {feature?.text}
-                  </li>
-                ))}
-              </ul>
-            </section>
+            {zapFeaturesPlan.length > 0 && (
+              <section className="zap-section">
+                <ul>
+                  {zapFeaturesPlan.map((feature, index) => (
+                    <li key={index} className={feature.liClassName}>
+                      {feature.iconClassName && (
+                        <i className={feature.iconClassName}></i>
+                      )}
+                      {feature.text}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {!isForeign && (
               <ul>
                 {features.map((feature, index) => {
-                  const isBasic = subscription_plan.plan_name === "BASIC";
-
                   let iconClass = feature.iconClassName;
 
-                  if (isBasic) {
+                  if (isBasicPlan) {
                     if (index === 0) iconClass = "bi bi-check";
                     else iconClass = "bi bi-x";
                   }

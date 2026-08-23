@@ -5,7 +5,6 @@ import { Link } from "@/lib/router";
 import {
   SubscriptionPlanData,
   SubscriptionPlanFeaturesData,
-  ZAPFeaturesData,
 } from "../../../data/data";
 import { Helmet } from "@/lib/helmet";
 import { SubscriptionService } from "@/core/services";
@@ -45,10 +44,30 @@ const sortPremium = (rows) =>
       (a, b) => (PLAN_ORDER[a.plan_name] || 99) - (PLAN_ORDER[b.plan_name] || 99)
     );
 
-// Hardcoded fallback (also the first paint before the API responds, since this
-// page is statically exported and fetches on the client).
+const isBasicRow = (p) =>
+  ["basic", "foc"].includes(String(p?.plan_name || "").toLowerCase());
+const isTrialRow = (p) => String(p?.plan_name || "").toLowerCase() === "trial";
+
+// Reading order of the influencer cards: BASIC -> Trial -> paid tiers (cheapest
+// first). The API already returns them this way; this only guarantees it for
+// the hardcoded fallback and for any future row the backend doesn't rank.
+const cardRank = (p) => (isBasicRow(p) ? 0 : isTrialRow(p) ? 1 : 2);
+const sortInfluencerCards = (rows) =>
+  (rows || [])
+    .slice()
+    .sort(
+      (a, b) =>
+        cardRank(a) - cardRank(b) ||
+        (PLAN_ORDER[a.plan_name] || 99) - (PLAN_ORDER[b.plan_name] || 99)
+    );
+
+// Hardcoded fallback — also the first paint, since the plans are fetched on the
+// client (the backend resolves the visitor's country from the request, so the
+// call has to carry the visitor's own IP, not the server's). No Trial row here:
+// whether a trial is on offer is a live, country-specific decision, so the card
+// only ever appears once the API has answered.
 const FALLBACK_BRAND = sortPremium(Object.values(SubscriptionPlanData.brand));
-const FALLBACK_INFLUENCER = sortPremium(
+const FALLBACK_INFLUENCER = sortInfluencerCards(
   Object.values(SubscriptionPlanData.influencer)
 );
 
@@ -65,11 +84,13 @@ const isForeignResponse = (rows) =>
 
 const Pricing = () => {
   const [brandPremium, setBrandPremium] = useState(FALLBACK_BRAND);
-  const [influencerPremium, setInfluencerPremium] = useState(
-    FALLBACK_INFLUENCER
-  );
-  // The BASIC card is rendered from hardcoded data rather than the API response,
-  // so it can't read the flag off its own row — it has to come from the page.
+  // Every influencer card (BASIC/FOC, Trial, paid tiers) is rendered straight
+  // from the API rows — they carry the `entitlements` that drive the ZAP
+  // feature list, so a limit change in the DB shows up here with no release.
+  const [influencerCards, setInfluencerCards] = useState(FALLBACK_INFLUENCER);
+  // Zap-only (foreign) is a property of the visitor, not of one plan: the
+  // hardcoded fallback rows carry no marker at all, so the flag is resolved once
+  // for the whole page and handed to every card.
   const [influencerForeign, setInfluencerForeign] = useState(false);
 
   useEffect(() => {
@@ -93,12 +114,12 @@ const Pricing = () => {
         if (!mounted) return;
 
         const brandRows = sortPremium(brandRes?.data?.rows);
-        const inflRows = sortPremium(inflRes?.data?.rows);
+        const inflRows = sortInfluencerCards(inflRes?.data?.rows);
 
         if (brandRows.length) setBrandPremium(brandRows);
-        if (inflRows.length) setInfluencerPremium(inflRows);
-        // Read off the full response, not sortPremium's output: the free/FOC row
-        // it filters out carries the flag too.
+        if (inflRows.length) setInfluencerCards(inflRows);
+        // Read off the full response so the flag survives even if a future
+        // filter drops the row that carries it.
         setInfluencerForeign(isForeignResponse(inflRes?.data?.rows));
       } catch (error) {
         // Keep the fallback plans already in state.
@@ -154,11 +175,6 @@ const Pricing = () => {
     setActiveTab(tabKey);
     writeUserType(tabKey);
   };
-
-  const influencerCards = [
-    SubscriptionPlanData.influencer.basic_plan,
-    ...influencerPremium,
-  ];
 
   return (
     <>
@@ -308,7 +324,6 @@ const Pricing = () => {
                                       plan.plan_id || plan.id || plan.plan_name
                                     }
                                     subscription_plan={plan}
-                                    zapFeatures={ZAPFeaturesData}
                                     isForeign={influencerForeign}
                                   />
                                 ))}
