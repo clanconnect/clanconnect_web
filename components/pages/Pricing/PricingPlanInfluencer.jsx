@@ -10,6 +10,9 @@ import { Link } from "@/lib/router";
 import {
   formatEntitlementLimit,
   isUnlimitedEntitlement,
+  formatAutomationSurfaces,
+  isAnyMediaAutomationAllowed,
+  isFollowGateAllowed,
 } from "@/core/utility/entitlements";
 
 
@@ -122,7 +125,11 @@ const PricingPlanInfluencer = ({
         iconClassName: "bi bi-check",
       },
       {
-        text: `${limit("max_active_automation_posts")} active automation (posts)`,
+        // OLD: `... active automation (posts)` — "(posts)" was hardcoded, so
+        // Trial and paid plans under-sold themselves: FOC/Basic carries
+        // allowed_content_types = 'post', every trial/paid plan carries
+        // 'post,story,live'. The parenthetical is read off that entitlement now.
+        text: `${limit("max_active_automation_posts")} active automation (${formatAutomationSurfaces(entitlements)})`,
         iconClassName: "bi bi-check",
       },
       {
@@ -140,8 +147,21 @@ const PricingPlanInfluencer = ({
               text: `${limit("zap_link_limit")} zap links per rule`,
               iconClassName: "bi bi-check",
             },
-            { text: "No ClanConnect Branding", iconClassName: "bi bi-check" },
           ]),
+      // Catch-all zaps and button templates are plan capabilities the card never
+      // mentioned. Both go through the entitlement helpers, never the raw key —
+      // see the note in 2026-08-30_any_media_automation_entitlement.sql. They sit
+      // between the zap-link limit and the branding line so the ordering matches
+      // the in-app Settings > Subscription card.
+      ...(isAnyMediaAutomationAllowed(entitlements)
+        ? [{ text: "Any Post / Any Story automations", iconClassName: "bi bi-check" }]
+        : []),
+      ...(isFollowGateAllowed(entitlements)
+        ? [{ text: "Ask to Follow & button messages", iconClassName: "bi bi-check" }]
+        : []),
+      ...(isBasicPlan
+        ? []
+        : [{ text: "No ClanConnect Branding", iconClassName: "bi bi-check" }]),
       ...(entitlements.storefront_enabled
         ? [{ text: "Zap Storefront", iconClassName: "bi bi-check" }]
         : []),
