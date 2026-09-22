@@ -7,13 +7,7 @@ import { Link } from "@/lib/router";
 // Imported from the module directly, not the core/utility barrel: that barrel
 // also re-exports numbers.ts, whose 'number-to-words' dependency is not
 // installed and would fail the build.
-import {
-  formatEntitlementLimit,
-  isUnlimitedEntitlement,
-  formatAutomationSurfaces,
-  isAnyMediaAutomationAllowed,
-  isFollowGateAllowed,
-} from "@/core/utility/entitlements";
+import { zapPlanFeatures, zapPlanHeading } from "@/core/utility/zapPlanFeatures";
 
 
 const PricingPlanInfluencer = ({
@@ -105,71 +99,28 @@ const PricingPlanInfluencer = ({
   // in the DB needs no web release. A row without entitlements renders no ZAP
   // section at all — better silence than stale numbers.
   const entitlements = subscription_plan.entitlements;
-  const limit = (key) => formatEntitlementLimit(entitlements?.[key]);
 
+  // OLD: the whole list was assembled here, labelling each entitlement in the
+  // data model's vocabulary ("rule per automation", "trigger keyword per rule",
+  // "zap links per rule", "Ask to Follow & button messages") — the exact words
+  // the simplified Zap wizard stopped using — and never mentioning Collect
+  // leads at all. It now comes from zapPlanFeatures(), shared with the app and
+  // the mobile Subscription screen so the three cannot drift.
+  // A row without entitlements still renders no ZAP section: better silence
+  // than stale numbers.
   const zapFeaturesPlan = !entitlements
     ? []
     : [
-      {
-        text: <strong>{isBasicPlan ? "ZAP Basic" : "ZAP PRO"}</strong>,
-        liClassName: "border-bottom-0",
-        iconClassName: "",
-      },
-      {
-        // "Unlimited" replies never reset, so the daily-reset note is dropped.
-        text: `${limit("daily_interaction_limit")} comment replies/DMs${
-          isUnlimitedEntitlement(entitlements.daily_interaction_limit)
-            ? ""
-            : " (resets daily)"
-        }`,
-        iconClassName: "bi bi-check",
-      },
-      {
-        // OLD: `... active automation (posts)` — "(posts)" was hardcoded, so
-        // Trial and paid plans under-sold themselves: FOC/Basic carries
-        // allowed_content_types = 'post', every trial/paid plan carries
-        // 'post,story,live'. The parenthetical is read off that entitlement now.
-        text: `${limit("max_active_automation_posts")} active automation (${formatAutomationSurfaces(entitlements)})`,
-        iconClassName: "bi bi-check",
-      },
-      {
-        text: `${limit("max_dm_rules")} rule per automation`,
-        iconClassName: "bi bi-check",
-      },
-      {
-        text: `${limit("max_keywords_per_rule")} trigger keyword per rule`,
-        iconClassName: "bi bi-check",
-      },
-      ...(isBasicPlan
-        ? []
-        : [
-            {
-              text: `${limit("zap_link_limit")} zap links per rule`,
-              iconClassName: "bi bi-check",
-            },
-          ]),
-      // Catch-all zaps and button templates are plan capabilities the card never
-      // mentioned. Both go through the entitlement helpers, never the raw key —
-      // see the note in 2026-08-30_any_media_automation_entitlement.sql. They sit
-      // between the zap-link limit and the branding line so the ordering matches
-      // the in-app Settings > Subscription card.
-      ...(isAnyMediaAutomationAllowed(entitlements)
-        ? [{ text: "Any Post / Any Story automations", iconClassName: "bi bi-check" }]
-        : []),
-      ...(isFollowGateAllowed(entitlements)
-        ? [{ text: "Ask to Follow & button messages", iconClassName: "bi bi-check" }]
-        : []),
-      ...(isBasicPlan
-        ? []
-        : [{ text: "No ClanConnect Branding", iconClassName: "bi bi-check" }]),
-      ...(entitlements.storefront_enabled
-        ? [{ text: "Zap Storefront", iconClassName: "bi bi-check" }]
-        : []),
-      ...(entitlements.link_in_bio_enabled
-        ? [{ text: "Zap Link in Bio", iconClassName: "bi bi-check" }]
-        : []),
-      ]
-        .map((feature) => ({ liClassName: "", ...feature }));
+        {
+          text: <strong>{zapPlanHeading(subscription_plan.plan_name)}</strong>,
+          liClassName: "border-bottom-0",
+          iconClassName: "",
+        },
+        ...zapPlanFeatures(entitlements, subscription_plan.plan_name).map((text) => ({
+          text,
+          iconClassName: "bi bi-check",
+        })),
+      ].map((feature) => ({ liClassName: "", ...feature }));
 
   return (
     <div
