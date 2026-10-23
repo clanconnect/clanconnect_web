@@ -2,13 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { Tab, Nav } from "react-bootstrap";
 import { Link } from "@/lib/router";
-import {
-  SubscriptionPlanData,
-  SubscriptionPlanFeaturesData,
-} from "../../../data/data";
+import { SubscriptionPlanData } from "../../../data/data";
 import { Helmet } from "@/lib/helmet";
 import { SubscriptionService } from "@/core/services";
-import PricingPlanBrand from "./PricingPlan";
+import BrandPlanCards from "./BrandPlanCards";
 import PricingPlanInfluencer from "./PricingPlanInfluencer";
 
 const subscriptionService = new SubscriptionService();
@@ -17,7 +14,8 @@ const subscriptionService = new SubscriptionService();
 // ?user_type= value that appears in the URL.
 const TAB_KEY_BY_USER_TYPE = { brand: "first", influencer: "second" };
 const USER_TYPE_BY_TAB_KEY = { first: "brand", second: "influencer" };
-const DEFAULT_TAB_KEY = "first";
+// Influencer is shown first and opens by default; ?user_type=brand still opens Brand.
+const DEFAULT_TAB_KEY = "second";
 
 // Display order for premium plans (lower = shown first).
 const PLAN_ORDER = {
@@ -84,6 +82,8 @@ const isForeignResponse = (rows) =>
 
 const Pricing = () => {
   const [brandPremium, setBrandPremium] = useState(FALLBACK_BRAND);
+  // The free (FOC) row: its entitlements are the Basic card's Zap section.
+  const [brandFoc, setBrandFoc] = useState(null);
   // Every influencer card (BASIC/FOC, Trial, paid tiers) is rendered straight
   // from the API rows — they carry the `entitlements` that drive the ZAP
   // feature list, so a limit change in the DB shows up here with no release.
@@ -117,6 +117,8 @@ const Pricing = () => {
         const inflRows = sortInfluencerCards(inflRes?.data?.rows);
 
         if (brandRows.length) setBrandPremium(brandRows);
+        const foc = (brandRes?.data?.rows || []).find((r) => r.plan_name === "FOC");
+        if (foc) setBrandFoc(foc);
         if (inflRows.length) setInfluencerCards(inflRows);
         // Read off the full response so the flag survives even if a future
         // filter drops the row that carries it.
@@ -150,7 +152,8 @@ const Pricing = () => {
   };
 
   useEffect(() => {
-    const syncFromUrl = () => {
+    // event: a popstate (back / forward, or a hash change); none on mount.
+    const syncFromUrl = (event) => {
       const userType = new URLSearchParams(window.location.search)
         .get("user_type")
         ?.toLowerCase();
@@ -159,10 +162,16 @@ const Pricing = () => {
           ? TAB_KEY_BY_USER_TYPE[userType]
           : undefined;
 
-      setActiveTab(tabKey || DEFAULT_TAB_KEY);
-      // Nothing usable in the URL (first visit, or a stale/unknown value):
-      // stamp the tab that is actually showing.
-      if (!tabKey) writeUserType(DEFAULT_TAB_KEY);
+      if (tabKey) {
+        setActiveTab(tabKey);
+        return;
+      }
+      // A popstate without ?user_type= (e.g. only the #hash changed) keeps the
+      // tab showing — resetting it here snapped every switch back to the default.
+      if (event) return;
+      // First visit (or a stale/unknown value): stamp the tab that is showing.
+      setActiveTab(DEFAULT_TAB_KEY);
+      writeUserType(DEFAULT_TAB_KEY);
     };
 
     syncFromUrl();
@@ -213,102 +222,25 @@ const Pricing = () => {
             >
               <div className="subs-plan-sec main-tab">
                 <Nav className="nav-tabs plan-info plan-info-main-tab">
+                  {/* Buttons, not links: a tab switch never navigates (an anchor's
+                      "#" fired popstate, which reset the tab). */}
                   <Nav.Item>
-                    <Nav.Link eventKey="first">Brand</Nav.Link>
+                    <Nav.Link as="button" type="button" eventKey="second">Influencer</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey="second">Influencer</Nav.Link>
+                    <Nav.Link as="button" type="button" eventKey="first">Brand</Nav.Link>
                   </Nav.Item>
                 </Nav>
               </div>
 
               <Tab.Content>
                 <Tab.Pane eventKey="first" className="plan-tab-brand">
-                  <main className="full-width pb-3 page-pricing">
-                    <div className="pricing-tab p-0">
-                      <span className="plan-switch-btns">
-                        <div className=" sidebar-nav mb-0"></div>
-                      </span>
-                      <div className="tab-content" id="">
-                        <div className="pricing-sec-infl">
-                          <div className="pricing-sec-right">
-                            <div className="pricing-plan-sec">
-                              <div className="pricing-plan pricing-plan-info ">
-                                <span
-                                  className="pricing-title"
-                                  style={{
-                                    minHeight: "50px",
-                                    backgroundColor: "transparent",
-                                  }}
-                                ></span>
-                                <div className="pricing-plan-div">
-                                  <div className="d-flex flex-column  pb-3 text-center">
-                                    <span className="d-flex flex-column">
-                                      <span className="brand-pricing-plan-type">
-                                        <span
-                                          className="pricing-span"
-                                          style={{ opacity: "0" }}
-                                        >
-                                          {" "}
-                                          ₹ 0/month
-                                        </span>
-                                      </span>
-                                      <span
-                                        className="pricing-plan-type pricing-span"
-                                        style={{ opacity: "0" }}
-                                      >
-                                        Free
-                                      </span>
-                                      <span
-                                        className="pricing-description"
-                                        style={{ opacity: "0" }}
-                                      >
-                                        By default, this plan is activated until
-                                        you purchase a premium plan
-                                      </span>
-                                    </span>
-                                  </div>
-                                  <Link
-                                    style={{ minHeight: "50px" }}
-                                    className="btn buy-btn plan-btn"
-                                  ></Link>
-                                </div>
-                                <div className="pricing-plan-detail-sec">
-                                  <ul>
-                                    {SubscriptionPlanData.brand.basic_plan
-                                      .user_type === "Brand" && (
-                                      <>
-                                        {SubscriptionPlanFeaturesData.brand.basic_plan_feature_text.map(
-                                          (featureText, index) => {
-                                            return (
-                                              <li key={index}>
-                                                {featureText.text}
-                                              </li>
-                                            );
-                                          }
-                                        )}
-                                      </>
-                                    )}
-                                  </ul>
-                                </div>
-                              </div>
-                              <PricingPlanBrand
-                                subscription_plan={
-                                  SubscriptionPlanData.brand.basic_plan
-                                }
-                              />
-                              {brandPremium.map((plan) => (
-                                <PricingPlanBrand
-                                  key={plan.plan_id || plan.id || plan.plan_name}
-                                  subscription_plan={plan}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </main>
+                  <BrandPlanCards focPlan={brandFoc} premiumPlans={brandPremium} />
+                  <p className="brand-plan-cards__note">
+                    <strong>Please note:</strong> ClanConnect is an influencer
+                    marketplace where we bring influencers and brands on a
+                    common plane in the most transparent manner.
+                  </p>
                 </Tab.Pane>
                 <Tab.Pane eventKey="second" className="pt-2 plan-tab-influencer">
                   <main className="full-width pb-3 page-pricing">

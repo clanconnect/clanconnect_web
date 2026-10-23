@@ -1,0 +1,47 @@
+// Pricing → Brand tab: the brand app's Subscription screen — dark-blue plan
+// cards side by side (stacked on phones). Colours are the brand app's theme
+// (primary #66A9DD family).
+$bp-primary: #66A9DD;
+$bp-card: #2A6696;
+$bp-soft: #AAD1EC;
+$bp-light: #EBF4FB;
+
+.brand-plan-cards {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 22px;
+  padding: 32px 16px 24px; margin: 8px 0 0; border-radius: 20px; background: $bp-light;
+  @media (max-width: 767px) { padding: 20px 12px; gap: 16px; }
+}
+
+.brand-plan-card {
+  flex: 1 1 340px; max-width: 420px; display: flex; flex-direction: column; text-align: left;
+  border-radius: 20px; padding: 24px; background: $bp-card; color: $bp-soft;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  &__top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  &__name { flex: 1; margin: 0; font-size: 22px; font-weight: 700; color: #fff; }
+  &--basic &__name { color: $bp-soft; }
+  &__save { font-size: 14px; font-weight: 700; color: #fb923c; white-space: nowrap; }
+  &__price-row { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 8px; margin: 0 0 2px; }
+  &__strike { font-size: 17px; color: $bp-soft; align-self: flex-start; margin-top: 8px; }
+  &__price { font-size: 34px; font-weight: 700; line-height: 1.15; color: #fff; margin: 0 0 6px; }
+  &__price-row &__price { margin: 0; }
+  &__monthly { margin: 0 0 2px; font-size: 14px; color: $bp-soft; }
+  &__note { margin: 0 0 2px; font-size: 12.5px; line-height: 18px; color: $bp-soft; }
+  &__divider { height: 1px; margin: 16px 0; background: rgba(255, 255, 255, 0.18); }
+  &__features { flex: 1; }
+  &__group { margin-bottom: 14px; }
+  &__group-title { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: $bp-soft; }
+  &__row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  &__label { flex: 1; min-width: 0; font-size: 14px; line-height: 19px; color: $bp-light; }
+  &--basic &__label { color: $bp-soft; }
+  &__value { max-width: 110px; text-align: right; font-size: 13px; font-weight: 600; color: $bp-soft; }
+  &__yes { flex-shrink: 0; color: #4ade80; }
+  &__no { flex-shrink: 0; color: #f87171; }
+  &__cta {
+    display: flex; align-items: center; justify-content: center; height: 50px; margin-top: 16px; border-radius: 12px;
+    background: $bp-primary; color: #fff; font-size: 16px; font-weight: 700; text-decoration: none;
+    &:hover, &:focus, &:visited { color: #fff; text-decoration: none; }
+    &:hover { filter: brightness(1.06); }
+  }
+}
+
+.brand-plan-cards__note { margin: 16px auto 32px; max-width: 880px; text-align: center; font-size: 13px; color: #64748b; }
