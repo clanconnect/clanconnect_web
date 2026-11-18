@@ -2710,7 +2710,13 @@ textarea.form-control {
         @media (width < 1350px){
             left: 8px;
             right: auto;
-        }   
+        }
+    }
+    .tab-content-package-carousel .slick-arrow.slick-next {
+        @media (width < 1350px){
+            right: 8px;
+            left: auto;
+        }
     }
 
 
