@@ -1917,9 +1917,13 @@
 .tab-content-package-carousel .slick-arrow.slick-next {
     right: 0%;
 
-    @media (width > 480px) {
+    @media (width > 991px) {
         left: calc(100% + 10px);
-        right: auto;
+        right: 8px;
+    }
+    @media (width < 992px) {
+        // left: calc(100% + 10px);
+        right: 8px;
     }
 }
 
@@ -2706,6 +2710,9 @@ textarea.form-control {
     flex: 9999;
     max-width: 700px;
     position: relative;
+    @media (width < 992px){
+        max-width: 100%;
+    }
     .tab-content-package-carousel .slick-arrow.slick-prev {
         @media (width < 1350px){
             left: 8px;
