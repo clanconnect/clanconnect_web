@@ -1353,6 +1353,9 @@
           border-radius: 0;
 
           .nav-link {
+            // Tabs are <button>s, which don't stretch like the old <a> did.
+            width: 100%;
+            text-align: center;
             border-radius: 0;
             color: #000;
             font-size: 17px;
